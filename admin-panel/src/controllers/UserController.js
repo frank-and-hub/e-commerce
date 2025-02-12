@@ -1,0 +1,429 @@
+const mongoose = require('mongoose');
+
+// models
+const User = require('../models/user');
+const Role = require('../models/role');
+const File = require('../models/file');
+const Designation = require('../models/designation');
+const SocialDetail = require('../models/social_detail');
+const UserPermission = require('../models/user_permission');
+
+// helper function
+const helper = require('../utils/helper');
+
+// services
+const AuthServices = require('../services/AuthServices');
+
+// config url
+const url = require('../config/url');
+const { selectUser, insertUser } = require('../services/UserServices');
+
+// base url
+const baseurl = `${url.apiUrl}`;
+const apiBaseUrl = `${url.apiBaseUrl}`;
+const status_active = `${process.env.STATUS_ACTIVE}`;
+const unauthorized = `${process.env.UNAUTHORIZED}`;
+const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
+// stsic base
+const constName = 'users/';
+
+exports.index = async (req, res, next) => {
+    try {
+        const page = parseInt(req?.query?.page) || 1;
+        const limit = parseInt(req?.query?.limit) || parseInt(data_limit);
+
+        const orderByField = req?.query?.orderby || '_id';
+        const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
+
+        const filter = {};
+        const { role_id, status, gender, search } = req.query;
+
+        if (role_id) filter.role = role_id;
+        if (status) filter.status = status;
+        if (gender) filter.gender = gender;
+
+        if (search) {
+            const trimmedSearch = search.trim();
+            filter.$or = [
+                { name: { $regex: trimmedSearch, $options: "i" } },
+                { email: { $regex: trimmedSearch, $options: "i" } },
+                { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: search, options: "i" } } },
+            ];
+        }
+
+        const skip = (page - 1) * limit;
+        const totalCount = await User.countDocuments({
+            ...filter,
+            deleted_at: null
+        });
+
+        const query = User.find(filter)
+            .select('_id name email phone gender image status role about designations updated_by')
+            .populate('role', '_id name')
+            .populate({
+                path: 'designations',
+                select: '_id name'
+            })
+            .populate('updated_by', '_id name')
+            .populate('image', '_id name path');
+
+        if (req?.query?.page != 0) {
+            query.sort({ [orderByField]: orderByDirection })
+                .skip(skip)
+                .limit(limit);
+        }
+
+        const users = await query;
+
+        if (users.length === 0) return res.status(200).json({ message: `Users not found!`, data: [] });
+
+        const userPromises = users.map(async (user) => {
+            const { _id, name, email, phone, gender, role, image, designations, status } = user;
+
+            return {
+                'id': _id,
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'gender': gender,
+                'role': role,
+                'image': image,
+                'designations': designations,
+                'status': status,
+            }
+        });
+
+        const userResponses = await Promise.all(userPromises);
+        res.status(200).json({
+            message: `Users list retrieved successfully`, response: {
+                count: totalCount,
+                page: page,
+                limit: limit,
+                totalPages: Math.ceil(totalCount / limit),
+                data: userResponses
+            }, title: 'listing'
+        });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.create = (req, res, next) => {
+    try {
+        res.status(200).json({
+            message: `Create user form`,
+            body: {
+                'name': 'String',
+                'email': 'String',
+                'phone': 'Digits',
+                'password': 'String',
+                'role_id': 'SchemaId',
+                'designations': 'Array of SchemaId'
+            },
+            title: 'Add user'
+        });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.store = async (req, res, next) => {
+    const { name, email, phone, password, role_id, designations } = req.body;
+    try {
+        let userId = req?.userData?.id;
+
+        const existsUser = await User.findOne({ email: email, status: status_active });
+        if (existsUser) return res.status(409).json({ message: 'User already exists' });
+
+        const roleData = await Role.findById(role_id).select('_id').where('status').equals(status_active);
+        if (!roleData) return res.status(401).json({ message: unauthorized });
+
+        const foundDesignations = await Designation.find({ _id: { $in: designations }, status: status_active }).select('_id name');
+        if (foundDesignations.length !== designations.length) return res.status(404).json({ message: 'One or more active designations not found' });
+
+        const newData = await insertUser(req.body, userId, foundDesignations.map(p => p._id));
+
+        const response = {
+            'id': newData?._id,
+            'name': newData?.name,
+            'email': newData?.email,
+            'phone': newData?.phone,
+            'designations': newData?.designations,
+            'role': newData?.role,
+            'password': password,
+        }
+        return res.status(201).json({ message: `Successfully created`, data: response });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.show = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const userData = await selectUser(id, res);
+
+        const social_details = await SocialDetail.find({ 'user': userData?._id })
+            .select('_id name url icon')
+            .sort({ _id: -1 });
+
+        const userWithDetails = {
+            ...userData.toObject(),
+            designations: await helper.filterData(userData?.designations),
+            social_details,
+        };
+        res.status(200).json({ message: `User founded`, data: userWithDetails, title: `View ${userData?.name} user detail` });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.edit = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const userData = await selectUser(id, res);
+        const { _id, name, email, phone, password_text, role, designations } = userData;
+        const userResponses = {
+            '_id': _id,
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'password': password_text,
+            'role_id': role?._id,
+            'designations': await helper.filterData(designations),
+        }
+        res.status(200).json({ message: `User details founded`, data: userResponses, title: `Edit ${userData?.name} user detail` });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.update = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findById(id).select('_id');
+        if (!user) return res.status(404).json({ message: `User not found!`, });
+
+        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (user may not exist or the data is the same)` });
+
+        const updateOps = helper.updateOps(req);
+
+        if (updateOps?.role_id) {
+            updateOps['role'] = updateOps.role_id;
+        }
+
+        if (updateOps?.password) {
+            updateOps['password_text'] = updateOps.password;
+            updateOps['password'] = await AuthServices.hashPassword(updateOps.password);
+        }
+
+        if (typeof updateOps?.phone === 'string') {
+            updateOps['phone'] = updateOps.phone.replace('-', '').replace('-', '').replace(' ', '');
+        }
+
+        const designationsId = updateOps['designations'];
+
+        const Designations = await Designation.find({ _id: { $in: designationsId } }).select('_id name');
+
+        if (designationsId && Designations?.length !== designationsId?.length) return res.status(404).json({ message: 'One or more designations not found' });
+
+        const result = await User.updateOne({ _id: id }, { $set: updateOps });
+
+        if (result.modifiedCount > 0) {
+            const updatedUser = await selectUser(id, res);
+            const { _id, name, email, phone, gender, role, image, about, designations } = updatedUser;
+            const userData = {
+                'id': _id,
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'gender': gender,
+                'role': role,
+                'image': image,
+                'about': about,
+                'designations': designations
+            }
+            return res.status(200).json({ message: `User details updated successfully`, data: userData });
+        }
+        res.status(404).json({ message: `User not found or no details to update`, data: [] });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.destroy = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const getUser = await User.findById(id).select('_id').where('status').equals(!status_active);
+        if (!getUser) return res.status(404).json({ message: 'User not found' });
+
+        // const userData = await User.deleteOne({ _id: id });
+        // if (userData.deletedCount === 1) {
+
+        const userData = await User.findByIdAndUpdate(id, { deleted_at: new Date() });
+        if (userData) {
+            const response = {
+                'method': 'POST',
+                'url': `${baseurl}${constName}`,
+                'body': {
+                    'name': 'string',
+                    'email': 'string',
+                    'password': 'string',
+                    'role': 'ID',
+                    'designations': 'Array of SchemaId'
+                }
+            }
+            return res.status(200).json({ message: `Deleted successfully`, request: response });
+        }
+        res.status(404).json({ message: `Not found` });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.profile = async (req, res, next) => {
+    const { id } = req.params;
+    const file = req.file;
+    try {
+        if (!file) return res.status(404).json({ message: `File not found` });
+
+        const getUserData = await User.findById(id).select('_id').where('status').equals(status_active);
+        if (!getUserData) return res.status(404).json({ message: `User not found` });
+
+        const newFile = new File({
+            _id: new mongoose.Types.ObjectId(),
+            name: file.filename,
+            path: `${apiBaseUrl}/file/${file.filename}`,
+        });
+
+        const newData = await newFile.save();
+        const result = await User.updateOne({ _id: id }, { $set: { image: newData._id } });
+
+        const response = {
+            'id': newData._id,
+            'name': newData.name,
+            'path': newData.path,
+        };
+
+        if (result.modifiedCount > 0) return res.status(200).json({ message: `User image updated`, data: response });
+
+        res.status(404).json({ message: `User not found or no image to update`, data: [] });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.assignRole = async (req, res, next) => {
+    const { id } = req.params;
+    const roleId = req.body.role_id;
+    try {
+
+        const [roleData, userData] = await Promise.all([
+            Role.findById(roleId).select('_id').where('status').equals(status_active),
+            User.findById(id).select('_id').where('status').equals(status_active)
+        ]);
+
+        if (!roleData) return res.status(404).json({ message: `Role not found` });
+
+        if (!userData) return res.status(404).json({ message: `User not found` });
+
+        const updateResult = await User.updateOne({ _id: id }, { $set: { role: roleId } });
+
+        if (updateResult.modifiedCount > 0) {
+            const updatedUser = await User.findById(id).select('_id name email phone gender').where('status').equals(status_active);
+            const { _id, name, email, phone, gender } = updatedUser;
+            const response = {
+                'id': _id,
+                'name': name,
+                'email': email,
+                'phone': phone,
+                'gender': gender,
+                'role': roleData?.name,
+            }
+            return res.status(200).json({ message: `User role updated`, data: response });
+        }
+        res.status(404).json({ message: `No details to update`, data: [] });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.verifyPassword = async (req, res, next) => {
+    try {
+        const { id, password } = req.body;
+        const user = await User.findById(id).select('_id password').where('status').equals(status_active);
+        if (!user) return res.status(404).json({ message: `User not found!`, });
+
+        const isPasswordValid = await AuthServices.comparePasswords(password, user.password);
+        if (!isPasswordValid) return res.status(200).json({ message: `Incorrect current password`, data: false });
+
+        return res.status(200).json({ message: `Auth user password is correct 👍`, data: true });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.changePassword = async (req, res, next) => {
+    try {
+        const { id, oldPassword, newPassword } = req.body;
+
+        const user = await User.findById(id).select('_id password').where('status').equals(status_active);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        const isMatch = await AuthServices.comparePasswords(oldPassword, user.password);
+        if (!isMatch) return res.status(404).json({ message: 'Incorrect current password' });
+
+        const hashPassword = await AuthServices.hashPassword(newPassword);
+
+        user.password = hashPassword;
+        user.password_text = newPassword,
+            await user.save();
+
+        return res.status(200).json({ message: 'Password updated successfully', data: true });
+    } catch (err) {
+        next(err);
+    }
+}
+
+exports.permssion = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const userData = await User.findById(id).select('_id name');
+        if (!userData) return res.status(404).json({ message: `User not found!`, data: [] });
+
+        const UserPermissions = await UserPermission.find({ user: userData?._id })
+            .select('_id user menu add view edit delete');
+
+        if (!userData) return res.status(404).json({ message: `User has no permissions!`, data: [] });
+
+        res.status(200).json({ message: `User permissions founded`, data: { ...UserPermissions }, title: `${userData?.name} user permissions` });
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.update_permssion = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const { menu, add, edit, view, delete: del } = req.body;
+
+        const userData = await User.findById(id).select('_id name');
+        if (!userData) return res.status(404).json({ message: `User not found!`, data: [] });
+
+        await UserPermission.deleteMany({ user: userData?._id });
+
+        const insertData = menu?.map((m, index) => ({
+            user: userData?._id,
+            menu: m,
+            view: view?.[index] || false,
+            add: add?.[index] || false,
+            edit: edit?.[index] || false,
+            delete: del?.[index] || false,
+        }));
+
+        await UserPermission.insertMany(insertData);
+        res.status(200).json({ message: `User permissions updated`, data: {}, title: `${userData?.name} user permissions` });
+    } catch (err) {
+        next(err)
+    }
+}

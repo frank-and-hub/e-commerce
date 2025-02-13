@@ -1,0 +1,26 @@
+{
+  "name": "product",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend": "cd admin_front_end && npm start",
+    "backend": "cd admin_back_end && npm start",
+    "start": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "clean": "rm -rf build/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frank-and-hub/product.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frank-and-hub/product/issues"
+  },
+  "homepage": "https://github.com/frank-and-hub/product#readme",
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

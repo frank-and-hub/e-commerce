@@ -6,19 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-
+  <link rel="apple-touch-icon" href="/assets/img/apple-icon.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
   <link href="/admin-assets/img/logo.svg" rel="icon" />
   <link href="/admin-assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
-
   <link href="https://fonts.gstatic.com" rel="preconnect" />
-
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
 </head>
 
 <body>
@@ -27,14 +20,12 @@
 </body>
 <script>
   const isFrontend = window.location.pathname.includes('frontEnd');
-
   const frontendCssFiles = [
     './assets/css/bootstrap.min.css',
     './assets/css/templatemo.css',
     './assets/css/custom.css',
     './assets/css/fontawesome.min.css',
   ];
-
   const frontendJavaScriptFiles = [
     './assets/js/jquery-1.11.0.min.js',
     './assets/js/jquery-migrate-1.2.1.min.js',
@@ -42,7 +33,6 @@
     './assets/js/templatemo.js',
     './assets/js/custom.js',
   ];
-
   const backendCssFiles = [
     'admin-assets/vendor/bootstrap/css/bootstrap.min.css',
     'admin-assets/vendor/bootstrap-icons/bootstrap-icons.css',
@@ -53,7 +43,6 @@
     'admin-assets/vendor/simple-datatables/style.css',
     'admin-assets/css/style.css'
   ];
-
   const backendJavaScriptFiles = [
     'admin-assets/vendor/apexcharts/apexcharts.min.js',
     'admin-assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
@@ -65,47 +54,36 @@
     'admin-assets/vendor/php-email-form/validate.js',
     'admin-assets/js/main.js'
   ];
-
   document.title = (isFrontend === true) ? `Profile App` : `Admin Panel`;
-
   if (isFrontend === true) {
-
     frontendCssFiles.forEach((href) => {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = href;
       document.head.appendChild(link);
     });
-
     console.log(`front end page`);
-
     frontendJavaScriptFiles.forEach((src) => {
       const script = document.createElement('script');
       script.src = src;
       script.async = true;
       document.head.appendChild(script);
     });
-
   } else {
-
     backendCssFiles.forEach((href) => {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = href;
       document.head.appendChild(link);
     });
-
     console.log(`back end page`);
-
     backendJavaScriptFiles.forEach((src) => {
       const script = document.createElement('script');
       script.src = src;
       script.async = true;
       document.head.appendChild(script);
     });
-
   }
-
 </script>
 
 </html>

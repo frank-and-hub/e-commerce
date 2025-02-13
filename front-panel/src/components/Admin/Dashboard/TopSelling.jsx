@@ -23,7 +23,7 @@ function TopSelling() {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row">
+                                    <th scope={`row`}>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()}><img src="assets/img/product-1.jpg" alt="" /></Link></th>
                                     <td>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()} className="text-primary fw-bold">Ut inventore ipsa voluptas nulla</Link></td>
@@ -32,7 +32,7 @@ function TopSelling() {
                                     <td>$5,828</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">
+                                    <th scope={`row`}>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()}><img src="assets/img/product-2.jpg" alt="" /></Link></th>
                                     <td>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()} className="text-primary fw-bold">Exercitationem similique doloremque</Link></td>
@@ -41,7 +41,7 @@ function TopSelling() {
                                     <td>$4,508</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">
+                                    <th scope={`row`}>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()}><img src="assets/img/product-3.jpg" alt="" /></Link></th>
                                     <td>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()} className="text-primary fw-bold">Doloribus nisi exercitationem</Link></td>
@@ -50,7 +50,7 @@ function TopSelling() {
                                     <td>$4,366</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">
+                                    <th scope={`row`}>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()}><img src="assets/img/product-4.jpg" alt="" /></Link></th>
                                     <td>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()} className="text-primary fw-bold">Officiis quaerat sint rerum error</Link></td>
@@ -59,7 +59,7 @@ function TopSelling() {
                                     <td>$2,016</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">
+                                    <th scope={`row`}>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()}><img src="assets/img/product-5.jpg" alt="" /></Link></th>
                                     <td>
                                         <Link to={`#`} onClick={(e) => e.preventDefault()} className="text-primary fw-bold">Sit unde debitis delectus repellendus</Link></td>

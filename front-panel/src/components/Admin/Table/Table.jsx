@@ -234,7 +234,7 @@ const Table = ({
                                     {!loading && headers.length > 0 && (
                                         <>
                                             {headers.map((header, index) => (
-                                                <th key={index} scope="row" className='text-capitalize' style={{ cursor: (header !== ('id' || '_id')) ? 'pointer' : 'auto' }} onClick={(e) => (header === ('id' || '_id') ? e.preventDefault() : handleSort(header))}>
+                                                <th key={index} scope={`row`} className='text-capitalize' style={{ cursor: (header !== ('id' || '_id')) ? 'pointer' : 'auto' }} onClick={(e) => (header === ('id' || '_id') ? e.preventDefault() : handleSort(header))}>
                                                     {header === ('id' || '_id')
                                                         ? (<i className="bi bi-hash" ></i>)
                                                         : (ucwords(header))}

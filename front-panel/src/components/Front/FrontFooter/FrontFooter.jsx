@@ -6,10 +6,10 @@ class FrontFooter extends Component {
         return (
             <>
                  <footer className="bg-dark" id="tempaltemo_footer">
-        <div className="container">
-            <div className="row">
+        <div className={`container`}>
+            <div className={`row`}>
 
-                <div className="col-md-4 pt-5">
+                <div className={`col-md-4 pt-5`}>
                     <h2 className="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
                     <ul className="list-unstyled text-light footer-link-list">
                         <li>
@@ -18,36 +18,36 @@ class FrontFooter extends Component {
                         </li>
                         <li>
                             <i className="fa fa-phone fa-fw"></i>
-                            <Link className="text-decoration-none" href="tel:010-020-0340">010-020-0340</Link>
+                            <Link className={`text-decoration-none`} href="tel:010-020-0340">010-020-0340</Link>
                         </li>
                         <li>
                             <i className="fa fa-envelope fa-fw"></i>
-                            <Link className="text-decoration-none" href="mailto:info@company.com">info@company.com</Link>
+                            <Link className={`text-decoration-none`} href="mailto:info@company.com">info@company.com</Link>
                         </li>
                     </ul>
                 </div>
 
-                <div className="col-md-4 pt-5">
+                <div className={`col-md-4 pt-5`}>
                     <h2 className="h2 text-light border-bottom pb-3 border-light">Products</h2>
                     <ul className="list-unstyled text-light footer-link-list">
-                        <li><Link className="text-decoration-none" href="#">Luxury</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Sport Wear</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Men's Shoes</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Women's Shoes</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Popular Dress</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Gym Accessories</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Sport Shoes</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Luxury</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Sport Wear</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Men's Shoes</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Women's Shoes</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Popular Dress</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Gym Accessories</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Sport Shoes</Link></li>
                     </ul>
                 </div>
 
-                <div className="col-md-4 pt-5">
+                <div className={`col-md-4 pt-5`}>
                     <h2 className="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                     <ul className="list-unstyled text-light footer-link-list">
-                        <li><Link className="text-decoration-none" href="#">Home</Link></li>
-                        <li><Link className="text-decoration-none" href="#">About Us</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Shop Locations</Link></li>
-                        <li><Link className="text-decoration-none" href="#">FAQs</Link></li>
-                        <li><Link className="text-decoration-none" href="#">Contact</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Home</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">About Us</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Shop Locations</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">FAQs</Link></li>
+                        <li><Link className={`text-decoration-none`} href="#">Contact</Link></li>
                     </ul>
                 </div>
 
@@ -84,7 +84,7 @@ class FrontFooter extends Component {
         </div>
 
         <div className="w-100 bg-black py-3">
-            <div className="container">
+            <div className={`container`}>
                 <div className="row pt-2">
                     <div className="col-12">
                         <p className="text-left text-light">

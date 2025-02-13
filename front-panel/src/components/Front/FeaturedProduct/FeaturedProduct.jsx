@@ -15,7 +15,7 @@ class FeaturedProduct extends Component {
                                 </p>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className={`row`}>
                             <div className="col-12 col-md-4 mb-4">
                                 <div className="card h-100">
                                     <a href="shop-single.html">

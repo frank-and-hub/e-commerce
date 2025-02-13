@@ -88,7 +88,7 @@ function ProfileChangePassword({ user }) {
                 <Input name="newpassword" type="password" label="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} error={error.newPassword} required={true} onBlur={handleHoverOff} inputType={false} />
                 <Input name="renewpassword" type="password" label="Re-enter Password" value={renewPassword} onChange={(e) => setReNewPassword(e.target.value)} error={error.renewPassword} required={true} onBlur={handleHoverOff} inputType={false} />
 
-                <div className="text-center">
+                <div className={`text-center`}>
                     <SubmitButton className={`custom`} name={formValid ? `Changing...` : `Change Password`} />
                 </div>
             </form>

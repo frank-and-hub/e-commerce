@@ -13,7 +13,7 @@ class Carousel extends Component {
                     </ol>
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <div className="container">
+                            <div className={`container`}>
                                 <div className="row p-5">
                                     <div className="mx-auto col-md-8 col-lg-6 order-lg-last">
                                         <img className="img-fluid" src="./assets/img/banner_img_01.jpg" alt="" />
@@ -35,7 +35,7 @@ class Carousel extends Component {
                             </div>
                         </div>
                         <div className="carousel-item">
-                            <div className="container">
+                            <div className={`container`}>
                                 <div className="row p-5">
                                     <div className="mx-auto col-md-8 col-lg-6 order-lg-last">
                                         <img className="img-fluid" src="./assets/img/banner_img_02.jpg" alt="" />
@@ -54,7 +54,7 @@ class Carousel extends Component {
                             </div>
                         </div>
                         <div className="carousel-item">
-                            <div className="container">
+                            <div className={`container`}>
                                 <div className="row p-5">
                                     <div className="mx-auto col-md-8 col-lg-6 order-lg-last">
                                         <img className="img-fluid" src="./assets/img/banner_img_03.jpg" alt="" />

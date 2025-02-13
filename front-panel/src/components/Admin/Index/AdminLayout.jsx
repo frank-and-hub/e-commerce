@@ -8,7 +8,7 @@ import { SidebarProvider } from '../../../context/SidebarContext'
 import { LoadingProvider } from '../../../context/LoadingContext'
 import { DashboardProvider } from '../../../context/DashBoardContext'
 
-function Layout() {
+function AdminLayout() {
     const location = useLocation();
     const pathname = location.pathname !== '/' ? location.pathname.replace('admin/', '').replace(/-/g, ' ') : 'Dashboard';
     const title = pathname.charAt(0).toUpperCase() + pathname.slice(1);
@@ -46,4 +46,4 @@ function Layout() {
     )
 }
 
-export default Layout
+export default AdminLayout

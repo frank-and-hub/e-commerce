@@ -9,7 +9,7 @@ import CategoriesofTheMonth from '../CategoriesofTheMonth/CategoriesofTheMonth'
 import FeaturedProduct from '../FeaturedProduct/FeaturedProduct'
 import FrontFooter from '../FrontFooter/FrontFooter'
 
-function FrontIndex() {
+function FrontLayout() {
     const [loading, setLoading] = useState(null);
 
     useEffect(() => {
@@ -51,4 +51,4 @@ function FrontIndex() {
     );
 };
 
-export default FrontIndex;
+export default FrontLayout;

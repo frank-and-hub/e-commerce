@@ -85,7 +85,7 @@ function ProfileForm({ user }) {
                 <Input name="city" label="City" value={values?.city} onChange={handleChange} error={errors.city} required={true} />
                 <Input name="state" label="State" value={values?.state} onChange={handleChange} error={errors.state} required={true} />
                 <Input name="zipcode" label="Zip Code" value={values?.zipcode} onChange={handleChange} error={errors.zipcode} required={true} />
-                <div className="text-center">
+                <div className={`text-center`}>
                     <SubmitButton className={`custom`} name={isPending ? 'Saving...' : 'Save Changes'} />
                 </div>
             </form>

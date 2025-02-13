@@ -4,93 +4,80 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '../utils/AuthContext'
 import PrivateRoute from '../route/PrivateRoute'
 
+// sign-in page
 import SignIn from './Admin/SignIn/SignIn'
+// sign-up page
 import SignUp from './Admin/SignUp/SignUp'
 // admin layout
-import AdminLayout from './Admin/Index/Layout'
+import AdminLayout from './Admin/Index/AdminLayout'
+// error page
 import Error from './Admin/Pages/Error'
+// blank page
 import Blank from './Admin/Pages/Blank'
-
+ // dashboard page
 import Dashboard from './Admin/Dashboard/Dashboard'
-
-// user profile
+// user profile page
 import Profile from './Admin/Profile/Profile'
-
-import UserRolePermission from './Admin/UserManagement/UserRolePermission'
-
+// user permissions
 import PermissionTable from './Admin/PermissionManagement/PermissionTable'
-
+// settings
 // import SiteForm from './Admin/SettingManagement/SiteForm'
-
 import Support from './Admin/SettingManagement/Support'
-
 import TermsAndConditions from './Admin/SettingManagement/TermsAndConditions'
-
-// faq
 import FaqList from './Admin/SettingManagement/faq/List'
 import AddFaq from './Admin/SettingManagement/faq/Add'
-
 // users
-import UsersTable from './Admin/UserManagement/UserTable'
 import UserForm from './Admin/UserManagement/form/Add'
 import UserView from './Admin/UserManagement/form/View'
 import UserEdit from './Admin/UserManagement/form/Edit'
-
+import UsersTable from './Admin/UserManagement/UserTable'
+import UserRolePermission from './Admin/UserManagement/UserRolePermission'
 // role
 import RoleTable from './Admin/RoleManagement/RoleTable'
 import RoleAdd from './Admin/RoleManagement/form/Add'
 import RoleEdit from './Admin/RoleManagement/form/Edit'
 import RoleView from './Admin/RoleManagement/form/View'
-
 // menu
 import MenuTable from './Admin/MenuManagement/MenuTable'
 import MenuAdd from './Admin/MenuManagement/form/Add'
 import MenuEdit from './Admin/MenuManagement/form/Edit'
 import MenuView from './Admin/MenuManagement/form/View'
-
 // service
 import ServiceTable from './Admin/ServiceManagement/ServiceTable'
 import ServiceAdd from './Admin/ServiceManagement/form/Add'
 import ServiceEdit from './Admin/ServiceManagement/form/Edit'
 import ServiceView from './Admin/ServiceManagement/form/View'
-
 // testimonials
 import TestimonialTable from './Admin/TestimonialManagement/TestimonialTable'
 import TestimonialAdd from './Admin/TestimonialManagement/form/Add'
 import TestimonialEdit from './Admin/TestimonialManagement/form/Edit'
 import TestimonialView from './Admin/TestimonialManagement/form/View'
-
 // contacts
 import ContactTable from './Admin/ContactManagement/ContactTable'
 import ContactView from './Admin/ContactManagement/form/View'
-
 // social-media
 import SocialDetailTable from './Admin/SocialDetailManagement/SocialDetailTable'
 import SocialDetailAdd from './Admin/SocialDetailManagement/form/Add'
 import SocialDetailEdit from './Admin/SocialDetailManagement/form/Edit'
 import SocialDetailView from './Admin/SocialDetailManagement/form/View'
-
 // projects
 import ProjectTable from './Admin/ProjectManagement/ProjectTable'
 import ProjectAdd from './Admin/ProjectManagement/form/Add'
 import ProjectEdit from './Admin/ProjectManagement/form/Edit'
 import ProjectView from './Admin/ProjectManagement/form/View'
-
 // designations
 import DesignationTable from './Admin/DesignationManagement/DesignationTable'
 import DesignationAdd from './Admin/DesignationManagement/form/Add'
 import DesignationEdit from './Admin/DesignationManagement/form/Edit'
 import DesignationView from './Admin/DesignationManagement/form/View'
-
 // designations
 import PlanTable from './Admin/PlanManagement/PlanTable'
 // import PlanAdd from './Admin/PlanManagement/form/Add'
 import PlanEdit from './Admin/PlanManagement/form/Edit'
 import PlanView from './Admin/PlanManagement/form/View'
-
-import FrontEndComponent from './Front/Index/FrontIndex'
 import { CreatePlan } from '../controllers/planController'
 
+import FrontLayout from './Front/Index/FrontLayout'
 
 
 class Routing extends Component {
@@ -99,7 +86,7 @@ class Routing extends Component {
             <AuthProvider>
                 <Router>
                     <Routes>
-                        <Route path={`/`} element={<FrontEndComponent />} />
+                        <Route path={`/`} element={<FrontLayout />} />
                         <Route path="/admin/" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
                             <Route path='' element={<Dashboard />} />
                             <Route path={`index`} element={<Dashboard />} />
@@ -207,10 +194,6 @@ class Routing extends Component {
             </AuthProvider>
         );
     }
-}
-
-Routing.propTypes = {
-
 }
 
 export default Routing;

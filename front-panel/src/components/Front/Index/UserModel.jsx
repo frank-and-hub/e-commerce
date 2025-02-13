@@ -58,7 +58,7 @@ export const UserModel = ({ setNumber }) => {
 
     return (
         <>
-            <Modal show={modalShow} onHide={() => { setModalShow(modalShow); navigate('/signin', { replace: true }) }} size={`dialog-centered`}>
+            <Modal show={modalShow} onHide={() => { setModalShow(modalShow); navigate('/admin/signin', { replace: true }) }} size={`dialog-centered`}>
                 <Modal.Header className='border-0' closeButton>
                     <Modal.Title className=''>{`Select User`}</Modal.Title>
                 </Modal.Header>

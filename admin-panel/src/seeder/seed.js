@@ -83,7 +83,7 @@ const menuSeederData = [
   {
     _id: new mongoose.Types.ObjectId(),
     name: "Dashboard",
-    route: "/",
+    route: "/dashboard",
     type: true,
     icon: "bi bi-grid",
     parent: null,

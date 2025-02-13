@@ -22,13 +22,13 @@ export const SidebarProvider = ({ children }) => {
     const location = useLocation();
     const [menus, setMenus] = useState({});
     const [loading, setLoading] = useState(false);
-    const pathname = location.pathname !== '/' ? location.pathname.replace('/', '') : 'Dashboard';
+    const pathname = location.pathname !== '/' ? location.pathname.replace('admin/', '') : 'Dashboard';
 
     const userId = localStorage.getItem('user_id') ?? null;
-    const user = useSelector((state) => (state.auth.user)) ?? localStorage.getItem('user');
+    const user = useSelector((state) => (state.auth.user));
     const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');
-    const selectUserData = useSelector((state) => state.selectUser.selectUserData);
-    const selectRoleData = useSelector((state) => state.selectRole.selectRoleData);
+    const selectUserData = useSelector((state) => (state.selectUser.selectUserData));
+    const selectRoleData = useSelector((state) => (state.selectRole.selectRoleData));
 
     useEffect(() => {
         const fetchData = async (token) => {

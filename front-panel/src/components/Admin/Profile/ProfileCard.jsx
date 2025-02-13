@@ -7,12 +7,12 @@ import { useAuth } from '../../../utils/AuthContext'
 import { checkFileValidation } from './../../../utils/helper.js'
 
 function ProfileCard({ user }) {
-    const [src, setSrc] = useState('/back-end-assets/img/profile-img.jpg');
+    const [src, setSrc] = useState('/admin-assets/img/profile-img.jpg');
     const { loadUser } = useAuth();
 
     const baseUrl = config.reactApiUrl;
 
-    const userId = user?._id && localStorage.getItem('user_id');
+    const userId = user?._id ?? localStorage.getItem('user_id');
 
     const handleClick = (e) => {
         document.getElementById('imageInput').click();
@@ -41,7 +41,7 @@ function ProfileCard({ user }) {
     };
 
     useEffect(() => {
-        setSrc(user?.image?.path ?? `/back-end-assets/img/profile-img.jpg`);
+        setSrc(user?.image?.path ?? `/admin-assets/img/profile-img.jpg`);
     }, [user, src]);
 
     return (
@@ -53,7 +53,7 @@ function ProfileCard({ user }) {
                         <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
                     </form>
                     <h2>{user?.name}</h2>
-                    <h3 key={Math.random()}>{user?.email}</h3>
+                    <h3 key={0}>{user?.email}</h3>
                     <div className={`social-links mt-2 w-100`}>
                         {user?.social_details && user?.social_details.length > 0 && user?.social_details.map((social) => (
                             <Link to={`${social?.url}`} className={social?.name} ><i className={`bi bi-${social?.icon}`}></i></Link>

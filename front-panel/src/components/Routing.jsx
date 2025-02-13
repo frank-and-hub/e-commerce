@@ -84,7 +84,7 @@ import DesignationView from './Admin/DesignationManagement/form/View'
 
 // designations
 import PlanTable from './Admin/PlanManagement/PlanTable'
-import PlanAdd from './Admin/PlanManagement/form/Add'
+// import PlanAdd from './Admin/PlanManagement/form/Add'
 import PlanEdit from './Admin/PlanManagement/form/Edit'
 import PlanView from './Admin/PlanManagement/form/View'
 
@@ -99,10 +99,10 @@ class Routing extends Component {
             <AuthProvider>
                 <Router>
                     <Routes>
-                        <Route path={`/front`} element={<FrontEndComponent />} />
-                        <Route path="/" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
+                        <Route path={`/`} element={<FrontEndComponent />} />
+                        <Route path="/admin/" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
+                            <Route path='' element={<Dashboard />} />
                             <Route path={`index`} element={<Dashboard />} />
-                            <Route path='/' element={<Dashboard />} />
                             <Route path={`profile`} element={<Profile />} />
                             <Route path={`blank`} element={<Blank />} />
 
@@ -144,7 +144,7 @@ class Routing extends Component {
                             </Route>
 
                             <Route path={`settings`}>
-                                <Route index element={<Support />} />
+                                <Route index element={<Blank />} />
                                 <Route path={`terms-and-conditions`} element={<TermsAndConditions />} />
                                 <Route path={`support`}>
                                     <Route index element={<Support />} />
@@ -198,10 +198,10 @@ class Routing extends Component {
                                 <Route path={`:id`} element={<Blank />} />
                             </Route>
                         </Route>
-                        <Route path={`/signin`} element={<SignIn />} />
-                        <Route path={`/signup`} element={<SignUp />} />
-                        <Route path={`/error-404`} element={<Error />} />
-                        <Route path={`*`} element={<Error />} />
+                        <Route path={`/admin/signin`} element={<SignIn />} />
+                        <Route path={`/admin/signup`} element={<SignUp />} />
+                        <Route path={`/admin/error-404`} element={<Error />} />
+                        <Route path={`/*`} element={<Error />} />
                     </Routes>
                 </Router>
             </AuthProvider>

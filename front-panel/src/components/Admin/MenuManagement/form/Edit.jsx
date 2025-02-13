@@ -43,7 +43,6 @@ function Edit() {
       const res = await patch(`/menus/${id}`, newValues);
       if (res) {
         resetForm()
-        navigate('/', true);
       }
       notifySuccess(res.message)
       navigate('/menus', { replace: true })

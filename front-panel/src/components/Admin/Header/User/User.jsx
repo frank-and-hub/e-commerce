@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 
 function User() {
-    const user = useSelector((state) => state.auth.user);
+    const user = useSelector((state) => (state.auth.user));
     const [src, setSrc] = useState('');
 
     useEffect(() => {

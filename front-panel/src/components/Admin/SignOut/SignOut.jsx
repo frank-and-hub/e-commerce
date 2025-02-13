@@ -14,7 +14,7 @@ const SignOut = () => {
       await logout();
       notifySuccess(`User sign out...`);
     }
-    navigate('/signin', { replace: true })
+    navigate('/admin/signin', { replace: true })
   }
 
   return (

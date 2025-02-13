@@ -32,7 +32,7 @@ const Chat = ({ userOptions }) => {
         return errors;
     };
 
-    const roles = useSelector((state) => state?.role?.role);
+    const roles = useSelector((state) => (state?.role?.role));
 
     const support_role_id = roles?.data
         ?.filter((option) => option.name === 'Support')

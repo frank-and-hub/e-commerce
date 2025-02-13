@@ -85,7 +85,7 @@ function Add() {
     };
 
     useEffect(() => {
-        setSrc(`/back-end-assets/img/profile-img.jpg`);
+        setSrc(`/admin-assets/img/profile-img.jpg`);
     }, [src]);
 
     return (

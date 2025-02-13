@@ -7,7 +7,7 @@ import { useAuth } from './../utils/AuthContext'
 const useApi = (apiCall, url, bodyData = null) => {
     const { logout } = useAuth();
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.auth.token);
+    const token = useSelector((state) => (state.auth.token));
     const [response, setResponse] = useState(null);
     const { loading, setLoading } = useState(false);
     const [error, setError] = useState(null);

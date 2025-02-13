@@ -21,7 +21,7 @@ function Logo() {
                     className={`logo d-flex align-items-center`}
                     onClick={handleToggleSidebar}
                 >
-                    <img src={`back-end-assets/img/logo.svg`} alt={``} />
+                    <img src={`admin-assets/img/logo.svg`} alt={``} />
                     <span className={`d-none d-md-block`} >Admin</span>
                 </Link>
             </div>

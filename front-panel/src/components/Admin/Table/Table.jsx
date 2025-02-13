@@ -217,7 +217,7 @@ const Table = ({
                                     {handelCreate && (
                                         <div className="col-6 m-auto">
                                             <span className="d-inline-block color" tabIndex="0" data-toggle="tooltip" title={ucwords(`Add`)}>
-                                                <Link to={`/${pathname}/create`} className={`btn btn-sm border rounded-circle`}>
+                                                <Link to={`/admin${pathname}/create`} className={`btn btn-sm border rounded-circle`}>
                                                     <i className={`bi bi-plus`}></i>
                                                 </Link>
                                             </span>

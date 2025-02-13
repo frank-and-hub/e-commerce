@@ -22,7 +22,7 @@ function AboutProfile() {
     const [about, setAbout] = useState({});
     const [resumeFile, setResumeFile] = useState(0);
 
-    const [src, setSrc] = useState('/back-end-assets/img/file-earmark-arrow-up.svg');
+    const [src, setSrc] = useState('/admin-assets/img/file-earmark-arrow-up.svg');
 
     const initialState = useMemo(() => ({
         title: about?.title ?? '',

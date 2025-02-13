@@ -9,7 +9,7 @@ import { notifySuccess } from '../Comman/Notification/Notification'
 import { generateRandomString } from '../../../utils/helper'
 
 export const SignUpForm = () => {
-    const token = useSelector((state) => state.auth.token);
+    const token = useSelector((state) => (state.auth.token));
     const { register } = useAuth();
     const navigate = useNavigate();
     const [isPending, startTransition] = useTransition();
@@ -42,7 +42,7 @@ export const SignUpForm = () => {
 
                 const data = await response;
                 notifySuccess(data.message);
-                navigate('/signin', { replace: true })
+                navigate('/admin/signin', { replace: true })
             } catch (error) {
                 console.error(`Error submitting form: ${error}`);
             }
@@ -56,7 +56,7 @@ export const SignUpForm = () => {
     }
 
     useEffect(() => {
-        navigate(token ? '/' : '/signup', { replace: true })
+        navigate(token ? '/admin' : '/admin/signup', { replace: true })
     }, [navigate, token]);
 
     return (
@@ -129,7 +129,7 @@ export const SignUpForm = () => {
                     <SubmitButton className={`custom w-50`} name={isPending ? 'Creating Account' : 'Create Account'} />
                 </div>
                 <div className="col-12">
-                    <p className="small mb-0">Already have an account? <Link to="/signin">Sign in</Link></p>
+                    <p className="small mb-0">Already have an account? <Link to="/admin/signin">Sign in</Link></p>
                 </div>
             </form>
         </>

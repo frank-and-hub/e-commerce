@@ -10,7 +10,7 @@ import { DashboardProvider } from '../../../context/DashBoardContext'
 
 function Layout() {
     const location = useLocation();
-    const pathname = location.pathname !== '/' ? location.pathname.replace('/', '').replace(/-/g, ' ') : 'Dashboard';
+    const pathname = location.pathname !== '/' ? location.pathname.replace('admin/', '').replace(/-/g, ' ') : 'Dashboard';
     const title = pathname.charAt(0).toUpperCase() + pathname.slice(1);
     
     return (

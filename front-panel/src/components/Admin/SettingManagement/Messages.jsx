@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 export const Messages = ({ isDataChange }) => {
 
     const [prevoiusChat, setPrevoiusChat] = useState([]);
-    const user = useSelector((state) => state.auth.user);
+    const user = useSelector((state) => (state.auth.user));
 
     useEffect(() => {
         const fetchPrevoiusChat = async (receiverId) => {

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 function SelectRole({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
 
-    const response = useSelector((state) => state?.role?.role);
+    const response = useSelector((state) => (state?.role?.role));
     
     let roleOptions = response?.data?.map((item) => ({
         value: item?.id,

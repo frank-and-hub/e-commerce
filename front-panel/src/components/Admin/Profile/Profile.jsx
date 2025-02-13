@@ -7,7 +7,7 @@ import ProfileOverview from './ProfileOverview'
 import AboutProfile from './AboutProfile'
 
 function Profile() {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => (state.auth.user));
 
   // State to track the active tab
   const [activeTab, setActiveTab] = useState("profile-overview");

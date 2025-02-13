@@ -8,7 +8,7 @@ import SubmitButton from '../Form/SubmitButton'
 import { notifySuccess } from '../Comman/Notification/Notification'
 
 export const SignInForm = () => {
-    const token = useSelector((state) => state.auth.token);
+    const token = useSelector((state) => (state.auth.token));
     const navigate = useNavigate();
 
     const { login } = useAuth();
@@ -35,7 +35,7 @@ export const SignInForm = () => {
                 const response = await login(values.email, values.password);
                 if (!response) throw new Error("Failed to submit form");
                 notifySuccess(response.message);
-                navigate('/', { replace: true })
+                navigate('/admin/index', { replace: true })
             } catch (error) {
                 console.error(`Error during login: ${error}`);
             }
@@ -43,7 +43,7 @@ export const SignInForm = () => {
     }
 
     useEffect(() => {
-        navigate(token ? '/' : '/signin', { replace: true })
+        navigate(token ? '/admin' : '/admin/signin', { replace: true })
     }, [token, navigate]);
 
     return (
@@ -84,7 +84,7 @@ export const SignInForm = () => {
                     <SubmitButton className={`custom w-50`} disable={isPending} name={isPending ? 'Login...' : 'Login'} />
                 </div>
                 <div className="col-12">
-                    <p className="small mb-0">Don't have account? <Link to="/signup">Sign Up</Link></p>
+                    <p className="small mb-0">Don't have account? <Link to="/admin/signup">Sign Up</Link></p>
                 </div>
             </form>
         </>

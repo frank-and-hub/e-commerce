@@ -12,7 +12,7 @@ function SignUp() {
                         <div className="row justify-content-center">
                             <div className="col-lg-5 col-md-7  d-flex flex-column align-items-center justify-content-center">
                                 <div className="d-flex justify-content-center py-4">
-                                    <Link to="/" className="logo d-flex align-items-center w-auto">
+                                    <Link to={`/`} className="logo d-flex align-items-center w-auto">
                                         <span className="d-none d-lg-block">Admin</span>
                                     </Link>
                                 </div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function PageTitle({ title, location }) {
 
-    const pathSegments = location.pathname.split('/').filter((x) => x);
+    const pathSegments = location.pathname.replace('/admin','').split('/').filter((x) => x);
 
     return (
         <>
@@ -11,10 +11,10 @@ function PageTitle({ title, location }) {
                 <nav>
                     <ol className="breadcrumb mb-0 text-capitalize">
                         <li className="breadcrumb-item">
-                            <Link to={`/`} >home</Link>
+                            <Link to={`/admin/index`} >home</Link>
                         </li>
                         {pathSegments.map((segment, index) => {
-                            const routeTo = `/${pathSegments.slice(0, index + 1).join('/')}`;
+                            const routeTo = `/admin/${pathSegments.slice(0, index + 1).join('/')}`;
                             const isLast = index === pathSegments.length - 1;
 
                             return isLast ? (

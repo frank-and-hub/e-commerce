@@ -13,9 +13,9 @@ export const AuthProvider = ({ children }) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
 
-    const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
-    const user = useSelector((state) => state.auth.user);
-    const token = useSelector((state) => state.auth.token) ?? localStorage.getItem('token');
+    const isLoggedIn = useSelector((state) => (state.auth.isAuthenticated));
+    const user = useSelector((state) => (state.auth.user));
+    const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');
     // const token = localStorage.getItem('token');
 
     const EXPIRATION_TIME = 60 * 60 * 1000; // 3600000 // 1 hour

@@ -1,6 +1,6 @@
 {
     "env": {
-        "APP_NAME": "admin",
+        "APP_NAME": "E-Commerce",
         "BASE_URL": "http://192.168.21.53",
         "ERROR_CODE": 500,
         "PORT": "5080",

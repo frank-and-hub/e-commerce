@@ -17,28 +17,28 @@ class CategoriesofTheMonth extends Component {
                     </div>
                     <div className={`row`}>
                         <div className={`col-12 col-md-4 p-5 mt-3`}>
-                            <Link to="#">
-                                <img alt="#" rc={`./assets/img/category_img_01.jpg`} className="rounded-circle img-fluid border" />
+                            <Link to={`#`}>
+                                <img alt="#" rc={`./assets/img/category_img_01.jpg`} className={`rounded-circle img-fluid border`} />
                             </Link>
-                            <h5 className="text-center mt-3 mb-3">Watches</h5>
+                            <h5 className={`text-center mt-3 mb-3`}>Watches</h5>
                             <p className={`text-center`}>
-                                <Link className="btn btn-success">Go Shop
+                                <Link className={`btn btn-success`}>Go Shop
                                 </Link>
                             </p>
                         </div>
                         <div className={`col-12 col-md-4 p-5 mt-3`}>
-                            <Link to="#">
-                                <img alt="#" rc="./assets/img/category_img_02.jpg" className="rounded-circle img-fluid border" />
+                            <Link to={`#`}>
+                                <img alt="#" rc="./assets/img/category_img_02.jpg" className={`rounded-circle img-fluid border`} />
                             </Link>
                             <h2 className={`h5 text-center mt-3 mb-3`}>Shoes</h2>
-                            <p className={`text-center`}><Link className="btn btn-success">Go Shop</Link></p>
+                            <p className={`text-center`}><Link className={`btn btn-success`}>Go Shop</Link></p>
                         </div>
                         <div className={`col-12 col-md-4 p-5 mt-3`}>
-                            <Link to="#"
-                            ><img alt="#" rc="./assets/img/category_img_03.jpg" className="rounded-circle img-fluid border" />
+                            <Link to={`#`}
+                            ><img alt="#" rc="./assets/img/category_img_03.jpg" className={`rounded-circle img-fluid border`} />
                             </Link>
                             <h2 className={`h5 text-center mt-3 mb-3`}>Accessories</h2>
-                            <p className={`text-center`}><Link className="btn btn-success">Go Shop</Link></p>
+                            <p className={`text-center`}><Link className={`btn btn-success`}>Go Shop</Link></p>
                         </div>
                     </div>
                 </section>

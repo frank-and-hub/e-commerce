@@ -19,7 +19,7 @@
   <div id="root"></div>
 </body>
 <script>
-  const isFrontend = window.location.pathname.includes('frontEnd');
+  const isFrontend = window.location.pathname.includes('admin');
   const frontendCssFiles = [
     './assets/css/bootstrap.min.css',
     './assets/css/templatemo.css',
@@ -55,7 +55,7 @@
     'admin-assets/js/main.js'
   ];
   document.title = (isFrontend === true) ? `Profile App` : `Admin Panel`;
-  if (isFrontend === true) {
+  if (isFrontend === false) {
     frontendCssFiles.forEach((href) => {
       const link = document.createElement('link');
       link.rel = 'stylesheet';

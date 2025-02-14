@@ -18,7 +18,7 @@ class Brands extends Component {
                             <div className="col-lg-9 m-auto tempaltemo-carousel">
                                 <div className="row d-flex flex-row">
                                     <div className="col-1 align-self-center">
-                                        <Link className="h1" href="#templatemo-slide-brand" role="button" data-bs-slide="prev">
+                                        <Link className="h1" to="#templatemo-slide-brand" role="button" data-bs-slide="prev">
                                             <i className="text-light fas fa-chevron-left"></i>
                                         </Link>
                                     </div>
@@ -29,48 +29,48 @@ class Brands extends Component {
                                                 <div className="carousel-item active">
                                                     <div className="row">
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo" /></Link>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="carousel-item">
-                                                    <div className="row">
-                                                        <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo" /></Link>
-                                                        </div>
-                                                        <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo" /></Link>
-                                                        </div>
-                                                        <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo" /></Link>
-                                                        </div>
-                                                        <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="carousel-item">
                                                     <div className="row">
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                         <div className="col-3 p-md-5">
-                                                            <Link href="#"><img className="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo" /></Link>
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo" /></Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="carousel-item">
+                                                    <div className="row">
+                                                        <div className="col-3 p-md-5">
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo" /></Link>
+                                                        </div>
+                                                        <div className="col-3 p-md-5">
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo" /></Link>
+                                                        </div>
+                                                        <div className="col-3 p-md-5">
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo" /></Link>
+                                                        </div>
+                                                        <div className="col-3 p-md-5">
+                                                            <Link to="#"><img className="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo" /></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -78,7 +78,7 @@ class Brands extends Component {
                                         </div>
                                     </div>
                                     <div className="col-1 align-self-center">
-                                        <Link className="h1" href="#templatemo-slide-brand" role="button" data-bs-slide="next">
+                                        <Link className="h1" to="#templatemo-slide-brand" role="button" data-bs-slide="next">
                                             <i className="text-light fas fa-chevron-right"></i>
                                         </Link>
                                     </div>

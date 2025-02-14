@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NevBarLinks from './NevBarLinks';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
     render() {
@@ -10,9 +11,9 @@ class Navbar extends Component {
                         <div className="w-100 d-flex justify-content-between">
                             <div>
                                 <i className="fa fa-envelope mx-2"></i>
-                                <a className="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                                <Link className="navbar-sm-brand text-light text-decoration-none" to="mailto:info@company.com">info@company.com</Link>
                                 <i className="fa fa-phone mx-2"></i>
-                                <a className="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                                <Link className="navbar-sm-brand text-light text-decoration-none" to="tel:010-020-0340">010-020-0340</Link>
                             </div>
                             <NevBarLinks />
                         </div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class FeaturedProduct extends Component {
     render() {
@@ -18,9 +19,9 @@ class FeaturedProduct extends Component {
                         <div className={`row`}>
                             <div className="col-12 col-md-4 mb-4">
                                 <div className="card h-100">
-                                    <a href="shop-single.html">
+                                    <Link to="shop-single.html">
                                         <img src="./assets/img/feature_prod_01.jpg" className="card-img-top" alt="..." />
-                                    </a>
+                                    </Link>
                                     <div className="card-body">
                                         <ul className="list-unstyled d-flex justify-content-between">
                                             <li>
@@ -32,7 +33,7 @@ class FeaturedProduct extends Component {
                                             </li>
                                             <li className="text-muted text-right">$240.00</li>
                                         </ul>
-                                        <a href="shop-single.html" className="h2 text-decoration-none text-dark">Gym Weight</a>
+                                        <Link to="shop-single.html" className="h2 text-decoration-none text-dark">Gym Weight</Link>
                                         <p className="card-text">
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
                                         </p>
@@ -42,9 +43,9 @@ class FeaturedProduct extends Component {
                             </div>
                             <div className="col-12 col-md-4 mb-4">
                                 <div className="card h-100">
-                                    <a href="shop-single.html">
+                                    <Link to="shop-single.html">
                                         <img src="./assets/img/feature_prod_02.jpg" className="card-img-top" alt="..." />
-                                    </a>
+                                    </Link>
                                     <div className="card-body">
                                         <ul className="list-unstyled d-flex justify-content-between">
                                             <li>
@@ -56,7 +57,7 @@ class FeaturedProduct extends Component {
                                             </li>
                                             <li className="text-muted text-right">$480.00</li>
                                         </ul>
-                                        <a href="shop-single.html" className="h2 text-decoration-none text-dark">Cloud Nike Shoes</a>
+                                        <Link to="shop-single.html" className="h2 text-decoration-none text-dark">Cloud Nike Shoes</Link>
                                         <p className="card-text">
                                             Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.
                                         </p>
@@ -66,9 +67,9 @@ class FeaturedProduct extends Component {
                             </div>
                             <div className="col-12 col-md-4 mb-4">
                                 <div className="card h-100">
-                                    <a href="shop-single.html">
+                                    <Link to="shop-single.html">
                                         <img src="./assets/img/feature_prod_03.jpg" className="card-img-top" alt="..." />
-                                    </a>
+                                    </Link>
                                     <div className="card-body">
                                         <ul className="list-unstyled d-flex justify-content-between">
                                             <li>
@@ -80,7 +81,7 @@ class FeaturedProduct extends Component {
                                             </li>
                                             <li className="text-muted text-right">$360.00</li>
                                         </ul>
-                                        <a href="shop-single.html" className="h2 text-decoration-none text-dark">Summer Addides Shoes</a>
+                                        <Link to="shop-single.html" className="h2 text-decoration-none text-dark">Summer Addides Shoes</Link>
                                         <p className="card-text">
                                             Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.
                                         </p>

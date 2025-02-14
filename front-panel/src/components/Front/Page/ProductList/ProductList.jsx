@@ -16,13 +16,13 @@ class ProductList extends Component {
                                 <div className={`col-md-6`} >
                                     <ul className="list-inline shop-top-menu pb-3 pt-1">
                                         <li className="list-inline-item">
-                                            <Link className="h3 text-dark text-decoration-none mr-3" href="#">All</Link>
+                                            <Link className="h3 text-dark text-decoration-none mr-3" to="#">All</Link>
                                         </li>
                                         <li className="list-inline-item">
-                                            <Link className="h3 text-dark text-decoration-none mr-3" href="#">Men's</Link>
+                                            <Link className="h3 text-dark text-decoration-none mr-3" to="#">Men's</Link>
                                         </li>
                                         <li className="list-inline-item">
-                                            <Link className="h3 text-dark text-decoration-none" href="#">Women's</Link>
+                                            <Link className="h3 text-dark text-decoration-none" to="#">Women's</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -374,13 +374,13 @@ class ProductList extends Component {
                             <div div="row">
                                 <ul className="pagination pagination-lg justify-content-end">
                                     <li className="page-item disabled">
-                                        <Link className="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabIndex="-1">1</Link>
+                                        <Link className="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" to="#" tabIndex="-1">1</Link>
                                     </li>
                                     <li className="page-item">
-                                        <Link className="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</Link>
+                                        <Link className="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" to="#">2</Link>
                                     </li>
                                     <li className="page-item">
-                                        <Link className="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</Link>
+                                        <Link className="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" to="#">3</Link>
                                     </li>
                                 </ul>
                             </div>

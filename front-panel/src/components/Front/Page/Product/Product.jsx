@@ -14,7 +14,7 @@ class Product extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="col-1 align-self-center">
-                                       <Link href="#multi-item-example" role="button" data-bs-slide="prev">
+                                       <Link to="#multi-item-example" role="button" data-bs-slide="prev">
                                             <i className="text-dark fas fa-chevron-left"></i>
                                             <span className="sr-only">Previous</span>
                                        </Link>
@@ -25,17 +25,17 @@ class Product extends Component {
                                             <div className="carousel-item active">
                                                 <div className="row">
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_01.jpg" alt="Product 1" />
                                                        </Link>
                                                     </div>
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_02.jpg" alt="Product 2" />
                                                        </Link>
                                                     </div>
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_03.jpg" alt="Product 3" />
                                                        </Link>
                                                     </div>
@@ -44,17 +44,17 @@ class Product extends Component {
                                             <div className="carousel-item">
                                                 <div className="row">
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_04.jpg" alt="Product 4" />
                                                        </Link>
                                                     </div>
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_05.jpg" alt="Product 5" />
                                                        </Link>
                                                     </div>
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_06.jpg" alt="Product 6" />
                                                        </Link>
                                                     </div>
@@ -63,17 +63,17 @@ class Product extends Component {
                                             <div className="carousel-item">
                                                 <div className="row">
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_07.jpg" alt="Product 7" />
                                                        </Link>
                                                     </div>
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_08.jpg" alt="Product 8" />
                                                        </Link>
                                                     </div>
                                                     <div className="col-4">
-                                                       <Link href="#">
+                                                       <Link to="#">
                                                             <img className="card-img img-fluid" src="assets/img/product_single_09.jpg" alt="Product 9" />
                                                        </Link>
                                                     </div>
@@ -82,7 +82,7 @@ class Product extends Component {
                                         </div>
                                     </div>
                                     <div className="col-1 align-self-center">
-                                       <Link href="#multi-item-example" role="button" data-bs-slide="next">
+                                       <Link to="#multi-item-example" role="button" data-bs-slide="next">
                                             <i className="text-dark fas fa-chevron-right"></i>
                                             <span className="sr-only">Next</span>
                                        </Link>

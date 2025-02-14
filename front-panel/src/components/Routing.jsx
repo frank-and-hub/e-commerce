@@ -14,7 +14,7 @@ import AdminLayout from './Admin/Index/AdminLayout'
 import Error from './Admin/Pages/Error'
 // blank page
 import Blank from './Admin/Pages/Blank'
- // dashboard page
+// dashboard page
 import Dashboard from './Admin/Dashboard/Dashboard'
 // user profile page
 import Profile from './Admin/Profile/Profile'
@@ -78,6 +78,11 @@ import PlanView from './Admin/PlanManagement/form/View'
 import { CreatePlan } from '../controllers/planController'
 
 import FrontLayout from './Front/Index/FrontLayout'
+import FrontPage from './Front/Page/FrontPage/FrontPage'
+import AboutPage from './Front/Page/AboutPage/AboutPage'
+import ContactPage from './Front/Page/ContactPage/ContactPage'
+import ProductList from './Front/Page/ProductList/ProductList'
+import Product from './Front/Page/Product/Product'
 
 
 class Routing extends Component {
@@ -86,7 +91,14 @@ class Routing extends Component {
             <AuthProvider>
                 <Router>
                     <Routes>
-                        <Route path={`/`} element={<FrontLayout />} />
+                        <Route path={`/`} element={<FrontLayout />} >
+                            <Route path='/' element={<FrontPage />} />
+                            <Route path='index' element={<FrontPage />} />
+                            <Route path={`about`} element={<AboutPage />} />
+                            <Route path={`contact`} element={<ContactPage />} />
+                            <Route path={`shop`} element={<ProductList />} />
+                            <Route path={`product`} element={<Product />} />
+                        </Route>
                         <Route path="/admin/" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
                             <Route path='' element={<Dashboard />} />
                             <Route path={`index`} element={<Dashboard />} />

@@ -50,7 +50,7 @@ function View() {
                             <SelectForm id="type" value={values?.type} handleChange={handleChange} required={false} disabled={true} label='Type' Options={OptionsProjectType} />
                         </div>
                         <div className={`col-md-12`} >
-                            <label for="description" className={`form-label`} >Description </label>
+                            <label htmlFor="description" className={`form-label`} >Description </label>
                             <div className='text-start'>
                                 {values?.description}
                             </div>

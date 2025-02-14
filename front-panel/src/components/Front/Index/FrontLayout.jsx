@@ -4,10 +4,8 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
 import Header from '../Header/Header'
 import Model from '../Modal/Modal'
-import Carousel from '../Carousel/Carousel'
-import CategoriesofTheMonth from '../CategoriesofTheMonth/CategoriesofTheMonth'
-import FeaturedProduct from '../FeaturedProduct/FeaturedProduct'
 import FrontFooter from '../FrontFooter/FrontFooter'
+import { Outlet } from 'react-router-dom'
 
 function FrontLayout() {
     const [loading, setLoading] = useState(null);
@@ -41,9 +39,9 @@ function FrontLayout() {
                     <Navbar />
                     <Header />
                     <Model />
-                    <Carousel />
-                    <CategoriesofTheMonth />
-                    <FeaturedProduct />
+                    <>
+                        <Outlet />
+                    </>
                     <FrontFooter />
                 </>
             )}

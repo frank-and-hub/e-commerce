@@ -83,7 +83,7 @@ function ProfileChangePassword({ user }) {
     return (
         <>
             <form key={formKey} encType={`multipart/form-data`} onSubmit={handleSubmit}>
-                <div className="row mb-3"></div>
+                <div className={`mb-3 col-12 row w-100`}></div>
                 <Input name="password" type="password" label="Current Password" value={password} onChange={(e) => setPassword(e.target.value)} error={error.password} required={true} onBlur={handleHoverOff} inputType={false} />
                 <Input name="newpassword" type="password" label="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} error={error.newPassword} required={true} onBlur={handleHoverOff} inputType={false} />
                 <Input name="renewpassword" type="password" label="Re-enter Password" value={renewPassword} onChange={(e) => setReNewPassword(e.target.value)} error={error.renewPassword} required={true} onBlur={handleHoverOff} inputType={false} />

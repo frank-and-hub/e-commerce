@@ -8,7 +8,7 @@ function Footer() {
             <footer id={`footer`} className={`pb-3 px-2 fixed-bottom`} >
                 <div className={`shadow rounded-25 mx-2`} style={{ background: 'var(--background)' }}>
                     <div className={`copyright pt-2 pb-1`}>
-                        &copy; Copyright <strong><span>Admin</span></strong>. All Rights Reserved
+                        Copyright &copy; {new Date().getFullYear()} <strong><span>Admin</span></strong>. All Rights Reserved
                     </div>
                     <Designedby />
                 </div>

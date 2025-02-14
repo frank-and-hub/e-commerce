@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import HeaderNavBar from './HeaderNavBar';
+import HeaderCart from './HeaderCart';
+import HeaderButton from './HeaderButton';
 
 class Header extends Component {
     render() {
@@ -17,41 +20,15 @@ class Header extends Component {
                         </button>
 
                         <div className="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-                            <div className="flex-fill">
-                                <ul className="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to={`index`} >Home</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to={`about`} >About</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to={`shop`} >Shop</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to={`contact`} >Contact</Link>
-                                    </li>
-                                </ul>
-                            </div>
+                            <HeaderNavBar />
                             <div className="navbar align-self-center d-flex">
-                                <div className="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                                    <div className="input-group">
-                                        <input type="text" className="form-control" id="inputMobileSearch" placeholder="Search ..." />
-                                        <div className="input-group-text">
-                                            <i className="fa fa-fw fa-search"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <Link className="nav-icon d-none d-lg-inline" to={`#`} data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                                <HeaderButton />
+                                <Link className="nav-icon d-none d-lg-inline" to={`#`} title={`Search`} data-bs-toggle="modal" data-bs-target="#templatemo_search">
                                     <i className="fa fa-fw fa-search text-dark mr-2"></i>
                                 </Link>
-                                <Link className="nav-icon position-relative text-decoration-none" to={`#`}>
-                                    <i className="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                                    <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                                </Link>
-                                <Link className="nav-icon position-relative text-decoration-none" to={`#`}>
+                                <HeaderCart />
+                                <Link className="nav-icon position-relative text-decoration-none" title={`Login`} to={`#`}>
                                     <i className="fa fa-fw fa-user text-dark mr-3"></i>
-                                    <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                                 </Link>
                             </div>
                         </div>

@@ -75,7 +75,7 @@ function ProfileForm({ user }) {
     return (
         <>
             <form key={formKey} encType={`multipart/form-data`} onSubmit={handleSubmit}>
-                <div className="row mb-3"></div>
+                <div className={`mb-3 col-12 row w-100`}></div>
                 <Input name="name" label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} />
                 <Input name="phone" label="Phone" value={values?.phone} onChange={handleChange} error={errors.phone} required={true} />
                 <Input name="email" label="Email" type="email" value={values?.email} onChange={handleChange} error={errors.email} required={true} />

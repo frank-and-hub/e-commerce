@@ -10,7 +10,7 @@ class ForgotPasswordModel extends Component {
                             <button type="button" className="btn-close position-absolute top-0 start-0 btn" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="" method="POST" className="modal-content modal-body border-0 p-0" id="forgot_password_form" name="forgot_password_form" >
-                            <div className="row mb-6">
+                            <div className={`row mb-3`}>
                                 <label className="col-md-12 col-form-label text-md-center">Reset Your Password</label>
                                 <div className="col-md-5">
                                 </div>

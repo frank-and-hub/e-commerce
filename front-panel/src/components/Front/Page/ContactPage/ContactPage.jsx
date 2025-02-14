@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-// import Map from './Map';
 import ContactForm from './ContactForm'
+import 'leaflet/dist/leaflet.css'
+import Map from './Map'
 
 class ContactPage extends Component {
     render() {
@@ -15,8 +16,8 @@ class ContactPage extends Component {
                         </p>
                     </div>
                 </div>
+                <Map />
                 <ContactForm />
-                {/* <Map /> */}
             </>
         );
     }

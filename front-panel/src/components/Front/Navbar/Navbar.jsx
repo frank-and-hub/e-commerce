@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import NevBarLinks from './NevBarLinks';
 
 class Navbar extends Component {
     render() {
@@ -14,12 +14,7 @@ class Navbar extends Component {
                                 <i className="fa fa-phone mx-2"></i>
                                 <a className="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
                             </div>
-                            <div>
-                                <Link className="text-light" to={`https://fb.com/templatemo`} target="_blank" rel="sponsored"><i className="fab fa-facebook-f fa-sm fa-fw me-2"></i></Link>
-                                <Link className="text-light" to={`https://www.instagram.com/`} target="_blank"><i className="fab fa-instagram fa-sm fa-fw me-2"></i></Link>
-                                <Link className="text-light" to={`https://twitter.com/`} target="_blank"><i className="fab fa-twitter fa-sm fa-fw me-2"></i></Link>
-                                <Link className="text-light" to={`https://www.linkedin.com/`} target="_blank"><i className="fab fa-linkedin fa-sm fa-fw"></i></Link>
-                            </div>
+                            <NevBarLinks />
                         </div>
                     </div>
                 </nav>

@@ -11,7 +11,7 @@ class OtpModel extends Component {
                         </div>
                         <form action="" method="POST" className="modal-content modal-body border-0 p-0" id="forgot_password_otp_form" name="forgot_password_otp_form" >
 
-                            <div className="row mb-6">
+                            <div className={`row mb-3`}>
                                 <label className="col-md-7 col-form-label text-md-end">Verify Your Otp</label>
                                 <div className="col-md-5">
                                 </div>

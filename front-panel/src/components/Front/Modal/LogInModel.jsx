@@ -9,8 +9,8 @@ class LogInModel extends Component {
                         <div className="w-100 pt-1 mb-5 text-right position-relative">
                             <button type="button" className="btn-close position-absolute top-0 start-0 btn" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action={`/`} class={`modal-content modal-body border-0 p-0`} method={`POST`}>
-                            <div className="row mb-6">
+                        <form action={`/`} className={`modal-content modal-body border-0 p-0`} method={`POST`}>
+                            <div className={`row mb-3`}>
                                 <label className="col-md-12 col-form-label text-md-center">Login</label>
                                 <div className="col-md-5">
                                 </div>
@@ -18,7 +18,7 @@ class LogInModel extends Component {
                             <div className={`mb-3 col-12 row w-100`}>
                                 <label htmlFor="email" className="col-md-4 col-form-label text-md-end">Email Address</label>
                                 <div className={`col-md-6`} >
-                                    <input id="email" type="email" className="form-control " name="email" value={``} required autoComplete="off" autofocus />
+                                    <input id="email" type="email" className="form-control " name="email" value={``} required autoComplete="off" autoFocus />
                                 </div>
                             </div>
 

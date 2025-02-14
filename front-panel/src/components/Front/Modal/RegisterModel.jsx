@@ -11,7 +11,7 @@ class RegisterModel extends Component {
                         </div>
 
                         <form action="" method="POST" className="modal-content modal-body border-0 p-0" id="register_form_font" name="register_form_font" >
-                            <div className="row mb-6">
+                            <div className={`row mb-3`}>
                                 <label className="col-md-12 col-form-label text-md-center">Create new account</label>
                                 <div className="col-md-5"></div>
                             </div>
@@ -20,7 +20,7 @@ class RegisterModel extends Component {
                                 <label htmlFor="name" className="col-md-4 col-form-label text-md-end">Name</label>
 
                                 <div className={`col-md-6`} >
-                                    <input id="name" type="text" className="form-control @error('name') is-invalid @enderror" name="name" defaultValue="" required autoComplete="off" autofocus />
+                                    <input id="name" type="text" className="form-control" name="name" defaultValue="" required autoComplete="off" autoFocus />
                                 </div>
                             </div>
 

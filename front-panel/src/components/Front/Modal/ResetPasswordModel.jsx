@@ -10,7 +10,7 @@ class ResetPasswordModel extends Component {
                             <button type="button" className="btn-close position-absolute top-0 start-0 btn" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="" method="POST" className="modal-content modal-body border-0 p-0" id="forgot_reset_password_form" name="forgot_reset_password_form" >
-                            <div className="row mb-6">
+                            <div className={`row mb-3`}>
                                 <label className="col-md-7 col-form-label text-md-end">Add New Password</label>
                                 <div className="col-md-5">
                                 </div>
@@ -27,7 +27,7 @@ class ResetPasswordModel extends Component {
                                 <label htmlFor="confirm_new_password" className="col-md-4 col-form-label text-md-end">Confirm New Password</label>
 
                                 <div className={`col-md-6`} >
-                                    <input id="confirm_new_password" type="text" className="form-control @error('confirm_new_password') is-invalid @enderror" name="confirm_new_password" required autoComplete="off" />
+                                    <input id="confirm_new_password" type="text" className="form-control" name="confirm_new_password" required autoComplete="off" />
 
                                 </div>
                             </div>

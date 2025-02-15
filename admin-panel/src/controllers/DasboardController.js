@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Role = require('../models/role');
-const Contact = require('../models/contact');
 
 const { startOfWeek, endOfWeek, startOfMonth, endOfMonth } = require('date-fns');
 
@@ -33,7 +32,6 @@ exports.index = async (req, res, next) => {
             usersCount: await User.countDocuments(userFilter),
             adminsCount: await User.countDocuments(adminFilter),
             guestsCount: await User.countDocuments(guestFilter),
-            contactUsCount: await Contact.countDocuments(contactFilter),
             paymentAmount: 1000,
             trafficDataChart: [
                 { value: 1048, name: 'Search Engine' },

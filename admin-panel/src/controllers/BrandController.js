@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Testimonial = require('../models/testimonial');
+const Brand = require('../models/brand');
 const User = require('../models/user');
 const File = require('../models/file');
 
@@ -16,7 +16,7 @@ const apiBaseUrl = `${url.apiBaseUrl}`;
 const status_active = `${process.env.STATUS_ACTIVE}`;
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
 
-const constName = 'testimonials/';
+const constName = 'brands/';
 
 exports.index = async (req, res, next) => {
     try {
@@ -35,19 +35,18 @@ exports.index = async (req, res, next) => {
             const trimmedSearch = search.trim();
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
-                { title: { $regex: trimmedSearch, $options: "i" } },
                 { description: { $regex: trimmedSearch, $options: "i" } },
             ];
         }
 
         const skip = (page - 1) * limit;
-        const totalCount = await Testimonial.countDocuments({
+        const totalCount = await Brand.countDocuments({
             ...filter,
             deleted_at: null
         });
 
-        const query = Testimonial.find(filter)
-            .select('_id name title description image user updated_by status')
+        const query = Brand.find(filter)
+            .select('_id name description image user updated_by status')
             .populate('user', '_id name')
             .populate('image', '_id name path')
             .populate('updated_by', '_id name');
@@ -58,30 +57,28 @@ exports.index = async (req, res, next) => {
                 .limit(limit);
         }
 
-        const testimonials = await query;
+        const brands = await query;
 
-        if (testimonials.length === 0) return res.status(200).json({ message: `No testimonials found`, data: [] });
+        if (brands.length === 0) return res.status(200).json({ message: `No brands found`, data: [] });
 
-        const testimonialPromises = testimonials.map(async (testimonial) => {
-            const { _id, name, title, description, image, status } = testimonial;
+        const brandPromises = brands.map(async (brand) => {
+            const { _id, name, description, image, status } = brand;
             return {
                 'id': _id,
                 'name': name,
-                'title': title,
                 'description': description,
                 'image': image,
                 'status': status
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
-        const testimonialResponses = await Promise.all(testimonialPromises);
+        const brandResponses = await Promise.all(brandPromises);
         res.status(200).json({
             message: `List retrieved successfully`, response: {
                 count: totalCount,
                 page: page,
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
-                data: testimonialResponses
+                data: brandResponses
             }, title: 'listing'
         });
     } catch (err) {
@@ -92,14 +89,13 @@ exports.index = async (req, res, next) => {
 exports.create = (req, res, next) => {
     try {
         res.status(200).json({
-            message: `Create Testimonial form`,
+            message: `Create Brand form`,
             body: {
                 'name': 'String',
-                'title': 'String',
+                'image': 'image|file',
                 'description': 'String',
-                'image': 'image|file'
             },
-            title: 'Add testimonial'
+            title: 'Add brand'
         });
     } catch (err) {
         next(err)
@@ -107,15 +103,15 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, title, description, image } = req.body;
+    const { name, description } = req.body;
     try {
         let userId = req?.userData?.id;
         const file = req.file;
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
 
-        const existsTestimonial = await Testimonial.findOne({ name: name, title: title, status: status_active });
-        if (existsTestimonial) return res.status(200).json({ message: 'Testimonial already exists' });
+        const existsBrand = await Brand.findOne({ name: name, status: status_active });
+        if (existsBrand) return res.status(200).json({ message: 'Brand already exists' });
 
         let newData = {};
         if (file) {
@@ -127,22 +123,20 @@ exports.store = async (req, res, next) => {
             newData = await newFile.save();
         }
 
-        const testimonial = new Testimonial({
+        const brand = new Brand({
             _id: new mongoose.Types.ObjectId(),
             user: userData?._id,
             name,
-            title,
             image: newData?._id,
             description,
         });
-        const newTestimonial = await testimonial.save();
+        const newBrand = await brand.save();
         const response = {
-            'id': newTestimonial?._id,
+            'id': newBrand?._id,
             'user': userData?.name,
-            'name': newTestimonial?.name,
-            'title': newTestimonial?.title,
+            'name': newBrand?.name,
             'image': newData?.path,
-            'description': newTestimonial?.description,
+            'description': newBrand?.description,
         }
         res.status(201).json({ message: `Successfully created`, data: response });
     } catch (err) {
@@ -153,20 +147,19 @@ exports.store = async (req, res, next) => {
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const testimonialData = await this.find_data_by_id(id, res);
+        const brandData = await this.find_data_by_id(id, res);
 
-        const { _id, name, title, description, user, image, updated_by, status } = testimonialData;
+        const { _id, name, description, user, image, updated_by, status } = brandData;
         const result = {
             'id': _id,
             'name': name,
-            'title': title,
             'user': user,
             'description': description,
             'image': image,
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Testimonial was found`, data: result, title: `View ${name} testimonial detail` });
+        res.status(200).json({ message: `Brand was found`, data: result, title: `View ${name} brand detail` });
     } catch (err) {
         next(err)
     }
@@ -175,19 +168,18 @@ exports.show = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const testimonialData = await this.find_data_by_id(id, res);
+        const brandData = await this.find_data_by_id(id, res);
 
-        const { _id, name, title, description, image, user, status } = testimonialData;
+        const { _id, name, description, image, user, status } = brandData;
         const result = {
             'id': _id,
             'name': name,
-            'title': title,
             'user': user,
             'image': image,
             'description': description,
             'status': status,
         }
-        res.status(200).json({ message: `Testimonial was found`, data: result, title: `Edit ${name} testimonial detail` });
+        res.status(200).json({ message: `Brand was found`, data: result, title: `Edit ${name} brand detail` });
     } catch (err) {
         next(err)
     }
@@ -198,10 +190,10 @@ exports.update = async (req, res, next) => {
     try {
         const file = req.file;
 
-        const testimonial = await Testimonial.findById(id);
-        if (!testimonial) return res.status(404).json({ message: `Testimonial not found!`, });
+        const brand = await Brand.findById(id);
+        if (!brand) return res.status(404).json({ message: `Brand not found!`, });
 
-        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (testimonial may not exist or the data is the same)` });
+        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (brand may not exist or the data is the same)` });
 
         const updateOps = helper.updateOps(req);
 
@@ -217,23 +209,22 @@ exports.update = async (req, res, next) => {
             }
         }
 
-        const result = await Testimonial.updateOne({ _id: id }, { $set: updateOps });
+        const result = await Brand.updateOne({ _id: id }, { $set: updateOps });
 
         if (result.modifiedCount > 0) {
-            const updatedTestimonial = await this.find_data_by_id(id, res);
-            const { _id, name, title, description, user, image } = updatedTestimonial;
+            const updatedBrand = await this.find_data_by_id(id, res);
+            const { _id, name, description, user, image } = updatedBrand;
 
-            const testimonialData = {
+            const brandData = {
                 'id': _id,
                 'name': name,
-                'title': title,
                 'user': user,
                 'image': image,
                 'description': description
             }
-            return res.status(200).json({ message: `Testimonial details updated successfully`, data: testimonialData });
+            return res.status(200).json({ message: `Brand details updated successfully`, data: brandData });
         }
-        res.status(404).json({ message: `Testimonial not found or no details to update`, data: [] });
+        res.status(404).json({ message: `Brand not found or no details to update`, data: [] });
     } catch (err) {
         next(err)
     }
@@ -242,39 +233,39 @@ exports.update = async (req, res, next) => {
 exports.destroy = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const getTestimonial = await Testimonial.findById(id).select('_id').where('status').equals(!status_active);
-        if (!getTestimonial) return res.status(404).json({ message: 'Testimonial not found' });
+        const getBrand = await Brand.findById(id).select('_id').where('status').equals(!status_active);
+        if (!getBrand) return res.status(404).json({ message: 'Brand not found' });
 
-        // const testimonialData = await Testimonial.deleteOne({ _id: id });
-        // if (testimonialData.deletedCount === 1) {
+        // const brandData = await Brand.deleteOne({ _id: id });
+        // if (brandData.deletedCount === 1) {
 
-        const testimonialData = await Testimonial.findByIdAndUpdate(id, { deleted_at: new Date() });
-        if (testimonialData) {
+        const brandData = await Brand.findByIdAndUpdate(id, { deleted_at: new Date() });
+        if (brandData) {
             const response = {
                 'method': 'POST',
                 'url': `${baseurl}${constName}`,
                 'body': {
                     'name': 'String',
-                    'title': 'String',
+                    'image': 'image|file',
                     'description': 'String'
                 }
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
-        res.status(404).json({ message: `Testimonial not found` });
+        res.status(404).json({ message: `Brand not found` });
     } catch (err) {
         next(err)
     }
 }
 
 exports.find_data_by_id = async (id, res) => {
-    const testimonialData = await Testimonial.findById(id)
-        .select('_id name title description user image updated_by status')
+    const brandData = await Brand.findById(id)
+        .select('_id name description user image updated_by status')
         // .where('status').equals(status_active)
         .populate('user', '_id name')
         .populate('image', '_id name path')
         .populate('updated_by', '_id name');
-    if (!testimonialData) return res.status(404).json({ message: `Testimonial not found` });
+    if (!brandData) return res.status(404).json({ message: `Brand not found` });
 
-    return testimonialData;
+    return brandData;
 }

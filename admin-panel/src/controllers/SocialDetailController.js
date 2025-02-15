@@ -25,9 +25,8 @@ exports.index = async (req, res, next) => {
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
         const filter = {};
-        const { user_id, status, search } = req.query;
+        const { status, search } = req.query;
 
-        if (user_id) filter.user = user_id;
         if (status) filter.status = status;
 
         if (search) {
@@ -39,19 +38,14 @@ exports.index = async (req, res, next) => {
         }
 
         const skip = (page - 1) * limit;
-        let userId = req?.userData?.id;
 
         const totalCount = await SocialDetail.countDocuments({
             ...filter,
             deleted_at: null
         });
 
-        const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
-        if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
-
         const query = SocialDetail.find(filter)
-            .select('_id name url icon user updated_by status')
-            .populate('user', '_id name')
+            .select('_id name url icon updated_by status')
             .populate('updated_by', '_id name');
 
         if (req?.query?.page != 0) {
@@ -65,16 +59,14 @@ exports.index = async (req, res, next) => {
         if (social_details.length === 0) return res.status(200).json({ message: `No social details found`, data: [] });
 
         const socialPromises = social_details.map(async (social) => {
-            const { _id, name, url, icon, user, updated_by, status } = social;
+            const { _id, name, url, icon, updated_by, status } = social;
             return {
                 'id': _id,
                 'name': name,
                 'icon': icon,
                 'url': url,
-                // 'user': user,
                 'updated_by': updated_by,
                 'status': status,
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const socialResponses = await Promise.all(socialPromises);
@@ -110,12 +102,8 @@ exports.create = (req, res, next) => {
 
 exports.store = async (req, res, next) => {
     const { name, url, icon } = req.body;
-    const userId = req?.userData?.id;
     try {
-        const userData = await User.findById(userId).select('_id name').where('status').equals(status_active);
-        if (!userData) return res.status(404).json({ message: `User not found` });
-
-        const existsSocialDetail = await SocialDetail.findOne({ name: name, user: userData._id, status: status_active });
+        const existsSocialDetail = await SocialDetail.findOne({ name: name, status: status_active });
         if (existsSocialDetail) return res.status(200).json({ message: 'SocialDetail already exists' });
 
         const social = new SocialDetail({
@@ -123,7 +111,6 @@ exports.store = async (req, res, next) => {
             name,
             url,
             icon,
-            user: userData._id,
         });
         const newData = await social.save();
         const response = {
@@ -131,7 +118,6 @@ exports.store = async (req, res, next) => {
             'name': newData?.name,
             'url': newData?.url,
             'icon': newData?.icon,
-            'user': userData?.name
         }
         res.status(201).json({ message: `Successfully created`, data: response });
     } catch (err) {
@@ -143,13 +129,12 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const socialData = await this.find_data_by_id(id, res);
-        const { _id, name, url, icon, user, updated_by, status } = socialData;
+        const { _id, name, url, icon, updated_by, status } = socialData;
         const result = {
             'id': _id,
             'name': name,
             'url': url,
             'icon': icon,
-            'user': user,
             'status': status,
             'updated_by': updated_by
         }
@@ -163,13 +148,12 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const socialData = await this.find_data_by_id(id, res);
-        const { _id, name, url, icon, user } = socialData;
+        const { _id, name, url, icon } = socialData;
         const result = {
             'id': _id,
             'name': name,
             'url': url,
             'icon': icon,
-            'user': user?.id
         }
         res.status(200).json({ message: `SocialDetail was found`, data: result, title: `Edit ${name} social detail` });
     } catch (err) {
@@ -187,21 +171,15 @@ exports.update = async (req, res, next) => {
 
         const updateOps = helper.updateOps(req);
 
-        if (updateOps['user']) {
-            const userData = await User.findById(updateOps['user']).select('_id').where('status').equals(status_active);
-            if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
-        }
-
         const result = await SocialDetail.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedSocialDetail = await this.find_data_by_id(id, res);
-            const { _id, name, url, icon, user } = updatedSocialDetail;
+            const { _id, name, url, icon } = updatedSocialDetail;
             const socialData = {
                 'id': _id,
                 'name': name,
                 'url': url,
-                'icon': icon,
-                'user': user
+                'icon': icon
             }
             return res.status(200).json({ message: `SocialDetail details updated successfully`, data: socialData });
         }
@@ -241,9 +219,8 @@ exports.destroy = async (req, res, next) => {
 
 exports.find_data_by_id = async (id, res) => {
     const socialData = await SocialDetail.findById(id)
-        .select('_id name url icon user updated_by status')
+        .select('_id name url icon updated_by status')
         // .where('status').equals(status_active)
-        .populate('user', '_id name')
         .populate('updated_by', '_id name');
 
     if (!socialData) return res.status(404).json({ message: `SocialDetail not found` });

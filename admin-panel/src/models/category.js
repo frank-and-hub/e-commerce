@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-const socialDetailSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
-    url: { type: String, default: null, trim: true },
+    description: { type: String, required: false, trim: true },
     icon: { type: String, required: true },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
@@ -12,11 +13,11 @@ const socialDetailSchema = new mongoose.Schema({
     timestamps: true
 });
 
-socialDetailSchema.pre(/^find/, function (next) {
+categorySchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
 });
 
-socialDetailSchema.index({ name: 1, deleted_at: 1 });
+categorySchema.index({ name: 1, deleted_at: 1 });
 
-module.exports = mongoose.model('SocialDetail', socialDetailSchema);
+module.exports = mongoose.model('Category', categorySchema);

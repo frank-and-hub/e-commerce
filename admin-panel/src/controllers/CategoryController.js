@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Service = require('../models/service');
+const Category = require('../models/category');
 const User = require('../models/user');
 
 // helper function
@@ -13,7 +13,7 @@ const url = require('../config/url');
 const baseurl = `${url.apiUrl}`;
 const status_active = `${process.env.STATUS_ACTIVE}`;
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
-const constName = 'services/';
+const constName = 'categories/';
 
 exports.index = async (req, res, next) => {
     try {
@@ -38,12 +38,12 @@ exports.index = async (req, res, next) => {
         }
 
         const skip = (page - 1) * limit;
-        const totalCount = await Service.countDocuments({
+        const totalCount = await Category.countDocuments({
             ...filter,
             deleted_at: null
         });
 
-        const query = Service.find(filter)
+        const query = Category.find(filter)
             .select('_id name icon description user status updated_by')
             .populate('user', '_id name')
             .populate('updated_by', '_id name');
@@ -54,12 +54,12 @@ exports.index = async (req, res, next) => {
                 .limit(limit);
         }
 
-        const services = await query;
+        const categories = await query;
 
-        if (services.length === 0) return res.status(200).json({ message: `No services found`, data: [] });
+        if (categories.length === 0) return res.status(200).json({ message: `No categories found`, data: [] });
 
-        const servicePromises = services.map(async (service) => {
-            const { _id, name, icon, description, status, user } = service;
+        const categoryPromises = categories.map(async (category) => {
+            const { _id, name, icon, description, status, user } = category;
             return {
                 'id': _id,
                 'name': name,
@@ -71,14 +71,14 @@ exports.index = async (req, res, next) => {
                 // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
-        const serviceResponses = await Promise.all(servicePromises);
+        const categoryResponses = await Promise.all(categoryPromises);
         res.status(200).json({
             message: `List retrieved successfully`, response: {
                 count: totalCount,
                 page: page,
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
-                data: serviceResponses
+                data: categoryResponses
             }, title: 'listing'
         });
     } catch (err) {
@@ -89,14 +89,14 @@ exports.index = async (req, res, next) => {
 exports.create = (req, res, next) => {
     try {
         res.status(200).json({
-            message: `Create service form`,
+            message: `Create category form`,
             body: {
                 'name': 'String',
                 'description': 'String',
                 'icon': 'String',
                 'userId': 'SchemaId'
             },
-            title: 'Add service'
+            title: 'Add category'
         });
     } catch (err) {
         next(err)
@@ -111,17 +111,17 @@ exports.store = async (req, res, next) => {
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
 
-        const existsService = await Service.findOne({ name: name, status: status_active, user: userData._id });
-        if (existsService) return res.status(200).json({ message: 'Service already exists' });
+        const existsCategory = await Category.findOne({ name: name, status: status_active, user: userData._id });
+        if (existsCategory) return res.status(200).json({ message: 'Category already exists' });
 
-        const service = new Service({
+        const category = new Category({
             _id: new mongoose.Types.ObjectId(),
             user: userData._id,
             name,
             description,
             icon
         });
-        const newData = await service.save();
+        const newData = await category.save();
         const response = {
             'id': newData?._id,
             'name': newData?.name,
@@ -138,8 +138,8 @@ exports.store = async (req, res, next) => {
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const serviceData = await this.find_data_by_id(id, res);
-        const { _id, name, icon, description, user, updated_by, status } = serviceData;
+        const categoryData = await this.find_data_by_id(id, res);
+        const { _id, name, icon, description, user, updated_by, status } = categoryData;
         const result = {
             'id': _id,
             'name': name,
@@ -149,7 +149,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Service was found`, data: result, title: `View ${name} service detail` });
+        res.status(200).json({ message: `Category was found`, data: result, title: `View ${name} category detail` });
     } catch (err) {
         next(err)
     }
@@ -158,8 +158,8 @@ exports.show = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const serviceData = await this.find_data_by_id(id, res);
-        const { _id, name, icon, description, user } = serviceData;
+        const categoryData = await this.find_data_by_id(id, res);
+        const { _id, name, icon, description, user } = categoryData;
         const result = {
             'id': _id,
             'name': name,
@@ -167,7 +167,7 @@ exports.edit = async (req, res, next) => {
             'description': description,
             'user': user?._id
         }
-        res.status(200).json({ message: `Service was found`, data: result, title: `Edit ${name} service detail` });
+        res.status(200).json({ message: `Category was found`, data: result, title: `Edit ${name} category detail` });
     } catch (err) {
         next(err)
     }
@@ -176,10 +176,10 @@ exports.edit = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const service = await Service.findById(id).select('_id');
-        if (!service) return res.status(404).json({ message: `Service not found!`, });
+        const category = await Category.findById(id).select('_id');
+        if (!category) return res.status(404).json({ message: `Category not found!`, });
 
-        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (service may not exist or the data is the same)` });
+        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (category may not exist or the data is the same)` });
 
         const updateOps = helper.updateOps(req);
 
@@ -188,10 +188,10 @@ exports.update = async (req, res, next) => {
             if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
         }
 
-        const result = await Service.updateOne({ _id: id }, { $set: updateOps });
+        const result = await Category.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedService = await this.find_data_by_id(id, res);
-            const { _id, name, description, icon, user } = updatedService;
+            const updatedCategory = await this.find_data_by_id(id, res);
+            const { _id, name, description, icon, user } = updatedCategory;
             const response = {
                 'id': _id,
                 'name': name,
@@ -199,9 +199,9 @@ exports.update = async (req, res, next) => {
                 'icon': icon,
                 'user': user
             }
-            return res.status(200).json({ message: `Service details updated successfully`, data: response });
+            return res.status(200).json({ message: `Category details updated successfully`, data: response });
         }
-        res.status(404).json({ message: `Service not found or no details to update`, data: [] });
+        res.status(404).json({ message: `Category not found or no details to update`, data: [] });
     } catch (err) {
         next(err)
     }
@@ -210,14 +210,14 @@ exports.update = async (req, res, next) => {
 exports.destroy = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const getService = await Service.findById(id).select('_id').where('status').equals(!status_active);
-        if (!getService) return res.status(404).json({ message: 'Service not found' });
+        const getCategory = await Category.findById(id).select('_id').where('status').equals(!status_active);
+        if (!getCategory) return res.status(404).json({ message: 'Category not found' });
 
-        // const serviceData = await Service.deleteOne({ _id: id });
-        // if (serviceData.deletedCount === 1) {
+        // const categoryData = await Category.deleteOne({ _id: id });
+        // if (categoryData.deletedCount === 1) {
 
-        const serviceData = await Service.findByIdAndUpdate(id, { deleted_at: new Date() });
-        if (serviceData) {
+        const categoryData = await Category.findByIdAndUpdate(id, { deleted_at: new Date() });
+        if (categoryData) {
             const response = {
                 'method': 'POST',
                 'url': `${baseurl}${constName}`,
@@ -230,47 +230,20 @@ exports.destroy = async (req, res, next) => {
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
-        res.status(404).json({ message: `Service not found` });
-    } catch (err) {
-        next(err)
-    }
-}
-
-exports.user_services = async (req, res, next) => {
-    const { userId } = req.params;
-    try {
-        const getUserData = await User.findById(userId).select('_id').where('status').equals(status_active);
-        if (!getUserData) return res.status(404).json({ message: `User not found` });
-
-        const getServices = await Service.find({ user: getUserData._id, status: status_active });
-        if (getServices.length === 0) return res.status(200).json({ message: `No services found`, data: [] });
-
-        const getServicesPromises = getServices.map(async (services) => {
-            const { _id, name, description, icon } = services;
-
-            return {
-                'id': _id,
-                'name': name,
-                'description': description,
-                'icon': icon,
-                'request': { method: 'GET', url: `${baseurl}${constName}${_id}` }
-            }
-        });
-        const getServicesResponses = await Promise.all(getServicesPromises);
-        res.status(200).json({ message: `List User-Services`, response: { count: getServices.length, data: getServicesResponses } });
+        res.status(404).json({ message: `Category not found` });
     } catch (err) {
         next(err)
     }
 }
 
 exports.find_data_by_id = async (id, res) => {
-    const serviceData = await Service.findById(id)
+    const categoryData = await Category.findById(id)
         .select('_id name icon description user updated_by status')
         // .where('status').equals(status_active)
         .populate('user', '_id name')
         .populate('updated_by', '_id name');
 
-    if (!serviceData) return res.status(404).json({ message: `Service not found` });
+    if (!categoryData) return res.status(404).json({ message: `Category not found` });
 
-    return serviceData;
+    return categoryData;
 }

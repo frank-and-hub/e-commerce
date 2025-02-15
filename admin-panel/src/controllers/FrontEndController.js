@@ -1,10 +1,10 @@
 // models
 const User = require('../models/user');
 const Plan = require('../models/plan');
-const Service = require('../models/service');
-const Project = require('../models/project');
+// const Service = require('../models/service');
+// const Project = require('../models/project');
 const About = require('../models/about_detail');
-const Testimonial = require('../models/testimonial');
+// const Testimonial = require('../models/testimonial');
 const SocialDetail = require('../models/social_detail');
 
 // status
@@ -28,18 +28,18 @@ exports.show = async (req, res, next) => {
             .select('_id title bio experience  user resume')
             .populate('resume', '_id name path');
 
-        const services = await Service.find({ 'user': userData?._id })
-            .select('_id title name description user icon')
-            .sort({ _id: -1 });
+        // const services = await Service.find({ 'user': userData?._id })
+        //     .select('_id title name description user icon')
+        //     .sort({ _id: -1 });
 
-        const testimonials = await Testimonial.find({ 'user': userData?._id })
-            .select('_id user name title description')
-            .sort({ _id: -1 });
+        // const testimonials = await Testimonial.find({ 'user': userData?._id })
+        //     .select('_id user name title description')
+        //     .sort({ _id: -1 });
 
-        const projects = await Project.find({ 'user': userData?._id })
-            .select('_id user name description url image type ')
-            .populate('image', '_id name path')
-            .sort({ _id: -1 });
+        // const projects = await Project.find({ 'user': userData?._id })
+        //     .select('_id user name description url image type ')
+        //     .populate('image', '_id name path')
+        //     .sort({ _id: -1 });
 
         const plans = await Plan.find({ 'user': userData?._id })
             .select('_id user name description price currency payment_method payment_type')
@@ -54,8 +54,7 @@ exports.show = async (req, res, next) => {
             plans,
             about,
             services,
-            projects,
-            testimonials,
+            // testimonials,
         };
         res.status(200).json({ message: `User founded`, data: userWithDetails, title: `View ${userData?.name} user detail` });
     } catch (err) {

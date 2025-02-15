@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 const File = require('../models/file');
-const Project = require('../models/project');
+const Product = require('../models/product');
 
 // helper function
 const helper = require('../utils/helper');
@@ -15,7 +15,7 @@ const baseurl = `${url.apiUrl}`;
 const apiBaseUrl = `${url.apiBaseUrl}`;
 const status_active = `${process.env.STATUS_ACTIVE}`;
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
-const constName = 'projects/';
+const constName = 'products/';
 
 exports.index = async (req, res, next) => {
     try {
@@ -43,12 +43,12 @@ exports.index = async (req, res, next) => {
         }
 
         const skip = (page - 1) * limit;
-        const totalCount = await Project.countDocuments({
+        const totalCount = await Product.countDocuments({
             ...filter,
             deleted_at: null
         });
 
-        const query = Project.find(filter)
+        const query = Product.find(filter)
             .select('_id name description url image user type status updated_by')
             .populate('image', '_id name path')
             .populate('user', '_id name')
@@ -60,12 +60,12 @@ exports.index = async (req, res, next) => {
                 .limit(limit);
         }
 
-        const projects = await query;
+        const products = await query;
 
-        if (projects.length === 0) return res.status(200).json({ message: `No projects found`, data: [] });
+        if (products.length === 0) return res.status(200).json({ message: `No products found`, data: [] });
 
-        const projectPromises = projects.map(async (project) => {
-            const { _id, name, description, url, image, user, type, status } = project;
+        const productPromises = products.map(async (product) => {
+            const { _id, name, description, url, image, user, type, status } = product;
             return {
                 'id': _id,
                 'name': name,
@@ -79,14 +79,14 @@ exports.index = async (req, res, next) => {
                 // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
-        const projectResponses = await Promise.all(projectPromises);
+        const productResponses = await Promise.all(productPromises);
         res.status(200).json({
             message: `List retrieved successfully`, response: {
                 count: totalCount,
                 page: page,
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
-                data: projectResponses
+                data: productResponses
             }, title: 'listing'
         });
     } catch (err) {
@@ -97,14 +97,14 @@ exports.index = async (req, res, next) => {
 exports.create = (req, res, next) => {
     try {
         res.status(200).json({
-            message: `Create project form`,
+            message: `Create product form`,
             body: {
                 'name': 'String',
                 'description': 'String',
                 'url': 'Url',
                 'type': 'Boolean',
             },
-            title: 'Add project'
+            title: 'Add product'
         });
     } catch (err) {
         next(err)
@@ -119,8 +119,8 @@ exports.store = async (req, res, next) => {
         const user = await User.findById(userId).select('_id name').where('status').equals(status_active);
         if (!user) return res.status(404).json({ message: `User not found` });
 
-        const existingProject = await Project.findOne({ name, type, url });
-        if (existingProject) return res.status(409).json({ message: `Project already exists` });
+        const existingProduct = await Product.findOne({ name, type, url });
+        if (existingProduct) return res.status(409).json({ message: `Product already exists` });
 
         // if (!file) return res.status(400).json({ message: `No file uploaded` });
 
@@ -135,7 +135,7 @@ exports.store = async (req, res, next) => {
             savedFile = await newFile.save();
         }
 
-        const newProject = new Project({
+        const newProduct = new Product({
             _id: new mongoose.Types.ObjectId(),
             name,
             description,
@@ -144,7 +144,7 @@ exports.store = async (req, res, next) => {
             image: savedFile?._id ?? null,
             user: user._id,
         });
-        const newData = await newProject.save();
+        const newData = await newProduct.save();
         const response = {
             'id': newData._id,
             'name': newData.name,
@@ -154,7 +154,7 @@ exports.store = async (req, res, next) => {
             'image': savedFile?.path ?? null,
             'user': user.name
         }
-        res.status(201).json({ message: `Project created successfully`, data: response });
+        res.status(201).json({ message: `Product created successfully`, data: response });
     } catch (err) {
         next(err)
     }
@@ -163,8 +163,8 @@ exports.store = async (req, res, next) => {
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const projectData = await this.find_data_by_id(id, res);
-        const { _id, name, description, url, image, user, type, updated_by, status } = projectData;
+        const productData = await this.find_data_by_id(id, res);
+        const { _id, name, description, url, image, user, type, updated_by, status } = productData;
         const result = {
             'id': _id,
             'name': name,
@@ -176,7 +176,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Project was found`, data: result, title: `View ${name} project detail` });
+        res.status(200).json({ message: `Product was found`, data: result, title: `View ${name} product detail` });
     } catch (err) {
         next(err)
     }
@@ -185,8 +185,8 @@ exports.show = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const projectData = await this.find_data_by_id(id, res);
-        const { _id, name, description, url, image, user, type } = projectData;
+        const productData = await this.find_data_by_id(id, res);
+        const { _id, name, description, url, image, user, type } = productData;
         const result = {
             'id': _id,
             'name': name,
@@ -196,7 +196,7 @@ exports.edit = async (req, res, next) => {
             'user': user?._id,
             'type': type
         }
-        res.status(200).json({ message: `Project was found`, data: result, title: `Edit ${name} project detail` });
+        res.status(200).json({ message: `Product was found`, data: result, title: `Edit ${name} product detail` });
     } catch (err) {
         next(err)
     }
@@ -205,10 +205,10 @@ exports.edit = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const project = await Project.findById(id).select('_id');
-        if (!project) return res.status(404).json({ message: `Project not found!`, });
+        const product = await Product.findById(id).select('_id');
+        if (!product) return res.status(404).json({ message: `Product not found!`, });
 
-        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (project may not exist or the data is the same)` });
+        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (product may not exist or the data is the same)` });
 
         const updateOps = helper.updateOps(req);
 
@@ -217,10 +217,10 @@ exports.update = async (req, res, next) => {
             if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
         }
 
-        const result = await Project.updateOne({ _id: id }, { $set: updateOps });
+        const result = await Product.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedProject = await this.find_data_by_id(id, res);
-            const { _id, name, description, url, image, user, type } = updatedProject;
+            const updatedProduct = await this.find_data_by_id(id, res);
+            const { _id, name, description, url, image, user, type } = updatedProduct;
             const response = {
                 'id': _id,
                 'name': name,
@@ -230,9 +230,9 @@ exports.update = async (req, res, next) => {
                 'user': user,
                 'type': type,
             }
-            return res.status(200).json({ message: `Project details updated successfully`, data: response });
+            return res.status(200).json({ message: `Product details updated successfully`, data: response });
         }
-        res.status(404).json({ message: `Project not found or no details to update`, data: [] });
+        res.status(404).json({ message: `Product not found or no details to update`, data: [] });
     } catch (err) {
         next(err)
     }
@@ -241,14 +241,14 @@ exports.update = async (req, res, next) => {
 exports.destroy = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const project = await Project.findById(id).select('_id').where('status').equals(!status_active);
-        if (!project) return res.status(404).json({ message: `Project not found!`, });
+        const product = await Product.findById(id).select('_id').where('status').equals(!status_active);
+        if (!product) return res.status(404).json({ message: `Product not found!`, });
 
-        // const projectData = await Project.deleteOne({ _id: id });
-        // if (projectData.deletedCount === 1) {
+        // const productData = await Product.deleteOne({ _id: id });
+        // if (productData.deletedCount === 1) {
 
-        const projectData = await Project.findByIdAndUpdate(id, { deleted_at: new Date() });
-        if (projectData) {
+        const productData = await Product.findByIdAndUpdate(id, { deleted_at: new Date() });
+        if (productData) {
             const response = {
                 'method': 'POST',
                 'url': `${baseurl}${constName}`,
@@ -265,7 +265,7 @@ exports.destroy = async (req, res, next) => {
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
-        res.status(404).json({ message: `Project not found` });
+        res.status(404).json({ message: `Product not found` });
     } catch (err) {
         next(err)
     }
@@ -275,8 +275,8 @@ exports.image = async (req, res, next) => {
     const { id } = req.params;
     const file = req.file;
     try {
-        const getProjectData = await Project.findById(id).select('_id').where('status').equals(status_active);
-        if (!getProjectData) return res.status(404).json({ message: `Project not found` });
+        const getProductData = await Product.findById(id).select('_id').where('status').equals(status_active);
+        if (!getProductData) return res.status(404).json({ message: `Product not found` });
 
         const newFile = new File({
             _id: new mongoose.Types.ObjectId(),
@@ -288,25 +288,25 @@ exports.image = async (req, res, next) => {
 
         const newData = await newFile.save();
 
-        const result = await Project.updateOne({ _id: id }, { $set: { image: newData._id } });
+        const result = await Product.updateOne({ _id: id }, { $set: { image: newData._id } });
 
-        if (result.modifiedCount > 0) return res.status(200).json({ message: `Project image updated` });
+        if (result.modifiedCount > 0) return res.status(200).json({ message: `Product image updated` });
 
-        res.status(404).json({ message: `Project not found or no image to update`, data: [] });
+        res.status(404).json({ message: `Product not found or no image to update`, data: [] });
     } catch (err) {
         next(err)
     }
 }
 
 exports.find_data_by_id = async (id, res) => {
-    const projectData = await Project.findById(id)
+    const productData = await Product.findById(id)
         .select('_id name description url image user type updated_by status')
         // .where('status').equals(status_active)
         .populate('user', '_id name')
         .populate('updated_by', '_id name')
         .populate('image', '_id name path');
 
-    if (!projectData) return res.status(404).json({ message: `Project not found` });
+    if (!productData) return res.status(404).json({ message: `Product not found` });
 
-    return projectData;
+    return productData;
 }

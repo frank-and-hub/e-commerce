@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const projectSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true, trim: true, unique: true, set: (value) => value.toLowerCase() },
     description: { type: String, required: true },
@@ -19,11 +19,11 @@ const projectSchema = new mongoose.Schema({
     timestamps: true
 });
 
-projectSchema.pre(/^find/, function (next) {
+productSchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
 });
 
-projectSchema.index({ name: 1, deleted_at: 1 });
+productSchema.index({ name: 1, deleted_at: 1 });
 
-module.exports = mongoose.model('Project', projectSchema);
+module.exports = mongoose.model('Product', productSchema);

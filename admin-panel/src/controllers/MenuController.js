@@ -36,7 +36,7 @@ exports.index = async (req, res, next) => {
         const page = parseInt(req?.query?.page) || 1;
         const limit = parseInt(req?.query?.limit) || parseInt(data_limit);
 
-        const orderByField = req?.query?.orderby || 'name';
+        const orderByField = req?.query?.orderby || '_id';
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
         const filter = {};

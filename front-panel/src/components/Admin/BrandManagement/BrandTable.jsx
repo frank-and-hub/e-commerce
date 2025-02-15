@@ -9,8 +9,8 @@ import { SidebarContext } from '../../../context/SidebarContext'
 import { ucwords } from '../../../utils/helper'
 
 
-function PlanTable() {
-    const module = 'plans';
+function BrandTable() {
+    const module = 'brands';
     const [showFilter, setShowFilter] = useState(true);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
@@ -121,4 +121,4 @@ function PlanTable() {
     )
 }
 
-export default PlanTable
+export default BrandTable

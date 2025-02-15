@@ -42,7 +42,7 @@ import MenuTable from './Admin/MenuManagement/MenuTable'
 import MenuAdd from './Admin/MenuManagement/form/Add'
 import MenuEdit from './Admin/MenuManagement/form/Edit'
 import MenuView from './Admin/MenuManagement/form/View'
-// contacts
+// contact
 import ContactTable from './Admin/ContactManagement/ContactTable'
 import ContactView from './Admin/ContactManagement/form/View'
 // social-media
@@ -50,7 +50,26 @@ import SocialDetailTable from './Admin/SettingManagement/SocialDetail/SocialDeta
 import SocialDetailAdd from './Admin/SettingManagement/SocialDetail/form/Add'
 import SocialDetailEdit from './Admin/SettingManagement/SocialDetail/form/Edit'
 import SocialDetailView from './Admin/SettingManagement/SocialDetail/form/View'
-
+// banner
+import BannerTable from './Admin/BannerManagement/BannerTable'
+import BannerAdd from './Admin/BannerManagement/form/Add'
+import BannerEdit from './Admin/BannerManagement/form/Edit'
+import BannerView from './Admin/BannerManagement/form/View'
+// brand
+import BrandTable from './Admin/BrandManagement/BrandTable'
+import BrandAdd from './Admin/BrandManagement/form/Add'
+import BrandEdit from './Admin/BrandManagement/form/Edit'
+import BrandView from './Admin/BrandManagement/form/View'
+// tag
+import TagTable from './Admin/TagManagement/TagTable'
+import TagAdd from './Admin/TagManagement/form/Add'
+import TagEdit from './Admin/TagManagement/form/Edit'
+import TagView from './Admin/TagManagement/form/View'
+// color
+import ColorTable from './Admin/ColorManagement/ColorTable'
+import ColorAdd from './Admin/ColorManagement/form/Add'
+import ColorEdit from './Admin/ColorManagement/form/Edit'
+import ColorView from './Admin/ColorManagement/form/View'
 
 import FrontLayout from './Front/Index/FrontLayout'
 import FrontPage from './Front/Page/FrontPage/FrontPage'
@@ -141,10 +160,16 @@ class Routing extends Component {
                                     <Route path={`:id`} element={<Blank />} />
                                 </Route>
                                 <Route path={`tags`}>
-                                    <Route index element={<Blank />} />
-                                    <Route path={`create`} element={<Blank />} />
-                                    <Route path={`:id/edit`} element={<Blank />} />
-                                    <Route path={`:id`} element={<Blank />} />
+                                    <Route index element={<TagTable />} />
+                                    <Route path={`create`} element={<TagAdd />} />
+                                    <Route path={`:id/edit`} element={<TagEdit />} />
+                                    <Route path={`:id`} element={<TagView />} />
+                                </Route>
+                                <Route path={`color`}>
+                                    <Route index element={<ColorTable />} />
+                                    <Route path={`create`} element={<ColorAdd />} />
+                                    <Route path={`:id/edit`} element={<ColorEdit />} />
+                                    <Route path={`:id`} element={<ColorView />} />
                                 </Route>
                             </Route>
 
@@ -154,18 +179,18 @@ class Routing extends Component {
                             </Route>
 
                             <Route path={`banners`}>
-                                <Route index element={<Blank />} />
-                                <Route path={`create`} element={<Blank />} />
-                                <Route path={`:id/edit`} element={<Blank />} />
-                                <Route path={`:id`} element={<Blank />} />
+                                <Route index element={<BannerTable />} />
+                                <Route path={`create`} element={<BannerAdd />} />
+                                <Route path={`:id/edit`} element={<BannerEdit />} />
+                                <Route path={`:id`} element={<BannerView />} />
                             </Route>
 
 
                             <Route path={`brands`}>
-                                <Route index element={<Blank />} />
-                                <Route path={`create`} element={<Blank />} />
-                                <Route path={`:id/edit`} element={<Blank />} />
-                                <Route path={`:id`} element={<Blank />} />
+                                <Route index element={<BrandTable />} />
+                                <Route path={`create`} element={<BrandAdd />} />
+                                <Route path={`:id/edit`} element={<BrandEdit />} />
+                                <Route path={`:id`} element={<BrandView />} />
                             </Route>
 
                             <Route path={`payments`}>

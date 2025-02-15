@@ -6,8 +6,8 @@ import SelectForm from '../Form/Select/SelectForm'
 import { useFormValidation } from '../Form/FormValidation'
 import { useLoading } from '../../../context/LoadingContext'
 
-function TagTable() {
-    const module = 'tags';
+function ColorTable() {
+    const module = 'color';
     const [showFilter, setShowFilter] = useState(true);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
@@ -93,4 +93,4 @@ function TagTable() {
     )
 }
 
-export default TagTable
+export default ColorTable

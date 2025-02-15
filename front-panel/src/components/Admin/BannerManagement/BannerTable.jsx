@@ -7,8 +7,8 @@ import { useFormValidation } from '../Form/FormValidation'
 import { useLoading } from '../../../context/LoadingContext'
 
 
-function ServiceTable() {
-    const module = 'services';
+function BannerTable() {
+    const module = 'banners';
     const [showFilter, setShowFilter] = useState(true);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
@@ -94,4 +94,4 @@ function ServiceTable() {
     )
 }
 
-export default ServiceTable
+export default BannerTable

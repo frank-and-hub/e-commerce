@@ -1,6 +1,7 @@
 const routes = [
     { path: '/api', module: require('../auths') },
     { path: '/api/faq', module: require('../faqs') },
+    { path: '/api/tags', module: require('../tags') },
     { path: '/api/users', module: require('../users') },
     { path: '/api/roles', module: require('../roles') },
     { path: '/api/menus', module: require('../menus') },

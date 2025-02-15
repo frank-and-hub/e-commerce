@@ -2,10 +2,8 @@ const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    name: { type: String, required: true, trim: true, unique: true, set: (value) => value.toLowerCase() },
     description: { type: String, required: true, trim: true },
-    specification: { type: String, required: true, trim: true },
-    price: { type: Number, required: true },
+    rating: { type: Number, required: true, enum: [1, 2, 3, 4, 5] },
     image: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File', required: false }],
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     status: { type: Boolean, default: true },

@@ -44,7 +44,7 @@ function Edit() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/social-details', { replace: true })
+            navigate('/admin/settings/social-details', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {

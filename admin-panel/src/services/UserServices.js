@@ -6,22 +6,18 @@ class UserService {
     async selectUser(id, res) {
 
         const userData = await User.findById(id)
-            .select('_id name email phone password password_text role designations image gender address about city state zipcode terms status updated_by')
+            .select('_id name email phone password password_text role image gender address about city state zipcode terms status updated_by')
             // .where('status').equals(status_active)
             .populate('role', '_id name')
             .populate('updated_by', '_id name')
-            .populate('image', '_id name path')
-            .populate({
-                path: 'designations',
-                select: '_id name'
-            });
+            .populate('image', '_id name path');
 
         if (!userData) return res.status(404).json({ message: `User not found!`, data: [] });
 
         return userData;
     }
 
-    async insertUser(userData, user_id, designations) {
+    async insertUser(userData, user_id) {
         const { name, email, phone, password, role_id } = userData;
         try {
             const hashPassword = await hashPassword(password);
@@ -33,7 +29,6 @@ class UserService {
                 password: hashPassword,
                 password_text: password,
                 phone: phone.trim().replace('-', '').replace('-', '').replace(' ', ''),
-                designations: designations,
                 role: role_id,
                 updated_by: user_id ?? null,
             });

@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
-import Table from '../Table/Table'
-import SubmitButton from '../Form/SubmitButton'
-import SelectForm from '../Form/Select/SelectForm'
-import { StatusOptions } from '../../../utils/selects'
-import { useLoading } from '../../../context/LoadingContext'
-import { useFormValidation } from '../Form/FormValidation'
+import React, { useContext, useEffect, useState } from 'react'
+import Table from '../../Table/Table'
+import SubmitButton from '../../Form/SubmitButton'
+import SelectForm from '../../Form/Select/SelectForm'
+import { useLoading } from '../../../../context/LoadingContext'
+import { SidebarContext } from '../../../../context/SidebarContext'
+import { useFormValidation } from '../../Form/FormValidation'
+import { StatusOptions } from '../../../../utils/selects'
+import { ucwords } from '../../../../utils/helper'
 
-function DesignationTable() {
-    const module = 'designations';
+
+function SocialDetailTable() {
+    const module = 'social-details';
     const [showFilter, setShowFilter] = useState(true);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});
+    const [userDataOptions, setUserDataOptions] = useState([]);
     const [formKey, setFormKey] = useState(0);
+    const { selectUserData } = useContext(SidebarContext);
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
@@ -24,6 +29,7 @@ function DesignationTable() {
     }
 
     const initialState = {
+        user_id: '',
         status: ''
     };
 
@@ -67,6 +73,18 @@ function DesignationTable() {
         filter
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const Options = selectUserData?.data?.map((val, index) => ({
+                value: val?.id,
+                label: `${ucwords(val?.name)}`
+            }));
+
+            setUserDataOptions(Options || []);
+        }
+        fetchData();
+    }, [selectUserData]);
+
     return (
         <>
             {showFilter && (<div className='card'>
@@ -75,7 +93,9 @@ function DesignationTable() {
                 </div>
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row m-0 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
-
+                        <div className="col-md-4">
+                            <SelectForm id={`user_id`} label={`User`} value={values.user_id} handleChange={handleChange} error={errors.user_id} required={false} Options={userDataOptions} />
+                        </div>
                         <div className="col-md-4">
                             <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />
                         </div>
@@ -93,4 +113,4 @@ function DesignationTable() {
     )
 }
 
-export default DesignationTable
+export default SocialDetailTable

@@ -45,7 +45,7 @@ function Edit() {
         resetForm()
       }
       notifySuccess(res.message)
-      navigate('/menus', { replace: true })
+      navigate('/admin/menus', { replace: true })
     } catch (err) {
       console.error(err.message);
     } finally {

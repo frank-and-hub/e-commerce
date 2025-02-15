@@ -14,13 +14,9 @@ exports.show = async (req, res, next) => {
     const { id } = req.params; // id is for phone number
     try {
         const userData = await User.findOne({ phone: id })
-            .select('_id name email phone gender address city state zipcode role image designations')
+            .select('_id name email phone gender address city state zipcode role image')
             .where('status').equals(status_active)
             .populate('role', '_id name')
-            .populate({
-                path: 'designations',
-                select: '_id name'
-            })
             .populate('updated_by', '_id name')
             .populate('image', '_id name path');
 

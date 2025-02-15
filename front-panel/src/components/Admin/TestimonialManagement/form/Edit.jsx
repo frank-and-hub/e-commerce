@@ -44,7 +44,7 @@ function Edit() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/testimonials', { replace: true })
+            navigate('/admin/testimonials', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {

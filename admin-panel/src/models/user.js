@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     password_text: { type: String, required: true, minlength: 8, maxlength: 16, unique: true, },
     role: { type: mongoose.Schema.Types.ObjectId, ref: 'Role', required: false },
-    designations: [{ type: mongoose.Schema.Types.ObjectId, required: false, ref: 'Designation' }],
     image: { type: mongoose.Schema.Types.ObjectId, ref: 'File' },
     gender: { type: String, enum: ['male', 'female', 'other'], default: 'male' },
     address: { type: String, default: null },

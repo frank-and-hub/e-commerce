@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { get } from '../../../../utils/AxiosUtils'
-import SelectIcon from '../../Form/Select/SelectIcon'
-import Input from '../../Form/Input'
-import { useParams } from 'react-router-dom'
-import { processNotifications } from '../../../../utils/notificationUtils'
 import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { get } from '../../../../../utils/AxiosUtils'
+import { processNotifications } from '../../../../../utils/notificationUtils'
+import Input from '../../../Form/Input'
+import SelectIcon from '../../../Form/Select/SelectIcon'
 
 function View() {
     const { id } = useParams();

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useFormValidation } from '../../Form/FormValidation'
-import validate from '../validate'
-import SubmitButton from '../../Form/SubmitButton'
-import Input from '../../Form/Input'
-import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
-import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import SelectIcon from '../../Form/Select/SelectIcon'
-import { formattedData } from '../../../../utils/helper'
-import { processNotifications } from '../../../../utils/notificationUtils'
-import { get, patch } from '../../../../utils/AxiosUtils'
-import { useLoading } from '../../../../context/LoadingContext'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useLoading } from '../../../../../context/LoadingContext'
+import validate from '../validate'
+import { useFormValidation } from '../../../Form/FormValidation'
+import { notifyError, notifyInfo, notifySuccess } from '../../../Comman/Notification/Notification'
+import { formattedData } from '../../../../../utils/helper'
+import { get, patch } from '../../../../../utils/AxiosUtils'
+import { processNotifications } from '../../../../../utils/notificationUtils'
+import Input from '../../../Form/Input'
+import SelectIcon from '../../../Form/Select/SelectIcon'
+import SubmitButton from '../../../Form/SubmitButton'
 
 function Edit() {
     const { id } = useParams();
@@ -44,7 +44,7 @@ function Edit() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/social-details', { replace: true })
+            navigate('/admin/social-details', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {

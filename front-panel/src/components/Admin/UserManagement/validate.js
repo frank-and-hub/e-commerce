@@ -6,6 +6,5 @@ export default function validate(values) {
     if (!values.password) errors.password = 'Please enter password';
     if (!values.phone) errors.phone = 'Please enter phone';
     if (!values.role_id) errors.role_id = 'Please select role';
-    if (!values.designations) errors.designations = 'Please select designations';
     return errors;
 }

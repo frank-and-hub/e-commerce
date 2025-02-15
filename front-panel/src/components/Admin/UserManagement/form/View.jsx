@@ -5,7 +5,6 @@ import SelectRole from '../../Form/Select/SelectRole'
 import { get } from '../../../../utils/AxiosUtils'
 import { useDispatch } from 'react-redux'
 import { processNotifications } from '../../../../utils/notificationUtils'
-import SelectDesignation from '../../Form/Select/SelectDesignation'
 
 function View() {
     const { id } = useParams();
@@ -46,9 +45,6 @@ function View() {
                         <Input name="phone" label="Phone" value={values?.phone} required={false} inputType={true} disabled={true} />
                         <div className="col-md-4">
                             <SelectRole id={`role_id`} value={values?.role?._id} required={false} disabled={true} label='role' handleChange={handleChange} />
-                        </div>
-                        <div className="col-md-4">
-                            <SelectDesignation id={`designations`} label={`Designations`} value={values?.designations} handleChange={(e) => handleChange(e)} required={false} disabled={true} />
                         </div>
                         <div className="col-12">
                         </div>

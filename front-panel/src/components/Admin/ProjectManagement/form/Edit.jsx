@@ -61,7 +61,7 @@ function Edit() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/projects', { replace: true })
+            navigate('/admin/projects', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {

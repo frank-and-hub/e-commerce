@@ -44,7 +44,7 @@ function Edit() {
 
                 resetForm()
                 notifySuccess(res.message)
-                navigate('/roles', { replace: true })
+                navigate('/admin/roles', { replace: true })
             }
         } catch (err) {
             notifyError(err.message)

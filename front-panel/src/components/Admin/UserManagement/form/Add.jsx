@@ -7,7 +7,6 @@ import { post } from '../../../../utils/AxiosUtils'
 import { useFormValidation } from '../../Form/FormValidation'
 import { notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { useNavigate } from 'react-router-dom'
-import SelectDesignation from '../../Form/Select/SelectDesignation'
 import { useLoading } from '../../../../context/LoadingContext'
 
 function Add() {
@@ -23,7 +22,6 @@ function Add() {
         password: '',
         phone: '',
         role_id: '',
-        designations: []
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -43,7 +41,7 @@ function Add() {
             setResponse(res);
             resetForm()
             notifySuccess(res.message)
-            navigate('/users', { replace: true })
+            navigate('/admin/users', { replace: true })
         } catch (err) {
             console.error(err.message);
             setError(err.message);
@@ -72,9 +70,6 @@ function Add() {
                     <Input name="phone" label="Phone" value={values.phone} onChange={handleChange} error={errors.phone} required={true} inputType={true} />
                     <div className="col-md-4">
                         <SelectRole id={`role_id`} label={`Role`} value={values.role_id} handleChange={handleChange} error={errors.role_id} required={true} />
-                    </div>
-                    <div className="col-md-4">
-                        <SelectDesignation id={`designations`} label={`Designations`} value={values?.designations} handleChange={handleChange} error={errors.designations} required={false} />
                     </div>
                     <div className="col-12">
                         <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />

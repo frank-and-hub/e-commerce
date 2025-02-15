@@ -56,21 +56,16 @@ import TestimonialView from './Admin/TestimonialManagement/form/View'
 import ContactTable from './Admin/ContactManagement/ContactTable'
 import ContactView from './Admin/ContactManagement/form/View'
 // social-media
-import SocialDetailTable from './Admin/SocialDetailManagement/SocialDetailTable'
-import SocialDetailAdd from './Admin/SocialDetailManagement/form/Add'
-import SocialDetailEdit from './Admin/SocialDetailManagement/form/Edit'
-import SocialDetailView from './Admin/SocialDetailManagement/form/View'
+import SocialDetailTable from './Admin/SettingManagement/SocialDetail/SocialDetailTable'
+import SocialDetailAdd from './Admin/SettingManagement/SocialDetail/form/Add'
+import SocialDetailEdit from './Admin/SettingManagement/SocialDetail/form/Edit'
+import SocialDetailView from './Admin/SettingManagement/SocialDetail/form/View'
 // projects
 import ProjectTable from './Admin/ProjectManagement/ProjectTable'
 import ProjectAdd from './Admin/ProjectManagement/form/Add'
 import ProjectEdit from './Admin/ProjectManagement/form/Edit'
 import ProjectView from './Admin/ProjectManagement/form/View'
-// designations
-import DesignationTable from './Admin/DesignationManagement/DesignationTable'
-import DesignationAdd from './Admin/DesignationManagement/form/Add'
-import DesignationEdit from './Admin/DesignationManagement/form/Edit'
-import DesignationView from './Admin/DesignationManagement/form/View'
-// designations
+// plas
 import PlanTable from './Admin/PlanManagement/PlanTable'
 // import PlanAdd from './Admin/PlanManagement/form/Add'
 import PlanEdit from './Admin/PlanManagement/form/Edit'
@@ -113,13 +108,6 @@ class Routing extends Component {
                                 <Route path={`permissions`} element={<UserRolePermission />} />
                             </Route>
 
-                            <Route path={`social-details`} >
-                                <Route index element={<SocialDetailTable />} />
-                                <Route path={`create`} element={<SocialDetailAdd />} />
-                                <Route path={`:id/edit`} element={<SocialDetailEdit />} />
-                                <Route path={`:id`} element={<SocialDetailView />} />
-                            </Route>
-
                             <Route path={`menus`}>
                                 <Route index element={<MenuTable />} />
                                 <Route path={`create`} element={<MenuAdd />} />
@@ -135,13 +123,6 @@ class Routing extends Component {
                                 <Route path={`:id`} element={<RoleView />} />
                             </Route>
 
-                            <Route path={`designations`}>
-                                <Route index element={<DesignationTable />} />
-                                <Route path={`create`} element={<DesignationAdd />} />
-                                <Route path={`:id/edit`} element={<DesignationEdit />} />
-                                <Route path={`:id`} element={<DesignationView />} />
-                            </Route>
-
                             <Route path={`settings`}>
                                 <Route index element={<Blank />} />
                                 <Route path={`terms-and-conditions`} element={<TermsAndConditions />} />
@@ -152,6 +133,13 @@ class Routing extends Component {
                                 <Route path={`faqs`}>
                                     <Route index element={<FaqList />} />
                                     <Route path={`create`} element={<AddFaq />} />
+                                </Route>
+
+                                <Route path={`social-details`} >
+                                    <Route index element={<SocialDetailTable />} />
+                                    <Route path={`create`} element={<SocialDetailAdd />} />
+                                    <Route path={`:id/edit`} element={<SocialDetailEdit />} />
+                                    <Route path={`:id`} element={<SocialDetailView />} />
                                 </Route>
                             </Route>
 

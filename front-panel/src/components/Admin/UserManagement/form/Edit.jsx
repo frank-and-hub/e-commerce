@@ -10,7 +10,6 @@ import { notifyInfo, notifySuccess } from '../../Comman/Notification/Notificatio
 import { get, patch } from '../../../../utils/AxiosUtils'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { formattedData } from '../../../../utils/helper'
-import SelectDesignation from '../../Form/Select/SelectDesignation'
 import { useLoading } from '../../../../context/LoadingContext'
 
 function Edit() {
@@ -28,7 +27,6 @@ function Edit() {
         password: '',
         phone: '',
         role_id: '',
-        designations: []
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -49,7 +47,7 @@ function Edit() {
             setResponse(res);
             resetForm()
             notifySuccess(res.message)
-            navigate('/users', { replace: true })
+            navigate('/admin/users', { replace: true })
         } catch (err) {
             console.error(err.message);
             setError(err.message);
@@ -99,10 +97,6 @@ function Edit() {
 
                         <div className="col-md-4">
                             <SelectRole id={`role_id`} value={values?.role_id} required={true} disabled={false} label='role' handleChange={handleChange} />
-                        </div>
-
-                        <div className="col-md-4">
-                            <SelectDesignation id={`designations`} label={`Designations`} value={values?.designations} handleChange={handleChange} error={errors.designations} required={false} />
                         </div>
 
                         <div className="col-12">

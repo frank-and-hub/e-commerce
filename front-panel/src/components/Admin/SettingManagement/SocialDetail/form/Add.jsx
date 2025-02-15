@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { useFormValidation } from '../../Form/FormValidation'
-import { post } from '../../../../utils/AxiosUtils'
-import validate from '../validate'
-import SubmitButton from '../../Form/SubmitButton'
-import Input from '../../Form/Input'
-import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
-import SelectIcon from '../../Form/Select/SelectIcon'
 import { useNavigate } from 'react-router-dom'
-import { useLoading } from '../../../../context/LoadingContext'
+import { post } from '../../../../../utils/AxiosUtils'
+import { useFormValidation } from '../../../Form/FormValidation'
+import { useLoading } from '../../../../../context/LoadingContext'
+import validate from '../validate'
+import Input from '../../../Form/Input'
+import SelectIcon from '../../../Form/Select/SelectIcon'
+import SubmitButton from '../../../Form/SubmitButton'
+import { notifyError, notifyInfo, notifySuccess } from '../../../Comman/Notification/Notification'
 
 function Add() {
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ function Add() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/social-details', { replace: true })
+            navigate('/admin/social-details', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {

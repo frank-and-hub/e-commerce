@@ -43,7 +43,7 @@ function Add() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/plans', { replace: true })
+            navigate('/admin/plans', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {

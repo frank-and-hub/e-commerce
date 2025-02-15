@@ -65,7 +65,7 @@ function List() {
             <section className={`section`}>
                 <div className={`card-head`}>
                     <div className={`card-title`}>
-                        <p className='p-0 m-0 btn' onClick={() => (navigate('/settings/faqs/create', true))} > Frequently Asked Questions  </p>
+                        <p className='p-0 m-0 btn' onClick={() => (navigate('/admin/settings/faqs/create', true))} > Frequently Asked Questions  </p>
                     </div>
                 </div>
                 <div className={`row`}>

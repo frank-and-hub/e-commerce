@@ -35,7 +35,7 @@ function Add() {
       if (res) {
         resetForm()
         notifySuccess(res.message)
-        navigate('/settings/faqs', true);
+        navigate('/admin/settings/faqs', true);
       }
     } catch (err) {
       console.error(err.message);

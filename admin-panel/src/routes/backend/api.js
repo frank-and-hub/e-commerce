@@ -11,7 +11,6 @@ const routes = [
     { path: '/api/services', module: require('../services') },
     { path: '/api/dashboard', module: require('../dashboard') },
     { path: '/api/permissions', module: require('../permissions') },
-    { path: '/api/designations', module: require('../designations') },
     { path: '/api/testimonials', module: require('../testimonials') },
     { path: '/api/about-details', module: require('../about_details') },
     { path: '/api/social-details', module: require('../social_details') },

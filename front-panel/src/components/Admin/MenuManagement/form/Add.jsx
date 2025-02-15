@@ -38,7 +38,7 @@ function Add() {
       const res = await post('/menus', values);
       if (res) {
         resetForm()
-        navigate('/menus', true);
+        navigate('/admin/menus', true);
       }
       notifySuccess(res.message)
     } catch (err) {

@@ -39,14 +39,10 @@ exports.signIn = async (req, res, next) => {
         }
         // fetch user data
         const userData = await User.findOne({ email: email, status: status_active })
-            .select('_id name email phone password password_text role designations image gender address about city state zipcode terms status updated_by')
+            .select('_id name email phone password password_text role image gender address about city state zipcode terms status updated_by')
             .populate('role', '_id name')
             .populate('updated_by', '_id name')
-            .populate('image', '_id name path')
-            .populate({
-                path: 'designations',
-                select: '_id name'
-            });
+            .populate('image', '_id name path');
         // check user data
         if (!userData) return res.status(401).json({ message: `User not found!` });
         // check password validation
@@ -74,7 +70,6 @@ exports.signIn = async (req, res, next) => {
 
         const userWithDetails = {
             ...userData.toObject(),
-            designations: await helper.filterData(userData.designations),
             social_details,
         };
 

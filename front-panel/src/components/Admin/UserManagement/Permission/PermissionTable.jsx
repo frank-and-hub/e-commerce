@@ -38,7 +38,7 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
                 const res = await post(`/users/${user_id}/permssions`, transformData(values));
                 notifySuccess(res.message)
             }
-            navigate('/users/permissions', { replace: true })
+            navigate('/admin/users/permissions', { replace: true })
         } catch (err) {
             console.error(err.message);
         } finally {

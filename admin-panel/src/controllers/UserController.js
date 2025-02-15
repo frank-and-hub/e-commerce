@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const Role = require('../models/role');
 const File = require('../models/file');
-const Designation = require('../models/designation');
 const SocialDetail = require('../models/social_detail');
 const UserPermission = require('../models/user_permission');
 
@@ -58,12 +57,8 @@ exports.index = async (req, res, next) => {
         });
 
         const query = User.find(filter)
-            .select('_id name email phone gender image status role about designations updated_by')
+            .select('_id name email phone gender image status role about updated_by')
             .populate('role', '_id name')
-            .populate({
-                path: 'designations',
-                select: '_id name'
-            })
             .populate('updated_by', '_id name')
             .populate('image', '_id name path');
 
@@ -78,7 +73,7 @@ exports.index = async (req, res, next) => {
         if (users.length === 0) return res.status(200).json({ message: `Users not found!`, data: [] });
 
         const userPromises = users.map(async (user) => {
-            const { _id, name, email, phone, gender, role, image, designations, status } = user;
+            const { _id, name, email, phone, gender, role, image, status } = user;
 
             return {
                 'id': _id,
@@ -88,7 +83,6 @@ exports.index = async (req, res, next) => {
                 'gender': gender,
                 'role': role,
                 'image': image,
-                'designations': designations,
                 'status': status,
             }
         });
@@ -118,7 +112,6 @@ exports.create = (req, res, next) => {
                 'phone': 'Digits',
                 'password': 'String',
                 'role_id': 'SchemaId',
-                'designations': 'Array of SchemaId'
             },
             title: 'Add user'
         });
@@ -128,7 +121,7 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, email, phone, password, role_id, designations } = req.body;
+    const { name, email, phone, password, role_id } = req.body;
     try {
         let userId = req?.userData?.id;
 
@@ -138,17 +131,13 @@ exports.store = async (req, res, next) => {
         const roleData = await Role.findById(role_id).select('_id').where('status').equals(status_active);
         if (!roleData) return res.status(401).json({ message: unauthorized });
 
-        const foundDesignations = await Designation.find({ _id: { $in: designations }, status: status_active }).select('_id name');
-        if (foundDesignations.length !== designations.length) return res.status(404).json({ message: 'One or more active designations not found' });
-
-        const newData = await insertUser(req.body, userId, foundDesignations.map(p => p._id));
+        const newData = await insertUser(req.body, userId);
 
         const response = {
             'id': newData?._id,
             'name': newData?.name,
             'email': newData?.email,
             'phone': newData?.phone,
-            'designations': newData?.designations,
             'role': newData?.role,
             'password': password,
         }
@@ -169,7 +158,6 @@ exports.show = async (req, res, next) => {
 
         const userWithDetails = {
             ...userData.toObject(),
-            designations: await helper.filterData(userData?.designations),
             social_details,
         };
         res.status(200).json({ message: `User founded`, data: userWithDetails, title: `View ${userData?.name} user detail` });
@@ -182,7 +170,7 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const userData = await selectUser(id, res);
-        const { _id, name, email, phone, password_text, role, designations } = userData;
+        const { _id, name, email, phone, password_text, role } = userData;
         const userResponses = {
             '_id': _id,
             'name': name,
@@ -190,7 +178,6 @@ exports.edit = async (req, res, next) => {
             'phone': phone,
             'password': password_text,
             'role_id': role?._id,
-            'designations': await helper.filterData(designations),
         }
         res.status(200).json({ message: `User details founded`, data: userResponses, title: `Edit ${userData?.name} user detail` });
     } catch (err) {
@@ -221,17 +208,11 @@ exports.update = async (req, res, next) => {
             updateOps['phone'] = updateOps.phone.replace('-', '').replace('-', '').replace(' ', '');
         }
 
-        const designationsId = updateOps['designations'];
-
-        const Designations = await Designation.find({ _id: { $in: designationsId } }).select('_id name');
-
-        if (designationsId && Designations?.length !== designationsId?.length) return res.status(404).json({ message: 'One or more designations not found' });
-
         const result = await User.updateOne({ _id: id }, { $set: updateOps });
 
         if (result.modifiedCount > 0) {
             const updatedUser = await selectUser(id, res);
-            const { _id, name, email, phone, gender, role, image, about, designations } = updatedUser;
+            const { _id, name, email, phone, gender, role, image, about } = updatedUser;
             const userData = {
                 'id': _id,
                 'name': name,
@@ -241,7 +222,6 @@ exports.update = async (req, res, next) => {
                 'role': role,
                 'image': image,
                 'about': about,
-                'designations': designations
             }
             return res.status(200).json({ message: `User details updated successfully`, data: userData });
         }
@@ -270,7 +250,6 @@ exports.destroy = async (req, res, next) => {
                     'email': 'string',
                     'password': 'string',
                     'role': 'ID',
-                    'designations': 'Array of SchemaId'
                 }
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });

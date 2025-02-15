@@ -112,16 +112,6 @@ const menuSeederData = [
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "Designation",
-    route: "designations",
-    type: true,
-    icon: "bi bi-person-lines-fill",
-    parent: null,
-    status: true,
-    deleted_at: null
-  },
-  {
-    _id: new mongoose.Types.ObjectId(),
     name: "Role",
     route: "roles",
     type: true,

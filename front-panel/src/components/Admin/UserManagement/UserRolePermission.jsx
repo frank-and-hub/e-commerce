@@ -30,7 +30,7 @@ function UserRolePermission() {
     notifyInfo(values);
     validateSubmit(e);
     if (errors && Object.keys(errors).length > 0) {
-      console.info(`Form validation failed : `);
+      // console.info(`Form validation failed : `);
       console.table(errors);
       return false;
     }

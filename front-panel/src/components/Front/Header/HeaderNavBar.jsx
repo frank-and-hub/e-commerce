@@ -22,6 +22,9 @@ class HeaderNavBar extends Component {
                         <li className="nav-item">
                             <Link className="nav-link" to={`#`}  data-bs-toggle="modal" data-bs-target="#templatemo_login" >Login</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to={`admin`} >Admin</Link>
+                        </li>
                     </ul>
                 </div>
             </>

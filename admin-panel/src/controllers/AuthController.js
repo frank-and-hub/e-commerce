@@ -111,7 +111,7 @@ exports.signUp = async (req, res, next) => {
         const existsUser = await User.findOne({ email: email });
         if (existsUser) return res.status(409).json({ message: `User already exists` });
 
-        const roleResponse = await RoleController.getGuestRole();
+        const roleResponse = await RoleController.getGuestRole('guest-user');
         const guestRoleId = roleResponse?.roleId ?? roleResponse;
 
         const hashPassword = await AuthServices.hashPassword(password);

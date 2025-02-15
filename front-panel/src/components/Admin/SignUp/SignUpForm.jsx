@@ -9,10 +9,11 @@ import { notifySuccess } from '../Comman/Notification/Notification'
 import { generateRandomString } from '../../../utils/helper'
 
 export const SignUpForm = () => {
-    const token = useSelector((state) => (state.auth.token));
-    const { register } = useAuth();
+
     const navigate = useNavigate();
+    const { register } = useAuth();
     const [isPending, startTransition] = useTransition();
+    const token = useSelector((state) => (state.auth.token));
 
     const initialState = {
         name: '',
@@ -29,7 +30,7 @@ export const SignUpForm = () => {
         validateSubmit(e);
 
         if (errors && Object.keys(errors).length > 0) {
-            console.info(`Form validation failed : `);
+            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

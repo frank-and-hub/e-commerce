@@ -335,7 +335,6 @@ const seedUserData = async () => {
         }
       }
     }
-
     console.log('data seeded successfully');
   } catch (err) {
     console.error('Error seeding data:', err);

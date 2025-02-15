@@ -28,9 +28,9 @@ export default function validate(values) {
     }
 
     // Terms and conditions validation
-    if (!values.terms) {
-        errors.terms = 'You must agree to the terms and conditions';
-    }
+    // if (!values.terms) {
+    //     errors.terms = 'You must agree to the terms and conditions';
+    // }
 
     return errors;
 }

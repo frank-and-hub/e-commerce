@@ -28,7 +28,7 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
         e.preventDefault();
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            console.info(`Form validation failed : `);
+            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

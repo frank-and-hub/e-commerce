@@ -4,8 +4,9 @@ import ReportsChart from './ReportsChart'
 import { useDashboard } from '../../../context/DashBoardContext'
 import { ucwords } from '../../../utils/helper'
 
-export const ReportGraph = () => {
+export const ReportGraph = ({ reportDataChart }) => {
     const { reportFilter, setReportFilter } = useDashboard();
+
     return (
         <>
             <div className="col-12">
@@ -13,7 +14,7 @@ export const ReportGraph = () => {
                     <Filter setFilterFunction={setReportFilter} />
                     <div className={`card-body`}>
                         <h5 className="card-title">Reports <span>| {ucwords(reportFilter)}</span></h5>
-                        <ReportsChart />
+                        <ReportsChart reportDataChart={reportDataChart} />
                     </div>
                 </div>
             </div>

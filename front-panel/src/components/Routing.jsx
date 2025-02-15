@@ -42,16 +42,16 @@ import MenuTable from './Admin/MenuManagement/MenuTable'
 import MenuAdd from './Admin/MenuManagement/form/Add'
 import MenuEdit from './Admin/MenuManagement/form/Edit'
 import MenuView from './Admin/MenuManagement/form/View'
-// service
-import ServiceTable from './Admin/ServiceManagement/ServiceTable'
-import ServiceAdd from './Admin/ServiceManagement/form/Add'
-import ServiceEdit from './Admin/ServiceManagement/form/Edit'
-import ServiceView from './Admin/ServiceManagement/form/View'
-// testimonials
-import TestimonialTable from './Admin/TestimonialManagement/TestimonialTable'
-import TestimonialAdd from './Admin/TestimonialManagement/form/Add'
-import TestimonialEdit from './Admin/TestimonialManagement/form/Edit'
-import TestimonialView from './Admin/TestimonialManagement/form/View'
+// // service
+// import ServiceTable from './Admin/ServiceManagement/ServiceTable'
+// import ServiceAdd from './Admin/ServiceManagement/form/Add'
+// import ServiceEdit from './Admin/ServiceManagement/form/Edit'
+// import ServiceView from './Admin/ServiceManagement/form/View'
+// // testimonials
+// import TestimonialTable from './Admin/TestimonialManagement/TestimonialTable'
+// import TestimonialAdd from './Admin/TestimonialManagement/form/Add'
+// import TestimonialEdit from './Admin/TestimonialManagement/form/Edit'
+// import TestimonialView from './Admin/TestimonialManagement/form/View'
 // contacts
 import ContactTable from './Admin/ContactManagement/ContactTable'
 import ContactView from './Admin/ContactManagement/form/View'
@@ -61,16 +61,16 @@ import SocialDetailAdd from './Admin/SettingManagement/SocialDetail/form/Add'
 import SocialDetailEdit from './Admin/SettingManagement/SocialDetail/form/Edit'
 import SocialDetailView from './Admin/SettingManagement/SocialDetail/form/View'
 // projects
-import ProjectTable from './Admin/ProjectManagement/ProjectTable'
-import ProjectAdd from './Admin/ProjectManagement/form/Add'
-import ProjectEdit from './Admin/ProjectManagement/form/Edit'
-import ProjectView from './Admin/ProjectManagement/form/View'
-// plas
-import PlanTable from './Admin/PlanManagement/PlanTable'
-// import PlanAdd from './Admin/PlanManagement/form/Add'
-import PlanEdit from './Admin/PlanManagement/form/Edit'
-import PlanView from './Admin/PlanManagement/form/View'
-import { CreatePlan } from '../controllers/planController'
+// import ProjectTable from './Admin/ProjectManagement/ProjectTable'
+// import ProjectAdd from './Admin/ProjectManagement/form/Add'
+// import ProjectEdit from './Admin/ProjectManagement/form/Edit'
+// import ProjectView from './Admin/ProjectManagement/form/View'
+// // plas
+// import PlanTable from './Admin/PlanManagement/PlanTable'
+// // import PlanAdd from './Admin/PlanManagement/form/Add'
+// import PlanEdit from './Admin/PlanManagement/form/Edit'
+// import PlanView from './Admin/PlanManagement/form/View'
+// import { CreatePlan } from '../controllers/planController'
 
 import FrontLayout from './Front/Index/FrontLayout'
 import FrontPage from './Front/Page/FrontPage/FrontPage'
@@ -143,11 +143,23 @@ class Routing extends Component {
                                 </Route>
                             </Route>
 
-                            <Route path={`projects`}>
-                                <Route index element={<ProjectTable />} />
-                                <Route path={`create`} element={<ProjectAdd />} />
-                                <Route path={`:id/edit`} element={<ProjectEdit />} />
-                                <Route path={`:id`} element={<ProjectView />} />
+                            <Route path={`products`}>
+                                <Route index element={<Blank />} />
+                                <Route path={`create`} element={<Blank />} />
+                                <Route path={`:id/edit`} element={<Blank />} />
+                                <Route path={`:id`} element={<Blank />} />
+                                <Route path={`category`}>
+                                    <Route index element={<Blank />} />
+                                    <Route path={`create`} element={<Blank />} />
+                                    <Route path={`:id/edit`} element={<Blank />} />
+                                    <Route path={`:id`} element={<Blank />} />
+                                </Route>
+                                <Route path={`sub-category`}>
+                                    <Route index element={<Blank />} />
+                                    <Route path={`create`} element={<Blank />} />
+                                    <Route path={`:id/edit`} element={<Blank />} />
+                                    <Route path={`:id`} element={<Blank />} />
+                                </Route>
                             </Route>
 
                             <Route path={`contacts`}>
@@ -155,28 +167,27 @@ class Routing extends Component {
                                 <Route path={`:id`} element={<ContactView />} />
                             </Route>
 
-                            <Route path={`testimonials`}>
-                                <Route index element={<TestimonialTable />} />
-                                <Route path={`create`} element={<TestimonialAdd />} />
-                                <Route path={`:id/edit`} element={<TestimonialEdit />} />
-                                <Route path={`:id`} element={<TestimonialView />} />
+                            <Route path={`banners`}>
+                                <Route index element={<Blank />} />
+                                <Route path={`create`} element={<Blank />} />
+                                <Route path={`:id/edit`} element={<Blank />} />
+                                <Route path={`:id`} element={<Blank />} />
                             </Route>
 
 
-                            <Route path={`plans`}>
-                                <Route index element={<PlanTable />} />
-                                {/* <Route path={`create`} element={<PlanAdd />} /> */}
-                                <Route path={`create`} element={<CreatePlan />} />
-                                <Route path={`:id/edit`} element={<PlanEdit />} />
-                                <Route path={`:id`} element={<PlanView />} />
+                            <Route path={`brands`}>
+                                <Route index element={<Blank />} />
+                                <Route path={`create`} element={<Blank />} />
+                                <Route path={`:id/edit`} element={<Blank />} />
+                                <Route path={`:id`} element={<Blank />} />
                             </Route>
 
-                            <Route path={`services`}>
-                                <Route index element={<ServiceTable />} />
-                                <Route path={`create`} element={<ServiceAdd />} />
-                                <Route path={`:id/edit`} element={<ServiceEdit />} />
-                                <Route path={`:id`} element={<ServiceView />} />
-                            </Route>
+                            {/* <Route path={`services`}>
+                                <Route index element={<Blank />} />
+                                <Route path={`create`} element={<Blank />} />
+                                <Route path={`:id/edit`} element={<Blank />} />
+                                <Route path={`:id`} element={<Blank />} />
+                            </Route> */}
 
                             <Route path={`payments`}>
                                 <Route index element={<Blank />} />

@@ -93,7 +93,7 @@ const TermsAndConditions = () => {
                 <div className='card'>
                     <div className='card-body'>
                         {!loading && (!inState
-                            ? (<div className='p-3 text-capitalize'>
+                            ? (<div className='py-3 px-2 text-horizontal'>
                                 {values.t_and_c ?? response?.t_and_c}
                             </div>)
                             : (

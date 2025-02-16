@@ -13,6 +13,7 @@ import activeMenuSlice from './activeMenuSlice'
 import activeSubMenuSlice from './activeSubMenuSlice'
 import selectUserSlice from './Select/userSlice'
 import selectRoleSlice from './Select/roleSlice'
+import selectCategorySlice from './Select/categorySlice'
 
 const rootReducer = combineReducers({
     menu: menuReducer,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     active_menu: activeMenuSlice,
     active_sub_menu: activeSubMenuSlice,
     selectUser: selectUserSlice,
-    selectRole: selectRoleSlice
+    selectRole: selectRoleSlice,
+    selectCategory: selectCategorySlice,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

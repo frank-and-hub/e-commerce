@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { useFormValidation } from '../../Form/FormValidation'
-import validate from '../validate'
-import SubmitButton from '../../Form/SubmitButton'
-import Input from '../../Form/Input'
-import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import SelectIcon from '../../Form/Select/SelectIcon'
-import { formattedData } from '../../../../utils/helper'
+import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { processNotifications } from '../../../../utils/notificationUtils'
-import { get, patch } from '../../../../utils/AxiosUtils'
-import Textarea from '../../Form/Textarea'
+import { SidebarContext } from '../../../../context/SidebarContext'
 import { useLoading } from '../../../../context/LoadingContext'
+import { useFormValidation } from '../../Form/FormValidation'
+import { get, patch } from '../../../../utils/AxiosUtils'
+import { formattedData, ucwords } from '../../../../utils/helper'
+import SelectForm from '../../Form/Select/SelectForm'
+import SelectIcon from '../../Form/Select/SelectIcon'
+import SubmitButton from '../../Form/SubmitButton'
+import Textarea from '../../Form/Textarea'
+import Input from '../../Form/Input'
+import validate from '../validate'
 
 function Edit() {
     const { id } = useParams();
@@ -19,10 +21,13 @@ function Edit() {
     const navigate = useNavigate();
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
+    const { selectCategoryData } = useContext(SidebarContext);
+    const [categoryDataOptions, setCategoryDataOptions] = useState([]);
 
     const initialState = {
         name: '',
         icon: '',
+        category: '',
         description: ''
     };
 
@@ -63,11 +68,15 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [getData] = await Promise.all([
-                    get(`/categories/${id}`),
+                    get(`/sub-categories/${id}`),
                 ]);
-
                 setValues(getData?.data || {});
 
+                const Options = selectCategoryData?.data?.map((val, index) => ({
+                    value: val?.id,
+                    label: `${ucwords(val?.name)}`
+                }));
+                setCategoryDataOptions(Options || []);
                 processNotifications(200, getData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
@@ -76,8 +85,7 @@ function Edit() {
         if (id) {
             fetchData();
         }
-    }, [dispatch, setValues, id]);
-
+    }, [dispatch, setValues, id, selectCategoryData]);
     return (
         <>
             <div className='card'>
@@ -89,6 +97,9 @@ function Edit() {
                             <label htmlFor="icon" className="form-label">Icon <span className='text-danger'>*</span></label>
                             <SelectIcon id="icon" value={values.icon} handleChange={handleChange} error={errors.icon} />
                             {errors.icon && <div className="invalid-feedback">{errors.icon}</div>}
+                        </div>
+                        <div className="col-md-4">
+                            <SelectForm id={`category`} label={`category`} value={values.category?._id} handleChange={handleChange} error={errors.category} required={true} Options={categoryDataOptions} />
                         </div>
                         <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <div className="col-12">

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const SubCategory = require('../models/sub_category');
+const Category = require('../models/category');
 const User = require('../models/user');
 
 // helper function
@@ -17,7 +18,6 @@ const constName = 'sub-sub_categories/';
 
 exports.index = async (req, res, next) => {
     try {
-
         const page = parseInt(req?.query?.page) || 1;
         const limit = parseInt(req?.query?.limit) || parseInt(data_limit);
 
@@ -67,9 +67,9 @@ exports.index = async (req, res, next) => {
                 'name': name,
                 'icon': icon,
                 'description': description,
-                'status': status,
                 'user': user,
                 'category': category,
+                'status': status,
             }
         });
         const sub_categoryResponses = await Promise.all(sub_categoryPromises);

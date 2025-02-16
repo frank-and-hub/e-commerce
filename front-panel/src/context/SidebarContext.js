@@ -12,6 +12,7 @@ import { setMenuData } from '../store/MenuRedux/menuActions'
 import { setRole } from '../store/roleSlice'
 import { setSelectUser } from '../store/Select/userSlice'
 import { setSelectRole } from '../store/Select/roleSlice'
+import { setSelectCategory } from '../store/Select/categorySlice'
 
 export const SidebarContext = createContext();
 
@@ -29,6 +30,7 @@ export const SidebarProvider = ({ children }) => {
     const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');
     const selectUserData = useSelector((state) => (state.selectUser.selectUserData));
     const selectRoleData = useSelector((state) => (state.selectRole.selectRoleData));
+    const selectCategoryData = useSelector((state) => (state.selectCategory.selectCategoryData));
 
     useEffect(() => {
         const fetchData = async (token) => {
@@ -38,11 +40,12 @@ export const SidebarProvider = ({ children }) => {
             // console.log(`token is still hear ${token}`)
             try {
                 // console.trace();
-                const [roleData, sideBarData, permissionData, userSelectData] = await Promise.all([
+                const [roleData, sideBarData, permissionData, userSelectData, categorySelectData] = await Promise.all([
                     get('/roles'),
                     get('/menus'),
                     get('/permissions'),
-                    get('/users?page=0')
+                    get('/users?page=0'),
+                    get('/categories?page=0')
                 ]);
 
                 if (!user) {
@@ -50,14 +53,15 @@ export const SidebarProvider = ({ children }) => {
                     dispatch(setUser({ user: LoadUser }));
                 }
 
-                dispatch(setRole({ role: roleData?.response }));
-                dispatch(setSelectRole({ selectRole: roleData?.response }));
-                dispatch(setSideBar(sideBarData?.response?.data));
+                setMenus(sideBarData?.response);
                 dispatch(setMenuData(sideBarData?.response));
+                dispatch(setRole({ role: roleData?.response }));
+                dispatch(setSideBar(sideBarData?.response?.data));
+                dispatch(setSelectRole({ selectRole: roleData?.response }));
                 dispatch(setSelectUser({ selectUser: userSelectData?.response }));
                 dispatch(setPermission({ permission: permissionData?.response }));
+                dispatch(setSelectCategory({ selectCategory: categorySelectData?.response }));
 
-                setMenus(sideBarData?.response);
             } catch (err) {
                 notifyError(`Error fetching data: ${err.message}`);
                 if (err.status === 401) logout();
@@ -69,7 +73,7 @@ export const SidebarProvider = ({ children }) => {
     }, [logout, user, token, userId, setLoading, dispatch]);
 
     const propsAray = {
-        menus, loading, pathname, selectUserData, selectRoleData
+        menus, loading, pathname, selectUserData, selectRoleData, selectCategoryData
     };
 
     return (

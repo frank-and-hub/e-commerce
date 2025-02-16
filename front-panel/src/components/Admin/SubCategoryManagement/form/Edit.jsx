@@ -6,13 +6,12 @@ import Input from '../../Form/Input'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import SelectForm from '../../Form/Select/SelectForm'
+import SelectIcon from '../../Form/Select/SelectIcon'
 import { formattedData } from '../../../../utils/helper'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { get, patch } from '../../../../utils/AxiosUtils'
 import Textarea from '../../Form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
-import { OptionsPaymentMethod, OptionsPaymentType } from '../../../../utils/selects'
 
 function Edit() {
     const { id } = useParams();
@@ -23,11 +22,8 @@ function Edit() {
 
     const initialState = {
         name: '',
-        description: '',
-        price: '',
-        currency: '',
-        payment_method: '',
-        payment_type: '',
+        icon: '',
+        description: ''
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -44,12 +40,12 @@ function Edit() {
         setLoading(true)
         try {
             const newValues = formattedData(values);
-            const res = await patch(`/plans/${id}`, newValues);
+            const res = await patch(`/sub-categories/${id}`, newValues);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/plans', { replace: true })
+            navigate('/admin/products/sub-categories', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -66,13 +62,13 @@ function Edit() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [serviceData] = await Promise.all([
-                    get(`/plans/${id}`),
+                const [getData] = await Promise.all([
+                    get(`/categories/${id}`),
                 ]);
 
-                setValues(serviceData?.data || {});
+                setValues(getData?.data || {});
 
-                processNotifications(200, serviceData?.message, dispatch);
+                processNotifications(200, getData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
             }
@@ -89,13 +85,10 @@ function Edit() {
                     <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
 
                         <Input name="name" label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <Input name="price" label="Price" value={values.price} onChange={handleChange} error={errors.price} required={true} inputType={true} />
-                        <Input name="currency" label="Currency" value={values.currency} onChange={handleChange} error={errors.currency} required={true} inputType={true} />
                         <div className="col-md-4">
-                            <SelectForm id="payment_method" value={values?.payment_method} handleChange={handleChange} error={errors.payment_method} required={true} disabled={false} label='Payment Method' Options={OptionsPaymentMethod} />
-                        </div>
-                        <div className="col-md-4">
-                            <SelectForm id="payment_type" value={values?.payment_type} handleChange={handleChange} error={errors.payment_type} required={true} disabled={false} label='Payment Type' Options={OptionsPaymentType} />
+                            <label htmlFor="icon" className="form-label">Icon <span className='text-danger'>*</span></label>
+                            <SelectIcon id="icon" value={values.icon} handleChange={handleChange} error={errors.icon} />
+                            {errors.icon && <div className="invalid-feedback">{errors.icon}</div>}
                         </div>
                         <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <div className="col-12">

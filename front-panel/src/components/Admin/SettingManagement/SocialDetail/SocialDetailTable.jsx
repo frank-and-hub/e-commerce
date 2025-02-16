@@ -11,7 +11,7 @@ import { ucwords } from '../../../../utils/helper'
 
 function SocialDetailTable() {
     const module = 'social-details';
-    const [showFilter, setShowFilter] = useState(true);
+    const [showFilter, setShowFilter] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});

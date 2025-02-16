@@ -170,8 +170,8 @@ const Table = ({
                 />);
                 break;
             case 'image':
-                const imageSrc = data?.path;
-                content = <div className={`w-25 rounded-25`} ><img src={`${imageSrc}`} className={`rounded-circle circle-image-small`} alt={`#`} /></div>;
+                const imageSrc = data?.image?.path;
+                content = imageSrc ? (<div className={`w-25 rounded-25`} ><img src={`${imageSrc}`} className={`rounded-circle circle-image-small`} alt={`#`} /></div>) : (<i className={`bi bi-card-image`}></i>);
                 break;
             default:
                 if (typeof item === 'object' && item !== null) {

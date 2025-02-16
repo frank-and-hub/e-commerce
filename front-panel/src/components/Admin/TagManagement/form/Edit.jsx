@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { formattedData } from '../../../../utils/helper'
-import Textarea from '../../Form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
 
 function Edit() {
@@ -21,8 +20,6 @@ function Edit() {
 
     const initialState = {
         name: '',
-        title: '',
-        description: '',
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -39,12 +36,12 @@ function Edit() {
         setLoading(true)
         try {
             const newValues = formattedData(values);
-            const res = await patch(`/testimonials/${id}`, newValues);
+            const res = await patch(`/tags/${id}`, newValues);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/testimonials', { replace: true })
+            navigate('/admin/products/tags', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -62,13 +59,13 @@ function Edit() {
         const fetchData = async () => {
             try {
 
-                const [testimonialData] = await Promise.all([
-                    get(`/testimonials/${id}`),
+                const [tagData] = await Promise.all([
+                    get(`/tags/${id}`),
                 ]);
 
-                setValues(testimonialData?.data || {});
+                setValues(tagData?.data || {});
 
-                processNotifications(200, testimonialData?.message, dispatch);
+                processNotifications(200, tagData?.message, dispatch);
             } catch (err) {
 
                 processNotifications(err.status || 500, err.message, dispatch);
@@ -86,9 +83,7 @@ function Edit() {
                     <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
 
                         <Input name="name" label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
-                        <Input name="title" label="Title" value={values?.title} onChange={handleChange} required={true} error={errors.title} inputType={true} disabled={false} />
-                        <Textarea onChange={handleChange} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
-
+                       
                         <div className="col-12">
                             <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
                         </div>

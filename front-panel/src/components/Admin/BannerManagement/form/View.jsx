@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { get } from '../../../../utils/AxiosUtils'
-import SelectIcon from '../../Form/Select/SelectIcon'
 import Input from '../../Form/Input'
 import Textarea from '../../Form/Textarea'
 import { useParams } from 'react-router-dom'
@@ -11,16 +10,18 @@ function View() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [values, setValues] = useState(null);
+    const [src, setSrc] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [serviceData] = await Promise.all([
-                    get(`/services/${id}`),
+                const [getData] = await Promise.all([
+                    get(`/banners/${id}`),
                 ]);
 
-                setValues(serviceData?.data || {});
-                processNotifications(200, serviceData?.message, dispatch);
+                setValues(getData?.data || {});
+                setSrc(getData?.data?.image?.path);
+                processNotifications(200, getData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
             }
@@ -39,11 +40,16 @@ function View() {
             <div className='card'>
                 <div className='card-body'>
                     <form encType={`multipart/form-data`} className=" row mt-3 g-3 needs-validation" noValidate>
-                        <Input name="name" label="Name" value={values?.name} required={false} inputType={true} disabled={true} />
-                        <div className="col-md-4">
-                            <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} label='Icon' required={false} disabled={true} />
+                        <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={(e) => e.preventDefault()} />
+                        <Input name="name" label="name" value={values?.name} required={false} inputType={true} disabled={true} />
+                        <Input name="title" label="title" value={values?.title} required={false} inputType={true} disabled={true} />
+                        <Input name="url" label="url" value={values?.url} required={false} inputType={true} disabled={true} />
+                        <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} label={`Description`} required={false} disabled={true} />
+                        <div className='col-md-4'>
+                            <div className='cursor-none'>
+                                <img src={src} alt={`Banner`} className={`rounded-25 col-md-6`} onClick={(e) => e.preventDefault()} style={{ cursor: 'pointer' }} />
+                            </div>
                         </div>
-                        <Textarea onChange={handleChange} name={`description`} value={values?.description} label={`Description`} required={false} disabled={true} />
                         <div className="col-12">
                         </div>
                     </form>

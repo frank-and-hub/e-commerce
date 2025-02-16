@@ -55,7 +55,7 @@ exports.index = async (req, res, next) => {
         }
 
         const categories = await query;
-
+        
         if (categories.length === 0) return res.status(200).json({ message: `No categories found`, data: [] });
 
         const categoryPromises = categories.map(async (category) => {
@@ -65,10 +65,7 @@ exports.index = async (req, res, next) => {
                 'name': name,
                 'icon': icon,
                 'description': description,
-                'user': user,
                 'status': status
-                // 'updated_by': updated_by,
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const categoryResponses = await Promise.all(categoryPromises);

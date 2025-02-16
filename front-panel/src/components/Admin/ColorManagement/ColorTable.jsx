@@ -7,8 +7,8 @@ import { useFormValidation } from '../Form/FormValidation'
 import { useLoading } from '../../../context/LoadingContext'
 
 function ColorTable() {
-    const module = 'color';
-    const [showFilter, setShowFilter] = useState(true);
+    const module = 'colors';
+    const [showFilter, setShowFilter] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});

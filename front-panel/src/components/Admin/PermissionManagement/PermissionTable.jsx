@@ -9,7 +9,7 @@ import SelectForm from '../Form/Select/SelectForm'
 
 function PermissionTable() {
     const module = 'permissions';
-    const [showFilter, setShowFilter] = useState(true);
+    const [showFilter, setShowFilter] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});

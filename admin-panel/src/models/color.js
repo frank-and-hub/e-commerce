@@ -4,7 +4,7 @@ const colorSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true, trim: true, unique: true, set: (value) => value.toLowerCase() },
-    code: { type: String, required: true, trim: true, unique: true },
+    hex_code: { type: String, required: true, trim: true },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }

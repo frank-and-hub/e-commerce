@@ -7,7 +7,7 @@ import { useAuth } from '../../../utils/AuthContext'
 import { checkFileValidation } from './../../../utils/helper.js'
 
 function ProfileCard({ user }) {
-    const [src, setSrc] = useState('/admin-assets/img/profile-img.jpg');
+    const [src, setSrc] = useState('/img/profile-img.jpg');
     const { loadUser } = useAuth();
 
     const baseUrl = config.reactApiUrl;
@@ -41,7 +41,7 @@ function ProfileCard({ user }) {
     };
 
     useEffect(() => {
-        setSrc(user?.image?.path ?? `/admin-assets/img/profile-img.jpg`);
+        setSrc(user?.image?.path ?? `/admin/img/profile-img.jpg`);
     }, [user, src]);
 
     return (

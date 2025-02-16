@@ -10,7 +10,7 @@ import { useLoading } from '../../../context/LoadingContext'
 
 function UsersTable() {
     const module = 'users';
-    const [showFilter, setShowFilter] = useState(true);
+    const [showFilter, setShowFilter] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});

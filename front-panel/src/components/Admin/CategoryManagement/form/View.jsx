@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { get } from '../../../../utils/AxiosUtils'
-import SelectForm from '../../Form/Select/SelectForm'
+import SelectIcon from '../../Form/Select/SelectIcon'
 import Input from '../../Form/Input'
 import Textarea from '../../Form/Textarea'
 import { useParams } from 'react-router-dom'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { useDispatch } from 'react-redux'
-import { OptionsPaymentMethod, OptionsPaymentType } from '../../../../utils/selects'
 
 function View() {
     const { id } = useParams();
@@ -16,12 +15,12 @@ function View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [serviceData] = await Promise.all([
-                    get(`/plans/${id}`),
+                const [getData] = await Promise.all([
+                    get(`/categories/${id}`),
                 ]);
 
-                setValues(serviceData?.data || {});
-                processNotifications(200, serviceData?.message, dispatch);
+                setValues(getData?.data || {});
+                processNotifications(200, getData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
             }
@@ -41,13 +40,8 @@ function View() {
                 <div className='card-body'>
                     <form encType={`multipart/form-data`} className=" row mt-3 g-3 needs-validation" noValidate>
                         <Input name="name" label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-                        <Input name="price" label="Price" value={values?.price} onChange={handleChange} required={false} inputType={true} disabled={true} />
-                        <Input name="currency" label="Currency" value={values?.currency} onChange={handleChange} required={false} inputType={true} disabled={true} />
                         <div className="col-md-4">
-                            <SelectForm id="payment_method" value={values?.payment_method} handleChange={handleChange} required={false} disabled={true} label='Payment Method' Options={OptionsPaymentMethod} />
-                        </div>
-                        <div className="col-md-4">
-                            <SelectForm id="payment_type" value={values?.payment_type} handleChange={handleChange} required={false} disabled={true} label='Payment Type' Options={OptionsPaymentType} />
+                            <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={false} required={false} disabled={true} label='Icon' />
                         </div>
                         <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
                         <div className="col-12">

@@ -5,12 +5,18 @@ module.exports = (err, req, res, next) => {
     const statusCode = err.status || 500;
     const errorType = config.ERROR_CODES[statusCode] || 'UnknownError';
 
+    let ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
+    if (ip.includes("::ffff:")) {
+        ip = ip.split("::ffff:")[1];
+    }
+
     const errorLog = new ErrorLog({
         route: req.originalUrl,
         statusCode: statusCode,
         errorMessage: err.message,
         errorType: errorType,
-        stackTrace: err.stack
+        stackTrace: err.stack,
+        IP: ip
     });
 
     errorLog.save()

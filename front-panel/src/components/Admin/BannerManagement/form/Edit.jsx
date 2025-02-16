@@ -6,12 +6,13 @@ import Input from '../../Form/Input'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import SelectIcon from '../../Form/Select/SelectIcon'
-import { formattedData } from '../../../../utils/helper'
+import { checkFileValidation, formattedData } from '../../../../utils/helper'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { get, patch } from '../../../../utils/AxiosUtils'
 import Textarea from '../../Form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
+import config from '../../../../config'
+import api from '../../../../utils/api'
 
 function Edit() {
     const { id } = useParams();
@@ -19,11 +20,14 @@ function Edit() {
     const navigate = useNavigate();
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
+    const [src, setSrc] = useState('');
+    const baseUrl = config.reactApiUrl;
 
     const initialState = {
         name: '',
-        icon: '',
-        description: ''
+        title: '',
+        description: '',
+        url: ''
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -40,12 +44,12 @@ function Edit() {
         setLoading(true)
         try {
             const newValues = formattedData(values);
-            const res = await patch(`/services/${id}`, newValues);
+            const res = await patch(`/banners/${id}`, newValues);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/services', { replace: true })
+            navigate('/admin/banners', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -62,13 +66,13 @@ function Edit() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [serviceData] = await Promise.all([
-                    get(`/services/${id}`),
+                const [getData] = await Promise.all([
+                    get(`/banners/${id}`),
                 ]);
 
-                setValues(serviceData?.data || {});
-
-                processNotifications(200, serviceData?.message, dispatch);
+                setValues(getData?.data || {});
+                setSrc(getData?.data?.image?.path);
+                processNotifications(200, getData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
             }
@@ -78,18 +82,39 @@ function Edit() {
         }
     }, [dispatch, setValues, id]);
 
+    const handleFileUpload = async (e) => {
+        const formData = checkFileValidation(e) ? e.target.files[0] : null;
+        const imageUrl = URL.createObjectURL(formData);
+        setSrc(imageUrl);
+        values.image = formData;
+        await api({
+            method: 'post',
+            url: `${baseUrl}/banners/${id}/image`,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }, data: values
+        });
+    };
+
+    const handleClick = (e) => {
+        document.getElementById('imageInput').click();
+    };
+
     return (
         <>
             <div className='card'>
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-
-                        <Input name="name" label="Name" value={values?.name} required={true} error={errors.name} inputType={true} disabled={false} onChange={handleChange} />
-                        <div className="col-md-4">
-                            <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={errors.icon} label='Icon' required={true} disabled={false} />
+                        <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
+                        <Input name="name" label="name" value={values?.name} required={true} error={errors.name} inputType={true} disabled={false} onChange={handleChange} />
+                        <Input name="title" label="title" value={values?.title} required={true} error={errors.title} inputType={true} disabled={false} onChange={handleChange} />
+                        <Input name="url" label="url" value={values?.url} required={false} error={errors.url} inputType={true} disabled={false} onChange={handleChange} />
+                        <Textarea onChange={handleChange} className={`w-100`} name={`description`} error={errors.description} value={values?.description} label={`Description`} required={true} disabled={false} />
+                        <div className='col-md-4'>
+                            <div className='cursor-none'>
+                                <img src={src} alt={`Brand`} className={`rounded-25 col-md-6`} onClick={handleClick} style={{ cursor: 'pointer' }} />
+                            </div>
                         </div>
-                        <Textarea onChange={handleChange} name={`description`} error={errors.description} value={values?.description} label={`Description`} required={true} disabled={false} />
-
                         <div className="col-12">
                             <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
                         </div>

@@ -17,8 +17,11 @@ router.route('/')
 
 router.route('/:id')
     .get(checkAuth, checkPermission(fileName, 'read'), BannerController.show)
-    .patch(checkAuth, helper.fileImageUpload.single('image'), checkPermission(fileName, 'edit'), BannerController.update)
+    .patch(checkAuth, checkPermission(fileName, 'edit'), BannerController.update)
     .delete(checkAuth, checkPermission(fileName, 'delete'), BannerController.destroy);
+
+// update image
+router.post('/:id/image', helper.fileImageUpload.single('image'), checkAuth, checkPermission(fileName, 'edit'), BannerController.image);
 
 // get form
 router.route('/get/create').get(checkAuth, checkPermission(fileName, 'create'), BannerController.create);

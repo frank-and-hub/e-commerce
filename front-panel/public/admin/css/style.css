@@ -1617,3 +1617,7 @@ i {
 .modal-content {
   background-color: var(--background);
 }
+
+.form-control{
+  min-height: 38px !important;
+}

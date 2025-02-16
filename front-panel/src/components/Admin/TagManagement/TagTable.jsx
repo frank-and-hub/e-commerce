@@ -8,7 +8,7 @@ import { useLoading } from '../../../context/LoadingContext'
 
 function TagTable() {
     const module = 'tags';
-    const [showFilter, setShowFilter] = useState(true);
+    const [showFilter, setShowFilter] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});

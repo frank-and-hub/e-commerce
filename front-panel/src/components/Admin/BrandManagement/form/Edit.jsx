@@ -6,13 +6,13 @@ import Input from '../../Form/Input'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import SelectForm from '../../Form/Select/SelectForm'
-import { formattedData } from '../../../../utils/helper'
+import { checkFileValidation, formattedData } from '../../../../utils/helper'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { get, patch } from '../../../../utils/AxiosUtils'
 import Textarea from '../../Form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
-import { OptionsPaymentMethod, OptionsPaymentType } from '../../../../utils/selects'
+import api from '../../../../utils/api'
+import config from '../../../../config'
 
 function Edit() {
     const { id } = useParams();
@@ -20,6 +20,8 @@ function Edit() {
     const navigate = useNavigate();
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
+    const [src, setSrc] = useState('');
+    const baseUrl = config.reactApiUrl;
 
     const initialState = {
         name: '',
@@ -44,12 +46,12 @@ function Edit() {
         setLoading(true)
         try {
             const newValues = formattedData(values);
-            const res = await patch(`/plans/${id}`, newValues);
+            const res = await patch(`/brands/${id}`, newValues);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/plans', { replace: true })
+            navigate('/admin/brands', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -67,11 +69,11 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [serviceData] = await Promise.all([
-                    get(`/plans/${id}`),
+                    get(`/brands/${id}`),
                 ]);
 
                 setValues(serviceData?.data || {});
-
+                setSrc(serviceData?.data?.image?.path);
                 processNotifications(200, serviceData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
@@ -82,21 +84,36 @@ function Edit() {
         }
     }, [dispatch, setValues, id]);
 
+    const handleFileUpload = async (e) => {
+        const formData = checkFileValidation(e) ? e.target.files[0] : null;
+        const imageUrl = URL.createObjectURL(formData);
+        setSrc(imageUrl);
+        values.image = formData;
+        await api({
+            method: 'post',
+            url: `${baseUrl}/brands/${id}/image`,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }, data: values
+        });
+    };
+
+    const handleClick = (e) => {
+        document.getElementById('imageInput').click();
+    };
+
     return (
         <>
             <div className='card'>
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-
+                        <div className='col-md-4'>
+                            <div className='cursor-none'>
+                                <img src={src} alt={`Brand`} className={`rounded-25 col-md-6`} onClick={handleClick} style={{ cursor: 'pointer' }} />
+                            </div>
+                        </div>
+                        <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
                         <Input name="name" label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <Input name="price" label="Price" value={values.price} onChange={handleChange} error={errors.price} required={true} inputType={true} />
-                        <Input name="currency" label="Currency" value={values.currency} onChange={handleChange} error={errors.currency} required={true} inputType={true} />
-                        <div className="col-md-4">
-                            <SelectForm id="payment_method" value={values?.payment_method} handleChange={handleChange} error={errors.payment_method} required={true} disabled={false} label='Payment Method' Options={OptionsPaymentMethod} />
-                        </div>
-                        <div className="col-md-4">
-                            <SelectForm id="payment_type" value={values?.payment_type} handleChange={handleChange} error={errors.payment_type} required={true} disabled={false} label='Payment Type' Options={OptionsPaymentType} />
-                        </div>
                         <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <div className="col-12">
                             <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />

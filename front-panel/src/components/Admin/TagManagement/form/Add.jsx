@@ -6,7 +6,6 @@ import SubmitButton from '../../Form/SubmitButton'
 import Input from '../../Form/Input'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { useNavigate } from 'react-router-dom'
-import Textarea from '../../Form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
 
 function Add() {
@@ -16,8 +15,6 @@ function Add() {
     const navigate = useNavigate();
     const initialState = {
         name: '',
-        title: '',
-        description: '',
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -33,12 +30,12 @@ function Add() {
         }
         setLoading(true)
         try {
-            const res = await post('/testimonials', values);
+            const res = await post('/tags', values);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/testimonials', { replace: true })
+            navigate('/admin/products/tags', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -58,8 +55,6 @@ function Add() {
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
                         <Input name="name" label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <Input name="title" label="Title" value={values.title} onChange={handleChange} error={errors.title} required={true} inputType={true} />
-                        <Textarea onChange={handleChange} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
                         <div className="col-12">
                             <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
                         </div>

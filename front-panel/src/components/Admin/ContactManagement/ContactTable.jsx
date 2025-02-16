@@ -10,7 +10,7 @@ import { SidebarContext } from '../../../context/SidebarContext'
 
 function ContactTable() {
     const module = 'contacts';
-    const [showFilter, setShowFilter] = useState(true);
+    const [showFilter, setShowFilter] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});

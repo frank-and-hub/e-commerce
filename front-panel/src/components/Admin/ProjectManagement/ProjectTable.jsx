@@ -14,7 +14,7 @@ function ProjectTable() {
     const [formKey, setFormKey] = useState(0);
     const { loading, setLoading } = useLoading();
     const [showTable, setShowTable] = useState(true);
-    const [showFilter, setShowFilter] = useState(true);
+    const [showFilter, setShowFilter] = useState(false);
     const [userDataOptions, setUserDataOptions] = useState([]);
     const { selectUserData } = useContext(SidebarContext);
 

@@ -289,3 +289,24 @@ exports.find_data_by_id = async (id, res) => {
 
     return bannerData;
 }
+
+exports.image = async (req, res, next) => {
+    const { id } = req.params;
+    const file = req.file;
+    try {
+        const getData = await Banner.findById(id).select('_id').where('status').equals(status_active);
+        if (!getData) return res.status(404).json({ message: `Data not found` });
+        const newFile = new File({
+            _id: new mongoose.Types.ObjectId(),
+            name: file.filename,
+            path: `${apiBaseUrl}/file/${file.filename}`,
+        });
+        // const savedPath = await resizeImage(req.file.buffer, filename);
+        const newData = await newFile.save();
+        const result = await Banner.updateOne({ _id: id }, { $set: { image: newData._id } });
+        if (result.modifiedCount > 0) return res.status(200).json({ message: `image updated` });
+        res.status(404).json({ message: `Data not found or no image to update`, data: [] });
+    } catch (err) {
+        next(err)
+    }
+}

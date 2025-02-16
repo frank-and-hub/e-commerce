@@ -71,6 +71,16 @@ const ColorTable = lazy(() => import('./Admin/ColorManagement/ColorTable'))
 const ColorAdd = lazy(() => import('./Admin/ColorManagement/form/Add'))
 const ColorEdit = lazy(() => import('./Admin/ColorManagement/form/Edit'))
 const ColorView = lazy(() => import('./Admin/ColorManagement/form/View'))
+// product category
+const CategoryTable = lazy(() => import('./Admin/CategoryManagement/CategoryTable'))
+const CategoryAdd = lazy(() => import('./Admin/CategoryManagement/form/Add'))
+const CategoryEdit = lazy(() => import('./Admin/CategoryManagement/form/Edit'))
+const CategoryView = lazy(() => import('./Admin/CategoryManagement/form/View'))
+// product sub-category
+const SubCategoryTable = lazy(() => import('./Admin/SubCategoryManagement/SubCategoryTable'))
+const SubCategoryAdd = lazy(() => import('./Admin/SubCategoryManagement/form/Add'))
+const SubCategoryEdit = lazy(() => import('./Admin/SubCategoryManagement/form/Edit'))
+const SubCategoryView = lazy(() => import('./Admin/SubCategoryManagement/form/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -103,7 +113,7 @@ class Routing extends Component {
                                 <Route key={index} path={route.path} element={<route.component />} />
                             ))}
                         </Route>
-                        <Route path="/admin/" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
+                        <Route path="/admin" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
                             <Route path='' element={<Dashboard />} />
                             <Route path={`index`} element={<Dashboard />} />
                             <Route path={`profile`} element={<Profile />} />
@@ -160,18 +170,18 @@ class Routing extends Component {
                                 <Route path={`:id/edit`} element={<Blank />} />
                                 <Route path={`:id`} element={<Blank />} />
 
-                                <Route path={`category`}>
-                                    <Route index element={<Blank />} />
-                                    <Route path={`create`} element={<Blank />} />
-                                    <Route path={`:id/edit`} element={<Blank />} />
-                                    <Route path={`:id`} element={<Blank />} />
+                                <Route path={`categories`}>
+                                    <Route index element={<CategoryTable />} />
+                                    <Route path={`create`} element={<CategoryAdd />} />
+                                    <Route path={`:id/edit`} element={<CategoryEdit />} />
+                                    <Route path={`:id`} element={<CategoryView />} />
                                 </Route>
-
-                                <Route path={`sub-category`}>
-                                    <Route index element={<Blank />} />
-                                    <Route path={`create`} element={<Blank />} />
-                                    <Route path={`:id/edit`} element={<Blank />} />
-                                    <Route path={`:id`} element={<Blank />} />
+                                
+                                <Route path={`sub-categories`}>
+                                    <Route index element={<SubCategoryTable />} />
+                                    <Route path={`create`} element={<SubCategoryAdd />} />
+                                    <Route path={`:id/edit`} element={<SubCategoryEdit />} />
+                                    <Route path={`:id`} element={<SubCategoryView />} />
                                 </Route>
 
                                 <Route path={`tags`}>
@@ -181,7 +191,7 @@ class Routing extends Component {
                                     <Route path={`:id`} element={<TagView />} />
                                 </Route>
 
-                                <Route path={`color`}>
+                                <Route path={`colors`}>
                                     <Route index element={<ColorTable />} />
                                     <Route path={`create`} element={<ColorAdd />} />
                                     <Route path={`:id/edit`} element={<ColorEdit />} />

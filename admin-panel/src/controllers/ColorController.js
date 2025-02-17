@@ -156,7 +156,7 @@ exports.edit = async (req, res, next) => {
             'id': _id,
             'name': name,
             'hex_code': hex_code,
-            'user': user?._id,
+            'user': user,
             'status': status,
             'updated_by': updated_by
         }

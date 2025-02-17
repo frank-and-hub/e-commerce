@@ -103,7 +103,7 @@ function Edit() {
             try {
 
                 const [projectData] = await Promise.all([
-                    get(`/projects/${id}`),
+                    get(`/projects/${id}/edit`),
                 ]);
 
                 setValues(projectData?.data || {});

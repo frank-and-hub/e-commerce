@@ -136,11 +136,11 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const tagData = await this.find_data_by_id(id, res);
-        const { _id, name, statue, updated_by } = tagData;
+        const { _id, name, updated_by, status } = tagData;
         const result = {
             'id': _id,
             'name': name,
-            'statue': statue,
+            'status': status,
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Tag was found`, data: result, title: `Edit ${name} tag detail` });

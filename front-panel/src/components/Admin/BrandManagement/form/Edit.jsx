@@ -69,7 +69,7 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [serviceData] = await Promise.all([
-                    get(`/brands/${id}`),
+                    get(`/brands/${id}/edit`),
                 ]);
 
                 setValues(serviceData?.data || {});

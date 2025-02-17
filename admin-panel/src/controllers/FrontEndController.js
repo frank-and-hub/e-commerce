@@ -1,6 +1,6 @@
 // models
 const User = require('../models/user');
-const Plan = require('../models/plan');
+// const Plan = require('../models/plan');
 // const Service = require('../models/service');
 // const Project = require('../models/project');
 const About = require('../models/about_detail');
@@ -41,17 +41,17 @@ exports.show = async (req, res, next) => {
         //     .populate('image', '_id name path')
         //     .sort({ _id: -1 });
 
-        const plans = await Plan.find({ 'user': userData?._id })
-            .select('_id user name description price currency payment_method payment_type')
-            .populate('user', '_id name')
-            .sort({ _id: -1 });
+        // const plans = await Plan.find({ 'user': userData?._id })
+        //     .select('_id user name description price currency payment_method payment_type')
+        //     .populate('user', '_id name')
+        //     .sort({ _id: -1 });
 
         if (!userData) return res.status(404).json({ message: `User not found!`, data: [] });
 
         const userWithDetails = {
             ...userData.toObject(),
             social_details,
-            plans,
+            // plans,
             about,
             services,
             // testimonials,

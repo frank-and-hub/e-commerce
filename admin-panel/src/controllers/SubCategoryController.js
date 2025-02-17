@@ -67,7 +67,6 @@ exports.index = async (req, res, next) => {
                 'name': name,
                 'icon': icon,
                 'description': description,
-                'user': user,
                 'category': category,
                 'status': status,
             }

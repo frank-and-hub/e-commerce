@@ -81,6 +81,11 @@ const SubCategoryTable = lazy(() => import('./Admin/SubCategoryManagement/SubCat
 const SubCategoryAdd = lazy(() => import('./Admin/SubCategoryManagement/form/Add'))
 const SubCategoryEdit = lazy(() => import('./Admin/SubCategoryManagement/form/Edit'))
 const SubCategoryView = lazy(() => import('./Admin/SubCategoryManagement/form/View'))
+// product sub-category
+const DiscountTable = lazy(() => import('./Admin/DiscountManagement/DiscountTable'))
+const DiscountAdd = lazy(() => import('./Admin/DiscountManagement/form/Add'))
+const DiscountEdit = lazy(() => import('./Admin/DiscountManagement/form/Edit'))
+const DiscountView = lazy(() => import('./Admin/DiscountManagement/form/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -108,127 +113,134 @@ class Routing extends Component {
             <AuthProvider>
                 <Router>
                     <Routes>
-                        <Route path={`/`} element={<FrontLayout />} >
+                        <Route exact path={`/`} element={<FrontLayout />} >
                             {frontPanelRoutes.map((route, index) => (
-                                <Route key={index} path={route.path} element={<route.component />} />
+                                <Route key={index} exact path={route.path} element={<route.component />} />
                             ))}
                         </Route>
-                        <Route path="/admin" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
-                            <Route path='' element={<Dashboard />} />
-                            <Route path={`index`} element={<Dashboard />} />
-                            <Route path={`profile`} element={<Profile />} />
-                            <Route path={`blank`} element={<Blank />} />
+                        <Route exact path="/admin" element={<PrivateRoute ><AdminLayout /></PrivateRoute>} >
+                            <Route exact path='' element={<Dashboard />} />
+                            <Route exact path={`index`} element={<Dashboard />} />
+                            <Route exact path={`profile`} element={<Profile />} />
+                            <Route exact path={`blank`} element={<Blank />} />
 
-                            <Route path={`users`}>
+                            <Route exact path={`users`}>
                                 <Route index element={<UsersTable />} />
-                                <Route path={`create`} element={<UserForm />} />
-                                <Route path={`:id/edit`} element={<UserEdit />} />
-                                <Route path={`:id`} element={<UserView />} />
-                                <Route path={`permissions`} element={<UserRolePermission />} />
+                                <Route exact path={`create`} element={<UserForm />} />
+                                <Route exact path={`:id/edit`} element={<UserEdit />} />
+                                <Route exact path={`:id`} element={<UserView />} />
+                                <Route exact path={`permissions`} element={<UserRolePermission />} />
                             </Route>
 
-                            <Route path={`menus`}>
+                            <Route exact path={`menus`}>
                                 <Route index element={<MenuTable />} />
-                                <Route path={`create`} element={<MenuAdd />} />
-                                <Route path={`:id/edit`} element={<MenuEdit />} />
-                                <Route path={`:id`} element={<MenuView />} />
-                                <Route path={`role-and-permission`} element={<PermissionTable />} />
+                                <Route exact path={`create`} element={<MenuAdd />} />
+                                <Route exact path={`:id/edit`} element={<MenuEdit />} />
+                                <Route exact path={`:id`} element={<MenuView />} />
+                                <Route exact path={`role-and-permission`} element={<PermissionTable />} />
                             </Route>
 
-                            <Route path={`roles`}>
+                            <Route exact path={`roles`}>
                                 <Route index element={<RoleTable />} />
-                                <Route path={`create`} element={<RoleAdd />} />
-                                <Route path={`:id/edit`} element={<RoleEdit />} />
-                                <Route path={`:id`} element={<RoleView />} />
+                                <Route exact path={`create`} element={<RoleAdd />} />
+                                <Route exact path={`:id/edit`} element={<RoleEdit />} />
+                                <Route exact path={`:id`} element={<RoleView />} />
                             </Route>
 
-                            <Route path={`settings`}>
+                            <Route exact path={`settings`}>
                                 <Route index element={<Blank />} />
-                                <Route path={`terms-and-conditions`} element={<TermsAndConditions />} />
+                                <Route exact path={`terms-and-conditions`} element={<TermsAndConditions />} />
 
-                                <Route path={`support`}>
+                                <Route exact path={`support`}>
                                     <Route index element={<Support />} />
-                                    <Route path={`create`} element={<Support />} />
+                                    <Route exact path={`create`} element={<Support />} />
                                 </Route>
 
-                                <Route path={`faqs`}>
+                                <Route exact path={`faqs`}>
                                     <Route index element={<FaqList />} />
-                                    <Route path={`create`} element={<AddFaq />} />
+                                    <Route exact path={`create`} element={<AddFaq />} />
                                 </Route>
 
-                                <Route path={`social-details`} >
+                                <Route exact path={`social-details`} >
                                     <Route index element={<SocialDetailTable />} />
-                                    <Route path={`create`} element={<SocialDetailAdd />} />
-                                    <Route path={`:id/edit`} element={<SocialDetailEdit />} />
-                                    <Route path={`:id`} element={<SocialDetailView />} />
+                                    <Route exact path={`create`} element={<SocialDetailAdd />} />
+                                    <Route exact path={`:id/edit`} element={<SocialDetailEdit />} />
+                                    <Route exact path={`:id`} element={<SocialDetailView />} />
                                 </Route>
                             </Route>
 
-                            <Route path={`products`}>
+                            <Route exact path={`products`}>
                                 <Route index element={<Blank />} />
-                                <Route path={`create`} element={<Blank />} />
-                                <Route path={`:id/edit`} element={<Blank />} />
-                                <Route path={`:id`} element={<Blank />} />
+                                <Route exact path={`create`} element={<Blank />} />
+                                <Route exact path={`:id/edit`} element={<Blank />} />
+                                <Route exact path={`:id`} element={<Blank />} />
 
-                                <Route path={`categories`}>
+                                <Route exact path={`categories`}>
                                     <Route index element={<CategoryTable />} />
-                                    <Route path={`create`} element={<CategoryAdd />} />
-                                    <Route path={`:id/edit`} element={<CategoryEdit />} />
-                                    <Route path={`:id`} element={<CategoryView />} />
+                                    <Route exact path={`create`} element={<CategoryAdd />} />
+                                    <Route exact path={`:id/edit`} element={<CategoryEdit />} />
+                                    <Route exact path={`:id`} element={<CategoryView />} />
                                 </Route>
                                 
-                                <Route path={`sub-categories`}>
+                                <Route exact path={`sub-categories`}>
                                     <Route index element={<SubCategoryTable />} />
-                                    <Route path={`create`} element={<SubCategoryAdd />} />
-                                    <Route path={`:id/edit`} element={<SubCategoryEdit />} />
-                                    <Route path={`:id`} element={<SubCategoryView />} />
+                                    <Route exact path={`create`} element={<SubCategoryAdd />} />
+                                    <Route exact path={`:id/edit`} element={<SubCategoryEdit />} />
+                                    <Route exact path={`:id`} element={<SubCategoryView />} />
                                 </Route>
 
-                                <Route path={`tags`}>
+                                <Route exact path={`tags`}>
                                     <Route index element={<TagTable />} />
-                                    <Route path={`create`} element={<TagAdd />} />
-                                    <Route path={`:id/edit`} element={<TagEdit />} />
-                                    <Route path={`:id`} element={<TagView />} />
+                                    <Route exact path={`create`} element={<TagAdd />} />
+                                    <Route exact path={`:id/edit`} element={<TagEdit />} />
+                                    <Route exact path={`:id`} element={<TagView />} />
                                 </Route>
 
-                                <Route path={`colors`}>
+                                <Route exact path={`colors`}>
                                     <Route index element={<ColorTable />} />
-                                    <Route path={`create`} element={<ColorAdd />} />
-                                    <Route path={`:id/edit`} element={<ColorEdit />} />
-                                    <Route path={`:id`} element={<ColorView />} />
+                                    <Route exact path={`create`} element={<ColorAdd />} />
+                                    <Route exact path={`:id/edit`} element={<ColorEdit />} />
+                                    <Route exact path={`:id`} element={<ColorView />} />
+                                </Route>
+
+                                <Route exact path={`discounts`}>
+                                    <Route index element={<DiscountTable />} />
+                                    <Route exact path={`create`} element={<DiscountAdd />} />
+                                    <Route exact path={`:id/edit`} element={<DiscountEdit />} />
+                                    <Route exact path={`:id`} element={<DiscountView />} />
                                 </Route>
                             </Route>
 
-                            <Route path={`contacts`}>
+                            <Route exact path={`contacts`}>
                                 <Route index element={<ContactTable />} />
-                                <Route path={`:id`} element={<ContactView />} />
+                                <Route exact path={`:id`} element={<ContactView />} />
                             </Route>
 
-                            <Route path={`banners`}>
+                            <Route exact path={`banners`}>
                                 <Route index element={<BannerTable />} />
-                                <Route path={`create`} element={<BannerAdd />} />
-                                <Route path={`:id/edit`} element={<BannerEdit />} />
-                                <Route path={`:id`} element={<BannerView />} />
+                                <Route exact path={`create`} element={<BannerAdd />} />
+                                <Route exact path={`:id/edit`} element={<BannerEdit />} />
+                                <Route exact path={`:id`} element={<BannerView />} />
                             </Route>
 
-                            <Route path={`brands`}>
+                            <Route exact path={`brands`}>
                                 <Route index element={<BrandTable />} />
-                                <Route path={`create`} element={<BrandAdd />} />
-                                <Route path={`:id/edit`} element={<BrandEdit />} />
-                                <Route path={`:id`} element={<BrandView />} />
+                                <Route exact path={`create`} element={<BrandAdd />} />
+                                <Route exact path={`:id/edit`} element={<BrandEdit />} />
+                                <Route exact path={`:id`} element={<BrandView />} />
                             </Route>
 
-                            <Route path={`payments`}>
+                            <Route exact path={`payments`}>
                                 <Route index element={<Blank />} />
-                                <Route path={`create`} element={<Blank />} />
-                                <Route path={`:id/edit`} element={<Blank />} />
-                                <Route path={`:id`} element={<Blank />} />
+                                <Route exact path={`create`} element={<Blank />} />
+                                <Route exact path={`:id/edit`} element={<Blank />} />
+                                <Route exact path={`:id`} element={<Blank />} />
                             </Route>
                         </Route>
-                        <Route path={`/admin/signin`} element={<SignIn />} />
-                        <Route path={`/admin/signup`} element={<SignUp />} />
-                        <Route path={`/admin/error-404`} element={<Error />} />
-                        <Route path={`/*`} element={<Error />} />
+                        <Route exact path={`/admin/signin`} element={<SignIn />} />
+                        <Route exact path={`/admin/signup`} element={<SignUp />} />
+                        <Route exact path={`/admin/error-404`} element={<Error />} />
+                        <Route exact path={`/*`} element={<Error />} />
                     </Routes>
                 </Router>
             </AuthProvider>

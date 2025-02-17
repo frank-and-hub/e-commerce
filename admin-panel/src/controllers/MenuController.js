@@ -203,7 +203,7 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const menuData = await this.find_data_by_id(id, res);
-        const { _id, name, route, icon, type } = menuData;
+        const { _id, name, route, icon, type, updated_by, parent, status } = menuData;
         const children = await Menu.find({ parent: _id }).select('_id name route');
         const result = {
             'id': _id,
@@ -211,7 +211,10 @@ exports.edit = async (req, res, next) => {
             'route': route,
             'icon': icon,
             'type': type,
-            'child': children?._id
+            'child': children,
+            'parent': parent,
+            'status': status,
+            'updated_by': updated_by
         }
         res.status(200).json({ message: `Menu was found`, data: result, title: `Edit ${name} menu detail` });
     } catch (err) {

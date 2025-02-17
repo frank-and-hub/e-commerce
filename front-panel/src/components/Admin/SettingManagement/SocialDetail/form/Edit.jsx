@@ -62,11 +62,9 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [serviceData] = await Promise.all([
-                    get(`/social-details/${id}`),
+                    get(`/social-details/${id}/edit`),
                 ]);
-
                 setValues(serviceData?.data || {});
-
                 processNotifications(200, serviceData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);

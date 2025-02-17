@@ -61,7 +61,7 @@ function Edit() {
             try {
 
                 const [testimonialData] = await Promise.all([
-                    get(`/colors/${id}`),
+                    get(`/colors/${id}/edit`),
                 ]);
 
                 setValues(testimonialData?.data || {});

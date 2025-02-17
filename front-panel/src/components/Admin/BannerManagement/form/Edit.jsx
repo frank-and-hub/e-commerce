@@ -67,7 +67,7 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [getData] = await Promise.all([
-                    get(`/banners/${id}`),
+                    get(`/banners/${id}/edit`),
                 ]);
 
                 setValues(getData?.data || {});

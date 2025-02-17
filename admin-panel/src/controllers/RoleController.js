@@ -133,7 +133,6 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const roleData = await this.find_data_by_id(id, res);
-
         const result = {
             'id': roleData._id,
             'name': roleData?.name,
@@ -151,13 +150,14 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const roleData = await this.find_data_by_id(id, res);
-
         const result = {
             'id': roleData._id,
             'name': roleData?.name,
-            'permissions': await helper.filterData(roleData?.permissions),
+            'permissions': await helper.filterData(roleData.permissions),
+            'status': roleData?.status,
+            'updated_by': roleData?.updated_by
         }
-        res.status(200).json({ message: `Role was found`, data: result, title: `Edit ${roleDate?.name} role detail` });
+        res.status(200).json({ message: `Role was found`, data: result, title: `Edit ${roleData?.name} role detail` });
     } catch (err) {
         next(err)
     }
@@ -215,7 +215,7 @@ exports.destroy = async (req, res, next) => {
                 'url': `${baseurl}${constName}`,
                 'body': {
                     'name': 'String',
-                    'permissions': 'array of ID'
+                    'permissions': 'array of SchemaID'
                 }
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });

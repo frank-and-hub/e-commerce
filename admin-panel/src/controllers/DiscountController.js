@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-const Category = require('../models/category');
+const Discount = require('../models/discount');
 const User = require('../models/user');
+
 
 // helper function
 const helper = require('../utils/helper');
@@ -13,11 +14,10 @@ const url = require('../config/url');
 const baseurl = `${url.apiUrl}`;
 const status_active = `${process.env.STATUS_ACTIVE}`;
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
-const constName = 'categories/';
+const constName = 'discounts/';
 
 exports.index = async (req, res, next) => {
     try {
-
         const page = parseInt(req?.query?.page) || 1;
         const limit = parseInt(req?.query?.limit) || parseInt(data_limit);
 
@@ -25,26 +25,17 @@ exports.index = async (req, res, next) => {
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
         const filter = {};
-        const { status, search } = req.query;
-
+        const { status } = req.query;
         if (status) filter.status = status;
 
-        if (search) {
-            const trimmedSearch = search.trim();
-            filter.$or = [
-                { name: { $regex: trimmedSearch, $options: "i" } },
-                { description: { $regex: trimmedSearch, $options: "i" } },
-            ];
-        }
-
         const skip = (page - 1) * limit;
-        const totalCount = await Category.countDocuments({
+        const totalCount = await Discount.countDocuments({
             ...filter,
             deleted_at: null
         });
 
-        const query = Category.find(filter)
-            .select('_id name icon description user status updated_by')
+        const query = Discount.find(filter)
+            .select('_id name description percentage user status updated_by')
             .populate('user', '_id name')
             .populate('updated_by', '_id name');
 
@@ -54,28 +45,28 @@ exports.index = async (req, res, next) => {
                 .limit(limit);
         }
 
-        const categories = await query;
-        
-        if (categories.length === 0) return res.status(200).json({ message: `No categories found`, data: [] });
+        const discounts = await query;
+        if (discounts.length === 0) return res.status(200).json({ message: `No discounts found`, data: [] });
 
-        const categoryPromises = categories.map(async (category) => {
-            const { _id, name, icon, description, status, user } = category;
+        const discountPromises = discounts.map(async (discount) => {
+            const { _id, name, description, percentage, status } = discount;
+
             return {
                 'id': _id,
                 'name': name,
-                'icon': icon,
+                'percentage': percentage,
                 'description': description,
-                'status': status
+                'status': status,
             }
         });
-        const categoryResponses = await Promise.all(categoryPromises);
+        const discountResponses = await Promise.all(discountPromises);
         res.status(200).json({
-            message: `List retrieved successfully`, response: {
+            message: `Discounts list retrieved successfully`, response: {
                 count: totalCount,
                 page: page,
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
-                data: categoryResponses
+                data: discountResponses
             }, title: 'listing'
         });
     } catch (err) {
@@ -86,14 +77,14 @@ exports.index = async (req, res, next) => {
 exports.create = (req, res, next) => {
     try {
         res.status(200).json({
-            message: `Create category form`,
+            message: `Create discount form`,
             body: {
                 'name': 'String',
                 'description': 'String',
-                'icon': 'String',
-                'userId': 'SchemaId'
+                'percentage': 'Number',
+                'user': 'SchemaId'
             },
-            title: 'Add category'
+            title: 'Add discount'
         });
     } catch (err) {
         next(err)
@@ -101,29 +92,27 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, description, icon } = req.body;
+    const { name, description, percentage } = req.body;
     try {
         let userId = req?.userData?.id;
 
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
 
-        const existsCategory = await Category.findOne({ name: name, status: status_active, user: userData._id });
-        if (existsCategory) return res.status(200).json({ message: 'Category already exists' });
+        const existsDiscount = await Discount.findOne({ name: name, status: status_active, user: userData._id });
+        if (existsDiscount) return res.status(200).json({ message: 'Discount already exists' });
 
-        const category = new Category({
+        const discount = new Discount({
             _id: new mongoose.Types.ObjectId(),
+            name, description, percentage,
             user: userData._id,
-            name,
-            description,
-            icon
         });
-        const newData = await category.save();
+        const newDiscount = await discount.save();
         const response = {
-            'id': newData?._id,
-            'name': newData?.name,
-            'icon': newData?.icon,
-            'description': newData?.description,
+            'id': newDiscount?._id,
+            'name': newDiscount?.name,
+            'percentage': newDiscount?.percentage,
+            'description': newDiscount?.description,
             'user': userData?.name
         }
         res.status(201).json({ message: `Successfully created`, data: response });
@@ -135,18 +124,18 @@ exports.store = async (req, res, next) => {
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const categoryData = await this.find_data_by_id(id, res);
-        const { _id, name, icon, description, user, updated_by, status } = categoryData;
+        const discountData = await this.find_data_by_id(id, res);
+        const { _id, name, description, percentage, updated_by, status, user } = discountData;
         const result = {
             'id': _id,
             'name': name,
-            'icon': icon,
+            'percentage': percentage,
             'description': description,
             'user': user,
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Category was found`, data: result, title: `View ${name} category detail` });
+        res.status(200).json({ message: `Discount was found`, data: result, title: `View ${name} discount detail` });
     } catch (err) {
         next(err)
     }
@@ -155,18 +144,18 @@ exports.show = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const categoryData = await this.find_data_by_id(id, res);
-        const { _id, name, icon, description, user, updated_by, status } = categoryData;
+        const discountData = await this.find_data_by_id(id, res);
+        const { _id, name, description, percentage, updated_by, status, user } = discountData;
         const result = {
             'id': _id,
             'name': name,
-            'icon': icon,
+            'percentage': percentage,
             'description': description,
             'user': user,
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Category was found`, data: result, title: `Edit ${name} category detail` });
+        res.status(200).json({ message: `Discount was found`, data: result, title: `Edit ${name} discount detail` });
     } catch (err) {
         next(err)
     }
@@ -175,10 +164,11 @@ exports.edit = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const category = await Category.findById(id).select('_id');
-        if (!category) return res.status(404).json({ message: `Category not found!`, });
 
-        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (category may not exist or the data is the same)` });
+        const discount = await Discount.findById(id).select('_id');
+        if (!discount) return res.status(404).json({ message: `Discount not found!`, });
+
+        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (discount may not exist or the data is the same)` });
 
         const updateOps = helper.updateOps(req);
 
@@ -187,20 +177,22 @@ exports.update = async (req, res, next) => {
             if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
         }
 
-        const result = await Category.updateOne({ _id: id }, { $set: updateOps });
+        const result = await Discount.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedCategory = await this.find_data_by_id(id, res);
-            const { _id, name, description, icon, user } = updatedCategory;
+            const updatedDiscount = await this.find_data_by_id(id, res);
+            const { _id, name, description, percentage, updated_by, status, user } = updatedDiscount;
             const response = {
                 'id': _id,
                 'name': name,
+                'percentage': percentage,
                 'description': description,
-                'icon': icon,
-                'user': user
+                'user': user,
+                'status': status,
+                'updated_by': updated_by
             }
-            return res.status(200).json({ message: `Category details updated successfully`, data: response });
+            return res.status(200).json({ message: `Discount details updated successfully`, data: response });
         }
-        res.status(404).json({ message: `Category not found or no details to update`, data: [] });
+        res.status(404).json({ message: `Discount not found or no details to update`, data: [] });
     } catch (err) {
         next(err)
     }
@@ -209,40 +201,40 @@ exports.update = async (req, res, next) => {
 exports.destroy = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const getCategory = await Category.findById(id).select('_id').where('status').equals(!status_active);
-        if (!getCategory) return res.status(404).json({ message: 'Category not found' });
+        const getDiscount = await Discount.findById(id).select('_id').where('status').equals(!status_active);
+        if (!getDiscount) return res.status(404).json({ message: 'Discount not found' });
 
-        // const categoryData = await Category.deleteOne({ _id: id });
-        // if (categoryData.deletedCount === 1) {
+        // const discountData = await Discount.deleteOne({ _id: id });
+        // if (discountData.deletedCount === 1) {
 
-        const categoryData = await Category.findByIdAndUpdate(id, { deleted_at: new Date() });
-        if (categoryData) {
+        const discountData = await Discount.findByIdAndUpdate(id, { deleted_at: new Date() });
+        if (discountData) {
             const response = {
                 'method': 'POST',
                 'url': `${baseurl}${constName}`,
                 'body': {
                     'name': 'String',
                     'description': 'String',
-                    'icon': 'String',
-                    'user': 'ID',
+                    'percentage': 'Number',
+                    'user': 'SchemaId'
                 }
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
-        res.status(404).json({ message: `Category not found` });
+        res.status(404).json({ message: `Discount not found` });
     } catch (err) {
         next(err)
     }
 }
 
 exports.find_data_by_id = async (id, res) => {
-    const categoryData = await Category.findById(id)
-        .select('_id name icon description user updated_by status')
+    const discountData = await Discount.findById(id)
+        .select('_id name description percentage updated_by status user')
         // .where('status').equals(status_active)
         .populate('user', '_id name')
         .populate('updated_by', '_id name');
 
-    if (!categoryData) return res.status(404).json({ message: `Category not found` });
+    if (!discountData) return res.status(404).json({ message: `Discount not found` });
 
-    return categoryData;
+    return discountData;
 }

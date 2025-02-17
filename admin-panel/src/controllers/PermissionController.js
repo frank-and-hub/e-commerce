@@ -146,11 +146,13 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const permissionData = await this.find_data_by_id(id, res);
-        const { _id, name, menu } = permissionData;
+        const { _id, name, menu, updated_by, status } = permissionData;
         const result = {
             'id': _id,
             'name': name,
-            'menu': menu?._id
+            'menu': menu,
+            'status': status,
+            'updated_by': updated_by
         }
         res.status(200).json({ message: `Permission was found`, data: result, title: `Edit ${name} permission detail` });
     } catch (err) {

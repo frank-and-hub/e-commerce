@@ -132,7 +132,6 @@ exports.show = async (req, res, next) => {
     try {
         const supportDetailsData = await this.find_data_by_id(id, res);
         const { _id, call, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetailsData;
-
         const result = {
             'id': _id,
             'call': call,
@@ -156,7 +155,7 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const supportDetailsData = await this.find_data_by_id(id, res);
-        const { _id, call, email, address, hours_start, hours_end, type, week_start, week_end, updated_by } = supportDetailsData;
+        const { _id, call, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetailsData;
         const result = {
             'id': _id,
             'call': call,
@@ -165,9 +164,10 @@ exports.edit = async (req, res, next) => {
             'address': address,
             'hours_start': hours_start,
             'hours_end': hours_end,
-            'updated_by': updated_by,
             'week_start': week_start,
             'week_end': week_end,
+            'status': status,
+            'updated_by': updated_by,
         }
         res.status(200).json({ message: `SupportDetails was found`, data: result, title: `Edit ${call} support details detail` });
     } catch (err) {

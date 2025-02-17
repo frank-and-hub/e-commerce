@@ -141,12 +141,13 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const faqData = await this.find_data_by_id(id);
-        const { _id, question, answer, created_by } = faqData;
+        const { _id, question, answer, created_by, status } = faqData;
         const result = {
             'id': _id,
             'question': question,
             'answer': answer,
-            'created_by': created_by
+            'created_by': created_by,
+            'status': status
         }
         res.status(200).json({ message: `Faq was found`, data: result, title: `Edit faq detail` });
     } catch (err) {

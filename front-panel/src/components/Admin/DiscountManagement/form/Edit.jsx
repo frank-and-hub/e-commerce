@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { formattedData } from '../../../../utils/helper'
 import { useLoading } from '../../../../context/LoadingContext'
+import Textarea from '../../Form/Textarea'
 
 function Edit() {
     const { id } = useParams();
@@ -20,6 +21,8 @@ function Edit() {
 
     const initialState = {
         name: '',
+        percentage: '',
+        description: '',
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -36,12 +39,12 @@ function Edit() {
         setLoading(true)
         try {
             const newValues = formattedData(values);
-            const res = await patch(`/tags/${id}`, newValues);
+            const res = await patch(`/discounts/${id}`, newValues);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/products/tags', { replace: true })
+            navigate('/admin/products/discounts', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -59,7 +62,7 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [tagData] = await Promise.all([
-                    get(`/tags/${id}/edit`),
+                    get(`/discounts/${id}/edit`),
                 ]);
                 setValues(tagData?.data || {});
                 processNotifications(200, tagData?.message, dispatch);
@@ -77,9 +80,9 @@ function Edit() {
             <div className='card'>
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-
                         <Input name="name" label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
-                       
+                        <Input name="percentage" label="percentage" value={values?.percentage} onChange={handleChange} required={true} error={errors.percentage} inputType={true} disabled={false} />
+                        <Textarea name="description"  label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <div className="col-12">
                             <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
                         </div>

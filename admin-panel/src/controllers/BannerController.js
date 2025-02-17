@@ -159,7 +159,6 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const bannerData = await this.find_data_by_id(id, res);
-
         const { _id, name, title, description, url, user, image, updated_by, status } = bannerData;
         const result = {
             'id': _id,
@@ -182,17 +181,17 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const bannerData = await this.find_data_by_id(id, res);
-
-        const { _id, name, title, description, url, image, user, status } = bannerData;
+        const { _id, name, title, description, url, user, image, updated_by, status } = bannerData;
         const result = {
             'id': _id,
             'name': name,
             'title': title,
             'url': url,
             'user': user,
-            'image': image,
             'description': description,
+            'image': image,
             'status': status,
+            'updated_by': updated_by
         }
         res.status(200).json({ message: `Banner was found`, data: result, title: `Edit ${name} banner detail` });
     } catch (err) {

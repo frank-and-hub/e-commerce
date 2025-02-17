@@ -64,7 +64,7 @@ function Edit() {
       try {
         // Fetch roles and user data in parallel
         const [menuData] = await Promise.all([
-          get(`/menus/${id}`),
+          get(`/menus/${id}/edit`),
         ]);
 
         setValues(menuData?.data || {});

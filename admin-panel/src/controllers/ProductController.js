@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
+const Tag = require('../models/tag');
 const User = require('../models/user');
 const File = require('../models/file');
+const Brand = require('../models/brand');
 const Product = require('../models/product');
+const Discount = require('../models/discount');
+const Category = require('../models/category');
 
 // helper function
 const helper = require('../utils/helper');
@@ -112,15 +116,28 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, description, url, type } = req.body;
+    const { name, description, specification, price, discount_id, brand_id, tags, categories } = req.body;
     const file = req.file;
-    const userId = req?.userData?.id;
     try {
+        const userId = req?.userData?.id;
+
+        const existingProduct = await Product.findOne({ name, description, specification, discount_id, brand_id, tags, categories });
+        if (existingProduct) return res.status(409).json({ message: `Product already exists` });
+
         const user = await User.findById(userId).select('_id name').where('status').equals(status_active);
         if (!user) return res.status(404).json({ message: `User not found` });
 
-        const existingProduct = await Product.findOne({ name, type, url });
-        if (existingProduct) return res.status(409).json({ message: `Product already exists` });
+        const discount = await Discount.findById(discount_id).select('_id name').where('status').equals(status_active);
+        if (!user) return res.status(404).json({ message: `Discount not found` });
+
+        const brand = await Brand.findById(brand_id).select('_id name').where('status').equals(status_active);
+        if (!brand) return res.status(404).json({ message: `Brand not found` });
+
+        const foundTags = await Tag.find({ _id: { $in: tags }, status: status_active }).select('_id name');
+        if (foundTags.length !== tags.length) return res.status(404).json({ message: 'One or more active tags not found' });
+
+        const foundCategories = await Category.find({ _id: { $in: categories }, status: status_active }).select('_id name');
+        if (foundCategories.length !== categories.length) return res.status(404).json({ message: 'One or more active categories not found' });
 
         // if (!file) return res.status(400).json({ message: `No file uploaded` });
 
@@ -137,10 +154,11 @@ exports.store = async (req, res, next) => {
 
         const newProduct = new Product({
             _id: new mongoose.Types.ObjectId(),
-            name,
-            description,
-            url,
-            type,
+            name, description, specification, price,
+            discount: discount._id,
+            brand: brand._id,
+            tags: foundTags.map(p => p._id),
+            categories: foundCategories.map(p => p._id),
             image: savedFile?._id ?? null,
             user: user._id,
         });
@@ -149,10 +167,18 @@ exports.store = async (req, res, next) => {
             'id': newData._id,
             'name': newData.name,
             'description': newData.description,
-            'url': newData.url,
-            'type': newData.type,
+            'brand': brand.name,
+            'discount': discount.name,
+            'user': user.name,
             'image': savedFile?.path ?? null,
-            'user': user.name
+            'tags': foundTags.map(perm => ({
+                'id': perm._id,
+                'name': perm.name
+            })),
+            'categories': foundCategories.map(perm => ({
+                'id': perm._id,
+                'name': perm.name
+            }))
         }
         res.status(201).json({ message: `Product created successfully`, data: response });
     } catch (err) {
@@ -186,15 +212,17 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const productData = await this.find_data_by_id(id, res);
-        const { _id, name, description, url, image, user, type } = productData;
+        const { _id, name, description, url, image, user, type, updated_by, status } = productData;
         const result = {
             'id': _id,
             'name': name,
             'description': description,
             'url': url,
             'image': image,
-            'user': user?._id,
-            'type': type
+            'user': user,
+            'type': type,
+            'status': status,
+            'updated_by': updated_by
         }
         res.status(200).json({ message: `Product was found`, data: result, title: `Edit ${name} product detail` });
     } catch (err) {
@@ -255,12 +283,15 @@ exports.destroy = async (req, res, next) => {
                 'body': {
                     'name': 'String',
                     'description': 'String',
-                    'url': 'String',
+                    'specification': 'String',
+                    'price': 'Number',
                     'image': 'file',
-                    'user': 'User Id',
-                    'type': [
-                        'web', 'app', 'graphic'
-                    ]
+                    'user': 'SchemaId',
+                    'discount': 'SchemaId',
+                    'brand': 'SchemaId',
+                    'tags': 'array of SchemaID',
+                    'categories': 'array of SchemaID',
+                    'product_images': 'array of SchemaID'
                 }
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });
@@ -287,11 +318,8 @@ exports.image = async (req, res, next) => {
         // const savedPath = await resizeImage(req.file.buffer, filename);
 
         const newData = await newFile.save();
-
         const result = await Product.updateOne({ _id: id }, { $set: { image: newData._id } });
-
         if (result.modifiedCount > 0) return res.status(200).json({ message: `Product image updated` });
-
         res.status(404).json({ message: `Product not found or no image to update`, data: [] });
     } catch (err) {
         next(err)
@@ -300,11 +328,25 @@ exports.image = async (req, res, next) => {
 
 exports.find_data_by_id = async (id, res) => {
     const productData = await Product.findById(id)
-        .select('_id name description url image user type updated_by status')
+        .select('_id name description specification price discount brand tags categories image product_images user updated_by status')
         // .where('status').equals(status_active)
+        .populate('discount', '_id name')
+        .populate('brand', '_id name')
         .populate('user', '_id name')
-        .populate('updated_by', '_id name')
-        .populate('image', '_id name path');
+        .populate('image', '_id name path')
+        .populate({
+            path: 'tags',
+            select: '_id name'
+        })
+        .populate({
+            path: 'categories',
+            select: '_id name'
+        })
+        .populate({
+            path: 'product_images',
+            select: '_id name path'
+        })
+        .populate('updated_by', '_id name');
 
     if (!productData) return res.status(404).json({ message: `Product not found` });
 

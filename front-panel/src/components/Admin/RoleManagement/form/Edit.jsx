@@ -64,16 +64,11 @@ function Edit() {
             try {
                 // Fetch roles and user data in parallel
                 const [roleData] = await Promise.all([
-                    get(`/roles/${id}`),
+                    get(`/roles/${id}/edit`),
                 ]);
-
-
                 setValues(roleData?.data || {});
-
-
                 processNotifications(200, roleData?.message, dispatch);
             } catch (err) {
-
                 processNotifications(err.status || 500, err.message, dispatch);
             }
         };

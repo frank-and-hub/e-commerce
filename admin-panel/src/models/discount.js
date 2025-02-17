@@ -2,13 +2,10 @@ const mongoose = require('mongoose');
 
 const planSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     name: { type: String, required: true, trim: true, unique: true, set: (value) => value.toLowerCase() },
+    percentage: { type: Number, required: true, trim: true },
     description: { type: String, required: true, trim: true },
-    price: { type: Number, required: true, trim: true },
-    currency: { type: String, required: true, trim: true },
-    payment_method: { type: String, enum: ['offline', 'online'], default: 'online' },
-    payment_type: { type: String, enum: ['hour', 'day', 'week', 'month', 'year'], default: 'month' },
+    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }

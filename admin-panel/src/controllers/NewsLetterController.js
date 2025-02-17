@@ -146,11 +146,11 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const newsLetterData = await this.find_data_by_id(id, res);
-        const { _id, email, ip_address, statue, updated_by } = newsLetterData;
+        const { _id, email, ip_address, updated_by, status } = newsLetterData;
         const result = {
             'id': _id,
             'email': email,
-            'statue': statue,
+            'status': status,
             'ip_address': ip_address,
             'updated_by': updated_by
         }

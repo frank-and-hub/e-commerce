@@ -68,10 +68,9 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [getData] = await Promise.all([
-                    get(`/sub-categories/${id}`),
+                    get(`/sub-categories/${id}/edit`),
                 ]);
                 setValues(getData?.data || {});
-
                 const Options = selectCategoryData?.data?.map((val, index) => ({
                     value: val?.id,
                     label: `${ucwords(val?.name)}`

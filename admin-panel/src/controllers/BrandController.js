@@ -148,7 +148,6 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const brandData = await this.find_data_by_id(id, res);
-
         const { _id, name, description, user, image, updated_by, status } = brandData;
         const result = {
             'id': _id,
@@ -169,15 +168,15 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const brandData = await this.find_data_by_id(id, res);
-
-        const { _id, name, description, image, user, status } = brandData;
+        const { _id, name, description, user, image, updated_by, status } = brandData;
         const result = {
             'id': _id,
             'name': name,
             'user': user,
-            'image': image,
             'description': description,
+            'image': image,
             'status': status,
+            'updated_by': updated_by
         }
         res.status(200).json({ message: `Brand was found`, data: result, title: `Edit ${name} brand detail` });
     } catch (err) {

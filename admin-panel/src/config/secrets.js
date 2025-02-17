@@ -7,7 +7,7 @@ const connectionFunction = (processed_env) => {
         case `localhost`:
             return `mongodb://localhost:27017/${processed_env.DB_NAME}`;
         case `live`:
-            return `${processed_env.DB_URL}://${processed_env.DB_NAME}:${processed_env.DB_PWD}@${processed_env.DB_NAME}.${processed_env.DB_CONNECTION}=${processed_env.DB_NAME}`
+            return `${processed_env.DB_URL}://${processed_env.CONNECTION_NAME}:${processed_env.DB_PWD}@${processed_env.CONNECTION_NAME}.${processed_env.DB_CONNECTION_BEFORE}${processed_env.DB_NAME}${processed_env.DB_CONNECTION_AFTER}=${processed_env.CONNECTION_NAME}`
         default:
             throw new Error('Invalid DB_TYPE specified in the environment variables.');
     }

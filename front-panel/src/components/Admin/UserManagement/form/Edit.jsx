@@ -68,7 +68,6 @@ function Edit() {
                 const [userData] = await Promise.all([
                     get(`/users/${id}/edit`),
                 ]);
-
                 setValues(userData?.data || {});
                 processNotifications(200, userData?.message, dispatch);
             } catch (err) {

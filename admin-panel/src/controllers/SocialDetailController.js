@@ -148,12 +148,14 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const socialData = await this.find_data_by_id(id, res);
-        const { _id, name, url, icon } = socialData;
+        const { _id, name, url, icon, updated_by, status } = socialData;
         const result = {
             'id': _id,
             'name': name,
             'url': url,
             'icon': icon,
+            'status': status,
+            'updated_by': updated_by
         }
         res.status(200).json({ message: `SocialDetail was found`, data: result, title: `Edit ${name} social detail` });
     } catch (err) {

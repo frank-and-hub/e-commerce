@@ -176,7 +176,6 @@ exports.update = async (req, res, next) => {
         const permissionsId = updateOps['permissions'];
 
         const permissions = await Permission.find({ _id: { $in: permissionsId } }).select('_id name');
-
         if (permissionsId && permissions?.length !== permissionsId?.length) return res.status(404).json({ message: 'One or more permissions not found' });
 
         const result = await Role.updateOne({ _id: id }, { $set: updateOps });

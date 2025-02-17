@@ -24,7 +24,7 @@ function User() {
                 </Link>
                 <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-25 card-color`}>
                     <li className={`dropdown-header`}>
-                        <Link to='/profile' className={``} >
+                        <Link to={`/admin/profile`} className={``} >
                             <h6 className={``} >{user?.name}</h6>
                             <span className={``} >{user?.email}</span>
                         </Link>

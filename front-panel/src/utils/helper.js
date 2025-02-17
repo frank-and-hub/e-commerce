@@ -150,3 +150,11 @@ export const customStyles = {
         scrollbarWidth: 'none',
     }),
 };
+
+export const fetchSelectedOptions = (data) => {
+    const Options = data?.map((val, index) => ({
+        value: val?.id,
+        label: `${ucwords(val?.name)}`
+    }));
+    return Options;
+}

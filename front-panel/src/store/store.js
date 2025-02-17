@@ -14,6 +14,12 @@ import activeSubMenuSlice from './activeSubMenuSlice'
 import selectUserSlice from './Select/userSlice'
 import selectRoleSlice from './Select/roleSlice'
 import selectCategorySlice from './Select/categorySlice'
+import selectBannerSlice from './Select/bannerSlice'
+import selectBrandSlice from './Select/brandSlice'
+import selectColorSlice from './Select/colorSlice'
+import selectDiscountSlice from './Select/discountSlice'
+import selectSubCategorySlice from './Select/subCategorySlice'
+import selectTagSlice from './Select/tagSlice'
 
 const rootReducer = combineReducers({
     menu: menuReducer,
@@ -30,6 +36,12 @@ const rootReducer = combineReducers({
     selectUser: selectUserSlice,
     selectRole: selectRoleSlice,
     selectCategory: selectCategorySlice,
+    selectBanner: selectBannerSlice,
+    selectBrand: selectBrandSlice,
+    selectColor: selectColorSlice,
+    selectDiscount: selectDiscountSlice,
+    selectSubCategory: selectSubCategorySlice,
+    selectTag: selectTagSlice,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

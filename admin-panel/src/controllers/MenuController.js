@@ -131,7 +131,6 @@ exports.store = async (req, res, next) => {
         let parent = null;
 
         if (parentId != '') {
-            console.log('f');
             parent = await Menu.findById(parentId).select('_id').where('status').equals(status_active);
             if (!parent) return res.status(404).json({ message: `Parent menu not found` });
         }

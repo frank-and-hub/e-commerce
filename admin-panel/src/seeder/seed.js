@@ -86,6 +86,26 @@ const menuSeederData = [
   },
   {
     _id: new mongoose.Types.ObjectId(),
+    name: "users list",
+    route: "users",
+    type: true,
+    icon: "bi bi-people-fill",
+    parent: null,
+    status: true,
+    deleted_at: null
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    name: "users permissions",
+    route: "users/permissions",
+    type: true,
+    icon: "bi bi-person-square",
+    parent: null,
+    status: true,
+    deleted_at: null
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
     name: "menu",
     route: "#",
     type: true,
@@ -116,20 +136,10 @@ const menuSeederData = [
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "users list",
-    route: "users",
-    type: true,
-    icon: "bi bi-people-fill",
-    parent: null,
-    status: true,
-    deleted_at: null
-  },
-  {
-    _id: new mongoose.Types.ObjectId(),
-    name: "users permissions",
-    route: "users/permissions",
-    type: true,
-    icon: "bi bi-person-square",
+    name: "profile",
+    route: "profile",
+    type: false,
+    icon: "bi bi-person-bounding-box",
     parent: null,
     status: true,
     deleted_at: null

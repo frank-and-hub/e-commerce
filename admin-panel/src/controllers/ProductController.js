@@ -105,8 +105,16 @@ exports.create = (req, res, next) => {
             body: {
                 'name': 'String',
                 'description': 'String',
-                'url': 'Url',
-                'type': 'Boolean',
+                'specification': 'String',
+                'price': 'Number',
+                'quantity': 'Number',
+                'image': 'file',
+                'user': 'SchemaId',
+                'discount': 'SchemaId',
+                'brand': 'SchemaId',
+                'tags': 'array of SchemaID',
+                'categories': 'array of SchemaID',
+                'product_images': 'array of SchemaID'
             },
             title: 'Add product'
         });
@@ -116,7 +124,7 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, description, specification, price, discount_id, brand_id, tags, categories } = req.body;
+    const { name, description, specification, price, quantity, discount_id, brand_id, tags, categories } = req.body;
     const file = req.file;
     try {
         const userId = req?.userData?.id;
@@ -154,7 +162,7 @@ exports.store = async (req, res, next) => {
 
         const newProduct = new Product({
             _id: new mongoose.Types.ObjectId(),
-            name, description, specification, price,
+            name, description, specification, price, quantity,
             discount: discount._id,
             brand: brand._id,
             tags: foundTags.map(p => p._id),
@@ -190,17 +198,23 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const productData = await this.find_data_by_id(id, res);
-        const { _id, name, description, url, image, user, type, updated_by, status } = productData;
+        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, image, product_images, user, updated_by, status } = productData;
         const result = {
             'id': _id,
             'name': name,
             'description': description,
-            'url': url,
+            'specification': specification,
+            'price': price,
+            'quantity': quantity,
+            'status': status,
+            'discount': discount,
+            'brand': brand,
             'image': image,
             'user': user,
-            'type': type,
-            'status': status,
-            'updated_by': updated_by
+            'updated_by': updated_by,
+            'tags': await helper.filterData(tags),
+            'categories': await helper.filterData(categories),
+            'product_images': await helper.filterData(product_images),
         }
         res.status(200).json({ message: `Product was found`, data: result, title: `View ${name} product detail` });
     } catch (err) {
@@ -212,17 +226,23 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const productData = await this.find_data_by_id(id, res);
-        const { _id, name, description, url, image, user, type, updated_by, status } = productData;
+        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, image, product_images, user, updated_by, status } = productData;
         const result = {
             'id': _id,
             'name': name,
             'description': description,
-            'url': url,
+            'specification': specification,
+            'price': price,
+            'quantity': quantity,
+            'status': status,
+            'discount': discount,
+            'brand': brand,
             'image': image,
             'user': user,
-            'type': type,
-            'status': status,
-            'updated_by': updated_by
+            'updated_by': updated_by,
+            'tags': await helper.filterData(tags),
+            'categories': await helper.filterData(categories),
+            'product_images': await helper.filterData(product_images),
         }
         res.status(200).json({ message: `Product was found`, data: result, title: `Edit ${name} product detail` });
     } catch (err) {
@@ -245,18 +265,49 @@ exports.update = async (req, res, next) => {
             if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
         }
 
+        const tagsId = updateOps['tags'];
+        const tags = await Tag.find({ _id: { $in: tagsId } }).select('_id name');
+        if (tagsId && tags?.length !== tagsId?.length) return res.status(404).json({ message: 'One or more tags not found' });
+
+        const categoriesId = updateOps['categories'];
+        const categories = await Category.find({ _id: { $in: categoriesId } }).select('_id name');
+        if (categoriesId && categories?.length !== categoriesId?.length) return res.status(404).json({ message: 'One or more categories not found' });
+
+        const productImagesId = updateOps['product_images'];
+        const productImages = await File.find({ _id: { $in: product_imagesId } }).select('_id name path');
+        if (productImagesId && productImages?.length !== productImagesId?.length) return res.status(404).json({ message: 'One or more product images not found' });
+
+
         const result = await Product.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedProduct = await this.find_data_by_id(id, res);
-            const { _id, name, description, url, image, user, type } = updatedProduct;
+            const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, image, product_images, user, updated_by, status } = updatedProduct;
             const response = {
                 'id': _id,
                 'name': name,
                 'description': description,
-                'url': url,
+                'specification': specification,
+                'price': price,
+                'quantity': quantity,
+                'status': status,
+                'discount': discount,
+                'brand': brand,
                 'image': image,
                 'user': user,
-                'type': type,
+                'updated_by': updated_by,
+                'tags': tags.map(per => ({
+                    'id': per._id,
+                    'name': per.name
+                })),
+                'categories': categories.map(per => ({
+                    'id': per._id,
+                    'name': per.name
+                })),
+                'product_images': product_images.map(per => ({
+                    'id': per._id,
+                    'name': per.name,
+                    'path': per.path
+                })),
             }
             return res.status(200).json({ message: `Product details updated successfully`, data: response });
         }
@@ -285,6 +336,7 @@ exports.destroy = async (req, res, next) => {
                     'description': 'String',
                     'specification': 'String',
                     'price': 'Number',
+                    'quantity': 'Number',
                     'image': 'file',
                     'user': 'SchemaId',
                     'discount': 'SchemaId',
@@ -328,7 +380,7 @@ exports.image = async (req, res, next) => {
 
 exports.find_data_by_id = async (id, res) => {
     const productData = await Product.findById(id)
-        .select('_id name description specification price discount brand tags categories image product_images user updated_by status')
+        .select('_id name description specification price quantity discount brand tags categories image product_images user updated_by status')
         // .where('status').equals(status_active)
         .populate('discount', '_id name')
         .populate('brand', '_id name')

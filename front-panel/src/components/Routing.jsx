@@ -86,6 +86,11 @@ const DiscountTable = lazy(() => import('./Admin/DiscountManagement/DiscountTabl
 const DiscountAdd = lazy(() => import('./Admin/DiscountManagement/form/Add'))
 const DiscountEdit = lazy(() => import('./Admin/DiscountManagement/form/Edit'))
 const DiscountView = lazy(() => import('./Admin/DiscountManagement/form/View'))
+// product
+const ProductTable = lazy(() => import('./Admin/ProductManagement/ProductTable'))
+const ProductAdd = lazy(() => import('./Admin/ProductManagement/form/Add'))
+const ProductEdit = lazy(() => import('./Admin/ProductManagement/form/Edit'))
+const ProductView = lazy(() => import('./Admin/ProductManagement/form/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -170,10 +175,10 @@ class Routing extends Component {
                             </Route>
 
                             <Route exact path={`products`}>
-                                <Route index element={<Blank />} />
-                                <Route exact path={`create`} element={<Blank />} />
-                                <Route exact path={`:id/edit`} element={<Blank />} />
-                                <Route exact path={`:id`} element={<Blank />} />
+                                <Route index element={<ProductTable />} />
+                                <Route exact path={`create`} element={<ProductAdd />} />
+                                <Route exact path={`:id/edit`} element={<ProductEdit />} />
+                                <Route exact path={`:id`} element={<ProductView />} />
 
                                 <Route exact path={`categories`}>
                                     <Route index element={<CategoryTable />} />
@@ -230,12 +235,12 @@ class Routing extends Component {
                                 <Route exact path={`:id`} element={<BrandView />} />
                             </Route>
 
-                            <Route exact path={`payments`}>
+                            {/* <Route exact path={`payments`}>
                                 <Route index element={<Blank />} />
                                 <Route exact path={`create`} element={<Blank />} />
                                 <Route exact path={`:id/edit`} element={<Blank />} />
                                 <Route exact path={`:id`} element={<Blank />} />
-                            </Route>
+                            </Route> */}
                         </Route>
                         <Route exact path={`/admin/signin`} element={<SignIn />} />
                         <Route exact path={`/admin/signup`} element={<SignUp />} />

@@ -2,21 +2,25 @@ import React, { useContext, useEffect, useState } from 'react'
 import Table from '../Table/Table'
 import { useLoading } from '../../../context/LoadingContext'
 import { useFormValidation } from '../Form/FormValidation'
-import { ucwords } from '../../../utils/helper'
+import { fetchSelectedOptions } from '../../../utils/helper'
 import SelectForm from '../Form/Select/SelectForm'
 import SubmitButton from '../Form/SubmitButton'
-import { OptionsProjectType, StatusOptions } from '../../../utils/selects'
+import { StatusOptions } from '../../../utils/selects'
 import { SidebarContext } from '../../../context/SidebarContext'
 
-function ProjectTable() {
-    const module = 'projects';
+function ProductTable() {
+    const module = 'products';
     const [filter, setFilter] = useState({});
     const [formKey, setFormKey] = useState(0);
     const { loading, setLoading } = useLoading();
     const [showTable, setShowTable] = useState(true);
     const [showFilter, setShowFilter] = useState(false);
-    const [userDataOptions, setUserDataOptions] = useState([]);
-    const { selectUserData } = useContext(SidebarContext);
+    const [tagDataOptions, setTagDataOptions] = useState([]);
+    const [brandDataOptions, setBrandDataOptions] = useState([]);
+    const [colorDataOptions, setColorDataOptions] = useState([]);
+    const [discountataOptions, setDiscounDataOptions] = useState([]);
+    const [categoryDataOptions, setCategoryDataOptions] = useState([]);
+    const { selectCategoryData, selectBrandData, selectColorData, selectDiscountData, selectTagData } = useContext(SidebarContext);
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
@@ -29,8 +33,13 @@ function ProjectTable() {
 
     const initialState = {
         user_id: '',
-        status: '',
-        type: ''
+        category_id: ``,
+        sub_category_id: ``,
+        brand_id: ``,
+        color_id: ``,
+        discount_id: ``,
+        tag_id: ``,
+        status: ''
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -75,14 +84,19 @@ function ProjectTable() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const Options = selectUserData?.data?.map((val, index) => ({
-                value: val?.id,
-                label: `${ucwords(val?.name)}`
-            }));
-            setUserDataOptions(Options || []);
+            const categoryOptions = fetchSelectedOptions(selectCategoryData?.data);
+            const brandOptions = fetchSelectedOptions(selectBrandData?.data);
+            const colorOptions = fetchSelectedOptions(selectColorData?.data);
+            const discountOptions = fetchSelectedOptions(selectDiscountData?.data);
+            const tagOptions = fetchSelectedOptions(selectTagData?.data);
+            setCategoryDataOptions(categoryOptions || []);
+            setBrandDataOptions(brandOptions || []);
+            setColorDataOptions(colorOptions || []);
+            setDiscounDataOptions(discountOptions || []);
+            setTagDataOptions(tagOptions || []);
         }
         fetchData();
-    }, [selectUserData]);
+    }, [selectCategoryData, selectBrandData, selectColorData, selectDiscountData, selectTagData]);
 
     return (
         <>
@@ -93,10 +107,19 @@ function ProjectTable() {
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row m-0 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
                         <div className="col-md-4">
-                            <SelectForm id={`user_id`} label={`User`} value={values.user_id} handleChange={handleChange} error={errors.user_id} required={false} Options={userDataOptions} />
+                            <SelectForm id={`brand_id`} label={`brand`} value={values.brand_id} handleChange={handleChange} error={errors.brand_id} required={false} Options={brandDataOptions} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id="type" label={`Type`} value={values.type} handleChange={handleChange} error={errors.type} required={false} Options={OptionsProjectType} />
+                            <SelectForm id={`category_id`} label={`category`} value={values.category_id} handleChange={handleChange} error={errors.category_id} required={false} Options={categoryDataOptions} />
+                        </div>
+                        <div className="col-md-4">
+                            <SelectForm id={`color_id`} label={`color`} value={values.color_id} handleChange={handleChange} error={errors.color_id} required={false} Options={colorDataOptions} />
+                        </div>
+                        <div className="col-md-4">
+                            <SelectForm id={`discount_id`} label={`discount`} value={values.discount_id} handleChange={handleChange} error={errors.discount_id} required={false} Options={discountataOptions} />
+                        </div>
+                        <div className="col-md-4">
+                            <SelectForm id={`tag_id`} label={`tag`} value={values.tag_id} handleChange={handleChange} error={errors.tag_id} required={false} Options={tagDataOptions} />
                         </div>
                         <div className="col-md-4">
                             <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />
@@ -115,4 +138,4 @@ function ProjectTable() {
     )
 }
 
-export default ProjectTable
+export default ProductTable

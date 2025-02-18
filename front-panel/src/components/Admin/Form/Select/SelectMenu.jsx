@@ -6,6 +6,7 @@ import { customStyles, ucwords } from '../../../../utils/helper'
 function SelectMenu({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
 
     const menuData = useSelector((state) => (state.menu.menuData));
+
     let menuOptions = menuData?.data?.map((val, index) => ({
         value: val?.id,
         label: (<><i className={val?.icon}></i> {ucwords(val?.name)}</>)

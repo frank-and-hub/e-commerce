@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Table from '../Table/Table'
 import SubmitButton from '../Form/SubmitButton'
 import { StatusOptions } from '../../../utils/selects'
 import SelectForm from '../Form/Select/SelectForm'
 import { useFormValidation } from '../Form/FormValidation'
 import { useLoading } from '../../../context/LoadingContext'
-import { ucwords } from '../../../utils/helper'
-import { SidebarContext } from '../../../context/SidebarContext'
+import SelectCategory from '../Form/Select/SelectCategory'
 
 
 function SubCategoryTable() {
@@ -16,8 +15,6 @@ function SubCategoryTable() {
     const { loading, setLoading } = useLoading();
     const [filter, setFilter] = useState({});
     const [formKey, setFormKey] = useState(0);
-    const { selectCategoryData } = useContext(SidebarContext);
-    const [categoryDataOptions, setCategoryDataOptions] = useState([]);
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
@@ -72,19 +69,6 @@ function SubCategoryTable() {
         filter
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-
-            const Options = selectCategoryData?.data?.map((val, index) => ({
-                value: val?.id,
-                label: `${ucwords(val?.name)}`
-            }));
-            setCategoryDataOptions(Options || []);
-
-        };
-        fetchData();
-    }, [selectCategoryData]);
-
     return (
         <>
             {showFilter && (<div className='card'>
@@ -94,12 +78,11 @@ function SubCategoryTable() {
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row m-0 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
                         <div className="col-md-4">
-                            <SelectForm id={`category`} label={`category`} value={values.category?._id} handleChange={handleChange} error={errors.category} required={true} Options={categoryDataOptions} />
+                            <SelectCategory id={`category`} label={`category`} value={values.category?._id} handleChange={handleChange} error={errors.category} required={true} multiple={false} />
                         </div>
                         <div className="col-md-4">
                             <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />
                         </div>
-
                         <div className={`col-md-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Loading...' : 'apply filter'} disabled={!showTable} />
                             <SubmitButton className={`secondary`} name={`Reset`} type='button' onClick={resetForm} />

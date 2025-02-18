@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useFormValidation } from '../../Form/FormValidation'
 import { post } from '../../../../utils/AxiosUtils'
 import validate from '../validate'
@@ -9,16 +9,12 @@ import SelectIcon from '../../Form/Select/SelectIcon'
 import Textarea from '../../Form/Textarea'
 import { useNavigate } from 'react-router-dom'
 import { useLoading } from '../../../../context/LoadingContext'
-import SelectForm from '../../Form/Select/SelectForm'
-import { SidebarContext } from '../../../../context/SidebarContext'
-import { ucwords } from '../../../../utils/helper'
+import SelectCategory from '../../Form/Select/SelectCategory'
 
 function Add() {
     const navigate = useNavigate();
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
-    const [categoryDataOptions, setCategoryDataOptions] = useState([]);
-    const { selectCategoryData } = useContext(SidebarContext);
 
     const initialState = {
         name: '',
@@ -53,17 +49,6 @@ function Add() {
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const Options = selectCategoryData?.data?.map((val, index) => ({
-                value: val?.id,
-                label: `${ucwords(val?.name)}`
-            }));
-            setCategoryDataOptions(Options || []);
-        }
-        fetchData();
-    }, [selectCategoryData]);
-
     const resetForm = () => {
         setValues(initialState);
         setFormKey((prevKey) => prevKey + 1);
@@ -82,7 +67,7 @@ function Add() {
                             {errors.icon && <div className="invalid-feedback">{errors.icon}</div>}
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`category`} label={`category`} value={values.category} handleChange={handleChange} error={errors.category} required={true} Options={categoryDataOptions} />
+                            <SelectCategory id={`category`} label={`category`} value={values.category} handleChange={handleChange} error={errors.category} required={true} multiple={false} />
                         </div>
                         <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <div className="col-12">

@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { customStyles, ucwords } from '../../../../utils/helper'
 import { get } from '../../../../utils/AxiosUtils';
 
-function SelectRole({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
-
+function SelectColor({ id, handleChange, value, error, label = null, required = false, disabled = false, multiple = false }) {
     const [response, setResponse] = useState();
 
-    let roleOptions = response?.data?.map((item) => ({
+    const colorOptions = response?.data?.map((item) => ({
         value: item?.id,
         label: `${ucwords(item?.name)}`
     }));
 
     const fetchData = async () => {
-        const res = await get('/roles?page=0');
+        const res = await get('/colors?page=0');
         setResponse(res?.response);
     }
 
@@ -21,9 +20,12 @@ function SelectRole({ id, handleChange, value, error, required = false, disabled
         fetchData();
     }, []);
 
-    const handleSelectChange = (selectedOption) => {
-        handleChange({ target: { name: id, value: selectedOption.value } });
+    const handleSelectChange = (selectedOptions) => {
+        const selectedValues = multiple ? (selectedOptions ? selectedOptions.map(option => option.value) : []) : [];
+        handleChange({ target: { name: id, value: (multiple ? selectedValues : selectedOptions.value) } });
     };
+
+    const selectedValueOptions = colorOptions?.filter(option => value?.includes(option?.value));
 
     return (
         <>
@@ -33,11 +35,12 @@ function SelectRole({ id, handleChange, value, error, required = false, disabled
             <Select
                 className={error ? 'is-invalid' : ''}
                 id={id}
-                options={roleOptions}
-                value={roleOptions?.find(option => option.value === value)}
-                placeholder="Select role"
+                value={multiple ? selectedValueOptions : (colorOptions?.find(option => option.value === value))}
+                options={colorOptions}
+                placeholder="Select Colors"
                 onChange={handleSelectChange}
                 styles={customStyles}
+                isMulti
                 isDisabled={disabled}
             />
             {error && <div className="invalid-feedback">{error}</div>}
@@ -45,4 +48,4 @@ function SelectRole({ id, handleChange, value, error, required = false, disabled
     )
 }
 
-export default SelectRole;
+export default SelectColor;

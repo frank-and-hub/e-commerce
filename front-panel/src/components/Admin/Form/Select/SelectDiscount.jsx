@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { customStyles, ucwords } from '../../../../utils/helper'
 import { get } from '../../../../utils/AxiosUtils';
 
-function SelectRole({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
-
+function SelectDiscount({ id, handleChange, value, error, label = null, required = false, disabled = false }) {
     const [response, setResponse] = useState();
 
-    let roleOptions = response?.data?.map((item) => ({
+    let discountOptions = response?.data?.map((item) => ({
         value: item?.id,
-        label: `${ucwords(item?.name)}`
+        label: `${ucwords(item?.name)} ( ${item?.percentage}% ) off`
     }));
 
     const fetchData = async () => {
-        const res = await get('/roles?page=0');
+        const res = await get('/discounts?page=0');
         setResponse(res?.response);
     }
 
@@ -33,9 +32,9 @@ function SelectRole({ id, handleChange, value, error, required = false, disabled
             <Select
                 className={error ? 'is-invalid' : ''}
                 id={id}
-                options={roleOptions}
-                value={roleOptions?.find(option => option.value === value)}
-                placeholder="Select role"
+                options={discountOptions}
+                value={discountOptions?.find(option => option.value === value)}
+                placeholder="Select Discount"
                 onChange={handleSelectChange}
                 styles={customStyles}
                 isDisabled={disabled}
@@ -45,4 +44,4 @@ function SelectRole({ id, handleChange, value, error, required = false, disabled
     )
 }
 
-export default SelectRole;
+export default SelectDiscount;

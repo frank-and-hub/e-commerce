@@ -13,6 +13,7 @@ const productSchema = new mongoose.Schema({
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', required: true }],
     product_images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File', required: false }],
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true }],
+    colors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Color', required: true }],
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },

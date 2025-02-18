@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import config from '../../../../config'
 import api from '../../../../utils/api'
 
@@ -6,14 +6,17 @@ import validate from '../validate'
 import Input from '../../Form/Input'
 import Textarea from '../../Form/Textarea'
 import SubmitButton from '../../Form/SubmitButton'
-import SelectForm from '../../Form/Select/SelectForm'
 
 import { useNavigate } from 'react-router-dom'
 import { useFormValidation } from '../../Form/FormValidation'
 import { useLoading } from '../../../../context/LoadingContext'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
-import { checkFileValidation, fetchSelectedOptions } from '../../../../utils/helper'
-import { SidebarContext } from '../../../../context/SidebarContext'
+import { checkFileValidation } from '../../../../utils/helper'
+import SelectTag from '../../Form/Select/SelectTag'
+import SelectCategory from '../../Form/Select/SelectCategory'
+import SelectColor from '../../Form/Select/SelectColor'
+import SelectDiscount from '../../Form/Select/SelectDiscount'
+import SelectBrand from '../../Form/Select/SelectBrand'
 
 function Add() {
 
@@ -21,12 +24,6 @@ function Add() {
     const [formKey, setFormKey] = useState(0);
     const [src, setSrc] = useState('');
     const navigate = useNavigate();
-    const [tagDataOptions, setTagDataOptions] = useState([]);
-    const [brandDataOptions, setBrandDataOptions] = useState([]);
-    const [colorDataOptions, setColorDataOptions] = useState([]);
-    const [discountataOptions, setDiscounDataOptions] = useState([]);
-    const [categoryDataOptions, setCategoryDataOptions] = useState([]);
-    const { selectCategoryData, selectBrandData, selectColorData, selectDiscountData, selectTagData } = useContext(SidebarContext);
 
 
     const baseUrl = config.reactApiUrl;
@@ -98,17 +95,7 @@ function Add() {
 
     useEffect(() => {
         setSrc(src !== '' ? src : `/admin/img/profile-img.jpg`);
-        const categoryOptions = fetchSelectedOptions(selectCategoryData?.data);
-        const brandOptions = fetchSelectedOptions(selectBrandData?.data);
-        const colorOptions = fetchSelectedOptions(selectColorData?.data);
-        const discountOptions = fetchSelectedOptions(selectDiscountData?.data);
-        const tagOptions = fetchSelectedOptions(selectTagData?.data);
-        setCategoryDataOptions(categoryOptions || []);
-        setBrandDataOptions(brandOptions || []);
-        setColorDataOptions(colorOptions || []);
-        setDiscounDataOptions(discountOptions || []);
-        setTagDataOptions(tagOptions || []);
-    }, [src, selectCategoryData, selectBrandData, selectColorData, selectDiscountData, selectTagData]);
+    }, [src]);
 
     return (
         <>
@@ -119,26 +106,26 @@ function Add() {
                         <Input name={`price`} text={`price`} label="price" value={values?.price} onChange={handleChange} error={errors.price} required={true} inputType={true} />
                         <Input name={`quantity`} text={`quantity`} label="quantity" value={values?.quantity} onChange={handleChange} error={errors.quantity} required={true} inputType={true} />
                         <div className="col-md-4">
-                            <SelectForm id={`brand_id`} label={`brand`} value={values.brand_id} handleChange={handleChange} error={errors.brand_id} required={true} Options={brandDataOptions} />
+                            <SelectBrand id={`brand_id`} label={`brand`} value={values.brand_id} handleChange={handleChange} error={errors.brand_id} required={true} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`categories`} label={`categories`} value={values.categories} handleChange={handleChange} error={errors.categories} required={true} Options={categoryDataOptions} />
+                            <SelectCategory id={`categories`} label={`categories`} value={values.categories} handleChange={handleChange} error={errors.categories} required={true} multiple={true} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`tags`} label={`tags`} value={values.tags} handleChange={handleChange} error={errors.tags} required={true} Options={tagDataOptions} />
+                            <SelectTag id={`tags`} label={`tags`} value={values.tags} handleChange={handleChange} error={errors.tags} required={true} multiple={true} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`color_id`} label={`color`} value={values.color_id} handleChange={handleChange} error={errors.color_id} required={true} Options={colorDataOptions} />
+                            <SelectColor id={`colors`} label={`color`} value={values.colors} handleChange={handleChange} error={errors.colors} required={true} multiple={true} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`discount_id`} label={`discount`} value={values.discount_id} handleChange={handleChange} error={errors.discount_id} required={true} Options={discountataOptions} />
+                            <SelectDiscount id={`discount_id`} label={`discount`} value={values.discount_id} handleChange={handleChange} error={errors.discount_id} required={true} />
                         </div>
                         <Textarea name="description" className={`w-100`} label="description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <Textarea name="specification" className={`w-100`} label="specification" value={values?.specification} onChange={handleChange} error={errors.specification} required={true} inputType={true} ></Textarea>
                         <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
                         <div className='col-md-4'>
                             <div className='cursor-none'>
-                                <img src={src} alt={`Project main`} className={`rounded-25 col-md-6`} onClick={handleClick} style={{ cursor: 'pointer' }} />
+                                <img src={src} alt={`Project main`} className={`rounded-25 col-md-6 w-50`} onClick={handleClick} style={{ cursor: 'pointer' }} />
                             </div>
                         </div>
                         <div className="col-12">

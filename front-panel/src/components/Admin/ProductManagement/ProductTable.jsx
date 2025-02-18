@@ -1,12 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Table from '../Table/Table'
 import { useLoading } from '../../../context/LoadingContext'
 import { useFormValidation } from '../Form/FormValidation'
-import { fetchSelectedOptions } from '../../../utils/helper'
 import SelectForm from '../Form/Select/SelectForm'
 import SubmitButton from '../Form/SubmitButton'
 import { StatusOptions } from '../../../utils/selects'
-import { SidebarContext } from '../../../context/SidebarContext'
+import SelectBrand from '../Form/Select/SelectBrand'
+import SelectCategory from '../Form/Select/SelectCategory'
+import SelectColor from '../Form/Select/SelectColor'
+import SelectDiscount from '../Form/Select/SelectDiscount'
+import SelectTag from '../Form/Select/SelectTag'
 
 function ProductTable() {
     const module = 'products';
@@ -15,12 +18,6 @@ function ProductTable() {
     const { loading, setLoading } = useLoading();
     const [showTable, setShowTable] = useState(true);
     const [showFilter, setShowFilter] = useState(false);
-    const [tagDataOptions, setTagDataOptions] = useState([]);
-    const [brandDataOptions, setBrandDataOptions] = useState([]);
-    const [colorDataOptions, setColorDataOptions] = useState([]);
-    const [discountataOptions, setDiscounDataOptions] = useState([]);
-    const [categoryDataOptions, setCategoryDataOptions] = useState([]);
-    const { selectCategoryData, selectBrandData, selectColorData, selectDiscountData, selectTagData } = useContext(SidebarContext);
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
@@ -82,22 +79,6 @@ function ProductTable() {
         filter
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const categoryOptions = fetchSelectedOptions(selectCategoryData?.data);
-            const brandOptions = fetchSelectedOptions(selectBrandData?.data);
-            const colorOptions = fetchSelectedOptions(selectColorData?.data);
-            const discountOptions = fetchSelectedOptions(selectDiscountData?.data);
-            const tagOptions = fetchSelectedOptions(selectTagData?.data);
-            setCategoryDataOptions(categoryOptions || []);
-            setBrandDataOptions(brandOptions || []);
-            setColorDataOptions(colorOptions || []);
-            setDiscounDataOptions(discountOptions || []);
-            setTagDataOptions(tagOptions || []);
-        }
-        fetchData();
-    }, [selectCategoryData, selectBrandData, selectColorData, selectDiscountData, selectTagData]);
-
     return (
         <>
             {showFilter && (<div className='card'>
@@ -107,19 +88,19 @@ function ProductTable() {
                 <div className='card-body'>
                     <form key={formKey} encType={`multipart/form-data`} className="row m-0 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
                         <div className="col-md-4">
-                            <SelectForm id={`brand_id`} label={`brand`} value={values.brand_id} handleChange={handleChange} error={errors.brand_id} required={false} Options={brandDataOptions} />
+                            <SelectBrand id={`brand_id`} label={`brand`} value={values.brand_id} handleChange={handleChange} error={errors.brand_id} required={false} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`category_id`} label={`category`} value={values.category_id} handleChange={handleChange} error={errors.category_id} required={false} Options={categoryDataOptions} />
+                            <SelectCategory id={`category_id`} label={`category`} value={values.category_id} handleChange={handleChange} error={errors.category_id} required={false} mulitiple={false} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`color_id`} label={`color`} value={values.color_id} handleChange={handleChange} error={errors.color_id} required={false} Options={colorDataOptions} />
+                            <SelectColor id={`color_id`} label={`color`} value={values.color_id} handleChange={handleChange} error={errors.color_id} required={false} mulitiple={false} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`discount_id`} label={`discount`} value={values.discount_id} handleChange={handleChange} error={errors.discount_id} required={false} Options={discountataOptions} />
+                            <SelectDiscount id={`discount_id`} label={`discount`} value={values.discount_id} handleChange={handleChange} error={errors.discount_id} required={false} />
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`tag_id`} label={`tag`} value={values.tag_id} handleChange={handleChange} error={errors.tag_id} required={false} Options={tagDataOptions} />
+                            <SelectTag id={`tag_id`} label={`tag`} value={values.tag_id} handleChange={handleChange} error={errors.tag_id} required={false} mulitiple={false} />
                         </div>
                         <div className="col-md-4">
                             <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />

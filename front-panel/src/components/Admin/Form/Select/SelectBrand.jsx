@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { customStyles, ucwords } from '../../../../utils/helper'
+import { get } from '../../../../utils/AxiosUtils';
 
-function SelectForm({ id, handleChange, value, error, required = false, disabled = false, label = null, Options }) {
-    Options = [{
-        value: '',
-        label: `Select ${ucwords(id.replace('_id', ''))}`
-    },
-    ...Options
-    ]
+function SelectBrand({ id, handleChange, value, error, label = null, required = false, disabled = false, }) {
+    const [response, setResponse] = useState();
+
+    let brandOptions = response?.data?.map((item) => ({
+        value: item?.id,
+        label: `${ucwords(item?.name)}`
+    }));
+
+    const fetchData = async () => {
+        const res = await get('/brands?page=0');
+        setResponse(res?.response);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleSelectChange = (selectedOption) => {
         handleChange({ target: { name: id, value: selectedOption.value } });
@@ -22,9 +32,9 @@ function SelectForm({ id, handleChange, value, error, required = false, disabled
             <Select
                 className={error ? 'is-invalid' : ''}
                 id={id}
-                options={Options}
-                value={Options?.find((option) => option.value === value)}
-                placeholder={`Select ${label}`}
+                options={brandOptions}
+                value={brandOptions?.find(option => option.value === value)}
+                placeholder="Select Brand"
                 onChange={handleSelectChange}
                 styles={customStyles}
                 isDisabled={disabled}
@@ -34,4 +44,4 @@ function SelectForm({ id, handleChange, value, error, required = false, disabled
     )
 }
 
-export default SelectForm
+export default SelectBrand;

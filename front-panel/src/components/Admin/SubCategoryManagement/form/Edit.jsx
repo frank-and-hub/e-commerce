@@ -1,19 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { processNotifications } from '../../../../utils/notificationUtils'
-import { SidebarContext } from '../../../../context/SidebarContext'
 import { useLoading } from '../../../../context/LoadingContext'
 import { useFormValidation } from '../../Form/FormValidation'
 import { get, patch } from '../../../../utils/AxiosUtils'
-import { formattedData, ucwords } from '../../../../utils/helper'
-import SelectForm from '../../Form/Select/SelectForm'
+import { formattedData } from '../../../../utils/helper'
 import SelectIcon from '../../Form/Select/SelectIcon'
 import SubmitButton from '../../Form/SubmitButton'
 import Textarea from '../../Form/Textarea'
 import Input from '../../Form/Input'
 import validate from '../validate'
+import SelectCategory from '../../Form/Select/SelectCategory'
 
 function Edit() {
     const { id } = useParams();
@@ -21,8 +20,6 @@ function Edit() {
     const navigate = useNavigate();
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
-    const { selectCategoryData } = useContext(SidebarContext);
-    const [categoryDataOptions, setCategoryDataOptions] = useState([]);
 
     const initialState = {
         name: '',
@@ -71,11 +68,6 @@ function Edit() {
                     get(`/sub-categories/${id}/edit`),
                 ]);
                 setValues(getData?.data || {});
-                const Options = selectCategoryData?.data?.map((val, index) => ({
-                    value: val?.id,
-                    label: `${ucwords(val?.name)}`
-                }));
-                setCategoryDataOptions(Options || []);
                 processNotifications(200, getData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
@@ -84,7 +76,7 @@ function Edit() {
         if (id) {
             fetchData();
         }
-    }, [dispatch, setValues, id, selectCategoryData]);
+    }, [dispatch, setValues, id]);
     return (
         <>
             <div className='card'>
@@ -98,7 +90,7 @@ function Edit() {
                             {errors.icon && <div className="invalid-feedback">{errors.icon}</div>}
                         </div>
                         <div className="col-md-4">
-                            <SelectForm id={`category`} label={`category`} value={values.category?._id} handleChange={handleChange} error={errors.category} required={true} Options={categoryDataOptions} />
+                            <SelectCategory id={`category`} label={`category`} value={values.category?._id} handleChange={handleChange} error={errors.category} required={true} multiple={false} />
                         </div>
                         <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <div className="col-12">

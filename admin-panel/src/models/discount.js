@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const planSchema = new mongoose.Schema({
+const discountSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true, trim: true, unique: true, set: (value) => value.toLowerCase() },
     percentage: { type: Number, required: true, trim: true },
@@ -13,11 +13,11 @@ const planSchema = new mongoose.Schema({
     timestamps: true
 });
 
-planSchema.pre(/^find/, function (next) {
+discountSchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
 });
 
-planSchema.index({ name: 1, deleted_at: 1 });
+discountSchema.index({ name: 1, deleted_at: 1 });
 
-module.exports = mongoose.model('Plan', planSchema);
+module.exports = mongoose.model('Discount', discountSchema);

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Tag = require('../models/tag');
 const User = require('../models/user');
 const File = require('../models/file');
+const Color = require('../models/color');
 const Brand = require('../models/brand');
 const Product = require('../models/product');
 const Discount = require('../models/discount');
@@ -113,6 +114,7 @@ exports.create = (req, res, next) => {
                 'discount': 'SchemaId',
                 'brand': 'SchemaId',
                 'tags': 'array of SchemaID',
+                'colors': 'array of SchemaID',
                 'categories': 'array of SchemaID',
                 'product_images': 'array of SchemaID'
             },
@@ -124,12 +126,11 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, description, specification, price, quantity, discount_id, brand_id, tags, categories } = req.body;
+    const { name, description, specification, price, quantity, discount_id, brand_id, tags, categories, colors } = req.body;
     const file = req.file;
     try {
         const userId = req?.userData?.id;
-
-        const existingProduct = await Product.findOne({ name, description, specification, discount_id, brand_id, tags, categories });
+        const existingProduct = await Product.findOne({ name, description, specification, discount_id, brand_id });
         if (existingProduct) return res.status(409).json({ message: `Product already exists` });
 
         const user = await User.findById(userId).select('_id name').where('status').equals(status_active);
@@ -140,6 +141,9 @@ exports.store = async (req, res, next) => {
 
         const brand = await Brand.findById(brand_id).select('_id name').where('status').equals(status_active);
         if (!brand) return res.status(404).json({ message: `Brand not found` });
+
+        const foundColors = await Color.find({ _id: { $in: colors }, status: status_active }).select('_id name');
+        if (foundColors.length !== colors.length) return res.status(404).json({ message: 'One or more active colors not found' });
 
         const foundTags = await Tag.find({ _id: { $in: tags }, status: status_active }).select('_id name');
         if (foundTags.length !== tags.length) return res.status(404).json({ message: 'One or more active tags not found' });
@@ -166,6 +170,7 @@ exports.store = async (req, res, next) => {
             discount: discount._id,
             brand: brand._id,
             tags: foundTags.map(p => p._id),
+            colors: foundColors.map(p => p._id),
             categories: foundCategories.map(p => p._id),
             image: savedFile?._id ?? null,
             user: user._id,
@@ -180,6 +185,10 @@ exports.store = async (req, res, next) => {
             'user': user.name,
             'image': savedFile?.path ?? null,
             'tags': foundTags.map(perm => ({
+                'id': perm._id,
+                'name': perm.name
+            })),
+            'colors': foundColors.map(perm => ({
                 'id': perm._id,
                 'name': perm.name
             })),
@@ -198,7 +207,7 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const productData = await this.find_data_by_id(id, res);
-        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, image, product_images, user, updated_by, status } = productData;
+        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, colors, image, product_images, user, updated_by, status } = productData;
         const result = {
             'id': _id,
             'name': name,
@@ -207,12 +216,13 @@ exports.show = async (req, res, next) => {
             'price': price,
             'quantity': quantity,
             'status': status,
-            'discount': discount,
-            'brand': brand,
+            'discount_id': discount?._id,
+            'brand_id': brand?._id,
             'image': image,
             'user': user,
             'updated_by': updated_by,
             'tags': await helper.filterData(tags),
+            'colors': await helper.filterData(colors),
             'categories': await helper.filterData(categories),
             'product_images': await helper.filterData(product_images),
         }
@@ -226,7 +236,7 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const productData = await this.find_data_by_id(id, res);
-        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, image, product_images, user, updated_by, status } = productData;
+        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, colors, image, product_images, user, updated_by, status } = productData;
         const result = {
             'id': _id,
             'name': name,
@@ -235,12 +245,13 @@ exports.edit = async (req, res, next) => {
             'price': price,
             'quantity': quantity,
             'status': status,
-            'discount': discount,
-            'brand': brand,
+            'discount_id': discount?._id,
+            'brand_id': brand?._id,
             'image': image,
             'user': user,
             'updated_by': updated_by,
             'tags': await helper.filterData(tags),
+            'colors': await helper.filterData(colors),
             'categories': await helper.filterData(categories),
             'product_images': await helper.filterData(product_images),
         }
@@ -265,6 +276,10 @@ exports.update = async (req, res, next) => {
             if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
         }
 
+        const colorsId = updateOps['colors'];
+        const colors = await Color.find({ _id: { $in: colorsId } }).select('_id name');
+        if (colorsId && colors?.length !== colorsId?.length) return res.status(404).json({ message: 'One or more colors not found' });
+
         const tagsId = updateOps['tags'];
         const tags = await Tag.find({ _id: { $in: tagsId } }).select('_id name');
         if (tagsId && tags?.length !== tagsId?.length) return res.status(404).json({ message: 'One or more tags not found' });
@@ -274,14 +289,13 @@ exports.update = async (req, res, next) => {
         if (categoriesId && categories?.length !== categoriesId?.length) return res.status(404).json({ message: 'One or more categories not found' });
 
         const productImagesId = updateOps['product_images'];
-        const productImages = await File.find({ _id: { $in: product_imagesId } }).select('_id name path');
+        const productImages = await File.find({ _id: { $in: productImagesId } }).select('_id name path');
         if (productImagesId && productImages?.length !== productImagesId?.length) return res.status(404).json({ message: 'One or more product images not found' });
-
 
         const result = await Product.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedProduct = await this.find_data_by_id(id, res);
-            const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, image, product_images, user, updated_by, status } = updatedProduct;
+            const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, colors, image, product_images, user, updated_by, status } = updatedProduct;
             const response = {
                 'id': _id,
                 'name': name,
@@ -295,6 +309,10 @@ exports.update = async (req, res, next) => {
                 'image': image,
                 'user': user,
                 'updated_by': updated_by,
+                'colors': categories.map(per => ({
+                    'id': per._id,
+                    'name': per.name
+                })),
                 'tags': tags.map(per => ({
                     'id': per._id,
                     'name': per.name
@@ -342,6 +360,7 @@ exports.destroy = async (req, res, next) => {
                     'discount': 'SchemaId',
                     'brand': 'SchemaId',
                     'tags': 'array of SchemaID',
+                    'colors': 'array of SchemaID',
                     'categories': 'array of SchemaID',
                     'product_images': 'array of SchemaID'
                 }
@@ -380,12 +399,16 @@ exports.image = async (req, res, next) => {
 
 exports.find_data_by_id = async (id, res) => {
     const productData = await Product.findById(id)
-        .select('_id name description specification price quantity discount brand tags categories image product_images user updated_by status')
+        .select('_id name description specification price quantity discount brand tags categories colors image product_images user updated_by status')
         // .where('status').equals(status_active)
         .populate('discount', '_id name')
         .populate('brand', '_id name')
         .populate('user', '_id name')
         .populate('image', '_id name path')
+        .populate({
+            path: 'colors',
+            select: '_id name'
+        })
         .populate({
             path: 'tags',
             select: '_id name'

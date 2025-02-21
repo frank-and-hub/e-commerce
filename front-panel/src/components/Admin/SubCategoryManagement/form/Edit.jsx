@@ -90,7 +90,7 @@ function Edit() {
                             {errors.icon && <div className="invalid-feedback">{errors.icon}</div>}
                         </div>
                         <div className="col-md-4">
-                            <SelectCategory id={`category`} label={`category`} value={values.category?._id} handleChange={handleChange} error={errors.category} required={true} multiple={false} />
+                            <SelectCategory id={`category`} label={`category`} value={values.category} handleChange={handleChange} error={errors.category} required={true} multiple={false} />
                         </div>
                         <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
                         <div className="col-12">

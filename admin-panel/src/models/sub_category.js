@@ -19,6 +19,6 @@ SubCategorySchema.pre(/^find/, function (next) {
     next();
 });
 
-SubCategorySchema.index({ name: 1, deleted_at: 1 });
+SubCategorySchema.index({ name: 1, category: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('SubCategory', SubCategorySchema);

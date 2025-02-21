@@ -4,7 +4,7 @@ class AboutUs extends Component {
     render() {
         return (
             <>
-                <section className="bg-success py-5">
+                <section className="bg-dark py-5">
                     <div className="container">
                         <div className="row align-items-center py-5">
                             <div className="col-md-8 text-white">

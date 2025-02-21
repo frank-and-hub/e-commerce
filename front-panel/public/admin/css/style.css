@@ -72,8 +72,8 @@ h6 {
 
 @media (max-width: 419px) {
   #main {
-      padding: 5px;
-      height: 100% !important;
+    padding: 5px;
+    height: 100% !important;
   }
 }
 
@@ -270,6 +270,7 @@ tfoot {
   background-color: var(--background);
   color: #798eb3;
   padding: 15px;
+  transform: translateY(0);
 }
 
 .card-title {
@@ -433,12 +434,9 @@ tfoot {
   z-index: 997;
   height: 60px;
   box-shadow: #f6f9ff;
-  /* box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1); */
-  /* background-color: var(--white); */
+  animation: slideIn 0.5s ease-in-out forwards;
   background-color: var(--background);
   padding-left: 20px;
-  /* Toggle Sidebar Button */
-  /* Search Bar */
 }
 
 .header .toggle-sidebar-btn {
@@ -686,6 +684,7 @@ textarea {
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   background: var(--background);
+  animation: slideIn 0.5s ease-in-out forwards;
 }
 
 @media (max-width: 1199px) {
@@ -769,6 +768,7 @@ textarea {
   padding: 0px;
   margin: 4px 0px 4px 0px;
   list-style: none;
+  animation: slideIn 0.5s ease-in-out forwards;
 }
 
 .sidebar-nav .nav-item {
@@ -1440,6 +1440,7 @@ table>tbody>tr>td,
 table>thead>tr {
   color: var(--dark);
   text-align: left !important;
+  animation: slideIn 0.5s ease-in-out forwards;
 }
 
 .table tbody tr td {
@@ -1558,7 +1559,7 @@ table>thead>tr .action {
 }
 
 .Toastify__toast {
-  border-radius: 25px !important;
+  border-radius: 15px !important;
 }
 
 i {
@@ -1616,8 +1617,25 @@ i {
 
 .modal-content {
   background-color: var(--background);
+  border-radius: 25px;
 }
 
-.form-control{
+.form-control {
   min-height: 38px !important;
+  animation: slideIn 0.5s ease-in-out forwards;
+}
+
+.section {
+  animation: slideIn 0.5s ease-in-out forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -97,7 +97,7 @@ exports.store = async (req, res, next) => {
         let userId = req?.userData?.id;
 
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
-        if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
+        if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
 
         const existsDiscount = await Discount.findOne({ name: name, status: status_active, user: userData._id });
         if (existsDiscount) return res.status(200).json({ message: 'Discount already exists' });
@@ -174,7 +174,7 @@ exports.update = async (req, res, next) => {
 
         if (updateOps['user']) {
             const userData = await User.findById(updateOps['user']).select('_id').where('status').equals(status_active);
-            if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
+            if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
         }
 
         const result = await Discount.updateOne({ _id: id }, { $set: updateOps });

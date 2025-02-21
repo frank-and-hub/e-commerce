@@ -190,7 +190,7 @@ const Table = ({
                 <div className='card-body'>
                     <div className='row my-2'>
                         <div className='col-md-6'>
-                            <h5 className="card-title text-capitalize">{(cleanedTitle)}</h5>
+                            <h5 className="card-title text-capitalize underline">{(cleanedTitle)}</h5>
                         </div>
                         <div className="d-flex justify-content-evenly align-items-center col-md-6">
                             <div className="col-md-9 col-sm-10">
@@ -206,7 +206,7 @@ const Table = ({
                                 <div className="col-md-3 col-sm-2 d-flex justify-content-evenly" >
                                     {handelFilter && (
                                         <div className="col-6 m-auto">
-                                            <span className="d-inline-block color" tabIndex="0" data-toggle="tooltip" title={ucwords(`Filter`)}>
+                                            <span className="d-inline-block color" tabIndex="0" data-bs-toggle="tooltip" data-bs-original-title="" title={ucwords(`filter`)}>
                                                 <Link onClick={() => handelFilter()} className={`btn btn-sm border rounded-circle`}>
                                                     <i className={`bi bi-filter`}></i>
                                                 </Link>
@@ -215,7 +215,7 @@ const Table = ({
                                     )}
                                     {handelCreate && (
                                         <div className="col-6 m-auto">
-                                            <span className="d-inline-block color" tabIndex="0" data-toggle="tooltip" title={ucwords(`Add`)}>
+                                            <span className="d-inline-block color" tabIndex="0" data-bs-toggle="tooltip" title={ucwords(`add`)}>
                                                 <Link to={`/admin${pathname}/create`} className={`btn btn-sm border rounded-circle`}>
                                                     <i className={`bi bi-plus`}></i>
                                                 </Link>
@@ -235,7 +235,7 @@ const Table = ({
                                             {headers.map((header, index) => (
                                                 <th key={index} scope={`row`} className='text-capitalize' style={{ cursor: (header !== ('id' || '_id')) ? 'pointer' : 'auto' }} onClick={(e) => (header === ('id' || '_id') ? e.preventDefault() : handleSort(header))}>
                                                     {header === ('id' || '_id')
-                                                        ? (<i className="bi bi-hash" ></i>)
+                                                        ? (<i className="bi bi-hash"></i>)
                                                         : (ucwords(header))}
                                                     {sortConfig.key === header ? (sortConfig.direction === 'asc' ? '  ▲' : '  ▼') : ''}
                                                 </th>
@@ -249,7 +249,7 @@ const Table = ({
                                 {loading ? (
                                     <tr>
                                         <th colSpan={headers.length + 1} className='text-center'>
-                                            <Loading />
+                                            {/* <Loading /> */}
                                         </th>
                                     </tr>
                                 ) : (data && data.length > 0 ? (data.map((item, i) => (

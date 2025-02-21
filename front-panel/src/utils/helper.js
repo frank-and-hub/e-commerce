@@ -144,6 +144,7 @@ export const customStyles = {
     }),
     menuList: (provided) => ({
         ...provided,
+        animation: 'slideIn 0.5s ease-in-out forwards',
         '&::-webkit-scrollbar': {
             display: 'none',
         },

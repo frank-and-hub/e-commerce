@@ -1,6 +1,6 @@
 /*
 
-TemplateMo 559 Zay Shop
+Shop
 
 https://templatemo.com/tm-559-zay-shop
 
@@ -54,7 +54,7 @@ body, ul, li, p, a, label, input, div {
 .text-muted { color: #bcbcbc !important;}
 .text-success { color: #59ab6e !important;}
 .text-light { color: #cfd6e1 !important;}
-.bg-dark { background-color: #212934 !important;}
+.bg-dark { background-color: #000 !important;}
 .bg-light { background-color: #e9eef5 !important;}
 .bg-black { background-color: #1d242d !important;}
 .bg-success { background-color: #59ab6e !important;}

@@ -16,6 +16,6 @@ nutshellSchema.pre(/^find/, function (next) {
     next();
 });
 
-nutshellSchema.index({ name: 1, deleted_at: 1 });
+nutshellSchema.index({ user: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('Mutshell', nutshellSchema);

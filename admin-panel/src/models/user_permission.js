@@ -10,7 +10,7 @@ const userPermissionSchema = new mongoose.Schema({
     delete: { type: Boolean, default: false, Comment: '1:yes,0:no' },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
-    deleted_at: { type: Date, default: null } 
+    deleted_at: { type: Date, default: null }
 }, {
     timestamps: true
 });
@@ -20,6 +20,6 @@ userPermissionSchema.pre(/^find/, function (next) {
     next();
 });
 
-userPermissionSchema.index({ name: 1, deleted_at: 1 });
+userPermissionSchema.index({ user: 1, menu: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('UserPermission', userPermissionSchema);

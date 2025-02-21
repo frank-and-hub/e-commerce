@@ -231,10 +231,13 @@ exports.update = async (req, res, next) => {
 
         const updateOps = helper.updateOps(req);
 
-        if (updateOps['parent']) {
+        if (updateOps['parent'] && updateOps['parent'] !== '' && updateOps['parent'] !== null) {
             const parent = await Menu.findById(updateOps['parent']).select('_id').where('status').equals(status_active);
             if (!parent) return res.status(404).json({ message: `Parent menu not found` });
+        } else {
+            updateOps['parent'] = null;
         }
+
         const result = await Menu.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedMenu = await this.find_data_by_id(id, res);

@@ -20,8 +20,6 @@ const userSchema = new mongoose.Schema({
     state: { type: String, default: null, maxlength: 100 },
     zipcode: { type: Number, default: null, maxlength: 10 },
     token: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Token', required: false }],
-    // loginTime: { type: Date, default: null },
-    // ip_address: { type: String, default: null, maxlength: 100 },
     terms: { type: Boolean, default: true },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },

@@ -16,6 +16,6 @@ NewsLetterSchema.pre(/^find/, function (next) {
     next();
 });
 
-NewsLetterSchema.index({ name: 1, deleted_at: 1 });
+NewsLetterSchema.index({ email: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('NewsLetter', NewsLetterSchema);

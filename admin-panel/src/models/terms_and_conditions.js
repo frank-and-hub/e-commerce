@@ -15,7 +15,7 @@ termsAndConditionsSchema.pre(/^find/, function (next) {
     next();
 });
 
-termsAndConditionsSchema.index({ name: 1, deleted_at: 1 });
+termsAndConditionsSchema.index({ t_and_c: 1, deleted_at: 1 });
 
 // Export the model
 module.exports = mongoose.model('TermsAndConditions', termsAndConditionsSchema);

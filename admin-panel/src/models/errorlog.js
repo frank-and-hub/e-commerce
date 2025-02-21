@@ -6,9 +6,11 @@ const errorLogSchema = new mongoose.Schema({
     statusCode: { type: Number, required: true },
     IP: { type: String, required: true },
     errorMessage: { type: String, required: true },
-    stackTrace: { type: String }
+    stackTrace: { type: String },
 }, {
     timestamps: true
 });
+
+errorLogSchema.index({ errorType: 1, IP: 1 });
 
 module.exports = mongoose.model('ErrorLog', errorLogSchema);

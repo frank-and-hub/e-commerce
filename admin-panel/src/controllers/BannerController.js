@@ -115,7 +115,7 @@ exports.store = async (req, res, next) => {
         const file = req.file;
 
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
-        if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
+        if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
 
         const existsBanner = await Banner.findOne({ name: name, title: title, status: status_active });
         if (existsBanner) return res.status(200).json({ message: 'Banner already exists' });

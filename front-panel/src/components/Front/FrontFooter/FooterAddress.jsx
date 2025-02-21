@@ -6,7 +6,7 @@ class FooterAddress extends Component {
         return (
             <>
                 <div className={`col-md-4 pt-5`}>
-                    <h2 className="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
+                    <h2 className="h2 text-success border-bottom pb-3 border-light logo">Shop</h2>
                     <ul className="list-unstyled text-light footer-link-list">
                         <li>
                             <i className="fas fa-map-marker-alt fa-fw"></i> 123 Consectetur at ligula 10660

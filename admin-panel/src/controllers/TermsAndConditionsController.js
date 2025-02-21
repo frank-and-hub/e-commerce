@@ -73,7 +73,7 @@ exports.store = async (req, res, next) => {
         let userId = req?.userData?.id;
 
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
-        if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
+        if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
 
         const existsTermsAndConditions = await TermsAndConditions.findOne({ t_and_c: t_and_c, status: status_active });
         if (existsTermsAndConditions) return res.status(200).json({ message: 'Terms nd conditions already exists' });

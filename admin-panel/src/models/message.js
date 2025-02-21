@@ -7,7 +7,7 @@ const messageSchema = new mongoose.Schema({
     message: { type: String, required: true },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
-    deleted_at: { type: Date, default: null } 
+    deleted_at: { type: Date, default: null }
 }, {
     timestamps: true
 });
@@ -17,6 +17,6 @@ messageSchema.pre(/^find/, function (next) {
     next();
 });
 
-messageSchema.index({ name: 1, deleted_at: 1 });
+messageSchema.index({ sender_id: 1, receiver_id: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('Message', messageSchema);

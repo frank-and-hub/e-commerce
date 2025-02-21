@@ -16,6 +16,6 @@ faqSchema.pre(/^find/, function (next) {
     next();
 });
 
-faqSchema.index({ name: 1, deleted_at: 1 });
+faqSchema.index({ question: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('Faq', faqSchema);

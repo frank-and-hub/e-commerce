@@ -26,7 +26,7 @@ class FrontFooter extends Component {
                         </div>
                     </div>
 
-                    <div className="w-100 bg-black py-3">
+                    <div className="w-100 bg-dark py-3">
                         <div className={`container`}>
                             <div className="row pt-2">
                                 <div className="col-12">

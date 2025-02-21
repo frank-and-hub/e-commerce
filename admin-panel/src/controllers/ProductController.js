@@ -273,7 +273,7 @@ exports.update = async (req, res, next) => {
 
         if (updateOps['user']) {
             const userData = await User.findById(updateOps['user']).where('status').equals(status_active);
-            if (!userData) return res.status(401).json({ message: `User not found!`, data: response });
+            if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
         }
 
         const colorsId = updateOps['colors'];

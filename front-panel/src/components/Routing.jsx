@@ -24,9 +24,12 @@ const PermissionTable = lazy(() => import('./Admin/PermissionManagement/Permissi
 // settings
 // const SiteForm = lazy(() => import ('./Admin/SettingManagement/SiteForm'))
 const Support = lazy(() => import('./Admin/SettingManagement/Support'))
-const TermsAndConditions = lazy(() => import('./Admin/SettingManagement/TermsAndConditions'))
 const FaqList = lazy(() => import('./Admin/SettingManagement/faq/List'))
 const AddFaq = lazy(() => import('./Admin/SettingManagement/faq/Add'))
+// static pages
+const AboutUsPage = lazy(() => import('./Admin/Pages/AboutUsPage'))
+const ReturnPolicyPage = lazy(() => import('./Admin/Pages/ReturnPolicyPage'))
+const TermsAndConditions = lazy(() => import('./Admin/Pages/TermsAndConditions'))
 // users
 const UserForm = lazy(() => import('./Admin/UserManagement/form/Add'))
 const UserView = lazy(() => import('./Admin/UserManagement/form/View'))
@@ -154,12 +157,6 @@ class Routing extends Component {
 
                             <Route exact path={`settings`}>
                                 <Route index element={<Blank />} />
-                                <Route exact path={`terms-and-conditions`} element={<TermsAndConditions />} />
-
-                                <Route exact path={`support`}>
-                                    <Route index element={<Support />} />
-                                    <Route exact path={`create`} element={<Support />} />
-                                </Route>
 
                                 <Route exact path={`faqs`}>
                                     <Route index element={<FaqList />} />
@@ -174,6 +171,17 @@ class Routing extends Component {
                                 </Route>
                             </Route>
 
+                            <Route exact path={`supports`}>
+                                <Route index element={<Support />} />
+                                <Route exact path={`create`} element={<Support />} />
+                            </Route>
+
+                            <Route exact path={`pages`}>
+                                <Route exact path={`terms-and-conditions`} element={<TermsAndConditions />} />
+                                <Route exact path={`about-us`} element={<AboutUsPage />} />
+                                <Route exact path={`return-and-refund-policies`} element={<ReturnPolicyPage />} />
+                            </Route>
+
                             <Route exact path={`products`}>
                                 <Route index element={<ProductTable />} />
                                 <Route exact path={`create`} element={<ProductAdd />} />
@@ -186,7 +194,7 @@ class Routing extends Component {
                                     <Route exact path={`:id/edit`} element={<CategoryEdit />} />
                                     <Route exact path={`:id`} element={<CategoryView />} />
                                 </Route>
-                                
+
                                 <Route exact path={`sub-categories`}>
                                     <Route index element={<SubCategoryTable />} />
                                     <Route exact path={`create`} element={<SubCategoryAdd />} />
@@ -235,12 +243,12 @@ class Routing extends Component {
                                 <Route exact path={`:id`} element={<BrandView />} />
                             </Route>
 
-                            {/* <Route exact path={`payments`}>
+                            <Route exact path={`payments`}>
                                 <Route index element={<Blank />} />
                                 <Route exact path={`create`} element={<Blank />} />
                                 <Route exact path={`:id/edit`} element={<Blank />} />
                                 <Route exact path={`:id`} element={<Blank />} />
-                            </Route> */}
+                            </Route>
                         </Route>
                         <Route exact path={`/admin/signin`} element={<SignIn />} />
                         <Route exact path={`/admin/signup`} element={<SignUp />} />

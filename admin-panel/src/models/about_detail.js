@@ -19,6 +19,6 @@ aboutDetailSchema.pre(/^find/, function (next) {
     next();
 });
 
-aboutDetailSchema.index({ name: 1, deleted_at: 1 });
+aboutDetailSchema.index({ user: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('AboutDetail', aboutDetailSchema);

@@ -156,7 +156,7 @@ exports.show = async (req, res, next) => {
             'category': category,
             'updated_by': updated_by,
         }
-        res.status(200).json({ message: `Sub category was found`, data: result, title: `View ${name} sub_category detail` });
+        res.status(200).json({ message: `Sub category data found`, data: result, title: `View ${name} sub_category detail` });
     } catch (err) {
         next(err)
     }
@@ -176,7 +176,7 @@ exports.edit = async (req, res, next) => {
             'user': user?._id,
             'category': category?._id
         }
-        res.status(200).json({ message: `Sub category was found`, data: result, title: `Edit ${name} sub category detail` });
+        res.status(200).json({ message: `Sub category data found`, data: result, title: `Edit ${name} sub category detail` });
     } catch (err) {
         next(err)
     }

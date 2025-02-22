@@ -226,7 +226,7 @@ exports.show = async (req, res, next) => {
             'categories': await helper.filterData(categories),
             'product_images': await helper.filterData(product_images),
         }
-        res.status(200).json({ message: `Product was found`, data: result, title: `View ${name} product detail` });
+        res.status(200).json({ message: `Product data found`, data: result, title: `View ${name} product detail` });
     } catch (err) {
         next(err)
     }
@@ -255,7 +255,7 @@ exports.edit = async (req, res, next) => {
             'categories': await helper.filterData(categories),
             'product_images': await helper.filterData(product_images),
         }
-        res.status(200).json({ message: `Product was found`, data: result, title: `Edit ${name} product detail` });
+        res.status(200).json({ message: `Product data found`, data: result, title: `Edit ${name} product detail` });
     } catch (err) {
         next(err)
     }

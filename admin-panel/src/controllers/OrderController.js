@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const Color = require('../models/color');
 const User = require('../models/user');
+const Order = require('../models/order');
 
 // helper function
 const helper = require('../utils/helper');
@@ -38,12 +38,12 @@ exports.index = async (req, res, next) => {
         }
 
         const skip = (page - 1) * limit;
-        const totalCount = await Color.countDocuments({
+        const totalCount = await Order.countDocuments({
             ...filter,
             deleted_at: null
         });
 
-        const query = Color.find(filter)
+        const query = Order.find(filter)
             .select('_id name hex_code user status updated_by')
             .populate('user', '_id name')
             .populate('updated_by', '_id name');
@@ -105,10 +105,10 @@ exports.store = async (req, res, next) => {
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
 
-        const existsColor = await Color.findOne({ name: name, hex_code: hex_code, status: status_active });
-        if (existsColor) return res.status(200).json({ message: 'Color already exists' });
+        const existsOrder = await Order.findOne({ name: name, hex_code: hex_code, status: status_active });
+        if (existsOrder) return res.status(200).json({ message: 'Order already exists' });
 
-        const color = new Color({
+        const color = new Order({
             _id: new mongoose.Types.ObjectId(),
             user: userData._id,
             name,
@@ -140,7 +140,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Color was found`, data: result, title: `View ${name} color detail` });
+        res.status(200).json({ message: `Order data found`, data: result, title: `View ${name} color detail` });
     } catch (err) {
         next(err)
     }
@@ -159,7 +159,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Color was found`, data: result, title: `Edit ${name} color detail` });
+        res.status(200).json({ message: `Order data found`, data: result, title: `Edit ${name} color detail` });
     } catch (err) {
         next(err)
     }
@@ -168,8 +168,8 @@ exports.edit = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const color = await Color.findById(id).select('_id');
-        if (!color) return res.status(404).json({ message: `Color not found!`, });
+        const color = await Order.findById(id).select('_id');
+        if (!color) return res.status(404).json({ message: `Order not found!`, });
 
         if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (color may not exist or the data is the same)` });
 
@@ -180,10 +180,10 @@ exports.update = async (req, res, next) => {
             if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
         }
 
-        const result = await Color.updateOne({ _id: id }, { $set: updateOps });
+        const result = await Order.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedColor = await this.find_data_by_id(id, res);
-            const { _id, name, hex_code, user, updated_by, status } = updatedColor;
+            const updatedOrder = await this.find_data_by_id(id, res);
+            const { _id, name, hex_code, user, updated_by, status } = updatedOrder;
             const response = {
                 'id': _id,
                 'name': name,
@@ -192,9 +192,9 @@ exports.update = async (req, res, next) => {
                 'status': status,
                 'updated_by': updated_by
             }
-            return res.status(200).json({ message: `Color details updated successfully`, data: response });
+            return res.status(200).json({ message: `Order details updated successfully`, data: response });
         }
-        res.status(404).json({ message: `Color not found or no details to update`, data: [] });
+        res.status(404).json({ message: `Order not found or no details to update`, data: [] });
     } catch (err) {
         next(err)
     }
@@ -203,13 +203,13 @@ exports.update = async (req, res, next) => {
 exports.destroy = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const getColor = await Color.findById(id).select('_id').where('status').equals(!status_active);
-        if (!getColor) return res.status(404).json({ message: 'Color not found' });
+        const getOrder = await Order.findById(id).select('_id').where('status').equals(!status_active);
+        if (!getOrder) return res.status(404).json({ message: 'Order not found' });
 
-        // const colorData = await Color.deleteOne({ _id: id });
+        // const colorData = await Order.deleteOne({ _id: id });
         // if (colorData.deletedCount === 1) {
 
-        const colorData = await Color.findByIdAndUpdate(id, { deleted_at: new Date() });
+        const colorData = await Order.findByIdAndUpdate(id, { deleted_at: new Date() });
         if (colorData) {
             const response = {
                 'method': 'POST',
@@ -222,20 +222,20 @@ exports.destroy = async (req, res, next) => {
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
-        res.status(404).json({ message: `Color not found` });
+        res.status(404).json({ message: `Order not found` });
     } catch (err) {
         next(err)
     }
 }
 
 exports.find_data_by_id = async (id, res) => {
-    const colorData = await Color.findById(id)
+    const colorData = await Order.findById(id)
         .select('_id name hex_code user updated_by status')
         // .where('status').equals(status_active)
         .populate('user', '_id name')
         .populate('updated_by', '_id name');
 
-    if (!colorData) return res.status(404).json({ message: `Color not found` });
+    if (!colorData) return res.status(404).json({ message: `Order not found` });
 
     return colorData;
 }

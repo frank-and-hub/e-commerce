@@ -140,7 +140,7 @@ exports.show = async (req, res, next) => {
             'status': roleData?.status,
             'updated_by': roleData?.updated_by
         }
-        res.status(200).json({ message: `Role was found`, data: result, title: `View ${roleData?.name} role detail` });
+        res.status(200).json({ message: `Role data found`, data: result, title: `View ${roleData?.name} role detail` });
     } catch (err) {
         next(err)
     }
@@ -157,7 +157,7 @@ exports.edit = async (req, res, next) => {
             'status': roleData?.status,
             'updated_by': roleData?.updated_by
         }
-        res.status(200).json({ message: `Role was found`, data: result, title: `Edit ${roleData?.name} role detail` });
+        res.status(200).json({ message: `Role data found`, data: result, title: `Edit ${roleData?.name} role detail` });
     } catch (err) {
         next(err)
     }

@@ -192,7 +192,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Menu was found`, data: result, title: `View ${name} menu detail` });
+        res.status(200).json({ message: `Menu data found`, data: result, title: `View ${name} menu detail` });
     } catch (err) {
         next(err)
     }
@@ -215,7 +215,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Menu was found`, data: result, title: `Edit ${name} menu detail` });
+        res.status(200).json({ message: `Menu data found`, data: result, title: `Edit ${name} menu detail` });
     } catch (err) {
         next(err)
     }

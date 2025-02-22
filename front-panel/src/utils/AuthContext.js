@@ -56,9 +56,9 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('user', data?.user);
             localStorage.setItem('user_id', data?.user?._id);
             return data;
-        } catch (error) {
-            notifyError(`Login error: ${error.message}`);
-            throw error;
+        } catch (err) {
+            notifyError(`Login error: ${err.message}`);
+            throw err;
         }
     }, [storeUserData]);
 

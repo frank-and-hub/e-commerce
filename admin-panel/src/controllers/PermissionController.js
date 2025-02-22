@@ -136,7 +136,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Permission was found`, data: result, title: `View ${name} permission detail` });
+        res.status(200).json({ message: `Permission data found`, data: result, title: `View ${name} permission detail` });
     } catch (err) {
         next(err)
     }
@@ -154,7 +154,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Permission was found`, data: result, title: `Edit ${name} permission detail` });
+        res.status(200).json({ message: `Permission data found`, data: result, title: `Edit ${name} permission detail` });
     } catch (err) {
         next(err)
     }

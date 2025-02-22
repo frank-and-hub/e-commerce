@@ -165,7 +165,7 @@ exports.show = async (req, res, next) => {
         });
 
         const chatResponses = await Promise.all(chatPromises);
-        res.status(200).json({ message: `Message was found`, data: chatResponses, title: `View chat detail` });
+        res.status(200).json({ message: `Message data found`, data: chatResponses, title: `View chat detail` });
     } catch (err) {
         next(err)
     }
@@ -194,7 +194,7 @@ exports.edit = async (req, res, next) => {
             'receiver': receiver_id,
             'message': message,
         }
-        res.status(200).json({ message: `Message was found`, data: result, title: `Edit ${sender?.name} message detail` });
+        res.status(200).json({ message: `Message data found`, data: result, title: `Edit ${sender?.name} message detail` });
     } catch (err) {
         next(err)
     }

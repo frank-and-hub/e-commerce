@@ -69,7 +69,7 @@ export const SignInForm = () => {
                 <div className="col-12">
                     <label htmlFor="yourPassword" className="form-label">password</label>
                     <input
-                        type="text"
+                        type="password"
                         name="password"
                         className="form-control"
                         id="yourPassword"

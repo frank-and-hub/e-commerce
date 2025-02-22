@@ -35,6 +35,10 @@ exports.validateUserSignin = [
 
 exports.validate = async (req, res, next) => {
     const errors = validationResult(req);
+    let ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
+    if (ip.includes("::ffff:")) {
+        ip = ip.split("::ffff:")[1];
+    }
     if (!errors.isEmpty()) {
         const errorArray = errors.array();
 
@@ -44,7 +48,8 @@ exports.validate = async (req, res, next) => {
                 statusCode: 422,
                 errorMessage: error.msg,
                 errorType: 'Validation Error',
-                stackTrace: error.stack
+                stackTrace: error.stack,
+                IP: ip
             });
             await errorLog.save();
         }

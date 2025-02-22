@@ -126,7 +126,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Tag was found`, data: result, title: `View ${name} tag detail` });
+        res.status(200).json({ message: `Tag data found`, data: result, title: `View ${name} tag detail` });
     } catch (err) {
         next(err)
     }
@@ -143,7 +143,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Tag was found`, data: result, title: `Edit ${name} tag detail` });
+        res.status(200).json({ message: `Tag data found`, data: result, title: `Edit ${name} tag detail` });
     } catch (err) {
         next(err)
     }

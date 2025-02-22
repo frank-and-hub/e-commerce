@@ -140,7 +140,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Like was found`, data: result, title: `View ${name} like_list detail` });
+        res.status(200).json({ message: `Like data found`, data: result, title: `View ${name} like_list detail` });
     } catch (err) {
         next(err)
     }
@@ -159,7 +159,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Like was found`, data: result, title: `Edit ${name} like_list detail` });
+        res.status(200).json({ message: `Like data found`, data: result, title: `Edit ${name} like_list detail` });
     } catch (err) {
         next(err)
     }

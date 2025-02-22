@@ -17,7 +17,7 @@
         "LOG_LEVEL": "info",
         "JWT_SECRET": "your_jwt_secret",
         "JWT_EXPIRES_IN": "2h",
-        "DATA_PAGINATION_LIMIT": 10,
+        "DATA_PAGINATION_LIMIT": 20,
         "EMAIL_SERVICE": "gmail",
         "EMAIL_USER": "sourabbiswas000x@gmail.com",
         "EMAIL_PASS": "gdrjuqeuilviatcw",

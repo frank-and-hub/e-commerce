@@ -12,13 +12,9 @@ router.route('/')
     .post(checkAuth, checkPermission(fileName, 'create'), CartController.store);
 
 router.route('/:id')
-    .get(checkAuth, checkPermission(fileName, 'read'), CartController.show)
-    .delete(checkAuth, checkPermission(fileName, 'delete'), CartController.destroy);
+    .patch(checkAuth, checkPermission(fileName, 'edit'), CartController.update);
 
 // get form
 router.route('/get/create').get(checkAuth, checkPermission(fileName, 'create'), CartController.create);
-
-// get edit details
-router.route('/:id/edit').get(checkAuth, checkPermission(fileName, 'edit'), CartController.edit);
 
 module.exports = router;

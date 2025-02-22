@@ -135,7 +135,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Discount was found`, data: result, title: `View ${name} discount detail` });
+        res.status(200).json({ message: `Discount data found`, data: result, title: `View ${name} discount detail` });
     } catch (err) {
         next(err)
     }
@@ -155,7 +155,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Discount was found`, data: result, title: `Edit ${name} discount detail` });
+        res.status(200).json({ message: `Discount data found`, data: result, title: `Edit ${name} discount detail` });
     } catch (err) {
         next(err)
     }

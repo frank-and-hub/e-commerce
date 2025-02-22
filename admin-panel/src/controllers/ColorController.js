@@ -140,7 +140,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Color was found`, data: result, title: `View ${name} color detail` });
+        res.status(200).json({ message: `Color data found`, data: result, title: `View ${name} color detail` });
     } catch (err) {
         next(err)
     }
@@ -159,7 +159,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `Color was found`, data: result, title: `Edit ${name} color detail` });
+        res.status(200).json({ message: `Color data found`, data: result, title: `Edit ${name} color detail` });
     } catch (err) {
         next(err)
     }

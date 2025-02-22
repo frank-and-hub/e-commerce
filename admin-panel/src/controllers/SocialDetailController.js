@@ -138,7 +138,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `SocialDetail was found`, data: result, title: `View ${name} social detail` });
+        res.status(200).json({ message: `SocialDetail data found`, data: result, title: `View ${name} social detail` });
     } catch (err) {
         next(err)
     }
@@ -157,7 +157,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `SocialDetail was found`, data: result, title: `Edit ${name} social detail` });
+        res.status(200).json({ message: `SocialDetail data found`, data: result, title: `Edit ${name} social detail` });
     } catch (err) {
         next(err)
     }

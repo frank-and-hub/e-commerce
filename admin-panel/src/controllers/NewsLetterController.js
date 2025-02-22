@@ -136,7 +136,7 @@ exports.show = async (req, res, next) => {
             'ip_address': ip_address,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `News letter was found`, data: result, title: `View ${email} news letter detail` });
+        res.status(200).json({ message: `News letter data found`, data: result, title: `View ${email} news letter detail` });
     } catch (err) {
         next(err)
     }
@@ -154,7 +154,7 @@ exports.edit = async (req, res, next) => {
             'ip_address': ip_address,
             'updated_by': updated_by
         }
-        res.status(200).json({ message: `News letter was found`, data: result, title: `Edit ${email} news letter detail` });
+        res.status(200).json({ message: `News letter data found`, data: result, title: `Edit ${email} news letter detail` });
     } catch (err) {
         next(err)
     }

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const wishListSchema = new mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true }],
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     deleted_at: { type: Date, default: null } 

@@ -68,6 +68,7 @@ exports.index = async (req, res, next) => {
                 'status': status
             }
         });
+
         const cartResponses = await Promise.all(cartPromises);
         res.status(200).json({
             message: `List retrieved successfully`, response: {
@@ -99,48 +100,94 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { product_id, quantity } = req.body;
+    const { product_id, quantity = true } = req.body;
     try {
+        let msg = ``; let response = {};
         let userId = req?.userData?.id;
         const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
 
-        const productData = await Product.findById(product_id).select('_id').where('status').equals(status_active);
+        const productData = await Product.findById(product_id).select('_id name price').where('status').equals(status_active);
         if (!productData) return res.status(401).json({ message: `Product not found!`, data: [] });
 
-        const existsCart = await Cart.findOne({
+        let cart = await Cart.findOne({
             user: userData._id,
-            status: status_active,
-            'products.product': productData._id,
+            status: status_active
         });
 
-        if (existsCart) {
-            const CartData = await Cart.updateOne({ _id: existsCart._id }, { $pull: { products: { product: productData._id } } });
-            if (CartData.modifiedCount > 0) {
-                res.status(201).json({ message: `Product removed from cart`, data: [] });
+        if (!cart) {
+            cart = new Cart({
+                _id: new mongoose.Types.ObjectId(),
+                user: userData._id,
+                products: [{
+                    product: productData._id,
+                    quantity: 1
+                }]
+            });
+            const newData = await cart.save();
+            response = {
+                'id': newData?._id,
+                'products': {
+                    'id': productData._id,
+                    'name': productData.name,
+                    'price': productData.price,
+                    'quantity': 1
+                },
+                'user': userData?.name
             }
-        };
+            msg = `Successfully created new cart`;
+        } else {
+            const productInCartIndex = cart.products.findIndex(p => p.product.toString() === productData._id.toString());
+            if (productInCartIndex > -1) {
 
-        const cart = new Cart({
-            _id: new mongoose.Types.ObjectId(),
-            user: userData._id,
-            products: [{
-                product: productData._id,
-                quantity: quantity || 1
-            }]
-        });
+                cart.products[productInCartIndex].quantity += (quantity ? 1 : -1);
+                await cart.save();
+                
+                const productIds = cart.products.map(p => p.product); // Extract the product IDs from the cart
+                const foundProducts = await Product.find({
+                    _id: { $in: productIds },
+                    status: status_active
+                }).select('_id name price');
 
-        const newData = await cart.save();
-        const response = {
-            'id': newData?._id,
-            'products': {
-                'product': productData._id,
-                'quantity': quantity
-            },
-            'quantity': quantity,
-            'user': userData?.name
+                response = {
+                    'id': cart?._id,
+                    'products': foundProducts.map(product => ({
+                        'id': product._id,
+                        'name': product.name,
+                        'price': product.price,
+                        'quantity': cart.products.find(p => p.product.toString() === product._id.toString()).quantity // Get the correct quantity for each product
+                    })),
+                    'user': userData?.name
+                };
+
+                msg = `Product quantity updated in cart.`;
+            } else {
+                cart.products.push({
+                    product: productData._id,
+                    quantity: quantity || 1
+                });
+                await cart.save();
+
+                const productIds = cart.products.map(p => p.product); // Extract the product IDs from the cart
+                const foundProducts = await Product.find({
+                    _id: { $in: productIds },
+                    status: status_active
+                }).select('_id name price');
+
+                response = {
+                    'id': cart?._id,
+                    'products': foundProducts.map(product => ({
+                        'id': product._id,
+                        'name': product.name,
+                        'price': product.price,
+                        'quantity': cart.products.find(p => p.product.toString() === product._id.toString()).quantity // Get the correct quantity for each product
+                    })),
+                    'user': userData?.name
+                };
+                msg = `Product added to cart.`;
+            }
         }
-        res.status(201).json({ message: `Successfully created`, data: response });
+        res.status(201).json({ message: msg, data: response });
     } catch (err) {
         next(err)
     }
@@ -160,55 +207,44 @@ exports.show = async (req, res, next) => {
                 'quantity': p.quantity
             }))
         }
-        res.status(200).json({ message: `Cart was found`, data: result, title: `View ${user.name} cart detail` });
+        res.status(200).json({ message: `Cart data found`, data: result, title: `View ${user.name} cart detail` });
     } catch (err) {
         next(err)
     }
 }
 
-exports.edit = async (req, res, next) => {
+exports.update = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const cartData = await this.find_data_by_id(id, res);
-        const { _id, products, user, updated_by, status } = cartData;
-        const result = {
-            'id': _id,
-            'user': user,
-            'status': status,
-            'updated_by': updated_by,
-            'products': products.map(p => ({
-                product: p.product,
-                quantity: p.quantity
-            }))
+
+        const discount = await Discount.findById(id).select('_id');
+        if (!discount) return res.status(404).json({ message: `Discount not found!`, });
+
+        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (discount may not exist or the data is the same)` });
+
+        const updateOps = helper.updateOps(req);
+
+        if (updateOps['user']) {
+            const userData = await User.findById(updateOps['user']).select('_id').where('status').equals(status_active);
+            if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
         }
-        res.status(200).json({ message: `Cart was found`, data: result, title: `Edit ${user.name} cart detail` });
-    } catch (err) {
-        next(err)
-    }
-}
 
-exports.destroy = async (req, res, next) => {
-    const { id } = req.params;
-    try {
-        const getCart = await Cart.findById(id).select('_id').where('status').equals(!status_active);
-        if (!getCart) return res.status(404).json({ message: 'Cart not found' });
-
-        // const cartData = await Cart.deleteOne({ _id: id });
-        // if (cartData.deletedCount === 1) {
-
-        const cartData = await Cart.findByIdAndUpdate(id, { deleted_at: new Date() });
-        if (cartData) {
+        const result = await Discount.updateOne({ _id: id }, { $set: updateOps });
+        if (result.modifiedCount > 0) {
+            const updatedDiscount = await this.find_data_by_id(id, res);
+            const { _id, name, description, percentage, updated_by, status, user } = updatedDiscount;
             const response = {
-                'method': 'POST',
-                'url': `${baseurl}${constName}`,
-                'body': {
-                    'product': 'SchemaId',
-                    'user': 'SchemaId',
-                }
+                'id': _id,
+                'name': name,
+                'percentage': percentage,
+                'description': description,
+                'user': user,
+                'status': status,
+                'updated_by': updated_by
             }
-            return res.status(200).json({ message: `Deleted successfully`, request: response });
+            return res.status(200).json({ message: `Discount details updated successfully`, data: response });
         }
-        res.status(404).json({ message: `Cart not found` });
+        res.status(404).json({ message: `Discount not found or no details to update`, data: [] });
     } catch (err) {
         next(err)
     }

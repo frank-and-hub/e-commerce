@@ -27,7 +27,7 @@ exports.index = async (req, res, next) => {
         if (search) {
             const trimmedSearch = search.trim();
             filter.$or = [
-                { product: { $regex: trimmedSearch, $options: "i" } },
+                { products: { $regex: trimmedSearch, $options: "i" } },
             ];
         }
 
@@ -38,10 +38,10 @@ exports.index = async (req, res, next) => {
         });
 
         const query = WishList.find(filter)
-            .select('_id product user status updated_by')
+            .select('_id products user status updated_by')
             .populate('user', '_id name')
-            .populate('product', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name')
+            .populate('products', '_id name price');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -51,13 +51,17 @@ exports.index = async (req, res, next) => {
 
         const wishLists = await query;
 
-        if (wishLists.length === 0) return res.status(200).json({ message: `wish lists is empty!!`, data: [] });
+        if (wishLists.length === 0) return res.status(200).json({ message: `wish_lists is empty!!`, data: [] });
 
         const wishListPromises = wishLists.map(async (wishList) => {
-            const { _id, product, status } = wishList;
+            const { _id, products, status } = wishList;
             return {
                 'id': _id,
-                'product': product,
+                'products': products.map(p => ({
+                    'id': p._id,
+                    'name': p.name,
+                    'price': p.price
+                })),
                 'status': status
             }
         });
@@ -81,7 +85,7 @@ exports.create = (req, res, next) => {
         res.status(200).json({
             message: `Create wishList form`,
             body: {
-                'product': 'SchemaId',
+                'products': 'Array of SchemaId',
                 'userId': 'SchemaId'
             },
             title: 'Add wishList'
@@ -94,7 +98,8 @@ exports.create = (req, res, next) => {
 exports.store = async (req, res, next) => {
     const { product_id } = req.body;
     try {
-        console.log(req.body);
+        let msg = ``;
+        const response = [];
         let userId = req?.userData?.id;
         const userData = await User.findById(userId).select('_id name').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
@@ -102,7 +107,7 @@ exports.store = async (req, res, next) => {
         const productData = await Product.findById(product_id).select('_id name').where('status').equals(status_active);
         if (!productData) return res.status(401).json({ message: `Product not found!`, data: [] });
 
-        const existsWishList = await WishList.findOne({ product: product, user: userData._id, status: status_active });
+        const existsWishList = await WishList.findOne({ products: products, user: userData._id, status: status_active });
         if (existsWishList) {
             const wishListData = await WishList.deleteOne({ _id: existsWishList._id });
             if (wishListData.deletedCount === 1) {
@@ -110,19 +115,48 @@ exports.store = async (req, res, next) => {
             }
         };
 
-        const wishList = new WishList({
-            _id: new mongoose.Types.ObjectId(),
-            user: userData._id,
-            product: productData._id
+        let wishList = await Cart.findOne({
+            user: userData._id
         });
 
-        const newData = await wishList.save();
-        const response = {
-            'id': newData?._id,
-            'product': productData?.name,
-            'user': userData?.name
+        if (!wishList) {
+            wishList = new WishList({
+                _id: new mongoose.Types.ObjectId(),
+                user: userData._id,
+                products: [productData._id]
+            });
+            const newData = await wishList.save();
+            response = {
+                'id': newData?._id,
+                'products': productData.map(perm => ({
+                    'id': perm._id,
+                    'name': perm.name
+                })),
+                'user': userData?.name
+            }
+            msg = `Successfully created new wish list`;
+        } else {
+            
+            wishList.products.push(productData._id);
+            await wishList.save();
+            const productIds = wishList.products.map(p => p.product); // Extract the product IDs from the cart
+            const foundProducts = await Product.find({
+                _id: { $in: productIds },
+                status: status_active
+            }).select('_id name price');
+
+            response = {
+                'id': cart?._id,
+                'products': foundProducts.map(product => ({
+                    'id': product._id,
+                    'name': product.name,
+                    'price': product.price,
+                })),
+                'user': userData?.name
+            };
+            msg = `Product added to wish list.`;
         }
-        res.status(201).json({ message: `Successfully created`, data: response });
+        res.status(201).json({ message: msg, data: response });
     } catch (err) {
         next(err)
     }

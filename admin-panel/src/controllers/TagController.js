@@ -74,9 +74,7 @@ exports.index = async (req, res, next) => {
                 data: tagResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -88,9 +86,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add tag'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -110,9 +106,7 @@ exports.store = async (req, res, next) => {
             'name': newData?.name,
         }
         res.status(201).json({ message: `Your name is received Successfully`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -127,9 +121,7 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Tag data found`, data: result, title: `View ${name} tag detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.edit = async (req, res, next) => {
@@ -144,9 +136,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Tag data found`, data: result, title: `Edit ${name} tag detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -197,9 +187,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Tag not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.find_data_by_id = async (id, res) => {
@@ -209,6 +197,5 @@ exports.find_data_by_id = async (id, res) => {
         .populate('updated_by', '_id name');
 
     if (!tagData) return res.status(404).json({ message: `Tag not found` });
-
     return tagData;
 }

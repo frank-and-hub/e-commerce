@@ -57,7 +57,5 @@ exports.show = async (req, res, next) => {
             // testimonials,
         };
         res.status(200).json({ message: `User founded`, data: userWithDetails, title: `View ${userData?.name} user detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

@@ -73,9 +73,7 @@ exports.index = async (req, res, next) => {
                 data: supportDetailsResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -94,9 +92,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add supportDetails'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -122,9 +118,7 @@ exports.store = async (req, res, next) => {
             'week_end': newData?.week_end,
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -146,9 +140,7 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by,
         }
         res.status(200).json({ message: `SupportDetails data found`, data: result, title: `View ${call} support details detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.edit = async (req, res, next) => {
@@ -170,9 +162,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by,
         }
         res.status(200).json({ message: `SupportDetails data found`, data: result, title: `Edit ${call} support details detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -205,9 +195,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `SupportDetails details updated successfully`, data: supportDetailsData });
         }
         res.status(404).json({ message: `SupportDetails not found or no details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -238,9 +226,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `SupportDetails not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.find_data_by_id = async (id, res) => {

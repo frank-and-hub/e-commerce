@@ -62,9 +62,7 @@ exports.index = async (req, res, next) => {
                 data: termsAndConditionsResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -89,7 +87,5 @@ exports.store = async (req, res, next) => {
         const newTermsAndConditions = await termsAndConditions.save();
 
         res.status(201).json({ message: `Successfully updated`, data: newTermsAndConditions[0] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

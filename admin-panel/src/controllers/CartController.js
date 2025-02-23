@@ -25,11 +25,12 @@ exports.index = async (req, res, next) => {
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
         const filter = {};
-        let userId = req?.userData?.id;
+        const user_id = req?.userData?.id;
+
         const { status, search } = req.query;
 
         if (status) filter.status = status;
-        if (userId) filter.user = userId;
+        if (user_id) filter.user = user_id;
 
         if (search) {
             const trimmedSearch = search.trim();
@@ -79,9 +80,7 @@ exports.index = async (req, res, next) => {
                 data: cartResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -94,9 +93,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add cart'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -142,7 +139,7 @@ exports.store = async (req, res, next) => {
 
                 cart.products[productInCartIndex].quantity += (quantity ? 1 : -1);
                 await cart.save();
-                
+
                 const productIds = cart.products.map(p => p.product); // Extract the product IDs from the cart
                 const foundProducts = await Product.find({
                     _id: { $in: productIds },
@@ -188,9 +185,7 @@ exports.store = async (req, res, next) => {
             }
         }
         res.status(201).json({ message: msg, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -208,9 +203,7 @@ exports.show = async (req, res, next) => {
             }))
         }
         res.status(200).json({ message: `Cart data found`, data: result, title: `View ${user.name} cart detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -245,9 +238,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Discount details updated successfully`, data: response });
         }
         res.status(404).json({ message: `Discount not found or no details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.find_data_by_id = async (id, res) => {
@@ -259,6 +250,5 @@ exports.find_data_by_id = async (id, res) => {
         .populate('products.product', '_id name price');
 
     if (!cartData) return res.status(404).json({ message: `Cart not found` });
-
     return cartData;
 }

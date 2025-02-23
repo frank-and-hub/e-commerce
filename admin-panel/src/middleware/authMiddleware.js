@@ -25,9 +25,7 @@ module.exports.checkAuth = async (req, res, next) => {
             next()
         });
 
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 module.exports.restrictTo = (...roles) => {

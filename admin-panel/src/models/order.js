@@ -23,6 +23,7 @@ const OrderSchema = new mongoose.Schema({
             'outOfStock'      // Product is out of stock and can't be fulfilled
         ]
     },
+    time: { type: Date, required: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     deleted_at: { type: Date, default: null }
 }, {

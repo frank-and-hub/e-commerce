@@ -85,9 +85,7 @@ exports.index = async (req, res, next) => {
                 data: bannerResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -103,9 +101,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add banner'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -150,9 +146,7 @@ exports.store = async (req, res, next) => {
             'description': newBanner?.description,
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -172,9 +166,7 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Banner data found`, data: result, title: `View ${name} banner detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.edit = async (req, res, next) => {
@@ -194,9 +186,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Banner data found`, data: result, title: `Edit ${name} banner detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -241,9 +231,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Banner details updated successfully`, data: bannerData });
         }
         res.status(404).json({ message: `Banner not found or no details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -271,9 +259,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Banner not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.find_data_by_id = async (id, res) => {
@@ -285,7 +271,6 @@ exports.find_data_by_id = async (id, res) => {
         .populate('updated_by', '_id name');
         
     if (!bannerData) return res.status(404).json({ message: `Banner not found` });
-
     return bannerData;
 }
 
@@ -305,7 +290,5 @@ exports.image = async (req, res, next) => {
         const result = await Banner.updateOne({ _id: id }, { $set: { image: newData._id } });
         if (result.modifiedCount > 0) return res.status(200).json({ message: `image updated` });
         res.status(404).json({ message: `Data not found or no image to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

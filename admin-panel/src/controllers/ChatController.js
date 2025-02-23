@@ -74,9 +74,7 @@ exports.index = async (req, res, next) => {
                 data: chatResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -90,9 +88,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add chat'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -120,9 +116,7 @@ exports.store = async (req, res, next) => {
             'message': newData?.message
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -166,9 +160,7 @@ exports.show = async (req, res, next) => {
 
         const chatResponses = await Promise.all(chatPromises);
         res.status(200).json({ message: `Message data found`, data: chatResponses, title: `View chat detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.edit = async (req, res, next) => {
@@ -195,9 +187,7 @@ exports.edit = async (req, res, next) => {
             'message': message,
         }
         res.status(200).json({ message: `Message data found`, data: result, title: `Edit ${sender?.name} message detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -256,9 +246,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Message not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.destroy_chat = async (req, res, next) => {
@@ -300,7 +288,5 @@ exports.destroy_chat = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Message not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

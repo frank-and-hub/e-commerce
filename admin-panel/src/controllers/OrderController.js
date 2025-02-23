@@ -13,7 +13,7 @@ const url = require('../config/url');
 const baseurl = `${url.apiUrl}`;
 const status_active = `${process.env.STATUS_ACTIVE}`;
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
-const constName = 'colors/';
+const constName = 'orders/';
 
 exports.index = async (req, res, next) => {
     try {
@@ -25,15 +25,20 @@ exports.index = async (req, res, next) => {
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
         const filter = {};
-        const { status, search } = req.query;
+        const role = req?.userData?.role;
+        const { status, search, user_id } = req.query;
 
         if (status) filter.status = status;
+        if (role) {
+            if (user_id) filter.user = user_id;
+        }
 
         if (search) {
             const trimmedSearch = search.trim();
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
-                { hex_code: { $regex: trimmedSearch, $options: "i" } },
+                { price: { $regex: trimmedSearch, $options: "i" } },
+                { address: { $regex: trimmedSearch, $options: "i" } },
             ];
         }
 
@@ -44,8 +49,17 @@ exports.index = async (req, res, next) => {
         });
 
         const query = Order.find(filter)
-            .select('_id name hex_code user status updated_by')
+            .select('_id cart user address price time status updated_by')
             .populate('user', '_id name')
+            .populate('cart', '_id products')
+            .populate({
+                path: 'cart',
+                select: '_id products',
+                populate: {
+                    path: 'products.product',
+                    select: '_id name price',
+                }
+            })
             .populate('updated_by', '_id name');
 
         if (req?.query?.page != 0) {
@@ -54,150 +68,127 @@ exports.index = async (req, res, next) => {
                 .limit(limit);
         }
 
-        const colors = await query;
+        const orders = await query;
 
-        if (colors.length === 0) return res.status(200).json({ message: `No colors found`, data: [] });
+        if (orders.length === 0) return res.status(200).json({ message: `No orders found`, data: [] });
 
-        const colorPromises = colors.map(async (color) => {
-            const { _id, name, hex_code, status, user } = color;
+        const orderPromises = orders.map(async (order) => {
+            const { _id, cart, user, address, price, status, time } = order;
             return {
                 'id': _id,
-                'name': name,
-                'hex_code': hex_code,
-                'status': status
+                'time': time,
+                'cart': cart,
+                'user': user,
+                'price': price,
+                'status': status,
+                'address': address,
             }
         });
-        const colorResponses = await Promise.all(colorPromises);
+        const orderResponses = await Promise.all(orderPromises);
         res.status(200).json({
             message: `List retrieved successfully`, response: {
                 count: totalCount,
                 page: page,
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
-                data: colorResponses
+                data: orderResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
     try {
         res.status(200).json({
-            message: `Create color form`,
+            message: `Create order form`,
             body: {
-                'name': 'String',
-                'hex_code': 'String',
-                'userId': 'SchemaId'
+                'cartId': 'SchemaId',
+                'userId': 'SchemaId',
+                'price': 'Number',
+                'address': 'String',
+                'status': 'String'
             },
-            title: 'Add color'
+            title: 'Add order'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
-    const { name, hex_code } = req.body;
+    const { cart_id, address, price, status } = req.body;
     try {
         let userId = req?.userData?.id;
-        const userData = await User.findById(userId).select('_id').where('status').equals(status_active);
+        const userData = await User.findById(userId).select('_id name').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
 
-        const existsOrder = await Order.findOne({ name: name, hex_code: hex_code, status: status_active });
+        const cartData = await Cart.findById(cart_id).select('_id');
+        if (!cartData) return res.status(401).json({ message: `Cart not found!`, data: [] });
+
+        const existsOrder = await Order.findOne({
+            user: userData._id,
+            cart: cartData._id,
+            price: price,
+            status: status
+        });
         if (existsOrder) return res.status(200).json({ message: 'Order already exists' });
 
-        const color = new Order({
+        const order = new Order({
             _id: new mongoose.Types.ObjectId(),
+            time: now(),
+            price,
+            address,
             user: userData._id,
-            name,
-            hex_code
+            cart: cartData._id,
         });
-        const newData = await color.save();
+        const newData = await order.save();
+
+        await Cart.updateOne({ _id: cartData._id }, { $set: { status: !status_active } });
+
         const response = {
             'id': newData?._id,
-            'name': newData?.name,
-            'hex_code': newData?.hex_code,
-            'user': userData?.name
+            'time': newData?.time,
+            'price': newData?.price,
+            'address': newData?.address,
+            'user': userData?.name,
+            'cart': cartData?.products,
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const colorData = await this.find_data_by_id(id, res);
-        const { _id, name, hex_code, user, updated_by, status } = colorData;
+        const orderData = await this.find_data_by_id(id, res);
+        const { _id, cart, user, address, price, status, time } = orderData;
         const result = {
             'id': _id,
-            'name': name,
-            'hex_code': hex_code,
+            'cart': cart,
             'user': user,
-            'status': status,
-            'updated_by': updated_by
+            'price': price,
+            'address': address,
+            'time': time,
+            'status': status
         }
-        res.status(200).json({ message: `Order data found`, data: result, title: `View ${name} color detail` });
-    } catch (err) {
-        next(err)
-    }
+        res.status(200).json({ message: `Order data found`, data: result, title: `View ${user.name} order detail` });
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const colorData = await this.find_data_by_id(id, res);
-        const { _id, name, hex_code, user, updated_by, status } = colorData;
+        const orderData = await this.find_data_by_id(id, res);
+        const { _id, cart, user, address, price, status, time } = orderData;
         const result = {
             'id': _id,
-            'name': name,
-            'hex_code': hex_code,
+            'cart': cart,
             'user': user,
-            'status': status,
-            'updated_by': updated_by
+            'price': price,
+            'address': address,
+            'time': time,
+            'status': status
         }
-        res.status(200).json({ message: `Order data found`, data: result, title: `Edit ${name} color detail` });
-    } catch (err) {
-        next(err)
-    }
-}
-
-exports.update = async (req, res, next) => {
-    const { id } = req.params;
-    try {
-        const color = await Order.findById(id).select('_id');
-        if (!color) return res.status(404).json({ message: `Order not found!`, });
-
-        if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (color may not exist or the data is the same)` });
-
-        const updateOps = helper.updateOps(req);
-
-        if (updateOps['user']) {
-            const userData = await User.findById(updateOps['user']).select('_id').where('status').equals(status_active);
-            if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
-        }
-
-        const result = await Order.updateOne({ _id: id }, { $set: updateOps });
-        if (result.modifiedCount > 0) {
-            const updatedOrder = await this.find_data_by_id(id, res);
-            const { _id, name, hex_code, user, updated_by, status } = updatedOrder;
-            const response = {
-                'id': _id,
-                'name': name,
-                'hex_code': hex_code,
-                'user': user,
-                'status': status,
-                'updated_by': updated_by
-            }
-            return res.status(200).json({ message: `Order details updated successfully`, data: response });
-        }
-        res.status(404).json({ message: `Order not found or no details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+        res.status(200).json({ message: `Order data found`, data: result, title: `Edit ${user.name} order detail` });
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -206,36 +197,44 @@ exports.destroy = async (req, res, next) => {
         const getOrder = await Order.findById(id).select('_id').where('status').equals(!status_active);
         if (!getOrder) return res.status(404).json({ message: 'Order not found' });
 
-        // const colorData = await Order.deleteOne({ _id: id });
-        // if (colorData.deletedCount === 1) {
+        // const orderData = await Order.deleteOne({ _id: id });
+        // if (orderData.deletedCount === 1) {
 
-        const colorData = await Order.findByIdAndUpdate(id, { deleted_at: new Date() });
-        if (colorData) {
+        const orderData = await Order.findByIdAndUpdate(id, { deleted_at: new Date() });
+        if (orderData) {
             const response = {
                 'method': 'POST',
                 'url': `${baseurl}${constName}`,
                 'body': {
-                    'name': 'String',
-                    'hex_code': 'String',
-                    'user': 'ID',
+                    'cartId': 'SchemaId',
+                    'userId': 'SchemaId',
+                    'price': 'Number',
+                    'address': 'String',
+                    'status': 'String'
                 }
             }
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Order not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err) }
 }
 
 exports.find_data_by_id = async (id, res) => {
-    const colorData = await Order.findById(id)
-        .select('_id name hex_code user updated_by status')
+    const orderData = await Order.findById(id)
+        .select('_id cart user address price time status updated_by')
         // .where('status').equals(status_active)
         .populate('user', '_id name')
+        .populate('cart', '_id products')
+        .populate({
+            path: 'cart',
+            select: '_id products',
+            populate: {
+                path: 'products.product',
+                select: '_id name price',
+            }
+        })
         .populate('updated_by', '_id name');
 
-    if (!colorData) return res.status(404).json({ message: `Order not found` });
-
-    return colorData;
+    if (!orderData) return res.status(404).json({ message: `Order not found` });
+    return orderData;
 }

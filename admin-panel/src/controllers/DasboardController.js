@@ -52,9 +52,7 @@ exports.index = async (req, res, next) => {
                 data: responses
             }, title: 'dashboard data'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.applyFilter = async (filter, role) => {

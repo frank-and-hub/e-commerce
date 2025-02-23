@@ -102,9 +102,7 @@ exports.index = async (req, res, next) => {
                 data: menuResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -120,9 +118,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add menu'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -169,9 +165,7 @@ exports.store = async (req, res, next) => {
             'parent': parent?.name
         }
         res.status(201).json({ message: `Successfully new menu created`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -193,9 +187,7 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Menu data found`, data: result, title: `View ${name} menu detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.edit = async (req, res, next) => {
@@ -216,9 +208,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Menu data found`, data: result, title: `Edit ${name} menu detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -253,9 +243,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Menu details updated successfully`, data: response });
         }
         res.status(404).json({ message: `Menu not found or no details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -285,9 +273,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Menu not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.assignMenu = async (req, res, next) => {
@@ -306,9 +292,7 @@ exports.assignMenu = async (req, res, next) => {
         if (result.modifiedCount > 0) return res.status(200).json({ message: `Menu details updated successfully` });
 
         res.status(400).json({ message: `No details updated successfully or menu not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.find_data_by_id = async (id, res) => {
@@ -318,6 +302,5 @@ exports.find_data_by_id = async (id, res) => {
         .populate('updated_by', '_id name');
 
     if (!menuData) return res.status(404).json({ message: `Menu not found` });
-
     return menuData;
 }

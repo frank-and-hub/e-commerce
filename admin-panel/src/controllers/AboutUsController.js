@@ -61,9 +61,7 @@ exports.index = async (req, res, next) => {
                 data: aboutUsResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -88,7 +86,5 @@ exports.store = async (req, res, next) => {
         const newAboutUs = await aboutUs.save();
 
         res.status(201).json({ message: `Successfully updated`, data: newAboutUs[0] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

@@ -24,9 +24,7 @@ exports.getSignIn = (req, res, next) => {
                 'password': 'String',
             }
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.signIn = async (req, res, next) => {
@@ -79,9 +77,7 @@ exports.signIn = async (req, res, next) => {
         if (result.modifiedCount === 0 || !token) return res.status(401).json({ message: unauthorized });
         // result
         return res.status(200).json({ message: `User sign-in 👍`, user: userWithDetails, token: token });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.getSignUp = (req, res, next) => {
@@ -95,9 +91,7 @@ exports.getSignUp = (req, res, next) => {
                 'password': 'String'
             }
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.signUp = async (req, res, next) => {
@@ -124,9 +118,7 @@ exports.signUp = async (req, res, next) => {
         await user.save();
 
         res.status(201).json({ message: `Successfully sign up 👍`, request: { method: 'GET', url: `${baseurl}/sign-in/` } });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.signOut = async (req, res, next) => {

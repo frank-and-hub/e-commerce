@@ -10,19 +10,18 @@ const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
 
 exports.index = async (req, res, next) => {
     try {
-
         const page = parseInt(req?.query?.page) || 1;
         const limit = parseInt(req?.query?.limit) || parseInt(data_limit);
 
         const orderByField = req?.query?.orderby || '_id';
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
+        let user_id = req?.userData?.id;
         const filter = {};
-        let userId = req?.userData?.id;
         const { status, search } = req.query;
 
         if (status) filter.status = status;
-        if (userId) filter.user = userId;
+        if (user_id) filter.user = user_id;
 
         if (search) {
             const trimmedSearch = search.trim();
@@ -75,9 +74,7 @@ exports.index = async (req, res, next) => {
                 data: wishListResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -90,9 +87,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add wishList'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -100,19 +95,19 @@ exports.store = async (req, res, next) => {
     try {
         let msg = ``;
         const response = [];
-        let userId = req?.userData?.id;
-        const userData = await User.findById(userId).select('_id name').where('status').equals(status_active);
+        const user_id = req?.userData?.id;
+
+        const userData = await User.findById(user_id).select('_id name').where('status').equals(status_active);
         if (!userData) return res.status(401).json({ message: `User not found!`, data: [] });
 
         const productData = await Product.findById(product_id).select('_id name').where('status').equals(status_active);
         if (!productData) return res.status(401).json({ message: `Product not found!`, data: [] });
 
         const existsWishList = await WishList.findOne({ products: products, user: userData._id, status: status_active });
+
         if (existsWishList) {
             const wishListData = await WishList.deleteOne({ _id: existsWishList._id });
-            if (wishListData.deletedCount === 1) {
-                res.status(201).json({ message: `Deleted successfully`, data: [] });
-            }
+            if (wishListData.deletedCount === 1) res.status(201).json({ message: `Deleted successfully`, data: [] });
         };
 
         let wishList = await Cart.findOne({
@@ -136,7 +131,7 @@ exports.store = async (req, res, next) => {
             }
             msg = `Successfully created new wish list`;
         } else {
-            
+
             wishList.products.push(productData._id);
             await wishList.save();
             const productIds = wishList.products.map(p => p.product); // Extract the product IDs from the cart
@@ -157,7 +152,5 @@ exports.store = async (req, res, next) => {
             msg = `Product added to wish list.`;
         }
         res.status(201).json({ message: msg, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

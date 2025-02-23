@@ -13,7 +13,7 @@ router.route('/')
 
 router.route('/:id')
     .get(checkAuth, checkPermission(fileName, 'read'), OrderController.show)
-    .patch(checkAuth, checkPermission(fileName, 'edit'), OrderController.update)
+    // .patch(checkAuth, checkPermission(fileName, 'edit'), OrderController.update)
     .delete(checkAuth, checkPermission(fileName, 'delete'), OrderController.destroy);
 
 // get form

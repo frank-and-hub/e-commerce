@@ -97,9 +97,7 @@ exports.index = async (req, res, next) => {
                 data: userResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -115,9 +113,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add user'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -142,9 +138,7 @@ exports.store = async (req, res, next) => {
             'password': password,
         }
         return res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -161,9 +155,7 @@ exports.show = async (req, res, next) => {
             social_details,
         };
         res.status(200).json({ message: `User founded`, data: userWithDetails, title: `View ${userData?.name} user detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.edit = async (req, res, next) => {
@@ -180,9 +172,7 @@ exports.edit = async (req, res, next) => {
             'role_id': role?._id,
         }
         res.status(200).json({ message: `User details founded`, data: userResponses, title: `Edit ${userData?.name} user detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -226,9 +216,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `User details updated successfully`, data: userData });
         }
         res.status(404).json({ message: `User not found or no details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -255,9 +243,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.profile = async (req, res, next) => {
@@ -287,9 +273,7 @@ exports.profile = async (req, res, next) => {
         if (result.modifiedCount > 0) return res.status(200).json({ message: `User image updated`, data: response });
 
         res.status(404).json({ message: `User not found or no image to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.assignRole = async (req, res, next) => {
@@ -322,9 +306,7 @@ exports.assignRole = async (req, res, next) => {
             return res.status(200).json({ message: `User role updated`, data: response });
         }
         res.status(404).json({ message: `No details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.verifyPassword = async (req, res, next) => {
@@ -337,9 +319,7 @@ exports.verifyPassword = async (req, res, next) => {
         if (!isPasswordValid) return res.status(200).json({ message: `Incorrect current password`, data: false });
 
         return res.status(200).json({ message: `Auth user password is correct 👍`, data: true });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.changePassword = async (req, res, next) => {
@@ -376,9 +356,7 @@ exports.permssion = async (req, res, next) => {
         if (!userData) return res.status(404).json({ message: `User has no permissions!`, data: [] });
 
         res.status(200).json({ message: `User permissions founded`, data: { ...UserPermissions }, title: `${userData?.name} user permissions` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update_permssion = async (req, res, next) => {
@@ -402,7 +380,5 @@ exports.update_permssion = async (req, res, next) => {
 
         await UserPermission.insertMany(insertData);
         res.status(200).json({ message: `User permissions updated`, data: {}, title: `${userData?.name} user permissions` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

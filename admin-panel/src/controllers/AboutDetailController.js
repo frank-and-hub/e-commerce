@@ -35,9 +35,7 @@ exports.index = async (req, res, next) => {
                 }
             }
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -77,7 +75,5 @@ exports.update = async (req, res, next) => {
             resume: newFileData?.path
         }
         return res.status(201).json({ message: 'About details updated successfully', data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }

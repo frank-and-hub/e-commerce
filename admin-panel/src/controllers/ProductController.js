@@ -94,9 +94,7 @@ exports.index = async (req, res, next) => {
                 data: productResponses
             }, title: 'listing'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.create = (req, res, next) => {
@@ -120,9 +118,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add product'
         });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.store = async (req, res, next) => {
@@ -198,9 +194,7 @@ exports.store = async (req, res, next) => {
             }))
         }
         res.status(201).json({ message: `Product created successfully`, data: response });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.show = async (req, res, next) => {
@@ -227,9 +221,7 @@ exports.show = async (req, res, next) => {
             'product_images': await helper.filterData(product_images),
         }
         res.status(200).json({ message: `Product data found`, data: result, title: `View ${name} product detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.edit = async (req, res, next) => {
@@ -256,9 +248,7 @@ exports.edit = async (req, res, next) => {
             'product_images': await helper.filterData(product_images),
         }
         res.status(200).json({ message: `Product data found`, data: result, title: `Edit ${name} product detail` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.update = async (req, res, next) => {
@@ -330,9 +320,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Product details updated successfully`, data: response });
         }
         res.status(404).json({ message: `Product not found or no details to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -368,9 +356,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Product not found` });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.image = async (req, res, next) => {
@@ -392,9 +378,7 @@ exports.image = async (req, res, next) => {
         const result = await Product.updateOne({ _id: id }, { $set: { image: newData._id } });
         if (result.modifiedCount > 0) return res.status(200).json({ message: `Product image updated` });
         res.status(404).json({ message: `Product not found or no image to update`, data: [] });
-    } catch (err) {
-        next(err)
-    }
+    } catch (err) { next(err)  }
 }
 
 exports.find_data_by_id = async (id, res) => {
@@ -424,6 +408,5 @@ exports.find_data_by_id = async (id, res) => {
         .populate('updated_by', '_id name');
 
     if (!productData) return res.status(404).json({ message: `Product not found` });
-
     return productData;
 }

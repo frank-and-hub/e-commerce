@@ -68,14 +68,14 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
 
     return (
         <>
-            <div className='card'>
+            <div className={`card`}>
                 <div className={`card-head`}></div>
-                <div className='card-body' >
-                    <form key={formKey} className="row mt-3 px-3 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
+                <div className={`card-body`} >
+                    <form key={formKey} className={`row mt-3 px-3 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
                         <table className={`table table-borderless table-sm`}>
                             <thead>
                                 <tr key={formKey}  >
-                                    <th><i className="bi bi-hash" ></i></th>
+                                    <th><i className={`bi bi-hash`} ></i></th>
                                     <th>Menu Name</th>
                                     <th>View</th>
                                     <th>Add</th>
@@ -110,7 +110,7 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
                             <tfoot>
                                 <tr>
                                     <th colSpan={columnCount} >
-                                        <div className="col-12">
+                                        <div className={`col-12`}>
                                             {response && (
                                                 <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
                                             )}

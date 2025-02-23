@@ -54,21 +54,21 @@ export const CreatePlan = () => {
     };
 
     return (
-        <div className="card">
-            <div className="card-body">
-                <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-                    <Input name="name" label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                    <Input name="price" label="Price" value={values.price} onChange={handleChange} error={errors.price} required={true} inputType={true} />
-                    <Input name="currency" label="Currency" value={values.currency} onChange={handleChange} error={errors.currency} required={true} inputType={true} />
-                    <div className="col-md-4">
+        <div className={`card`}>
+            <div className={`card-body`}>
+                <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
+                    <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+                    <Input name={`price" label="Price" value={values.price} onChange={handleChange} error={errors.price} required={true} inputType={true} />
+                    <Input name={`currency" label="Currency" value={values.currency} onChange={handleChange} error={errors.currency} required={true} inputType={true} />
+                    <div className={`col-md-4`}>
                         <SelectForm id="payment_method" value={values.payment_method} handleChange={handleChange} error={errors.payment_method} required={true} label="Payment Method" Options={OptionsPaymentMethod} />
                     </div>
-                    <div className="col-md-4">
+                    <div className={`col-md-4`}>
                         <SelectForm id="payment_type" value={values.payment_type} handleChange={handleChange} error={errors.payment_type} required={true} label="Payment Type" Options={OptionsPaymentType} />
                     </div>
-                    <Textarea name="description" className="w-100" label="Description" value={values.description} onChange={handleChange} error={errors.description} required={true} />
-                    <div className="col-12">
-                        <SubmitButton className="custom" name={loading ? 'Submitting...' : 'Submit Form'} />
+                    <Textarea name={`description`} className={`w-100" label="Description" value={values.description} onChange={handleChange} error={errors.description} required={true} />
+                    <div className={`col-12`}>
+                        <SubmitButton className={`custom" name={loading ? 'Submitting...' : 'Submit Form'} />
                     </div>
                 </form>
             </div>

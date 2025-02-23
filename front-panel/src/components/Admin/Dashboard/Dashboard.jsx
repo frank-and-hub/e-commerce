@@ -46,9 +46,9 @@ function Dashboard() {
 
     return (
         <>
-            <section className="section dashboard mt-0">
+            <section className={`section dashboard mt-0`}>
                 <div className={`row`}>
-                    <div className="col-lg-8 col-12">
+                    <div className={`col-lg-8 col-12`}>
                         <div className={`row`}>
                             <UsersCard usersCount={response?.usersCount} />
                             <GuestsCard guestsCount={response?.guestsCount} />
@@ -57,10 +57,10 @@ function Dashboard() {
                             <PaymentCard paymentAmount={response?.paymentAmount} />
                         </div>
                     </div>
-                    <div className="col-lg-4 col-12">
+                    <div className={`col-lg-4 col-12`}>
                         <TrafficCard trafficDataChart={response?.trafficDataChart} />
                     </div>
-                    <div className="col-12">
+                    <div className={`col-12`}>
                     <ReportGraph reportDataChart={response?.reportDataChart} />
                 </div>
             </div>

@@ -7,7 +7,7 @@ function SignUp() {
   return (
     <>
       <div className={`container`}>
-        <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <section className={`section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4`}>
           <div className={`container`}>
             <div className={`row justify-content-center`}>
               <div className={`col-lg-5 col-md-7 d-flex flex-column align-items-center justify-content-center`}>

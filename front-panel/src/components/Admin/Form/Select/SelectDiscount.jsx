@@ -27,19 +27,19 @@ function SelectDiscount({ id, handleChange, value, error, label = null, required
     return (
         <>
             {label ? (
-                <label htmlFor={id} className="form-label text-capitalize">{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
+                <label htmlFor={id} className={`form-label text-capitalize`}>{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
             ) : ('')}
             <Select
                 className={error ? 'is-invalid' : ''}
                 id={id}
                 options={discountOptions}
                 value={discountOptions?.find(option => option.value === value)}
-                placeholder="Select Discount"
+                placeholder={`Select Discount`}
                 onChange={handleSelectChange}
                 styles={customStyles}
                 isDisabled={disabled}
             />
-            {error && <div className="invalid-feedback">{error}</div>}
+            {error && <div className={`invalid-feedback`}>{error}</div>}
         </>
     )
 }

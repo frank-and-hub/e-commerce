@@ -70,15 +70,15 @@ function BannerTable() {
 
     return (
         <>
-            {showFilter && (<div className='card'>
-                <div className='card-title pb-0 mb-0 text-capitalize tshadow'>
+            {showFilter && (<div className={`card`}>
+                <div className={`card-title pb-0 mb-0 text-capitalize tshadow`}>
                     {(module)} Filter
                 </div>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="row m-0 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`row m-0 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
 
-                        <div className="col-md-4">
-                            <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />
+                        <div className={`col-md-4`}>
+                            <SelectForm id={`status`} label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />
                         </div>
                         <div className={`col-md-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Loading...' : 'apply filter'} disabled={!showTable} />

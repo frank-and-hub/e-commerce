@@ -82,22 +82,22 @@ function Edit() {
 
   return (
     <>
-      <div className='card'>
-        <div className='card-body'>
-          <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
+      <div className={`card`}>
+        <div className={`card-body`}>
+          <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
 
-            <Input name="name" label="Menu Name" value={values?.name} onChange={handleChange} error={errors.name} inputType={true} required={true} />
-            <Input name="route" label="Route" value={values?.route} onChange={handleChange} error={errors.route} inputType={true} required={true} />
+            <Input name={`name`} label="Menu Name" value={values?.name} onChange={handleChange} error={errors.name} inputType={true} required={true} />
+            <Input name={`route`} label="Route" value={values?.route} onChange={handleChange} error={errors.route} inputType={true} required={true} />
 
-            <div className="col-md-4">
+            <div className={`col-md-4`}>
               <SelectIcon id="icon" value={values?.icon} handleChange={handleChange} error={errors.icon} required={true} disabled={false} label='Icon' />
             </div>
 
-            <div className="col-md-4">
+            <div className={`col-md-4`}>
               <SelectMenu id="parent" value={values?.parent} handleChange={handleChange} error={errors.parent} required={true} disabled={false} label='Parent Menu' />
             </div>
 
-            <div className="col-12">
+            <div className={`col-12`}>
               <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
           </form>

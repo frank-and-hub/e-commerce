@@ -186,27 +186,27 @@ const Table = ({
 
     return (
         <>
-            <div key={`${url}`} className='card'>
-                <div className='card-body'>
+            <div key={`${url}`} className={`card`}>
+                <div className={`card-body`}>
                     <div className='row my-2'>
-                        <div className='col-md-6'>
-                            <h5 className="card-title text-capitalize underline">{(cleanedTitle)}</h5>
+                        <div className={`col-md-6`}>
+                            <h5 className={`card-title text-capitalize underline`}>{(cleanedTitle)}</h5>
                         </div>
-                        <div className="d-flex justify-content-evenly align-items-center col-md-6">
-                            <div className="col-md-9 col-sm-10">
+                        <div className={`d-flex justify-content-evenly align-items-center col-md-6`}>
+                            <div className={`col-md-9 col-sm-10`}>
                                 <input
-                                    type="text"
-                                    placeholder="Search..."
+                                    type={`text`}
+                                    placeholder={`Search...`}
                                     value={searchTerm}
                                     onChange={handleSearchChange}
-                                    className="form-control rounded-pill"
+                                    className={`form-control rounded-pill`}
                                 />
                             </div>
                             {handelFilter || handelCreate ? (
-                                <div className="col-md-3 col-sm-2 d-flex justify-content-evenly" >
+                                <div className={`col-md-3 col-sm-2 d-flex justify-content-evenly`} >
                                     {handelFilter && (
-                                        <div className="col-6 m-auto">
-                                            <span className="d-inline-block color" tabIndex="0" data-bs-toggle="tooltip" data-bs-original-title="" title={ucwords(`filter`)}>
+                                        <div className={`col-6 m-auto`}>
+                                            <span className={`d-inline-block color`} tabIndex={`0`} data-bs-toggle={`tooltip`} data-bs-original-title={``} title={ucwords(`filter`)}>
                                                 <Link onClick={() => handelFilter()} className={`btn btn-sm border rounded-circle`}>
                                                     <i className={`bi bi-filter`}></i>
                                                 </Link>
@@ -214,8 +214,8 @@ const Table = ({
                                         </div>
                                     )}
                                     {handelCreate && (
-                                        <div className="col-6 m-auto">
-                                            <span className="d-inline-block color" tabIndex="0" data-bs-toggle="tooltip" title={ucwords(`add`)}>
+                                        <div className={`col-6 m-auto`}>
+                                            <span className={`d-inline-block color`} tabIndex={`0`} data-bs-toggle={`tooltip`} title={ucwords(`add`)}>
                                                 <Link to={`/admin${pathname}/create`} className={`btn btn-sm border rounded-circle`}>
                                                     <i className={`bi bi-plus`}></i>
                                                 </Link>
@@ -223,19 +223,19 @@ const Table = ({
                                         </div>
                                     )}
                                 </div>
-                            ) : ''}
+                            ) : ``}
                         </div>
                     </div>
-                    <div>
+                    <div className={`pre-table`}>
                         <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl}`}>
                             <thead>
                                 <tr>
                                     {!loading && headers.length > 0 && (
                                         <>
                                             {headers.map((header, index) => (
-                                                <th key={index} scope={`row`} className='text-capitalize' style={{ cursor: (header !== ('id' || '_id')) ? 'pointer' : 'auto' }} onClick={(e) => (header === ('id' || '_id') ? e.preventDefault() : handleSort(header))}>
+                                                <th key={index} scope={`row`} className={`text-capitalize cursor${(header !== ('id' || '_id')) ? 'Pointer' : 'Auto'}`} onClick={(e) => (header === ('id' || '_id') ? e.preventDefault() : handleSort(header))}>
                                                     {header === ('id' || '_id')
-                                                        ? (<i className="bi bi-hash"></i>)
+                                                        ? (<i className={`bi bi-hash`}></i>)
                                                         : (ucwords(header))}
                                                     {sortConfig.key === header ? (sortConfig.direction === 'asc' ? '  ▲' : '  ▼') : ''}
                                                 </th>
@@ -249,7 +249,7 @@ const Table = ({
                                 {loading ? (
                                     <tr>
                                         <th colSpan={headers.length + 1} className='text-center'>
-                                            {/* <Loading /> */}
+                                            <Loading />
                                         </th>
                                     </tr>
                                 ) : (data && data.length > 0 ? (data.map((item, i) => (
@@ -264,13 +264,13 @@ const Table = ({
                                         <td className='action w-100'>
                                             <>
                                                 {handelView && (
-                                                    <Button iconClass="bi bi-eye" tooltip={ucwords(`view ${item?.name}`)} url={`${item?.id}`} />
+                                                    <Button iconClass={`bi bi-eye`} tooltip={ucwords(`view ${item?.name}`)} url={`${item?.id}`} />
                                                 )}
                                                 {item.status === true && handelEdit && (
-                                                    <Button iconClass="bi bi-pencil-square" tooltip={ucwords(`edit ${item?.name}`)} url={`${item?.id}/edit`} />
+                                                    <Button iconClass={`bi bi-pencil-square`} tooltip={ucwords(`edit ${item?.name}`)} url={`${item?.id}/edit`} />
                                                 )}
                                                 {item.status === false && handelDelete && (
-                                                    <Button iconClass="bi bi-trash" onClick={() => { handelDeleteModel(item.id); setSelectedItemName(item?.name); }} tooltip={ucwords(`delete ${item?.name}`)} />
+                                                    <Button iconClass={`bi bi-trash`} onClick={() => { handelDeleteModel(item.id); setSelectedItemName(item?.name); }} tooltip={ucwords(`delete ${item?.name}`)} />
                                                 )}
                                             </>
                                         </td>
@@ -284,10 +284,10 @@ const Table = ({
                             <tfoot >
                                 <tr>
                                     <td colSpan={headers.length + 1}>
-                                        <div className={`position-relative`}>
-                                            {dataCount >= dataLimit && (
+                                        <div className={`position-absolute my-auto py-3`}>Showing {start} to {end} of {dataCount} entries</div>
+                                        <div className={`position-relative Page navigation`}>
+                                            {dataCount > dataLimit && (
                                                 <>
-                                                    <div className={`position-absolute my-auto py-3`}>Showing {start} to {end} of {dataCount} entries</div>
                                                     <Pageignation totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
                                                 </>
                                             )}

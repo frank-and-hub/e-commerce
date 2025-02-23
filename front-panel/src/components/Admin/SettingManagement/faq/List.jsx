@@ -75,11 +75,11 @@ function List() {
                         ) : (faqData && faqData?.length > 0) ? faqData?.map((item, index) => (
                             <div key={item?.id} className={`card`}>
                                 <div className={`card-body`}>
-                                    <div className="accordion accordion-flush" id={`faq-group-${index}`}>
-                                        <div className="accordion-item">
-                                            <h2 className="accordion-header">
+                                    <div className={`accordion accordion-flush`} id={`faq-group-${index}`}>
+                                        <div className={`accordion-item`}>
+                                            <h2 className={`accordion-header`}>
                                                 <button
-                                                    className="accordion-button collapsed"
+                                                    className={`accordion-button collapsed`}
                                                     data-bs-target={`#faqs${index}-${item?.id}, #faqs${index}-${item?.id}-edit-delete`}
                                                     type={`button`}
                                                     data-bs-toggle="collapse"
@@ -91,7 +91,7 @@ function List() {
                                                 id={`faqs${index}-${item?.id}`}
                                                 className={`accordion-collapse collapse ${activeIndex === (`${item?.id}-faq-${index}`) ? 'show' : ''}`}
                                                 data-bs-parent={`#faq-group-${index}`}>
-                                                <div className="accordion-body" style={{ textAlign: "left" }}>
+                                                <div className={`accordion-body`} style={{ textAlign: "left" }}>
                                                     {accordionType ? (
                                                         <AccordionFrom value={item} onAction={setAccordionType} />
                                                     ) : (item?.answer)}
@@ -110,7 +110,7 @@ function List() {
                                                         <i className='bi bi-trash'></i>
                                                     </button>
                                                 </div>
-                                                <button className="m-0 p-0" data-bs-toggle="collapse" data-bs-target={`#faqs${index}-${item?.id}-edit-delete`} >
+                                                <button className={`m-0 p-0`} data-bs-toggle="collapse" data-bs-target={`#faqs${index}-${item?.id}-edit-delete`} >
                                                     <i className='d-none'></i>
                                                 </button>
                                             </div>
@@ -118,7 +118,7 @@ function List() {
                                     </div>
                                 </div>
                             </div>
-                        )) : (<div>No data available...</div>)}
+                        )) : (<>No data available...</>)}
                     </div>
                 </div>
             </section>

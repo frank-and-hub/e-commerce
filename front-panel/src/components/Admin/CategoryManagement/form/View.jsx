@@ -36,15 +36,15 @@ function View() {
 
     return (
         <>
-            <div className='card'>
-                <div className='card-body'>
-                    <form encType={`multipart/form-data`} className=" row mt-3 g-3 needs-validation" noValidate>
-                        <Input name="name" label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-                        <div className="col-md-4">
+            <div className={`card`}>
+                <div className={`card-body`}>
+                    <form encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} noValidate>
+                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
+                        <div className={`col-md-4`}>
                             <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={false} required={false} disabled={true} label='Icon' />
                         </div>
-                        <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
-                        <div className="col-12">
+                        <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
+                        <div className={`col-12`}>
                         </div>
                     </form>
                 </div>

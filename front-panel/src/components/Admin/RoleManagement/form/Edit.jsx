@@ -79,17 +79,17 @@ function Edit() {
 
     return (
         <>
-            <div className='card'>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
+            <div className={`card`}>
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
 
-                        <Input name="name" label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} inputType={true} disabled={false} />
+                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} inputType={true} disabled={false} />
 
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectPermission id="permissions" value={values?.permissions} handleChange={handleChange} error={errors.permissions} required={true} disabled={false} label='Permissions' />
                         </div>
 
-                        <div className="col-12">
+                        <div className={`col-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
                         </div>
                     </form>

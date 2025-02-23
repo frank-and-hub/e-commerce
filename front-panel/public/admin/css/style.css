@@ -203,6 +203,20 @@ tfoot {
   }
 }
 
+@media (max-width: 960px) {
+
+  .table tbody tr td,
+  .table thead tr th {
+    min-width: 8vw !important;
+  }
+
+  .table {
+    min-width: 960px !important;
+  }
+
+  .table.tfoot {}
+}
+
 @keyframes dropdown-animate {
   0% {
     opacity: 0;
@@ -1492,7 +1506,7 @@ table>thead>tr .action {
   transform: translateX(50%) !important;
 }
 
-.pageignation .btn {
+.pagination .btn {
   transition: all 0.5s;
   color: var(--dark);
   background-color: var(--background) !important;
@@ -1634,8 +1648,60 @@ i {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.cursorPointer {
+  cursor: pointer !important;
+}
+
+.cursorAuto {
+  cursor: auto !important;
+}
+
+.dataTable {
+  word-wrap: normal;
+}
+
+.pre-table {
+  overflow: auto;
+  white-space: pre;
+  direction: ltr;
+  unicode-bidi: bidi-override;
+  scrollbar-width: none;
+}
+
+@mixin pagination-size($padding-y, $padding-x, $font-size, $border-radius) {
+  .page-link {
+    padding: $padding-y $padding-x;
+    @include font-size($font-size);
+  }
+
+  .page-item {
+    @if $pagination-margin-start ==(-$pagination-border-width) {
+      &:first-child {
+        .page-link {
+          @include border-start-radius($border-radius);
+        }
+      }
+
+      &:last-child {
+        .page-link {
+          @include border-end-radius($border-radius);
+        }
+      }
+    }
+
+    @else {
+
+      //Add border-radius to all pageLinks in case they have left margin
+      .page-link {
+        @include border-radius($border-radius);
+      }
+    }
   }
 }

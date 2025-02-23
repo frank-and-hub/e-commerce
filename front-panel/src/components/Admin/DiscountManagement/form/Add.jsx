@@ -54,13 +54,13 @@ function Add() {
 
     return (
         <>
-            <div className='card'>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-                        <Input name="name" label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <Input name="percentage" label="percentage" value={values.percentage} onChange={handleChange} error={errors.percentage} required={true} inputType={true} />
-                        <Textarea name="description" label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
-                        <div className="col-12">
+            <div className={`card`}>
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
+                        <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+                        <Input name={`percentage`} label="percentage" value={values.percentage} onChange={handleChange} error={errors.percentage} required={true} inputType={true} />
+                        <Textarea name={`description`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
+                        <div className={`col-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
                         </div>
                     </form>

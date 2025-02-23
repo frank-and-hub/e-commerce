@@ -61,17 +61,17 @@ function Add() {
     }
 
     return (
-        <><div key={formKey} className='card'>
-            <div className='card-body'>
-                <form encType={`multipart/form-data`} className="row mt-3 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
-                    <Input name="name" label="User Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                    <Input name="email" label="Email" type="email" value={values.email} onChange={handleChange} error={errors.email} required={true} inputType={true} />
-                    <Input name="password" label="Password" value={values.password} onChange={handleChange} error={errors.password} required={true} inputType={true} />
-                    <Input name="phone" label="Phone" value={values.phone} onChange={handleChange} error={errors.phone} required={true} inputType={true} />
-                    <div className="col-md-4">
+        <><div key={formKey} className={`card`}>
+            <div className={`card-body`}>
+                <form encType={`multipart/form-data`} className={`row mt-3 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
+                    <Input name={`name`} label="User Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+                    <Input name={`email`} label="Email" type={`email`} value={values.email} onChange={handleChange} error={errors.email} required={true} inputType={true} />
+                    <Input name={`password`} label="Password" value={values.password} onChange={handleChange} error={errors.password} required={true} inputType={true} />
+                    <Input name={`phone`} label="Phone" value={values.phone} onChange={handleChange} error={errors.phone} required={true} inputType={true} />
+                    <div className={`col-md-4`}>
                         <SelectRole id={`role_id`} label={`Role`} value={values.role_id} handleChange={handleChange} error={errors.role_id} required={true} />
                     </div>
-                    <div className="col-12">
+                    <div className={`col-12`}>
                         <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
                     </div>
                 </form>

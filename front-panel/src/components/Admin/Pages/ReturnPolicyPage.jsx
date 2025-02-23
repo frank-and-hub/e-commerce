@@ -90,16 +90,16 @@ const ReturnPolicyPage = () => {
                         <p className='p-0 m-0 btn' onClick={() => (setInState(!inState))} > Return And Refund Policy </p>
                     </div>
                 </div>
-                <div className='card'>
-                    <div className='card-body'>
+                <div className={`card`}>
+                    <div className={`card-body`}>
                         {!loading && (!inState
                             ? (<div className='py-3 px-2 text-horizontal'>
                                 {values.info ?? response?.info}
                             </div>)
                             : (
-                                <form key={formKey} encType={`multipart/form-data`} className="row mt-1 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
+                                <form key={formKey} encType={`multipart/form-data`} className={`row mt-1 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
                                     <Textarea border={`0`} editor={true} name={`info`} className={`w-100`} onChange={handleChange} disabled={!inState} required={!inState} value={values?.info ?? response?.info} label={null} error={error?.info} />
-                                    <div className="col-12">
+                                    <div className={`col-12`}>
                                         {inState && (
                                             <SubmitButton className={`custom`} name={!loading ? 'Updating...' : 'Update Form'} />
                                         )}

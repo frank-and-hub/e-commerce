@@ -20,15 +20,15 @@ function Profile() {
   ];
 
   return (
-    <section className="section profile m-0">
+    <section className={`section profile m-0`}>
       <div className={`row`}>
-        <div className="col-xl-4">
+        <div className={`col-xl-4`}>
           <ProfileCard user={user} />
         </div>  
-        <div className="col-xl-8">
+        <div className={`col-xl-8`}>
           <div className={`card`}>
-            <div className="card-body pt-3">
-              <ul className="nav nav-tabs nav-tabs-bordered justify-content-around">
+            <div className={`card-body pt-3`}>
+              <ul className={`nav nav-tabs nav-tabs-bordered justify-content-around`}>
                 {tabs.map((tab, index) => (
                   <li className={`nav-item`} key={index}>
                     <button
@@ -41,7 +41,7 @@ function Profile() {
                   </li>
                 ))}
               </ul>
-              <div className="tab-content pt-2">
+              <div className={`tab-content pt-2`}>
                 {tabs.map((tab, index) => (
                   <div
                     key={index}

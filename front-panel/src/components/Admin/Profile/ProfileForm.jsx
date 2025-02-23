@@ -76,15 +76,15 @@ function ProfileForm({ user }) {
         <>
             <form key={formKey} encType={`multipart/form-data`} onSubmit={handleSubmit}>
                 <div className={`mb-3 col-12 row w-100`}></div>
-                <Input name="name" label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} />
-                <Input name="phone" label="Phone" value={values?.phone} onChange={handleChange} error={errors.phone} required={true} />
-                <Input name="email" label="Email" type="email" value={values?.email} onChange={handleChange} error={errors.email} required={true} />
-                <Input name="gender" label="Gender" value={values?.gender} onChange={handleChange} error={errors.gender} required={true} />
-                <Textarea name="about" label="About" value={values?.about} onChange={handleChange} error={errors.about} required={true} />
-                <Input name="address" label="Address" value={values?.address} onChange={handleChange} error={errors.address} required={true} />
-                <Input name="city" label="City" value={values?.city} onChange={handleChange} error={errors.city} required={true} />
-                <Input name="state" label="State" value={values?.state} onChange={handleChange} error={errors.state} required={true} />
-                <Input name="zipcode" label="Zip Code" value={values?.zipcode} onChange={handleChange} error={errors.zipcode} required={true} />
+                <Input name={`name`} label={`Name`} value={values?.name} onChange={handleChange} error={errors.name} required={true} />
+                <Input name={`phone`} label={`Phone`} value={values?.phone} onChange={handleChange} error={errors.phone} required={true} />
+                <Input name={`email`} label={`Email`} type={`email`} value={values?.email} onChange={handleChange} error={errors.email} required={true} />
+                <Input name={`gender`} label={`Gender`} value={values?.gender} onChange={handleChange} error={errors.gender} required={true} />
+                <Textarea name={`about`} label={`About`} value={values?.about} onChange={handleChange} error={errors.about} required={true} />
+                <Input name={`address`} label={`Address`} value={values?.address} onChange={handleChange} error={errors.address} required={true} />
+                <Input name={`city`} label={`City`} value={values?.city} onChange={handleChange} error={errors.city} required={true} />
+                <Input name={`state`} label={`State`} value={values?.state} onChange={handleChange} error={errors.state} required={true} />
+                <Input name={`zipcode`} label={`Zip Code`} value={values?.zipcode} onChange={handleChange} error={errors.zipcode} required={true} />
                 <div className={`text-center`}>
                     <SubmitButton className={`custom`} name={isPending ? 'Saving...' : 'Save Changes'} />
                 </div>

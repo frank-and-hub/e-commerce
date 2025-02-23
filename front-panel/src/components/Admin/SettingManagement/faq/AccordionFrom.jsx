@@ -54,12 +54,12 @@ function AccordionFrom({ value, onAction }) {
 
     return (
         <>
-            <form key={formKey} encType={`multipart/form-data`} className="row m-0 needs-validation" onSubmit={handleSubmit} noValidate>
+            <form key={formKey} encType={`multipart/form-data`} className={`row m-0 needs-validation`} onSubmit={handleSubmit} noValidate>
                 <div className='d-none'>
                     <Input values={values?.question} name={`question`} onChange={handleChange} required={false} disabled={false} inputType={true} error={errors.question} />
                 </div>
                 <Textarea border={`0`} label={null} onChange={handleChange} className={`w-100`} name={`answer`} value={values?.answer} />
-                <div className="col-12 text-end">
+                <div className={`col-12 text-end`}>
                     <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
                 </div>
             </form>

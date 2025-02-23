@@ -8,9 +8,9 @@ function RoundedTextarea({ name, label, type = 'text', value, onChange, error, r
     return (
         <>
             <div className={`${inputType ? 'col-md-4' : 'row mb-3'}`} >
-                <label htmlFor={rasc(name)} className="col-md-4 col-lg-3 col-form-label text-start text-capitalize">{(label)} {required && <span className="text-danger">*</span>}</label>
-                {inputType ? TextAreaItem : <div className="col-md-8 col-lg-9">{TextAreaItem}</div>}
-                {error && <div className="invalid-feedback">{error}</div>}
+                <label htmlFor={rasc(name)} className={`col-md-4 col-lg-3 col-form-label text-start text-capitalize`}>{(label)} {required && <span className={`text-danger`}>*</span>}</label>
+                {inputType ? TextAreaItem : <div className={`col-md-8 col-lg-9`}>{TextAreaItem}</div>}
+                {error && <div className={`invalid-feedback`}>{error}</div>}
             </div>
         </>
     )

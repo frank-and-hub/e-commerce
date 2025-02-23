@@ -30,7 +30,7 @@ export const Messages = ({ isDataChange }) => {
     }, [isDataChange]);
 
     return (
-        <div className="col-md-12 chat-container border-0 row w-100">
+        <div className={`col-md-12 chat-container border-0 row w-100`}>
             {prevoiusChat && prevoiusChat.length > 0 ? (
                 prevoiusChat.map((val, index) => (
                     <div
@@ -41,7 +41,7 @@ export const Messages = ({ isDataChange }) => {
                     </div>
                 ))
             ) : (
-                <div className="no-chat-message">No previous chat found.</div>
+                <div className={`no-chat-message`}>No previous chat found.</div>
             )}
         </div>
     );

@@ -60,13 +60,13 @@ function UserRolePermission() {
 
   return (
     <>
-      <div className='card'>
-        <div className='card-body'>
-          <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-            <div className="col-md-4">
+      <div className={`card`}>
+        <div className={`card-body`}>
+          <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
+            <div className={`col-md-4`}>
               <SelectUser id={`user_id`} value={values?.user_id} handleChange={(e) => { handleChange(e); }} error={errors.user_id} required={false} disabled={false} label='User' />
             </div>
-            <div className="col-md-12">
+            <div className={`col-md-12`}>
               <SubmitButton className={`custom`} name={loading ? 'Loading...' : 'Apply Filter'} />
               <SubmitButton className={`secondary`} name={`Reset`} type='button' onClick={resetForm} />
             </div>

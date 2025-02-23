@@ -14,15 +14,15 @@ function ProfileOverview({ user }) {
     };
     return (
         <>
-            <h5 className="card-title">About</h5>
-            <p className="small fst-italic">{user?.about}</p>
+            <h5 className={`card-title`}>About</h5>
+            <p className={`small fst-italic`}>{user?.about}</p>
 
-            <h5 className="card-title">Profile Details</h5>
+            <h5 className={`card-title`}>Profile Details</h5>
 
             {Object.entries(UserData).map(([key, value], index) => (
                 <div className={`row`} key={index}>
-                    <div className="col-lg-3 col-md-4 label text-start">{key}</div>
-                    <div className="col-lg-9 col-md-8 text-start">{value}</div>
+                    <div className={`col-lg-3 col-md-4 label text-start`}>{key}</div>
+                    <div className={`col-lg-9 col-md-8 text-start`}>{value}</div>
                 </div>
             ))}
         </>

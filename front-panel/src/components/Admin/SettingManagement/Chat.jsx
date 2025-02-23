@@ -99,8 +99,8 @@ const Chat = ({ userOptions }) => {
     return (
         <>
             <div className={`card p-4`}>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="w-100 needs-validation" onSubmit={handleSubmit} noValidate>
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`w-100 needs-validation`} onSubmit={handleSubmit} noValidate>
                         <div className={`gy-4 w-100`}>
 
                             <div className={`col-md-12`}>
@@ -123,7 +123,7 @@ const Chat = ({ userOptions }) => {
                                 {errors?.message && <div className={`invalid-feedback`} >{errors.message}</div>}
                             </div>
 
-                            <div className="col-xl-12 text-center col-lg-12 col-sm-12">
+                            <div className={`col-xl-12 text-center col-lg-12 col-sm-12`}>
                                 <SubmitButton className={`custom w-50`} name={loading ? 'Sending...' : 'Send'} />
                             </div>
                         </div>

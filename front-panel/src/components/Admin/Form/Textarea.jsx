@@ -6,9 +6,9 @@ function Textarea({ name, label, type = 'text', value, onChange, error, required
     return (
         <>
             <div className={`${className && className === 'w-100' ? 'col-md-12' : 'col-md-4'}`} >
-                {label && (<label htmlFor={rasc(name)} className={`text-capitalize form-label`}>{(label)} {required && <span className="text-danger">*</span>}</label>)}
+                {label && (<label htmlFor={rasc(name)} className={`text-capitalize form-label`}>{(label)} {required && <span className={`text-danger`}>*</span>}</label>)}
                 {InputItem}
-                {error && <div className="invalid-feedback">{error}</div>}
+                {error && <div className={`invalid-feedback`}>{error}</div>}
             </div>
         </>
     )

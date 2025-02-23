@@ -99,36 +99,36 @@ function Add() {
 
     return (
         <>
-            <div className='card'>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-                        <Input name="name" label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+            <div className={`card`}>
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
+                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
                         <Input name={`price`} text={`price`} label="price" value={values?.price} onChange={handleChange} error={errors.price} required={true} inputType={true} />
                         <Input name={`quantity`} text={`quantity`} label="quantity" value={values?.quantity} onChange={handleChange} error={errors.quantity} required={true} inputType={true} />
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectBrand id={`brand_id`} label={`brand`} value={values.brand_id} handleChange={handleChange} error={errors.brand_id} required={true} />
                         </div>
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectCategory id={`categories`} label={`categories`} value={values.categories} handleChange={handleChange} error={errors.categories} required={true} multiple={true} />
                         </div>
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectTag id={`tags`} label={`tags`} value={values.tags} handleChange={handleChange} error={errors.tags} required={true} multiple={true} />
                         </div>
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectColor id={`colors`} label={`color`} value={values.colors} handleChange={handleChange} error={errors.colors} required={true} multiple={true} />
                         </div>
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectDiscount id={`discount_id`} label={`discount`} value={values.discount_id} handleChange={handleChange} error={errors.discount_id} required={true} />
                         </div>
-                        <Textarea name="description" className={`w-100`} label="description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
-                        <Textarea name="specification" className={`w-100`} label="specification" value={values?.specification} onChange={handleChange} error={errors.specification} required={true} inputType={true} ></Textarea>
+                        <Textarea name={`description`} className={`w-100`} label="description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
+                        <Textarea name={`specification`} className={`w-100`} label="specification" value={values?.specification} onChange={handleChange} error={errors.specification} required={true} inputType={true} ></Textarea>
                         <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
-                        <div className='col-md-4'>
+                        <div className={`col-md-4`}>
                             <div className='cursor-none'>
                                 <img src={src} alt={`Project main`} className={`rounded-25 col-md-6 w-50`} onClick={handleClick} style={{ cursor: 'pointer' }} />
                             </div>
                         </div>
-                        <div className="col-12">
+                        <div className={`col-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
                         </div>
                     </form>

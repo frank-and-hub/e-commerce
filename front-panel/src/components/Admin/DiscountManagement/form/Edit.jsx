@@ -77,13 +77,13 @@ function Edit() {
 
     return (
         <>
-            <div className='card'>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-                        <Input name="name" label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
-                        <Input name="percentage" label="percentage" value={values?.percentage} onChange={handleChange} required={true} error={errors.percentage} inputType={true} disabled={false} />
-                        <Textarea name="description"  label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
-                        <div className="col-12">
+            <div className={`card`}>
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
+                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
+                        <Input name={`percentage`} label="percentage" value={values?.percentage} onChange={handleChange} required={true} error={errors.percentage} inputType={true} disabled={false} />
+                        <Textarea name={`description`}  label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
+                        <div className={`col-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
                         </div>
                     </form>

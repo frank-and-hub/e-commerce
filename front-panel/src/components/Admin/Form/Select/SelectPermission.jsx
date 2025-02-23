@@ -32,7 +32,7 @@ function SelectPermission({ id, handleChange, value, error, label = null, requir
     return (
         <>
             {label ? (
-                <label htmlFor={id} className="form-label text-capitalize">{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
+                <label htmlFor={id} className={`form-label text-capitalize`}>{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
             ) : ('')}
             <Select
                 className={error ? 'is-invalid' : ''}
@@ -45,7 +45,7 @@ function SelectPermission({ id, handleChange, value, error, label = null, requir
                 isMulti
                 isDisabled={disabled}
             />
-            {error && <div className="invalid-feedback">{error}</div>}
+            {error && <div className={`invalid-feedback`}>{error}</div>}
         </>
     )
 }

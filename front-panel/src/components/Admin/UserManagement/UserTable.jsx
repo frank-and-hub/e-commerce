@@ -73,19 +73,19 @@ function UsersTable() {
 
     return (
         <>
-            {showFilter && (<div className='card'>
+            {showFilter && (<div className={`card`}>
                 <div className='card-title pb-0 mb-0 text-capitalize tshadow'>
                     {(module)} Filter
                 </div>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="row m-0 g-4 needs-validation" onSubmit={handleSubmit} noValidate>
-                        <div className="col-md-4">
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`row m-0 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
+                        <div className={`col-md-4`}>
                             <SelectRole id={`role_id`} label={`Role`} value={values.role_id} handleChange={handleChange} error={errors.role_id} required={false} />
                         </div>
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectForm id="gender" label={`Gender`} value={values.gender} handleChange={handleChange} error={errors.gender} required={false} Options={GenderOptions} />
                         </div>
-                        <div className="col-md-4">
+                        <div className={`col-md-4`}>
                             <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />
                         </div>
                         <div className={`col-md-12`}>

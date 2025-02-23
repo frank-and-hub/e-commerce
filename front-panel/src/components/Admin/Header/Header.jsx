@@ -11,11 +11,11 @@ function Header() {
     // const notificationsData = useSelector((state) => (state.alert.notifications));
     return (
         <>
-            <header id="header" className="header fixed-top d-flex align-items-center m-2 rounded-25 shadow">
+            <header id="header" className={`header fixed-top d-flex align-items-center m-2 rounded-25 shadow`}>
                 <Logo />
                 {/* <SearchBar /> */}
-                <nav className="header-nav ms-auto">
-                    <ul className="d-flex align-items-center">
+                <nav className={`header-nav ms-auto`}>
+                    <ul className={`d-flex align-items-center`}>
                         {/* <Notifications notifications={notificationsData} /> */}
                         {/* <Messages /> */}
                         <UserProfile />

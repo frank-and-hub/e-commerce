@@ -19,7 +19,7 @@ const SidebarItem = ({ icon, label, route, subItems }) => {
     };
 
     return (
-        <li className="nav-item">
+        <li className={`nav-item`}>
             {subItems ? (
                 <SubSidebarItem
                     icon={icon}

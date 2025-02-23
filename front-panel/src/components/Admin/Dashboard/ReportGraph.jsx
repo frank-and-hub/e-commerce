@@ -15,11 +15,11 @@ export const ReportGraph = ({ reportDataChart }) => {
 
     return (
         <>
-            <div className="col-12">
+            <div className={`col-12`}>
                 <div className={`card`}>
                     <Filter setFilterFunction={setReportFilter} />
                     <div className={`card-body`}>
-                        <h5 className="card-title">Reports <span>| {ucwords(reportFilter)}</span></h5>
+                        <h5 className={`card-title`}>Reports <span>| {ucwords(reportFilter)}</span></h5>
                         <ReportsChart reportDataChart={reportDataChart} />
                     </div>
                 </div>

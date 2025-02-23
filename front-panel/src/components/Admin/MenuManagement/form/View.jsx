@@ -41,22 +41,22 @@ function View() {
 
   return (
     <>
-      <div className='card'>
-        <div className='card-body'>
-          <form encType={`multipart/form-data`} className=" row mt-3 g-3 needs-validation" noValidate>
+      <div className={`card`}>
+        <div className={`card-body`}>
+          <form encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} noValidate>
 
-            <Input name="name" label="Menu Name" value={values?.name} error={false} inputType={true} required={false} disabled={true} />
-            <Input name="route" label="Route" value={values?.route} error={false} inputType={true} required={false} disabled={true} />
+            <Input name={`name`} label="Menu Name" value={values?.name} error={false} inputType={true} required={false} disabled={true} />
+            <Input name={`route`} label="Route" value={values?.route} error={false} inputType={true} required={false} disabled={true} />
 
-            <div className="col-md-4">
+            <div className={`col-md-4`}>
               <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={false} required={false} disabled={true} label='Icon' />
             </div>
 
-            <div className="col-md-4">
+            <div className={`col-md-4`}>
               <SelectMenu id="parent" value={values?.parent} handleChange={(e) => handleChange(e)} error={false} required={false} disabled={true} label='Parent Menu' />
             </div>
 
-            <div className="col-12">
+            <div className={`col-12`}>
             </div>
           </form>
         </div>

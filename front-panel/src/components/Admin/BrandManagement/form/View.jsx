@@ -37,18 +37,18 @@ function View() {
 
     return (
         <>
-            <div className='card'>
-                <div className='card-body'>
-                    <form encType={`multipart/form-data`} className=" row mt-3 g-3 needs-validation" noValidate>
-                        <div className='col-md-4'>
+            <div className={`card`}>
+                <div className={`card-body`}>
+                    <form encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} noValidate>
+                        <div className={`col-md-4`}>
                             <div className='cursor-none'>
                                 <img src={src} alt={`Brand`} className={`rounded-25 col-md-6`} onClick={(e) => e.preventDefault()} style={{ cursor: 'pointer' }} />
                             </div>
                         </div>
                         <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={(e) => e.preventDefault()} />
-                        <Input name="name" label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-                        <Textarea name="description" className={`w-100`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
-                        <div className="col-12">
+                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
+                        <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
+                        <div className={`col-12`}>
                         </div>
                     </form>
                 </div>

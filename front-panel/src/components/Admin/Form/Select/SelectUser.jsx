@@ -27,7 +27,7 @@ function SelectUser({ id, handleChange, value, error, label = null, required = f
     return (
         <>
             {label ? (
-                <label htmlFor={id} className="form-label text-capitalize">{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
+                <label htmlFor={id} className={`form-label text-capitalize`}>{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
             ) : ('')}
             <Select
                 className={error ? 'is-invalid' : ''}
@@ -39,7 +39,7 @@ function SelectUser({ id, handleChange, value, error, label = null, required = f
                 styles={customStyles}
                 isDisabled={disabled}
             />
-            {error && <div className="invalid-feedback">{error}</div>}
+            {error && <div className={`invalid-feedback`}>{error}</div>}
         </>
     )
 }

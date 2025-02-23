@@ -11,8 +11,8 @@ export const TrafficCard = ({ trafficDataChart }) => {
         <>
             <div className={`card`}>
                 <Filter setFilterFunction={setTrafficFilter} />
-                <div className="card-body pb-0">
-                    <h5 className="card-title"> Traffic <span>| {ucwords(trafficFilter)}</span></h5>
+                <div className={`card-body pb-0`}>
+                    <h5 className={`card-title`}> Traffic <span>| {ucwords(trafficFilter)}</span></h5>
                     <TrafficChart trafficDataChart={trafficDataChart} />
                 </div>
             </div>

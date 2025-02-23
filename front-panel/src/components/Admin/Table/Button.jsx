@@ -7,7 +7,7 @@ function Button({ iconClass, onClick = null, tooltip = null, url = null, disable
     return (
         <>
             {tooltip ? (
-                <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title={ucwords(tooltip)}>
+                <span className={`d-inline-block`} tabIndex="0" data-toggle="tooltip" title={ucwords(tooltip)}>
                     {url ? (<Link to={url} className={classValue} disabled={disabled}>
                         <i className={iconClass}></i>
                     </Link>) : (

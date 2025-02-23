@@ -8,7 +8,7 @@ function Input({ name, label, type = 'text', value, onChange, error, required = 
     return (
         <>
             <div className={`${inputType ? 'col-md-4' : 'row mb-3'}`} >
-                {label && (<label htmlFor={rasc(name)} className={`text-capitalize${inputType ? ' form-label' : 'col-md-4 col-lg-3 col-form-label text-start'}`}>{(label)} {required && <span className="text-danger">*</span>}</label>)}
+                {label && (<label htmlFor={rasc(name)} className={`text-capitalize${inputType ? ' form-label' : 'col-md-4 col-lg-3 col-form-label text-start'}`}>{(label)} {required && <span className={`text-danger`}>*</span>}</label>)}
                 {inputType ? InputItem : <div className={`col-md-8 col-lg-9`}>{InputItem}</div>}
                 {error && <div className={`invalid-feedback`} >{error}</div>}
             </div>

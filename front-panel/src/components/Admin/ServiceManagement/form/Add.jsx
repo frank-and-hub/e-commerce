@@ -55,15 +55,15 @@ function Add() {
 
     return (
         <>
-            <div className='card'>
-                <div className='card-body'>
-                    <form key={formKey} encType={`multipart/form-data`} className="row mt-3 g-3 needs-validation" onSubmit={handleSubmit} noValidate>
-                        <Input name="name" label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <div className="col-md-4">
+            <div className={`card`}>
+                <div className={`card-body`}>
+                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
+                        <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+                        <div className={`col-md-4`}>
                             <SelectIcon id="icon" value={values.icon} handleChange={handleChange} error={errors.icon} required={true} disabled={false} label='Icon' />
                         </div>
                         <Textarea onChange={handleChange} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
-                        <div className="col-12">
+                        <div className={`col-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
                         </div>
                     </form>

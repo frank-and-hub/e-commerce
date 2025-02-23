@@ -73,14 +73,13 @@ exports.index = async (req, res, next) => {
         if (users.length === 0) return res.status(200).json({ message: `Users not found!`, data: [] });
 
         const userPromises = users.map(async (user) => {
-            const { _id, name, email, phone, gender, role, image, status } = user;
+            const { _id, name, email, phone, role, image, status } = user;
 
             return {
                 'id': _id,
                 'name': name,
                 'email': email,
                 'phone': phone,
-                'gender': gender,
                 'role': role,
                 'image': image,
                 'status': status,

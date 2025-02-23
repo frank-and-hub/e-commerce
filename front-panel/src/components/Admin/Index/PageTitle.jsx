@@ -7,10 +7,10 @@ function PageTitle({ title, location }) {
 
     return (
         <>
-            <div className="pagetitle text-left mt-3">
+            <div className={`pagetitle text-left mt-3`}>
                 <nav>
-                    <ol className="breadcrumb mb-0 text-capitalize">
-                        <li className="breadcrumb-item">
+                    <ol className={`breadcrumb mb-0 text-capitalize`}>
+                        <li className={`breadcrumb-item`}>
                             <Link to={`/admin/index`} >home</Link>
                         </li>
                         {pathSegments.map((segment, index) => {
@@ -18,11 +18,11 @@ function PageTitle({ title, location }) {
                             const isLast = index === pathSegments.length - 1;
 
                             return isLast ? (
-                                <li key={index} className="breadcrumb-item active" aria-current="page">
+                                <li key={index} className={`breadcrumb-item active" aria-current="page`}>
                                     {(segment.replace(/-/g, ' '))}
                                 </li>
                             ) : (
-                                <li key={index} className="breadcrumb-item">
+                                <li key={index} className={`breadcrumb-item`}>
                                     <Link to={routeTo} >{(segment.replace(/-/g, ' '))}</Link>
                                 </li>
                             );

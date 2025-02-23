@@ -35,32 +35,32 @@ const Support = () => {
                         <p className='p-0 m-0 btn' > Support </p>
                     </div>
                 </div>
-                <div className="row gy-4">
+                <div className={`row gy-4`}>
                     <div className={`${supportDetails.length > 0 ? `col-xl-6` : `col-0 m-0`}`}>
                         {supportDetails && supportDetails.length > 0 && supportDetails.map((values) => (
-                            <div className="card p-4">
+                            <div className={`card p-4`}>
                                 <div className='row p-0'>
-                                    <div className="col-xl-6 col-lg-3 col-sm-6">
-                                        <div className="info-box py-2">
-                                            <h3><i className="bi bi-telephone mb-1 p-2"></i>Call Us</h3>
+                                    <div className={`col-xl-6 col-lg-3 col-sm-6`}>
+                                        <div className={`info-box py-2`}>
+                                            <h3><i className={`bi bi-telephone mb-1 p-2`}></i>Call Us</h3>
                                             <p className='mb-2'>{values?.call ?? ''}</p>
                                         </div>
                                     </div>
-                                    <div className="col-xl-6 col-lg-3 col-sm-6">
-                                        <div className="info-box py-2">
-                                            <h3> <i className="bi bi-envelope mb-1 p-2"></i>Email Us</h3>
+                                    <div className={`col-xl-6 col-lg-3 col-sm-6`}>
+                                        <div className={`info-box py-2`}>
+                                            <h3> <i className={`bi bi-envelope mb-1 p-2`}></i>Email Us</h3>
                                             <p className='mb-2'>{values?.email ?? ''}</p>
                                         </div>
                                     </div>
-                                    <div className="col-xl-6 col-lg-3 col-sm-6">
-                                        <div className="info-box py-2">
-                                            <h3> <i className="bi bi-clock mb-1 p-2"></i>Open Hours</h3>
+                                    <div className={`col-xl-6 col-lg-3 col-sm-6`}>
+                                        <div className={`info-box py-2`}>
+                                            <h3> <i className={`bi bi-clock mb-1 p-2`}></i>Open Hours</h3>
                                             <p className='mb-2'>{`${(values?.week_start ?? '')} - ${(values?.week_end ?? '')} - ${(values?.hours_start ?? '')} - ${(values?.hours_end ?? '')}`}</p>
                                         </div>
                                     </div>
-                                    <div className="col-xl-6 col-lg-3 col-sm-6">
-                                        <div className="info-box py-2">
-                                            <h3><i className="bi bi-geo-alt mb-1 p-2"></i>Address</h3>
+                                    <div className={`col-xl-6 col-lg-3 col-sm-6`}>
+                                        <div className={`info-box py-2`}>
+                                            <h3><i className={`bi bi-geo-alt mb-1 p-2`}></i>Address</h3>
                                             <p className='mb-2'>{values?.address ?? ''}</p>
                                         </div>
                                     </div>

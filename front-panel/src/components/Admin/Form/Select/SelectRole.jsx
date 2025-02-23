@@ -28,19 +28,19 @@ function SelectRole({ id, handleChange, value, error, required = false, disabled
     return (
         <>
             {label ? (
-                <label htmlFor={id} className="form-label text-capitalize">{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
+                <label htmlFor={id} className={`form-label text-capitalize`}>{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
             ) : ('')}
             <Select
                 className={error ? 'is-invalid' : ''}
                 id={id}
                 options={roleOptions}
                 value={roleOptions?.find(option => option.value === value)}
-                placeholder="Select role"
+                placeholder={`Select role`}
                 onChange={handleSelectChange}
                 styles={customStyles}
                 isDisabled={disabled}
             />
-            {error && <div className="invalid-feedback">{error}</div>}
+            {error && <div className={`invalid-feedback`}>{error}</div>}
         </>
     )
 }

@@ -30,20 +30,20 @@ function SelectCategory({ id, handleChange, value, error, label = null, required
     return (
         <>
             {label ? (
-                <label htmlFor={id} className="form-label text-capitalize">{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
+                <label htmlFor={id} className={`form-label text-capitalize`}>{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
             ) : ('')}
             <Select
                 className={error ? 'is-invalid' : ''}
                 id={id}
                 value={multiple ? selectedValueOptions : (selectedValueOptions?.find(option => option.value === value))}
                 options={categoryOptions}
-                placeholder="Select Categories"
+                placeholder={`Select Categories`}
                 onChange={handleSelectChange}
                 styles={customStyles}
                 isMulti={multiple}
                 isDisabled={disabled}
             />
-            {error && <div className="invalid-feedback">{error}</div>}
+            {error && <div className={`invalid-feedback`}>{error}</div>}
         </>
     )
 }

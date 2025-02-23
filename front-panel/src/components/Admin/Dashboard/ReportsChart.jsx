@@ -55,7 +55,7 @@ const ReportsChart = ({ reportDataChart }) => {
     <ReactApexChart
       options={chartOptions}
       series={chartOptions.series}
-      type="area"
+      type={`area`}
       height={350}
     />
   );

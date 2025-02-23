@@ -36,17 +36,17 @@ function View() {
 
     return (
         <>
-            {values && (<div className='card'>
-                <div className='card-body'>
-                    <form encType={`multipart/form-data`} className=" row mt-3 g-4 needs-validation" noValidate>
-                        <Input name="name" label="User Name" value={values?.name} required={false} inputType={true} disabled={true} />
-                        <Input name="email" label="Email" type="email" value={values?.email} required={false} inputType={true} disabled={true} />
-                        <Input name="password" label="Password" value={values?.password_text} required={false} inputType={true} disabled={true} />
-                        <Input name="phone" label="Phone" value={values?.phone} required={false} inputType={true} disabled={true} />
-                        <div className="col-md-4">
+            {values && (<div className={`card`}>
+                <div className={`card-body`}>
+                    <form encType={`multipart/form-data`} className={`row mt-3 g-4 needs-validation`} noValidate>
+                        <Input name={`name`} label="User Name" value={values?.name} required={false} inputType={true} disabled={true} />
+                        <Input name={`email`} label="Email" type={`email`} value={values?.email} required={false} inputType={true} disabled={true} />
+                        <Input name={`password`} label="Password" value={values?.password_text} required={false} inputType={true} disabled={true} />
+                        <Input name={`phone`} label="Phone" value={values?.phone} required={false} inputType={true} disabled={true} />
+                        <div className={`col-md-4`}>
                             <SelectRole id={`role_id`} value={values?.role?._id} required={false} disabled={true} label='role' handleChange={handleChange} />
                         </div>
-                        <div className="col-12">
+                        <div className={`col-12`}>
                         </div>
                     </form>
                 </div>

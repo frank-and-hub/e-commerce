@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-class ContactForm extends Component {
-    render() {
+function ContactForm() {
         return (
             <>
                 <div className={`container py-5`}>
@@ -36,6 +35,5 @@ class ContactForm extends Component {
             </>
         );
     }
-}
 
-export default ContactForm;
+export default ContactForm

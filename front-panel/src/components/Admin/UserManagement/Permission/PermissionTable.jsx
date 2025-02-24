@@ -126,4 +126,4 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
     );
 }
 
-export default PermissionTable;
+export default PermissionTable

@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-class FeaturedProduct extends Component {
-    render() {
+function FeaturedProduct() {
         return (
             <>
                 <section className={`bg-light`}>
@@ -95,6 +94,5 @@ class FeaturedProduct extends Component {
             </>
         );
     }
-}
 
-export default FeaturedProduct;
+export default FeaturedProduct

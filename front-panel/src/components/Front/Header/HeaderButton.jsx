@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class HeaderButton extends Component {
-    render() {
+function HeaderButton() {
         return (
             <>
                 <div className={`d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3`}>
@@ -15,6 +14,5 @@ class HeaderButton extends Component {
             </>
         );
     }
-}
 
-export default HeaderButton;
+export default HeaderButton

@@ -47,6 +47,6 @@ function FrontLayout() {
             )}
         </>
     );
-};
+}
 
-export default FrontLayout;
+export default FrontLayout

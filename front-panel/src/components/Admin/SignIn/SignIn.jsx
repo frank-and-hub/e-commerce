@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import Designedby from '../Footer/Designedby/Designedby'
 import { SignInForm } from './SignInForm';
 

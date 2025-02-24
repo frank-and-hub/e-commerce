@@ -1,18 +1,16 @@
-import React, { Component } from 'react'
-import Brands from '../../Brands/Brands'
+import React from 'react'
+import AboutUs from '../../AboutUs/AboutUs'
 import OurServices from '../../OurServices/OurServices'
-import AboutUs from '../../AboutUs/AboutUs';
+import Brands from '../../Brands/Brands'
 
-class AboutPage extends Component {
-    render() {
-        return (
-            <>
-                <AboutUs />
-                <OurServices />
-                <Brands />
-            </>
-        );
-    }
+function AboutPage() {
+    return (
+        <>
+            <AboutUs />
+            <OurServices />
+            <Brands />
+        </>
+    );
 }
 
-export default AboutPage;
+export default AboutPage

@@ -107,7 +107,6 @@ const Product = lazy(() => import('./Front/Page/Product/Product'))
 
 class Routing extends Component {
     render() {
-
         const frontPanelRoutes = [
             { path: ``, component: FrontPage },
             { path: `index`, component: FrontPage },
@@ -116,7 +115,6 @@ class Routing extends Component {
             { path: `shop`, component: Product },
             { path: `shops`, component: ProductList },
         ];
-
         return (
             <AuthProvider>
                 <Router>

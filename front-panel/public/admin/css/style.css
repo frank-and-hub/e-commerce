@@ -1509,6 +1509,7 @@ table>thead>tr .action {
 .pagination .btn {
   transition: all 0.5s;
   color: var(--dark);
+  margin: 0px 4px;
   background-color: var(--background) !important;
 }
 
@@ -1522,7 +1523,8 @@ table>thead>tr .action {
   box-shadow: var(--shadow);
 }
 
-.circle-image-small {
+.circle-image-small,
+.circle-image-sm {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1532,6 +1534,10 @@ table>thead>tr .action {
   box-shadow: var(--shadow);
 }
 
+.circle-image-sm {
+  width: 30px;
+  height: 30px;
+}
 
 /* LoadingScreen.css */
 .loading-screen {
@@ -1636,6 +1642,7 @@ i {
 
 .form-control {
   min-height: 38px !important;
+  font-size: 13.33px;
   animation: slideIn 0.5s ease-in-out forwards;
 }
 
@@ -1661,10 +1668,6 @@ i {
 
 .cursorAuto {
   cursor: auto !important;
-}
-
-.dataTable {
-  word-wrap: normal;
 }
 
 .pre-table {

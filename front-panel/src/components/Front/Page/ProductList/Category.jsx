@@ -10,16 +10,16 @@ class Category extends Component {
                     <h1 className={`h2 pb-4`}>Categories</h1>
                     <ul className={`list-unstyled templatemo-accordion`}>
                         <li className={`pb-3`}>
-                            <Link className={`collapsed d-flex justify-content-between h3 text-decoration-none`} to={`#`}>Gender
+                            <Link className={`collapsed d-flex justify-content-between h3 text-decoration-none`} to={`#collapseOne`}>Gender
                                 <i className={`fa fa-fw fa-chevron-circle-down mt-1`}></i>
                             </Link>
-                            <ul className={`collapse show list-unstyled pl-3`}>
+                            <ul id={`collapseOne`} className={`collapse show list-unstyled pl-3`}>
                                 <li><Link className={`text-decoration-none`} to={`#`}>Men</Link></li>
                                 <li><Link className={`text-decoration-none`} to={`#`}>Women</Link></li>
                             </ul>
                         </li>
                         <li className={`pb-3`}>
-                            <Link className={`collapsed d-flex justify-content-between h3 text-decoration-none`} to={`#`}>Sale
+                            <Link className={`collapsed d-flex justify-content-between h3 text-decoration-none`} to={`#collapseTwo`}>Sale
                                 <i className={`pull-right fa fa-fw fa-chevron-circle-down mt-1`}></i>
                             </Link>
                             <ul id={`collapseTwo`} className={`collapse list-unstyled pl-3`}>
@@ -28,7 +28,7 @@ class Category extends Component {
                             </ul>
                         </li>
                         <li className={`pb-3`}>
-                            <Link className={`collapsed d-flex justify-content-between h3 text-decoration-none`} to={`#`}>Product
+                            <Link className={`collapsed d-flex justify-content-between h3 text-decoration-none`} to={`#collapseThree`}>Product
                                 <i className={`pull-right fa fa-fw fa-chevron-circle-down mt-1`}></i>
                             </Link>
                             <ul id={`collapseThree`} className={`collapse list-unstyled pl-3`}>

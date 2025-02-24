@@ -171,7 +171,7 @@ const Table = ({
                 break;
             case 'image':
                 const imageSrc = data?.image?.path;
-                content = imageSrc ? (<div className={`w-25 rounded-25`} ><img src={`${imageSrc}`} className={`rounded-circle circle-image-small`} alt={`#`} /></div>) : (<i className={`bi bi-card-image`}></i>);
+                content = imageSrc ? (<div className={`w-25 rounded-25`} ><img src={`${imageSrc}`} className={`rounded-circle circle-image-sm`} alt={`#`} /></div>) : (<i className={`bi bi-card-image`}></i>);
                 break;
             default:
                 if (typeof item === 'object' && item !== null) {
@@ -190,10 +190,10 @@ const Table = ({
                 <div className={`card-body`}>
                     <div className='row my-2'>
                         <div className={`col-md-6`}>
-                            <h5 className={`card-title text-capitalize underline`}>{(cleanedTitle)}</h5>
+                            <h6 className={`card-title text-capitalize`}>{(cleanedTitle)}</h6>
                         </div>
                         <div className={`d-flex justify-content-evenly align-items-center col-md-6`}>
-                            <div className={`col-md-9 col-sm-10`}>
+                            <div className={`col-md-9 col-sm-10 col-9`}>
                                 <input
                                     type={`text`}
                                     placeholder={`Search...`}
@@ -227,7 +227,7 @@ const Table = ({
                         </div>
                     </div>
                     <div className={`pre-table`}>
-                        <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl}`}>
+                        <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl} mb-2`} style={{ wordWrap: 'normal' }}>
                             <thead>
                                 <tr>
                                     {!loading && headers.length > 0 && (
@@ -284,13 +284,23 @@ const Table = ({
                             <tfoot >
                                 <tr>
                                     <td colSpan={headers.length + 1}>
-                                        <div className={`position-absolute my-auto py-3`}>Showing {start} to {end} of {dataCount} entries</div>
-                                        <div className={`position-relative Page navigation`}>
-                                            {dataCount > dataLimit && (
-                                                <>
-                                                    <Pageignation totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-                                                </>
-                                            )}
+                                        <div className={`row justify-content-md-between mt-2`}>
+                                            <div className={`col-md-5 col-12 d-none d-md-block`}>
+                                                {dataCount > dataLimit && (
+                                                    <>
+                                                        <div className={`position-absolute my-auto py-2 `}>Showing {start} to {end} of {dataCount} entries</div>
+                                                    </>
+                                                )}
+                                            </div>
+                                            <div className={`col-md-7 col-12`}>
+                                                <div className={`position-relative Page navigation`}>
+                                                    {dataCount > dataLimit && (
+                                                        <>
+                                                            <Pageignation totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

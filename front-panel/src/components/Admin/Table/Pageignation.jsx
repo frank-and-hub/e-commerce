@@ -3,16 +3,15 @@ import React from 'react'
 function Pageignation({ totalPages, currentPage, handlePageChange }) {
     return (
         <>
-            <div className={`pagination justify-content-end`}>
+            <div className={`pagination justify-content-start`}>
                 {Array.from({ length: totalPages }, (_, index) => {
                     const pageNumber = index + 1;
-
                     if (
-                        pageNumber === 1 ||
-                        pageNumber === totalPages ||
+                        (pageNumber === 1) ||
+                        (pageNumber === totalPages) ||
                         (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1) ||
-                        pageNumber === 1 ||
-                        pageNumber === totalPages
+                        (pageNumber === 1) ||
+                        (pageNumber === totalPages)
                     ) {
                         return (
                             <button
@@ -35,7 +34,6 @@ function Pageignation({ totalPages, currentPage, handlePageChange }) {
                             </button>
                         );
                     }
-
                     return null;
                 })}
             </div>

@@ -104,7 +104,7 @@ const Chat = ({ userOptions }) => {
                         <div className={`gy-4 w-100`}>
 
                             <div className={`col-md-12`}>
-                                <SelectForm id="receiver_id" label={`Support`} value={values.receiver_id} handleChange={(e) => { handleChange(e); setSelectedReceiver(e?.target?.value) }} error={errors.receiver_id} required={true} Options={userData} />
+                                <SelectForm id={`receiver_id`} label={`Support`} value={values.receiver_id} handleChange={(e) => { handleChange(e); setSelectedReceiver(e?.target?.value) }} error={errors.receiver_id} required={true} Options={userData} />
                             </div>
 
                             <Messages isDataChange={selectedReceiver} />

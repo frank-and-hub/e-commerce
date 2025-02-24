@@ -32,7 +32,7 @@ const Support = () => {
             <section className={`section`}>
                 <div className={`card-head`}>
                     <div className={`card-title`}>
-                        <p className='p-0 m-0 btn' > Support </p>
+                        <p className='p-0 m-0 btn'> Support </p>
                     </div>
                 </div>
                 <div className={`row gy-4`}>

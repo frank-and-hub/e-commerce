@@ -17,7 +17,7 @@ function SelectForm({ id, handleChange, value, error, required = false, disabled
     return (
         <>
             {label ? (
-                <label htmlFor={id} className={`form-label text-capitalize`}>>>{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
+                <label htmlFor={id} className={`form-label text-capitalize`}>{(label)} {required ? (<span className='text-danger'>*</span>) : ('')}</label>
             ) : ('')}
             <Select
                 className={error ? 'is-invalid' : ''}
@@ -29,7 +29,7 @@ function SelectForm({ id, handleChange, value, error, required = false, disabled
                 styles={customStyles}
                 isDisabled={disabled}
             />
-            {error && <div className={`invalid-feedback`}>>>{error}</div>}
+            {error && <div className={`invalid-feedback`}>{error}</div>}
         </>
     )
 }

@@ -114,7 +114,7 @@ class Routing extends Component {
             { path: `about`, component: AboutPage },
             { path: `contact`, component: ContactPage },
             { path: `shop`, component: Product },
-            { path: `product`, component: ProductList },
+            { path: `shops`, component: ProductList },
         ];
 
         return (

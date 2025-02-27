@@ -30,6 +30,7 @@ export const SignInForm = () => {
             console.table(errors);
             return false;
         }
+        
         startTransition(async () => {
             try {
                 const response = await login(values.email, values.password);
@@ -52,7 +53,7 @@ export const SignInForm = () => {
                 <div className={`col-12`}>
                     <label htmlFor={`yourUsername`} className={`form-label`}>User Email</label>
                     <div className={`input-group has-validation`}>
-                        <span className={`input-group-text" id="inputGroupPrepend`}>@</span>
+                        <span className={`input-group-text`} id={`inputGroupPrepend`}> @ </span>
                         <input
                             type={`email`}
                             name={`email`}

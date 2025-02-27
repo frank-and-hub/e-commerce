@@ -10,6 +10,8 @@ import { Outlet } from 'react-router-dom'
 function FrontLayout() {
     const [loading, setLoading] = useState(null);
 
+     const role = localStorage.getItem('role');
+
     useEffect(() => {
         setLoading(true)
         const fetchData = async () => {
@@ -24,9 +26,7 @@ function FrontLayout() {
             }
         };
 
-        // if (number) {
         fetchData();
-        // }
     }, []);
 
     return (

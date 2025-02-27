@@ -1,11 +1,33 @@
 import React from 'react'
 import { rasc } from '../../../utils/helper'
 
-function Textarea({ name, label, type = 'text', value, onChange, error, required = false, disabled = false, className = null, editor = false, border = null }) {
-    const InputItem = <textarea name={name} type={type} className={`form-control border-${border}${editor ? ' tinymce-editor' : ''}${className ?? ''}${error ? ' is-invalid' : ''}`} id={rasc(name)} defaultValue={value} style={{ height: `${className ? '100px' : '25px'}` }} onChange={onChange} disabled={disabled} ></textarea>;
+export default function Textarea({
+    name,
+    label,
+    value,
+    error,
+    onChange,
+    type = `text`,
+    border = null,
+    editor = false,
+    className = null,
+    required = false,
+    disabled = false,
+}) {
+    const InputItem = <textarea
+        name={name}
+        type={type}
+        id={rasc(name)}
+        onChange={onChange}
+        disabled={disabled}
+        defaultValue={value}
+        placeholder={`Enter ${name}`}
+        style={{ height: `${className ? `100px` : `25px`}` }}
+        className={`form-control border-${border}${editor ? ` tinymce-editor` : ``}${className ?? ``}${error ? ` is-invalid` : ``}`}
+    ></textarea>;
     return (
         <>
-            <div className={`${className && className === 'w-100' ? 'col-md-12' : 'col-md-4'}`} >
+            <div className={`${className && className === `w-100` ? `col-md-12` : `col-md-4`}`} >
                 {label && (<label htmlFor={rasc(name)} className={`text-capitalize form-label`}>{(label)} {required && <span className={`text-danger`}>*</span>}</label>)}
                 {InputItem}
                 {error && <div className={`invalid-feedback`}>{error}</div>}
@@ -13,5 +35,3 @@ function Textarea({ name, label, type = 'text', value, onChange, error, required
         </>
     )
 }
-
-export default Textarea

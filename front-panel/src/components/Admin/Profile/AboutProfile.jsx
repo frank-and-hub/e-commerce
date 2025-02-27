@@ -43,11 +43,13 @@ function AboutProfile() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         validateSubmit(e);
+        
         if (errors && Object.keys(errors).length !== 0) {
             // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }
+
         startTransition(async () => {
             try {
                 const res = await api({

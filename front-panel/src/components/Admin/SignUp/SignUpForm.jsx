@@ -26,7 +26,6 @@ export const SignUpForm = () => {
 
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-
         validateSubmit(e);
 
         if (errors && Object.keys(errors).length > 0) {
@@ -34,6 +33,7 @@ export const SignUpForm = () => {
             console.table(errors);
             return false;
         }
+
         startTransition(async () => {
             try {
                 const { name, email, password, phone } = values;

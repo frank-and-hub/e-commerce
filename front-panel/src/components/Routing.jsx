@@ -115,6 +115,7 @@ class Routing extends Component {
             { path: `shop`, component: Product },
             { path: `shops`, component: ProductList },
         ];
+
         return (
             <AuthProvider>
                 <Router>

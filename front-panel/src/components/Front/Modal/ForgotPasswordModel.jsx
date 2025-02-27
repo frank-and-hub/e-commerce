@@ -3,7 +3,7 @@ import React from 'react'
 function ForgotPasswordModel() {
     return (
         <>
-            <div className={`modal fade bg-white`} id={`templatemo_forget_password`} tabIndex={`-1`} role={`dialog`} aria-labelledby={`exampleModalLabel`} aria-hidden="true">
+            <div className={`modal fade bg-white`} id={`templatemo_forget_password`} tabIndex={`-1`} role={`dialog`} aria-labelledby={`exampleModalLabel`} aria-hidden={true}>
                 <div className={`modal-dialog modal-lg`} role={`document`}>
                     <div className={`w-100 pt-1 mb-5 text-right position-relative`}>
                         <button type={`button`} className={`btn-close position-absolute top-0 start-0 btn`} data-bs-dismiss={`modal`} aria-label={`Close`}></button>

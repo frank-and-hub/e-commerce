@@ -718,7 +718,6 @@ textarea {
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left: 300px;
@@ -741,7 +740,7 @@ textarea {
 }
 
 
-@media (max-height: 1079px) {
+@media (max-height: 719px) {
   footer {
     display: none;
   }

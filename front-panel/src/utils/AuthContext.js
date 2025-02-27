@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }) => {
             await storeUserData(data.user, data?.token);
             localStorage.setItem('token', data?.token);
             localStorage.setItem('user', data?.user);
+            localStorage.setItem('role', data?.user?.role?.name);
             localStorage.setItem('user_id', data?.user?._id);
             return data;
         } catch (err) {

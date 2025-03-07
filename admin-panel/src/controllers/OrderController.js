@@ -158,7 +158,7 @@ exports.store = async (req, res, next) => {
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const orderData = await this.find_data_by_id(id, res);
+        const orderData = await this.findData(id, res);
         const { _id, cart, user, address, price, status, time } = orderData;
         const result = {
             'id': _id,
@@ -176,7 +176,7 @@ exports.show = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const orderData = await this.find_data_by_id(id, res);
+        const orderData = await this.findData(id, res);
         const { _id, cart, user, address, price, status, time } = orderData;
         const result = {
             'id': _id,
@@ -219,8 +219,19 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const orderData = await Order.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const orderData = await Order.find(query)
         .select('_id cart user address price time status updated_by')
         // .where('status').equals(status_active)
         .populate('user', '_id name')

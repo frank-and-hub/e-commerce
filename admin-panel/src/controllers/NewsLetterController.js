@@ -76,7 +76,7 @@ exports.index = async (req, res, next) => {
                 data: newsLetterResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -88,7 +88,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add news letter'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -115,13 +115,13 @@ exports.store = async (req, res, next) => {
             'ip_address': newData?.ip_address
         }
         res.status(201).json({ message: `Your email is received Successfully`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const newsLetterData = await this.find_data_by_id(id, res);
+        const newsLetterData = await this.findData(id, res);
         const { _id, email, ip_address, updated_by, status } = newsLetterData;
         const result = {
             'id': _id,
@@ -131,13 +131,13 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `News letter data found`, data: result, title: `View ${email} news letter detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const newsLetterData = await this.find_data_by_id(id, res);
+        const newsLetterData = await this.findData(id, res);
         const { _id, email, ip_address, updated_by, status } = newsLetterData;
         const result = {
             'id': _id,
@@ -147,7 +147,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `News letter data found`, data: result, title: `Edit ${email} news letter detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -162,7 +162,7 @@ exports.update = async (req, res, next) => {
 
         const result = await NewsLetter.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedNewsLetter = await this.find_data_by_id(id, res);
+            const updatedNewsLetter = await this.findData(id, res);
             const { _id, email, ip_address } = updatedNewsLetter;
             const newsLetterData = {
                 'id': _id,
@@ -199,11 +199,22 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `NewsLetter not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const newsLetterData = await NewsLetter.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const newsLetterData = await NewsLetter.find(query)
         .select('_id email ip_address status updated_by')
         // .where('status').equals(status_active)
         .populate('updated_by', '_id name');

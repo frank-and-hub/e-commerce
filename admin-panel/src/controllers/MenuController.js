@@ -102,7 +102,7 @@ exports.index = async (req, res, next) => {
                 data: menuResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -118,7 +118,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add menu'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -165,13 +165,13 @@ exports.store = async (req, res, next) => {
             'parent': parent?.name
         }
         res.status(201).json({ message: `Successfully new menu created`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const menuData = await this.find_data_by_id(id, res);
+        const menuData = await this.findData(id, res);
         const { _id, name, route, icon, type, updated_by, parent, status } = menuData;
         const children = await Menu.find({ parent: _id }).select('_id name route');
 
@@ -187,13 +187,13 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Menu data found`, data: result, title: `View ${name} menu detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const menuData = await this.find_data_by_id(id, res);
+        const menuData = await this.findData(id, res);
         const { _id, name, route, icon, type, updated_by, parent, status } = menuData;
         const children = await Menu.find({ parent: _id }).select('_id name route');
         const result = {
@@ -208,7 +208,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Menu data found`, data: result, title: `Edit ${name} menu detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -230,7 +230,7 @@ exports.update = async (req, res, next) => {
 
         const result = await Menu.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedMenu = await this.find_data_by_id(id, res);
+            const updatedMenu = await this.findData(id, res);
             const { _id, name, route, parent, icon, type } = updatedMenu;
             const response = {
                 'id': _id,
@@ -243,7 +243,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Menu details updated successfully`, data: response });
         }
         res.status(404).json({ message: `Menu not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -273,7 +273,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Menu not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.assignMenu = async (req, res, next) => {
@@ -292,11 +292,22 @@ exports.assignMenu = async (req, res, next) => {
         if (result.modifiedCount > 0) return res.status(200).json({ message: `Menu details updated successfully` });
 
         res.status(400).json({ message: `No details updated successfully or menu not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const menuData = await Menu.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const menuData = await Menu.find(query)
         .select('_id name route parent icon type updated_by status')
         // .where('status').equals(status_active)
         .populate('updated_by', '_id name');

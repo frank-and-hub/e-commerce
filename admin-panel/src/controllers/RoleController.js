@@ -78,7 +78,7 @@ exports.index = async (req, res, next) => {
                 data: roleResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -91,7 +91,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add role'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -120,28 +120,28 @@ exports.store = async (req, res, next) => {
             }))
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const roleData = await this.find_data_by_id(id, res);
+        const roleData = await this.findData(id, res);
         const result = {
             'id': roleData._id,
             'name': roleData?.name,
-            'permissions': await helper.filterData(roleData.permissions),
+            'permissions': await helper.filterData(roleData?.permissions),
             'status': roleData?.status,
             'updated_by': roleData?.updated_by
         }
         res.status(200).json({ message: `Role data found`, data: result, title: `View ${roleData?.name} role detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const roleData = await this.find_data_by_id(id, res);
+        const roleData = await this.findData(id, res);
         const result = {
             'id': roleData._id,
             'name': roleData?.name,
@@ -150,7 +150,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': roleData?.updated_by
         }
         res.status(200).json({ message: `Role data found`, data: result, title: `Edit ${roleData?.name} role detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -170,7 +170,7 @@ exports.update = async (req, res, next) => {
 
         const result = await Role.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedRole = await this.find_data_by_id(id, res);
+            const updatedRole = await this.findData(id, res);
             const result = {
                 'id': updatedRole._id,
                 'name': updatedRole?.name,
@@ -183,7 +183,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Role details updated successfully`, data: result });
         }
         res.status(404).json({ message: `Role not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -208,7 +208,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Role not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.getGuestRole = async (string) => {
@@ -229,8 +229,18 @@ exports.getGuestRole = async (string) => {
     }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const roleData = await Role.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const roleData = await Role.find(query)
         .select('_id name permissions updated_by status')
         // .where('status').equals(status_active)
         .populate({

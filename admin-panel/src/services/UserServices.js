@@ -1,9 +1,10 @@
 const User = require('../models/user');
+const { phoneFormate } = require('../utils/helper');
 const { hashPassword } = require('./AuthServices');
 const status_active = `${process.env.STATUS_ACTIVE}`;
 
 class UserService {
-    async selectUser(id, res) {
+    async getDataById(id, res) {
 
         const userData = await User.findById(id)
             .select('_id name email phone password password_text role image gender address about city state zipcode terms status updated_by')
@@ -13,11 +14,10 @@ class UserService {
             .populate('image', '_id name path');
 
         if (!userData) return res.status(404).json({ message: `User not found!`, data: [] });
-
         return userData;
     }
 
-    async insertUser(userData, user_id) {
+    async insertNewData(userData, user_id) {
         const { name, email, phone, password, role_id } = userData;
         try {
             const hashPassword = await hashPassword(password);
@@ -28,7 +28,7 @@ class UserService {
                 email,
                 password: hashPassword,
                 password_text: password,
-                phone: phone.trim().replace('-', '').replace('-', '').replace(' ', ''),
+                phone: phoneformate(phone),
                 role: role_id,
                 updated_by: user_id ?? null,
             });

@@ -67,7 +67,7 @@ exports.index = async (req, res, next) => {
                 data: faqResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -80,7 +80,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add faq'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -110,13 +110,13 @@ exports.store = async (req, res, next) => {
             'created_by': newData?.created_by
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const faqData = await this.find_data_by_id(id);
+        const faqData = await this.findData(id);
         const { _id, question, answer, created_by, status } = faqData;
         const result = {
             'id': _id,
@@ -126,13 +126,13 @@ exports.show = async (req, res, next) => {
             'status': status
         }
         res.status(200).json({ message: `Faq data found`, data: result, title: `View faq detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const faqData = await this.find_data_by_id(id);
+        const faqData = await this.findData(id);
         const { _id, question, answer, created_by, status } = faqData;
         const result = {
             'id': _id,
@@ -142,7 +142,7 @@ exports.edit = async (req, res, next) => {
             'status': status
         }
         res.status(200).json({ message: `Faq data found`, data: result, title: `Edit faq detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -157,7 +157,7 @@ exports.update = async (req, res, next) => {
 
         const result = await Faq.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedFaq = await this.find_data_by_id(id);
+            const updatedFaq = await this.findData(id);
             const { _id, question, answer, created_by } = updatedFaq;
             const response = {
                 'id': _id,
@@ -168,7 +168,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Faq details updated successfully`, data: response });
         }
         res.status(404).json({ message: `Faq not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -194,11 +194,22 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Faq not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const faqData = await Faq.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const faqData = await Faq.find(query)
         .select('_id question answer created_by status')
         // .where('status').equals(status_active)
         .populate('created_by', '_id name');

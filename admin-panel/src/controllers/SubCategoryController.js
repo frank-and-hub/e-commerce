@@ -81,7 +81,7 @@ exports.index = async (req, res, next) => {
                 data: sub_categoryResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -97,7 +97,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add sub_category'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -132,13 +132,13 @@ exports.store = async (req, res, next) => {
             'category': categoryData?.name
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const sub_categoryData = await this.find_data_by_id(id, res);
+        const sub_categoryData = await this.findData(id, res);
         const { _id, name, icon, description, user, updated_by, status, category } = sub_categoryData;
         const result = {
             'id': _id,
@@ -151,13 +151,13 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by,
         }
         res.status(200).json({ message: `Sub category data found`, data: result, title: `View ${name} sub_category detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const sub_categoryData = await this.find_data_by_id(id, res);
+        const sub_categoryData = await this.findData(id, res);
         const { _id, name, icon, description, user, category, status } = sub_categoryData;
         const result = {
             'id': _id,
@@ -169,7 +169,7 @@ exports.edit = async (req, res, next) => {
             'category': category?._id
         }
         res.status(200).json({ message: `Sub category data found`, data: result, title: `Edit ${name} sub category detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -194,7 +194,7 @@ exports.update = async (req, res, next) => {
 
         const result = await SubCategory.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedSubCategory = await this.find_data_by_id(id, res);
+            const updatedSubCategory = await this.findData(id, res);
             const { _id, name, description, icon, user, category } = updatedSubCategory;
             const response = {
                 'id': _id,
@@ -207,7 +207,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Sub category details updated successfully`, data: response });
         }
         res.status(404).json({ message: `Sub category not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -235,11 +235,22 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Sub category not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const sub_categoryData = await SubCategory.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const sub_categoryData = await SubCategory.find(query)
         .select('_id name icon description user category updated_by status')
         // .where('status').equals(status_active)
         .populate('user', '_id name')

@@ -122,7 +122,7 @@ class Routing extends Component {
                     <Routes>
                         <Route exact path={`/`} element={<FrontLayout />} >
                             {frontPanelRoutes.map((route, index) => (
-                                <Route key={index} exact path={route.path} element={<route.component />} />
+                                <Route key={index} exact path={route?.path} element={<route.component />} />
                             ))}
                         </Route>
                         <Route exact path={`admin`}>

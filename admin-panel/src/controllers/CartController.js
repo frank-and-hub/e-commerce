@@ -80,7 +80,7 @@ exports.index = async (req, res, next) => {
                 data: cartResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -93,7 +93,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add cart'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -185,13 +185,13 @@ exports.store = async (req, res, next) => {
             }
         }
         res.status(201).json({ message: msg, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const cartData = await this.find_data_by_id(id, res);
+        const cartData = await this.findData(id, res);
         const { _id, products, user, updated_by, status } = cartData;
         const result = {
             'id': _id,
@@ -203,7 +203,7 @@ exports.show = async (req, res, next) => {
             }))
         }
         res.status(200).json({ message: `Cart data found`, data: result, title: `View ${user.name} cart detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -224,7 +224,7 @@ exports.update = async (req, res, next) => {
 
         const result = await Discount.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedDiscount = await this.find_data_by_id(id, res);
+            const updatedDiscount = await this.findData(id, res);
             const { _id, name, description, percentage, updated_by, status, user } = updatedDiscount;
             const response = {
                 'id': _id,
@@ -238,11 +238,22 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Discount details updated successfully`, data: response });
         }
         res.status(404).json({ message: `Discount not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const cartData = await Cart.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const cartData = await Cart.find(query)
         .select('_id products user updated_by status')
         // .where('status').equals(status_active)
         .populate('user', '_id name')

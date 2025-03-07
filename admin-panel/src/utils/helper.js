@@ -74,9 +74,13 @@ const sendEmail = async (to, subject, text) => {
 }
 
 const filterData = async (item) => {
-    return item.map(per => (
+    return item?.map(per => (
         per._id
     ));
 }
 
-module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData }
+const phoneFormate = (string) => {
+    return string?.trim()?.replace('-', '')?.replace('-', '')?.replace(' ', '');
+}
+
+module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData, phoneFormate }

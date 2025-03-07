@@ -15,7 +15,7 @@ const AuthServices = require('../services/AuthServices');
 
 // config url
 const url = require('../config/url');
-const { selectUser, insertUser } = require('../services/UserServices');
+const { getDataById, insertNewData } = require('../services/UserServices');
 
 // base url
 const baseurl = `${url.apiUrl}`;
@@ -46,7 +46,7 @@ exports.index = async (req, res, next) => {
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
                 { email: { $regex: trimmedSearch, $options: "i" } },
-                { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: search, options: "i" } } },
+                { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: search, $options: "i" } } },
             ];
         }
 
@@ -126,7 +126,7 @@ exports.store = async (req, res, next) => {
         const roleData = await Role.findById(role_id).select('_id').where('status').equals(status_active);
         if (!roleData) return res.status(401).json({ message: unauthorized });
 
-        const newData = await insertUser(req.body, userId);
+        const newData = await insertNewData(req.body, userId);
 
         const response = {
             'id': newData?._id,
@@ -143,7 +143,7 @@ exports.store = async (req, res, next) => {
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const userData = await selectUser(id, res);
+        const userData = await getDataById(id, res);
 
         const social_details = await SocialDetail.find({ 'user': userData?._id })
             .select('_id name url icon')
@@ -160,7 +160,7 @@ exports.show = async (req, res, next) => {
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const userData = await selectUser(id, res);
+        const userData = await getDataById(id, res);
         const { _id, name, email, phone, password_text, role } = userData;
         const userResponses = {
             '_id': _id,
@@ -200,7 +200,7 @@ exports.update = async (req, res, next) => {
         const result = await User.updateOne({ _id: id }, { $set: updateOps });
 
         if (result.modifiedCount > 0) {
-            const updatedUser = await selectUser(id, res);
+            const updatedUser = await getDataById(id, res);
             const { _id, name, email, phone, gender, role, image, about } = updatedUser;
             const userData = {
                 'id': _id,

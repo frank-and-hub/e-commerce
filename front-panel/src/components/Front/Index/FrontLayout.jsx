@@ -10,7 +10,7 @@ import { Outlet } from 'react-router-dom'
 function FrontLayout() {
     const [loading, setLoading] = useState(null);
 
-     const role = localStorage.getItem('role');
+    //  const role = localStorage.getItem('role');
 
     useEffect(() => {
         setLoading(true)

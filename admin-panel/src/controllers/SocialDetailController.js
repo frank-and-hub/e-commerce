@@ -79,7 +79,7 @@ exports.index = async (req, res, next) => {
                 data: socialResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -93,7 +93,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add social detail'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -116,13 +116,13 @@ exports.store = async (req, res, next) => {
             'icon': newData?.icon,
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const socialData = await this.find_data_by_id(id, res);
+        const socialData = await this.findData(id, res);
         const { _id, name, url, icon, updated_by, status } = socialData;
         const result = {
             'id': _id,
@@ -133,13 +133,13 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `SocialDetail data found`, data: result, title: `View ${name} social detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const socialData = await this.find_data_by_id(id, res);
+        const socialData = await this.findData(id, res);
         const { _id, name, url, icon, updated_by, status } = socialData;
         const result = {
             'id': _id,
@@ -150,7 +150,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `SocialDetail data found`, data: result, title: `Edit ${name} social detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -165,7 +165,7 @@ exports.update = async (req, res, next) => {
 
         const result = await SocialDetail.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
-            const updatedSocialDetail = await this.find_data_by_id(id, res);
+            const updatedSocialDetail = await this.findData(id, res);
             const { _id, name, url, icon } = updatedSocialDetail;
             const socialData = {
                 'id': _id,
@@ -176,7 +176,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `SocialDetail details updated successfully`, data: socialData });
         }
         res.status(404).json({ message: `SocialDetail not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -202,11 +202,22 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `SocialDetail not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const socialData = await SocialDetail.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const socialData = await SocialDetail.find(query)
         .select('_id name url icon updated_by status')
         // .where('status').equals(status_active)
         .populate('updated_by', '_id name');

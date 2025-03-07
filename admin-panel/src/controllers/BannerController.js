@@ -85,7 +85,7 @@ exports.index = async (req, res, next) => {
                 data: bannerResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -101,7 +101,7 @@ exports.create = (req, res, next) => {
             },
             title: 'Add banner'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
@@ -146,13 +146,13 @@ exports.store = async (req, res, next) => {
             'description': newBanner?.description,
         }
         res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const bannerData = await this.find_data_by_id(id, res);
+        const bannerData = await this.findData(id, res);
         const { _id, name, title, description, url, user, image, updated_by, status } = bannerData;
         const result = {
             'id': _id,
@@ -166,13 +166,13 @@ exports.show = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Banner data found`, data: result, title: `View ${name} banner detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const bannerData = await this.find_data_by_id(id, res);
+        const bannerData = await this.findData(id, res);
         const { _id, name, title, description, url, user, image, updated_by, status } = bannerData;
         const result = {
             'id': _id,
@@ -186,7 +186,7 @@ exports.edit = async (req, res, next) => {
             'updated_by': updated_by
         }
         res.status(200).json({ message: `Banner data found`, data: result, title: `Edit ${name} banner detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -216,7 +216,7 @@ exports.update = async (req, res, next) => {
         const result = await Banner.updateOne({ _id: id }, { $set: updateOps });
 
         if (result.modifiedCount > 0) {
-            const updatedBanner = await this.find_data_by_id(id, res);
+            const updatedBanner = await this.findData(id, res);
             const { _id, name, title, description, user, image } = updatedBanner;
 
             const bannerData = {
@@ -231,7 +231,7 @@ exports.update = async (req, res, next) => {
             return res.status(200).json({ message: `Banner details updated successfully`, data: bannerData });
         }
         res.status(404).json({ message: `Banner not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -259,17 +259,28 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Banner not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
-exports.find_data_by_id = async (id, res) => {
-    const bannerData = await Banner.findById(id)
+exports.findData = async (id = null, res, filter = {}) => {
+
+    let query = {};
+
+    if (id) {
+        query._id = id;
+    }
+
+    if (Object.keys(filter).length > 0) {
+        query = { ...query, ...filter };
+    }
+
+    const bannerData = await Banner.find(query)
         .select('_id name title description user image url updated_by status')
         // .where('status').equals(status_active)
         .populate('user', '_id name')
         .populate('image', '_id name path')
         .populate('updated_by', '_id name');
-        
+
     if (!bannerData) return res.status(404).json({ message: `Banner not found` });
     return bannerData;
 }
@@ -290,5 +301,5 @@ exports.image = async (req, res, next) => {
         const result = await Banner.updateOne({ _id: id }, { $set: { image: newData._id } });
         if (result.modifiedCount > 0) return res.status(200).json({ message: `image updated` });
         res.status(404).json({ message: `Data not found or no image to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }

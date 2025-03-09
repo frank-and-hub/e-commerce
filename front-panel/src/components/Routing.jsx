@@ -99,6 +99,11 @@ const UnitTable = lazy(() => import('./Admin/UnitManagement/UnitTable'))
 const UnitAdd = lazy(() => import('./Admin/UnitManagement/form/Add'))
 const UnitEdit = lazy(() => import('./Admin/UnitManagement/form/Edit'))
 const UnitView = lazy(() => import('./Admin/UnitManagement/form/View'))
+// warranty
+const WarrantyTable = lazy(() => import('./Admin/WarrantyManagement/WarrantyTable'))
+const WarrantyAdd = lazy(() => import('./Admin/WarrantyManagement/form/Add'))
+const WarrantyEdit = lazy(() => import('./Admin/WarrantyManagement/form/Edit'))
+const WarrantyView = lazy(() => import('./Admin/WarrantyManagement/form/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -260,6 +265,13 @@ class Routing extends Component {
                                     <Route exact path={`create`} element={<Blank />} />
                                     <Route exact path={`:id/edit`} element={<Blank />} />
                                     <Route exact path={`:id`} element={<Blank />} />
+                                </Route>
+
+                                <Route exact path={`warranties`}>
+                                    <Route index element={<WarrantyTable />} />
+                                    <Route exact path={`create`} element={<WarrantyAdd />} />
+                                    <Route exact path={`:id/edit`} element={<WarrantyEdit />} />
+                                    <Route exact path={`:id`} element={<WarrantyView />} />
                                 </Route>
                             </Route>
                             <Route exact path={`signin`} element={<SignIn />} />

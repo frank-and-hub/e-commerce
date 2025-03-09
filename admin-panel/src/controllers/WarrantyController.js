@@ -112,7 +112,9 @@ exports.store = async (req, res, next) => {
         const response = {
             'id': newData?._id,
             'name': newData?.name,
-            'short_name': newData?.short_name
+            'description': newData?.description,
+            'duration': newData?.duration,
+            'period': newData?.period,
         }
         res.status(201).json({ message: `Your name is received Successfully`, data: response });
     } catch (err) { next(err) }
@@ -122,11 +124,13 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const warrantyData = await this.findData(id, res);
-        const { _id, name, short_name, updated_by, status } = warrantyData;
+        const { _id, name, description, duration, period, updated_by, status } = warrantyData;
         const result = {
             'id': _id,
             'name': name,
-            'short_name': short_name,
+            'description': description,
+            'duration': duration,
+            'period': period,
             'status': status,
             'updated_by': updated_by
         }

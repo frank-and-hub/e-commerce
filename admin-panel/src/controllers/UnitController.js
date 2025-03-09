@@ -205,9 +205,9 @@ exports.findData = async (id = null, res, filter = {}) => {
     if (Object.keys(filter).length > 0) query = { ...query, ...filter };
 
     const unitData = await Unit.find(query)
-        .select('_id name short_name status updated_by')
+        .select('_id name short_name updated_by status')
         .populate('updated_by', '_id name');
-console.log(unitData);
+
     if (!unitData) return res.status(404).json({ message: `Unit not found` });
     return unitData;
 }

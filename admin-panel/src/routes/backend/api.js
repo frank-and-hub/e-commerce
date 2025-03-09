@@ -1,4 +1,5 @@
-const router = [
+module.exports = [
+    // const router = [
     { path: '/api', module: require('../auths') },
     { path: '/api/dashboard', module: require('../dashboard') },
     { path: '/api/users', module: require('../users') },
@@ -34,4 +35,4 @@ const router = [
     { path: '/api/stores', module: require('../stores') },
 ];
 
-module.exports = router;
+// module.exports = router;

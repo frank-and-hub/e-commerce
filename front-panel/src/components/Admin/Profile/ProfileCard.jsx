@@ -4,7 +4,7 @@ import api from '../../../utils/api'
 import { Link } from 'react-router-dom'
 import { notifyError, notifySuccess } from '../Comman/Notification/Notification'
 import { useAuth } from '../../../utils/AuthContext'
-import { checkFileValidation } from './../../../utils/helper.js'
+import { checkFileValidation, getFullName } from './../../../utils/helper.js'
 
 function ProfileCard({ user }) {
     const [src, setSrc] = useState('/img/profile-img.jpg');
@@ -49,10 +49,10 @@ function ProfileCard({ user }) {
             <div key={Math.floor(Math.random() * 1000)} className={`card pb-3`}>
                 <div className={`card-body profile-card pt-4 d-flex flex-column align-items-center`}>
                     <form encType={`multipart/form-data`} >
-                        <img src={src} alt={`${user?.name} - Profile`} className={`rounded-circle circle-image`} onClick={handleClick} style={{ cursor: 'pointer' }} />
+                        <img src={src} alt={`Profile`} className={`rounded-circle circle-image`} onClick={handleClick} style={{ cursor: 'pointer' }} />
                         <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
                     </form>
-                    <h2>{user?.name}</h2>
+                    <h2>{getFullName(user?.name)}</h2>
                     <h3 key={0}>{user?.email}</h3>
                     <div className={`social-links mt-2 w-100`}>
                         {user?.social_details && user?.social_details.length > 0 && user?.social_details.map((social) => (

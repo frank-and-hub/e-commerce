@@ -15,7 +15,9 @@ function ProfileForm({ user }) {
     const userId = user?._id;
 
     const initialState = {
-        name: user?.name ?? '',
+        first_name: user?.name?.first_name ?? '',
+        middle_name: user?.name?.middle_name ?? '',
+        last_name: user?.name?.last_name ?? '',
         email: user?.email ?? '',
         phone: user?.phone ?? '',
         gender: user?.gender ?? '',
@@ -75,7 +77,9 @@ function ProfileForm({ user }) {
         <>
             <form key={formKey} encType={`multipart/form-data`} onSubmit={handleSubmit}>
                 <div className={`mb-3 col-12 row w-100`}></div>
-                <Input name={`name`} label={`Name`} value={values?.name} onChange={handleChange} error={errors?.name} required={true} />
+                <Input name={`first_name`} label={`First Name`} value={values?.first_name} onChange={handleChange} error={errors?.first_name} required={true} />
+                <Input name={`middle_name`} label={`Middle Name`} value={values?.middle_name} onChange={handleChange} error={errors?.middle_name} required={true} />
+                <Input name={`last_name`} label={`Last Name`} value={values?.last_name} onChange={handleChange} error={errors?.last_name} required={true} />
                 <Input name={`phone`} label={`Phone`} value={values?.phone} onChange={handleChange} error={errors?.phone} required={true} />
                 <Input name={`email`} label={`Email`} type={`email`} value={values?.email} onChange={handleChange} error={errors?.email} required={true} />
                 <Input name={`gender`} label={`Gender`} value={values?.gender} onChange={handleChange} error={errors?.gender} required={true} />

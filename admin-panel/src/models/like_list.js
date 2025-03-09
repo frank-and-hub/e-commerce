@@ -18,5 +18,4 @@ likeListSchema.pre(/^find/, function (next) {
 
 likeListSchema.index({ name: 1, deleted_at: 1 });
 
-// Export the model
 module.exports = mongoose.model('LikeList', likeListSchema);

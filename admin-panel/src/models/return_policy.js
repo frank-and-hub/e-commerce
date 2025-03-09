@@ -17,5 +17,4 @@ returnPolicySchema.pre(/^find/, function (next) {
 
 returnPolicySchema.index({ name: 1, deleted_at: 1 });
 
-// Export the model
 module.exports = mongoose.model('RetunPolicy', returnPolicySchema);

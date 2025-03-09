@@ -208,18 +208,10 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const socialData = await SocialDetail.find(query)
         .select('_id name url icon updated_by status')
-        // .where('status').equals(status_active)
         .populate('updated_by', '_id name');
 
     if (!socialData) return res.status(404).json({ message: `SocialDetail not found` });

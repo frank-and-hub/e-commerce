@@ -105,7 +105,7 @@ exports.create = (req, res, next) => {
                 'cartId': 'SchemaId',
                 'userId': 'SchemaId',
                 'price': 'Number',
-                'address': 'String',
+                'address': 'Objects',
                 'status': 'String'
             },
             title: 'Add order'
@@ -134,8 +134,7 @@ exports.store = async (req, res, next) => {
         const order = new Order({
             _id: new mongoose.Types.ObjectId(),
             time: now(),
-            price,
-            address,
+            price,address,
             user: userData._id,
             cart: cartData._id,
         });
@@ -209,7 +208,7 @@ exports.destroy = async (req, res, next) => {
                     'cartId': 'SchemaId',
                     'userId': 'SchemaId',
                     'price': 'Number',
-                    'address': 'String',
+                    'address': 'Objects',
                     'status': 'String'
                 }
             }
@@ -222,18 +221,10 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const orderData = await Order.find(query)
         .select('_id cart user address price time status updated_by')
-        // .where('status').equals(status_active)
         .populate('user', '_id name')
         .populate('cart', '_id products')
         .populate({

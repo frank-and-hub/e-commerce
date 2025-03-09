@@ -45,7 +45,7 @@ exports.index = async (req, res, next) => {
 
         const query = Permission.find(filter)
             .select('_id name menu status updated_by')
-            // .where('status').equals(status_active)
+
             .populate('menu', '_id name')
             .populate('updated_by', '_id name');
         if (req?.query?.page != 0) {
@@ -203,18 +203,10 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const permissionData = await Permission.find(query)
         .select('_id name menu updated_by status')
-        // .where('status').equals(status_active)
         .populate('menu', '_id name')
         .populate('updated_by', '_id name');
 

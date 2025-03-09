@@ -44,9 +44,16 @@ exports.index = async (req, res, next) => {
         if (search) {
             const trimmedSearch = search.trim();
             filter.$or = [
-                { name: { $regex: trimmedSearch, $options: "i" } },
+                {
+                    $or: [
+                        { "name.first_name": { $regex: trimmedSearch, $options: "i" } },
+                        { "name.middle_name": { $regex: trimmedSearch, $options: "i" } },
+                        { "name.last_name": { $regex: trimmedSearch, $options: "i" } }
+                    ]
+                },
                 { email: { $regex: trimmedSearch, $options: "i" } },
-                { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: search, $options: "i" } } },
+                // { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: trimmedSearch, $options: "i" } } },
+                { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: trimmedSearch } } },
             ];
         }
 
@@ -73,11 +80,10 @@ exports.index = async (req, res, next) => {
         if (users.length === 0) return res.status(200).json({ message: `Users not found!`, data: [] });
 
         const userPromises = users.map(async (user) => {
-            const { _id, name, email, phone, role, image, status } = user;
-
+            const { _id, full_name, email, phone, role, image, status } = user;
             return {
                 'id': _id,
-                'name': name,
+                'name': full_name,
                 'email': email,
                 'phone': phone,
                 'role': role,
@@ -96,7 +102,7 @@ exports.index = async (req, res, next) => {
                 data: userResponses
             }, title: 'listing'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.create = (req, res, next) => {
@@ -104,7 +110,11 @@ exports.create = (req, res, next) => {
         res.status(200).json({
             message: `Create user form`,
             body: {
-                'name': 'String',
+                'name': {
+                    'first_name': 'String',
+                    'middle_name': 'String',
+                    'last_name': 'String'
+                },
                 'email': 'String',
                 'phone': 'Digits',
                 'password': 'String',
@@ -112,11 +122,11 @@ exports.create = (req, res, next) => {
             },
             title: 'Add user'
         });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.store = async (req, res, next) => {
-    const { name, email, phone, password, role_id } = req.body;
+    const { email, password, role_id } = req.body;
     try {
         let userId = req?.userData?.id;
 
@@ -130,14 +140,18 @@ exports.store = async (req, res, next) => {
 
         const response = {
             'id': newData?._id,
-            'name': newData?.name,
+            'name': {
+                'first_name': newData?.name?.first_name,
+                'middle_name': newData?.name?.middle_name,
+                'last_name': newData?.name?.last_name
+            },
             'email': newData?.email,
             'phone': newData?.phone,
             'role': newData?.role,
             'password': password,
         }
         return res.status(201).json({ message: `Successfully created`, data: response });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.show = async (req, res, next) => {
@@ -154,7 +168,7 @@ exports.show = async (req, res, next) => {
             social_details,
         };
         res.status(200).json({ message: `User founded`, data: userWithDetails, title: `View ${userData?.name} user detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.edit = async (req, res, next) => {
@@ -164,14 +178,18 @@ exports.edit = async (req, res, next) => {
         const { _id, name, email, phone, password_text, role } = userData;
         const userResponses = {
             '_id': _id,
-            'name': name,
+            'name': {
+                'first_name': name?.first_name,
+                'middle_name': name?.middle_name,
+                'last_name': name?.last_name
+            },
             'email': email,
             'phone': phone,
             'password': password_text,
             'role_id': role?._id,
         }
         res.status(200).json({ message: `User details founded`, data: userResponses, title: `Edit ${userData?.name} user detail` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update = async (req, res, next) => {
@@ -193,6 +211,12 @@ exports.update = async (req, res, next) => {
             updateOps['password'] = await AuthServices.hashPassword(updateOps.password);
         }
 
+        if (updateOps?.name) {
+            updateOps['name']['first_name'] = updateOps.first_name;
+            updateOps['name']['middle_name'] = updateOps.middle_name;
+            updateOps['name']['last_name'] = updateOps.last_name;
+        }
+
         if (typeof updateOps?.phone === 'string') {
             updateOps['phone'] = updateOps.phone.replace('-', '').replace('-', '').replace(' ', '');
         }
@@ -204,7 +228,11 @@ exports.update = async (req, res, next) => {
             const { _id, name, email, phone, gender, role, image, about } = updatedUser;
             const userData = {
                 'id': _id,
-                'name': name,
+                'name': {
+                    'first_name': name?.first_name,
+                    'middle_name': name?.middle_name,
+                    'last_name': name?.last_name
+                },
                 'email': email,
                 'phone': phone,
                 'gender': gender,
@@ -214,8 +242,9 @@ exports.update = async (req, res, next) => {
             }
             return res.status(200).json({ message: `User details updated successfully`, data: userData });
         }
+
         res.status(404).json({ message: `User not found or no details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {
@@ -233,7 +262,11 @@ exports.destroy = async (req, res, next) => {
                 'method': 'POST',
                 'url': `${baseurl}${constName}`,
                 'body': {
-                    'name': 'string',
+                    'name': {
+                        'first_name': 'String',
+                        'middle_name': 'String',
+                        'last_name': 'String'
+                    },
                     'email': 'string',
                     'password': 'string',
                     'role': 'ID',
@@ -242,7 +275,7 @@ exports.destroy = async (req, res, next) => {
             return res.status(200).json({ message: `Deleted successfully`, request: response });
         }
         res.status(404).json({ message: `Not found` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.profile = async (req, res, next) => {
@@ -272,7 +305,7 @@ exports.profile = async (req, res, next) => {
         if (result.modifiedCount > 0) return res.status(200).json({ message: `User image updated`, data: response });
 
         res.status(404).json({ message: `User not found or no image to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.assignRole = async (req, res, next) => {
@@ -296,7 +329,11 @@ exports.assignRole = async (req, res, next) => {
             const { _id, name, email, phone, gender } = updatedUser;
             const response = {
                 'id': _id,
-                'name': name,
+                'name': {
+                    'first_name': name?.first_name,
+                    'middle_name': name?.middle_name,
+                    'last_name': name?.last_name
+                },
                 'email': email,
                 'phone': phone,
                 'gender': gender,
@@ -305,7 +342,7 @@ exports.assignRole = async (req, res, next) => {
             return res.status(200).json({ message: `User role updated`, data: response });
         }
         res.status(404).json({ message: `No details to update`, data: [] });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.verifyPassword = async (req, res, next) => {
@@ -318,7 +355,7 @@ exports.verifyPassword = async (req, res, next) => {
         if (!isPasswordValid) return res.status(200).json({ message: `Incorrect current password`, data: false });
 
         return res.status(200).json({ message: `Auth user password is correct 👍`, data: true });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.changePassword = async (req, res, next) => {
@@ -355,7 +392,7 @@ exports.permssion = async (req, res, next) => {
         if (!userData) return res.status(404).json({ message: `User has no permissions!`, data: [] });
 
         res.status(200).json({ message: `User permissions founded`, data: { ...UserPermissions }, title: `${userData?.name} user permissions` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }
 
 exports.update_permssion = async (req, res, next) => {
@@ -379,5 +416,5 @@ exports.update_permssion = async (req, res, next) => {
 
         await UserPermission.insertMany(insertData);
         res.status(200).json({ message: `User permissions updated`, data: {}, title: `${userData?.name} user permissions` });
-    } catch (err) { next(err)  }
+    } catch (err) { next(err) }
 }

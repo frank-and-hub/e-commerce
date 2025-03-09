@@ -3,7 +3,9 @@ import React from 'react'
 function ProfileOverview({ user }) {
 
     const UserData = {
-        'Name': user?.name,
+        'First Name': user?.name?.first_name,
+        'Middle Name': user?.name?.middle_name,
+        'Last Name': user?.name?.last_name,
         'Phone': user?.phone,
         'Email': user?.email,
         'Gender': user?.gender,

@@ -298,18 +298,10 @@ exports.assignMenu = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const menuData = await Menu.find(query)
         .select('_id name route parent icon type updated_by status')
-        // .where('status').equals(status_active)
         .populate('updated_by', '_id name');
 
     if (!menuData) return res.status(404).json({ message: `Menu not found` });

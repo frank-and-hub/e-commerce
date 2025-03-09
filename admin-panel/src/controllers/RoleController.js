@@ -34,7 +34,7 @@ exports.index = async (req, res, next) => {
 
         const query = Role.find(filter)
             .select('_id name permissions status updated_by')
-            // .where('status').equals(status_active)
+
             .populate({
                 path: 'permissions',
                 select: '_id name menu',
@@ -231,18 +231,10 @@ exports.getGuestRole = async (string) => {
 
 exports.findData = async (id = null, res, filter = {}) => {
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const roleData = await Role.find(query)
         .select('_id name permissions updated_by status')
-        // .where('status').equals(status_active)
         .populate({
             path: 'permissions',
             select: '_id name menu',

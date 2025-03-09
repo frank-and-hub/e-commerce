@@ -21,5 +21,4 @@ CartSchema.pre(/^find/, function (next) {
 
 CartSchema.index({ user: 1, deleted_at: 1 });
 
-// Export the model
 module.exports = mongoose.model('Cart', CartSchema);

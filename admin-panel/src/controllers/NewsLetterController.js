@@ -205,18 +205,10 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const newsLetterData = await NewsLetter.find(query)
         .select('_id email ip_address status updated_by')
-        // .where('status').equals(status_active)
         .populate('updated_by', '_id name');
 
     if (!newsLetterData) return res.status(404).json({ message: `NewsLetter not found` });

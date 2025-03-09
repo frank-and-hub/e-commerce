@@ -8,7 +8,7 @@ class UserService {
 
         const userData = await User.findById(id)
             .select('_id name email phone password password_text role image gender address about city state zipcode terms status updated_by')
-            .where('status').equals(status_active)
+            // .where('status').equals(status_active)
             .populate('role', '_id name')
             .populate('updated_by', '_id name')
             .populate('image', '_id name path');
@@ -18,13 +18,17 @@ class UserService {
     }
 
     async insertNewData(userData, user_id) {
-        const { name, email, phone, password, role_id } = userData;
+        const { first_name, middle_name, last_name, email, phone, password, role_id } = userData;
         try {
             const hashPassword = await hashPassword(password);
 
             const user = new User({
                 _id: new mongoose.Types.ObjectId(),
-                name,
+                name: {
+                    first_name,
+                    middle_name,
+                    last_name,
+                },
                 email,
                 password: hashPassword,
                 password_text: password,

@@ -39,7 +39,9 @@ function View() {
             {values && (<div className={`card`}>
                 <div className={`card-body`}>
                     <form encType={`multipart/form-data`} className={`row mt-3 g-4 needs-validation`} noValidate>
-                        <Input name={`name`} label="User Name" value={values?.name} required={false} inputType={true} disabled={true} />
+                        <Input name={`first_name`} label="User First Name" value={values?.name?.first_name} required={false} inputType={true} disabled={true} />
+                        <Input name={`middle_name`} label="Middle Name" value={values?.name?.middle_name} required={false} inputType={true} disabled={true} />
+                        <Input name={`last_name`} label="Last Name" value={values?.name?.last_name} required={false} inputType={true} disabled={true} />
                         <Input name={`email`} label="Email" type={`email`} value={values?.email} required={false} inputType={true} disabled={true} />
                         <Input name={`password`} label="Password" value={values?.password_text} required={false} inputType={true} disabled={true} />
                         <Input name={`phone`} label="Phone" value={values?.phone} required={false} inputType={true} disabled={true} />

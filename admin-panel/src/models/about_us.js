@@ -17,5 +17,4 @@ aboutUsSchema.pre(/^find/, function (next) {
 
 aboutUsSchema.index({ deleted_at: 1 });
 
-// Export the model
 module.exports = mongoose.model('AboutUs', aboutUsSchema);

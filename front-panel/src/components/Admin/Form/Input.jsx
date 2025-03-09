@@ -1,20 +1,8 @@
 import React from 'react'
 import { rasc } from '../../../utils/helper'
 
-export default function Input({
-    name,
-    label,
-    value,
-    error,
-    onChange,
-    type = `text`,
-    onBlur = false,
-    readonly = false,
-    required = false,
-    disabled = false,
-    inputType = false,
-}) {
-    const InputItem = <input
+export default function Input({ name, label, value, error, onChange, type = `text`, onBlur = (e) => e.preventDefault(), readonly = false, required = false, disabled = false, inputType = false }) {
+    const InputItem = (<input
         name={name}
         type={type}
         onBlur={onBlur}
@@ -24,9 +12,9 @@ export default function Input({
         readOnly={readonly}
         defaultValue={value}
         autoComplete={`off`}
-        placeholder={`Enter ${name}`}
+        placeholder={`Enter ${(name).replace('_', ' ')}`}
         className={`form-control${inputType ? `` : ` rounded-pill`}${error ? ` is-invalid` : ``}`}
-    />;
+    />);
 
     return (
         <>

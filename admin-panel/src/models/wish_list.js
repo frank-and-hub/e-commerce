@@ -18,5 +18,4 @@ wishListSchema.pre(/^find/, function (next) {
 
 wishListSchema.index({ name: 1, deleted_at: 1 });
 
-// Export the model
 module.exports = mongoose.model('WishList', wishListSchema);

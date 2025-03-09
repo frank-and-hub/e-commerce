@@ -159,3 +159,7 @@ export const fetchSelectedOptions = (data) => {
     }));
     return Options;
 }
+
+export const getFullName = (name) => {
+    return `${name?.first_name} ${name?.middle_name ? name?.middle_name + ' ' : ''}${name?.last_name}`;
+}

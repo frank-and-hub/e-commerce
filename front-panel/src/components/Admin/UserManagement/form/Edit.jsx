@@ -22,7 +22,9 @@ function Edit() {
     const [formKey, setFormKey] = useState(0);
 
     const initialState = {
-        name: '',
+        first_name: '',
+        middle_name: '',
+        last_name: '',
         email: '',
         password: '',
         phone: '',
@@ -89,7 +91,9 @@ function Edit() {
                 <div className={`card-body`}>
                     <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
 
-                        <Input name={`name`} label="User Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+                        <Input name={`first_name`} label="User First Name" value={values?.name?.first_name} onChange={handleChange} error={errors.first_name} required={true} inputType={true} />
+                        <Input name={`middle_name`} label="Middle Name" value={values?.name?.middle_name} onChange={handleChange} error={errors.middle_name} required={true} inputType={true} />
+                        <Input name={`last_name`} label="Last Name" value={values?.name?.last_name} onChange={handleChange} error={errors.last_name} required={true} inputType={true} />
                         <Input name={`email`} label="Email" type={`email`} value={values?.email} onChange={handleChange} error={errors.email} required={true} inputType={true} />
                         <Input name={`password`} label="Password" value={values?.password} onChange={handleChange} error={errors.password} required={true} inputType={true} />
                         <Input name={`phone`} label="Phone" value={values?.phone} onChange={handleChange} error={errors.phone} required={true} inputType={true} />

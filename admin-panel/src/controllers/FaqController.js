@@ -200,18 +200,10 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const faqData = await Faq.find(query)
         .select('_id question answer created_by status')
-        // .where('status').equals(status_active)
         .populate('created_by', '_id name');
 
     if (!faqData) return res.status(404).json({ message: `Faq not found` });

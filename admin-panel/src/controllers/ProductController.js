@@ -4,8 +4,10 @@ const Tag = require('../models/tag');
 const User = require('../models/user');
 const File = require('../models/file');
 const Color = require('../models/color');
+const Unit = require('../models/unit');
 const Brand = require('../models/brand');
 const Product = require('../models/product');
+const Warranty = require('../models/warranty');
 const Discount = require('../models/discount');
 const Category = require('../models/category');
 
@@ -43,6 +45,7 @@ exports.index = async (req, res, next) => {
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
                 { url: { $regex: trimmedSearch, $options: "i" } },
+                { code: { $regex: trimmedSearch, $options: "i" } },
                 { description: { $regex: trimmedSearch, $options: "i" } },
             ];
         }
@@ -54,7 +57,7 @@ exports.index = async (req, res, next) => {
         });
 
         const query = Product.find(filter)
-            .select('_id name description url image user type status updated_by')
+            .select('_id name description code url image user type manufactured_date expiry_date status updated_by')
             .populate('image', '_id name path')
             .populate('user', '_id name')
             .populate('updated_by', '_id name');
@@ -70,20 +73,24 @@ exports.index = async (req, res, next) => {
         if (products.length === 0) return res.status(200).json({ message: `No products found`, data: [] });
 
         const productPromises = products.map(async (product) => {
-            const { _id, name, description, url, image, user, type, status } = product;
+            const { _id, name, description, code, url, image, user, type, manufactured_date, expiry_date, status } = product;
             return {
                 'id': _id,
                 'name': name,
                 'url': url,
                 'user': user,
                 'type': type,
+                'manufactured_date': manufactured_date,
+                'expiry_date': expiry_date,
                 'description': description,
+                'code': code,
                 'image': image,
                 'status': status,
                 // 'updated_by': updated_by
                 // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
+
         const productResponses = await Promise.all(productPromises);
         res.status(200).json({
             message: `List retrieved successfully`, response: {
@@ -104,13 +111,18 @@ exports.create = (req, res, next) => {
             body: {
                 'name': 'String',
                 'description': 'String',
+                'code': 'String',
                 'specification': 'String',
                 'price': 'Number',
                 'quantity': 'Number',
                 'image': 'file',
+                'manufactured_date': 'Date',
+                'expiry_date': 'Date',
                 'user': 'SchemaId',
                 'discount': 'SchemaId',
+                'unit': 'SchemaId',
                 'brand': 'SchemaId',
+                'warranty':'SchemaId',
                 'tags': 'array of SchemaID',
                 'colors': 'array of SchemaID',
                 'categories': 'array of SchemaID',
@@ -122,7 +134,7 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, description, specification, price, quantity, discount_id, brand_id, tags, categories, colors } = req.body;
+    const { name, description, code, specification, price, quantity, discount_id, brand_id, unit_id, warranty_id, tags, categories, colors, manufactured_date, expiry_date } = req.body;
     const file = req.file;
     try {
         const userId = req?.userData?.id;
@@ -137,6 +149,12 @@ exports.store = async (req, res, next) => {
 
         const brand = await Brand.findById(brand_id).select('_id name').where('status').equals(status_active);
         if (!brand) return res.status(404).json({ message: `Brand not found` });
+
+        const unit = await Unit.findById(unit_id).select('_id name').where('status').equals(status_active);
+        if (!unit) return res.status(404).json({ message: `Unit not found` });
+
+        const warranty = await Warranty.findById(warranty_id).select('_id name').where('status').equals(status_active);
+        if (!warranty) return res.status(404).json({ message: `warranty not found` });
 
         const foundColors = await Color.find({ _id: { $in: colors }, status: status_active }).select('_id name');
         if (foundColors.length !== colors.length) return res.status(404).json({ message: 'One or more active colors not found' });
@@ -162,9 +180,11 @@ exports.store = async (req, res, next) => {
 
         const newProduct = new Product({
             _id: new mongoose.Types.ObjectId(),
-            name, description, specification, price, quantity,
+            name, description, code, specification, price, quantity, manufactured_date, expiry_date,
             discount: discount._id,
             brand: brand._id,
+            unit: unit._id,
+            warranty: warranty._id,
             tags: foundTags.map(p => p._id),
             colors: foundColors.map(p => p._id),
             categories: foundCategories.map(p => p._id),
@@ -176,9 +196,14 @@ exports.store = async (req, res, next) => {
             'id': newData._id,
             'name': newData.name,
             'description': newData.description,
+            'code': newData.code,
+            'manufactured_date': newData.manufactured_date,
+            'expiry_date': newData.expiry_date,
             'brand': brand.name,
             'discount': discount.name,
+            'unit': unit.name,
             'user': user.name,
+            'warranty': warranty.name,
             'image': savedFile?.path ?? null,
             'tags': foundTags.map(perm => ({
                 'id': perm._id,
@@ -201,17 +226,22 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const productData = await this.findData(id, res);
-        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, colors, image, product_images, user, updated_by, status } = productData;
+        const { _id, name, description, code, specification, price, quantity, discount, unit, brand, tags, categories, colors, image, product_images, user, warranty, updated_by, manufactured_date, expiry_date, status } = productData;
         const result = {
             'id': _id,
             'name': name,
             'description': description,
+            'code': code,
+            'manufactured_date': manufactured_date,
+            'expiry_date': expiry_date,
             'specification': specification,
             'price': price,
             'quantity': quantity,
             'status': status,
             'discount_id': discount?._id,
+            'unit_id': unit?._id,
             'brand_id': brand?._id,
+            'warranty_id': warranty?._id,
             'image': image,
             'user': user,
             'updated_by': updated_by,
@@ -228,17 +258,22 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const productData = await this.findData(id, res);
-        const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, colors, image, product_images, user, updated_by, status } = productData;
+        const { _id, name, description, code, specification, price, quantity, discount, unit, brand, tags, categories, colors, image, product_images, user, warranty, manufactured_date, expiry_date, updated_by, status } = productData;
         const result = {
             'id': _id,
             'name': name,
             'description': description,
+            'code': code,
+            'manufactured_date': manufactured_date,
+            'expiry_date': expiry_date,
             'specification': specification,
             'price': price,
             'quantity': quantity,
             'status': status,
             'discount_id': discount?._id,
+            'unit_id': unit?._id,
             'brand_id': brand?._id,
+            'warranty_id': warranty?._id,
             'image': image,
             'user': user,
             'updated_by': updated_by,
@@ -285,21 +320,26 @@ exports.update = async (req, res, next) => {
         const result = await Product.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedProduct = await this.findData(id, res);
-            const { _id, name, description, specification, price, quantity, discount, brand, tags, categories, colors, image, product_images, user, updated_by, status } = updatedProduct;
+            const { _id, name, description, code, specification, price, quantity, discount, unit, brand, tags, categories, colors, image, product_images, user, warranty, manufactured_date, expiry_date, updated_by, status } = updatedProduct;
             const response = {
                 'id': _id,
                 'name': name,
                 'description': description,
+                'code': code,
+                'manufactured_date': manufactured_date,
+                'expiry_date': expiry_date,
                 'specification': specification,
                 'price': price,
                 'quantity': quantity,
                 'status': status,
                 'discount': discount,
+                'warranty': warranty,
+                'unit': unit,
                 'brand': brand,
                 'image': image,
                 'user': user,
                 'updated_by': updated_by,
-                'colors': categories.map(per => ({
+                'colors': colors.map(per => ({
                     'id': per._id,
                     'name': per.name
                 })),
@@ -340,13 +380,18 @@ exports.destroy = async (req, res, next) => {
                 'body': {
                     'name': 'String',
                     'description': 'String',
+                    'code': 'String',
                     'specification': 'String',
                     'price': 'Number',
                     'quantity': 'Number',
                     'image': 'file',
+                    'manufactured_date': 'Date',
+                    'expiry_date': 'Date',
                     'user': 'SchemaId',
                     'discount': 'SchemaId',
+                    'unit': 'SchemaId',
                     'brand': 'SchemaId',
+                    'warranty':'SchemaId',
                     'tags': 'array of SchemaID',
                     'colors': 'array of SchemaID',
                     'categories': 'array of SchemaID',
@@ -384,22 +429,16 @@ exports.image = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const productData = await Product.find(query)
-        .select('_id name description specification price quantity discount brand tags categories colors image product_images user updated_by status')
-        // .where('status').equals(status_active)
+        .select('_id name description specification code price quantity discount unit warranty brand tags categories colors image product_images user manufactured_date expiry_date updated_by status')
         .populate('discount', '_id name')
+        .populate('unit', '_id name')
         .populate('brand', '_id name')
         .populate('user', '_id name')
         .populate('image', '_id name path')
+        .populate('warranty', '_id name')
         .populate({
             path: 'colors',
             select: '_id name'

@@ -24,5 +24,4 @@ supportDetailSchema.pre(/^find/, function (next) {
 
 supportDetailSchema.index({ email: 1, deleted_at: 1 });
 
-// Export the model
 module.exports = mongoose.model('SupportDetail', supportDetailSchema);

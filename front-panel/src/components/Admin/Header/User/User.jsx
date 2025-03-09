@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SignOut from './../../SignOut/SignOut'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { getFullName } from '../../../../utils/helper';
 
 function User() {
     const user = useSelector((state) => (state.auth.user));
@@ -20,12 +21,12 @@ function User() {
                     data-bs-toggle={`dropdown`}
                 >
                     <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} />
-                    <span className={`d-none d-md-block dropdown-toggle ps-2`}>{user?.name}</span>
+                    <span className={`d-none d-md-block dropdown-toggle ps-2`}>{getFullName(user?.name)}</span>
                 </Link>
                 <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-25 card-color`}>
                     <li className={`dropdown-header`}>
                         <Link to={`/admin/profile`} className={``} >
-                            <h6 className={``} >{user?.name}</h6>
+                            <h6 className={``} >{getFullName(user?.name)}</h6>
                             <span className={``} >{user?.email}</span>
                         </Link>
                     </li>

@@ -10,13 +10,17 @@ const { getGuestRole } = require('../controllers/RoleController');
 
 let i = 0;
 const generateFakeData = async (fakePassword, guestRoleId) => {
-  const basePhoneNumber = 1234567890;
+  const basePhoneNumber = 9999990000;
   const baseZipCodeNumber = 99999;
   i++;
   const phoneNumber = basePhoneNumber + i;
   return {
     _id: new mongoose.Types.ObjectId(),
-    name: faker.person.fullName(),
+    name: {
+      first_name: faker.person.firstName(),
+      middle_name: faker.person.firstName(),
+      last_name: faker.person.lastName(),
+    },
     phone: phoneNumber,
     email: faker.internet.email(),
     password: await AuthServices.hashPassword(fakePassword),
@@ -39,23 +43,35 @@ const generateFakeData = async (fakePassword, guestRoleId) => {
 const defaultRoleData = [
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "supper-admin",
+    name: 'supper-admin',
     permissions: [],
     status: true,
     updated_by: null,
     deleted_at: null
-  },
-  {
+  }, {
     _id: new mongoose.Types.ObjectId(),
-    name: "admin",
+    name: 'admin',
     permissions: [],
     status: true,
     updated_by: null,
     deleted_at: null
-  },
-  {
+  }, {
     _id: new mongoose.Types.ObjectId(),
-    name: "customer",
+    name: 'customer',
+    permissions: [],
+    status: true,
+    updated_by: null,
+    deleted_at: null
+  }, {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'supplier',
+    permissions: [],
+    status: true,
+    updated_by: null,
+    deleted_at: null
+  }, {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'employee',
     permissions: [],
     status: true,
     updated_by: null,
@@ -66,240 +82,240 @@ const defaultRoleData = [
 const menuSeederData = [
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "dashboard",
-    route: "/admin",
+    name: 'dashboard',
+    route: '/admin',
     type: true,
-    icon: "bi bi-grid",
+    icon: 'bi bi-grid',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "user",
-    route: "#",
+    name: 'user',
+    route: '#',
     type: true,
-    icon: "bi bi-person-circle",
+    icon: 'bi bi-person-circle',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "users list",
-    route: "users",
+    name: 'users list',
+    route: 'users',
     type: true,
-    icon: "bi bi-people-fill",
+    icon: 'bi bi-people-fill',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "users permissions",
-    route: "users/permissions",
+    name: 'users permissions',
+    route: 'users/permissions',
     type: true,
-    icon: "bi bi-person-square",
+    icon: 'bi bi-person-square',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "menu",
-    route: "#",
+    name: 'menu',
+    route: '#',
     type: true,
-    icon: "bi bi-card-list",
+    icon: 'bi bi-card-list',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "menu list",
-    route: "menus",
+    name: 'menu list',
+    route: 'menus',
     type: true,
-    icon: "bi bi-view-list",
+    icon: 'bi bi-view-list',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "role and permission",
-    route: "menus/role-and-permission",
+    name: 'role and permission',
+    route: 'menus/role-and-permission',
     type: true,
-    icon: "bi bi-file-lock-fill",
+    icon: 'bi bi-file-lock-fill',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "profile",
-    route: "profile",
+    name: 'profile',
+    route: 'profile',
     type: false,
-    icon: "bi bi-person-bounding-box",
+    icon: 'bi bi-person-bounding-box',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "role",
-    route: "roles",
+    name: 'role',
+    route: 'roles',
     type: true,
-    icon: "bi bi-person-badge",
+    icon: 'bi bi-person-badge',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "social media",
-    route: "settings/social-details",
+    name: 'social media',
+    route: 'settings/social-details',
     type: true,
-    icon: "bi bi-phone",
+    icon: 'bi bi-phone',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "banner",
-    route: "banners",
+    name: 'banner',
+    route: 'banners',
     type: true,
-    icon: "bi bi-card-image",
+    icon: 'bi bi-card-image',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "brand",
-    route: "brands",
+    name: 'brand',
+    route: 'brands',
     type: true,
-    icon: "bi bi-briefcase-fill",
+    icon: 'bi bi-briefcase-fill',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "payment",
-    route: "payments",
+    name: 'payment',
+    route: 'payments',
     type: true,
-    icon: "bi bi-paypal",
+    icon: 'bi bi-paypal',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "product",
-    route: "#",
+    name: 'product',
+    route: '#',
     type: true,
-    icon: "bi bi-box",
+    icon: 'bi bi-box',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "discount",
-    route: "products/discounts",
+    name: 'discount',
+    route: 'products/discounts',
     type: true,
-    icon: "bi bi-ticket-detailed",
+    icon: 'bi bi-ticket-detailed',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "categories",
-    route: "products/categories",
+    name: 'categories',
+    route: 'products/categories',
     type: true,
-    icon: "bi bi-dropbox",
+    icon: 'bi bi-dropbox',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "sub category",
-    route: "products/sub-categories",
+    name: 'sub category',
+    route: 'products/sub-categories',
     type: true,
-    icon: "bi bi-inbox-fill",
+    icon: 'bi bi-inbox-fill',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "tag",
-    route: "products/tags",
+    name: 'tag',
+    route: 'products/tags',
     type: true,
-    icon: "bi bi-tags-fill",
+    icon: 'bi bi-tags-fill',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "color",
-    route: "products/colors",
+    name: 'color',
+    route: 'products/colors',
     type: true,
-    icon: "bi bi-droplet-half",
+    icon: 'bi bi-droplet-half',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "product list",
-    route: "products",
+    name: 'product list',
+    route: 'products',
     type: true,
-    icon: "bi bi-boxes",
+    icon: 'bi bi-boxes',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "setting",
-    route: "#",
+    name: 'setting',
+    route: '#',
     type: true,
-    icon: "bi bi-gear-wide-connected",
+    icon: 'bi bi-gear-wide-connected',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "support",
-    route: "settings/support",
+    name: 'support',
+    route: 'settings/support',
     type: true,
-    icon: "bi bi-headphones",
+    icon: 'bi bi-headphones',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "terms and conditions",
-    route: "settings/terms-and-conditions",
+    name: 'terms and conditions',
+    route: 'settings/terms-and-conditions',
     type: true,
-    icon: "bi bi-file-earmark-medical-fill",
+    icon: 'bi bi-file-earmark-medical-fill',
     parent: null,
     status: true,
     deleted_at: null
   },
   {
     _id: new mongoose.Types.ObjectId(),
-    name: "frequently asked questions",
-    route: "settings/faqs",
+    name: 'frequently asked questions',
+    route: 'settings/faqs',
     type: true,
-    icon: "bi bi-exclamation-circle-fill",
+    icon: 'bi bi-exclamation-circle-fill',
     parent: null,
     status: true,
     deleted_at: null
@@ -309,7 +325,6 @@ const menuSeederData = [
 const seedUserData = async () => {
   try {
     // Connect to the database
-    console.log(`try`);
     await connectDB();
 
     console.log('Database connected');

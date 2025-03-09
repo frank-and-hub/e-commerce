@@ -34,6 +34,7 @@ exports.index = async (req, res, next) => {
             const trimmedSearch = search.trim();
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
+                { code: { $regex: trimmedSearch, $options: "i" } },
                 { description: { $regex: trimmedSearch, $options: "i" } },
             ];
         }
@@ -45,7 +46,7 @@ exports.index = async (req, res, next) => {
         });
 
         const query = SubCategory.find(filter)
-            .select('_id name icon description user status updated_by category')
+            .select('_id name icon code description user status updated_by category')
             .populate('user', '_id name')
             .populate('category', '_id name')
             .populate('updated_by', '_id name');
@@ -61,11 +62,12 @@ exports.index = async (req, res, next) => {
         if (sub_categories.length === 0) return res.status(200).json({ message: `No sub categories found`, data: [] });
 
         const sub_categoryPromises = sub_categories.map(async (sub_category) => {
-            const { _id, name, icon, description, status, user, category } = sub_category;
+            const { _id, name, code, icon, description, status, user, category } = sub_category;
             return {
                 'id': _id,
                 'name': name,
                 'icon': icon,
+                'code': code,
                 'description': description,
                 'category': category,
                 'status': status,
@@ -91,6 +93,7 @@ exports.create = (req, res, next) => {
             body: {
                 'name': 'String',
                 'description': 'String',
+                'code': 'String',
                 'icon': 'String',
                 'user': 'SchemaId',
                 'category': 'SchemaId'
@@ -101,7 +104,7 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, description, icon, category } = req.body;
+    const { name, description, icon, category, code } = req.body;
     try {
         let userId = req?.userData?.id;
 
@@ -116,9 +119,7 @@ exports.store = async (req, res, next) => {
 
         const sub_category = new SubCategory({
             _id: new mongoose.Types.ObjectId(),
-            name,
-            icon,
-            description,
+            name, icon, code, description,
             user: userData._id,
             category: categoryData._id
         });
@@ -127,6 +128,7 @@ exports.store = async (req, res, next) => {
             'id': newData?._id,
             'name': newData?.name,
             'icon': newData?.icon,
+            'code': newData?.code,
             'description': newData?.description,
             'user': userData?.name,
             'category': categoryData?.name
@@ -139,11 +141,12 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const sub_categoryData = await this.findData(id, res);
-        const { _id, name, icon, description, user, updated_by, status, category } = sub_categoryData;
+        const { _id, name, icon, code, description, user, updated_by, status, category } = sub_categoryData;
         const result = {
             'id': _id,
             'name': name,
             'icon': icon,
+            'code': code,
             'description': description,
             'status': status,
             'user': user,
@@ -158,11 +161,12 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const sub_categoryData = await this.findData(id, res);
-        const { _id, name, icon, description, user, category, status } = sub_categoryData;
+        const { _id, name, icon, code, description, user, category, status } = sub_categoryData;
         const result = {
             'id': _id,
             'name': name,
             'icon': icon,
+            'code': code,
             'description': description,
             'status': status,
             'user': user?._id,
@@ -195,14 +199,15 @@ exports.update = async (req, res, next) => {
         const result = await SubCategory.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedSubCategory = await this.findData(id, res);
-            const { _id, name, description, icon, user, category } = updatedSubCategory;
+            const { _id, name, code, description, icon, user, category } = updatedSubCategory;
             const response = {
                 'id': _id,
                 'name': name,
                 'description': description,
                 'icon': icon,
                 'user': user,
-                'category': category
+                'category': category,
+                'code': code,
             }
             return res.status(200).json({ message: `Sub category details updated successfully`, data: response });
         }
@@ -227,6 +232,7 @@ exports.destroy = async (req, res, next) => {
                 'body': {
                     'name': 'String',
                     'description': 'String',
+                    'code': 'String',
                     'icon': 'String',
                     'user': 'SchemaId',
                     'category': 'SchemaId'
@@ -241,18 +247,10 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id = null, res, filter = {}) => {
 
     let query = {};
-
-    if (id) {
-        query._id = id;
-    }
-
-    if (Object.keys(filter).length > 0) {
-        query = { ...query, ...filter };
-    }
-
+    if (id) query._id = id;
+    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
     const sub_categoryData = await SubCategory.find(query)
-        .select('_id name icon description user category updated_by status')
-        // .where('status').equals(status_active)
+        .select('_id name code icon description user category updated_by status')
         .populate('user', '_id name')
         .populate('category', '_id name')
         .populate('updated_by', '_id name');

@@ -6,7 +6,11 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
+    name: {
+        first_name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
+        middle_name: { type: String, required: false, trim: true, set: (value) => value.toLowerCase() },
+        last_name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
+    },
     phone: { type: Number, default: null, minlength: 8, maxlength: 12, unique: true, },
     email: { type: String, required: true, unique: true, match: [emailRegex, 'Please provide a valid email address'] },
     password: { type: String, required: true },
@@ -19,6 +23,7 @@ const userSchema = new mongoose.Schema({
     city: { type: String, default: null, maxlength: 100 },
     state: { type: String, default: null, maxlength: 100 },
     zipcode: { type: Number, default: null, maxlength: 10 },
+    country: { type: String, default: null, maxlength: 100 },
     token: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Token', required: false }],
     terms: { type: Boolean, default: true },
     status: { type: Boolean, default: true },
@@ -38,6 +43,10 @@ userSchema.pre('save', async function (next) {
 userSchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
+});
+
+userSchema.virtual('full_name').get(function () {
+    return `${this.name?.first_name} ${this.name?.middle_name ? this.name?.middle_name + ' ' : ''}${this.name?.last_name}`;
 });
 
 userSchema.index({ name: 1, deleted_at: 1, });

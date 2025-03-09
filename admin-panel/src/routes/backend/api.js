@@ -1,4 +1,4 @@
-const routes = [
+const router = [
     { path: '/api', module: require('../auths') },
     { path: '/api/dashboard', module: require('../dashboard') },
     { path: '/api/users', module: require('../users') },
@@ -27,6 +27,11 @@ const routes = [
     { path: '/api/wish-lists', module: require('../wish_lists') },
     { path: '/api/carts', module: require('../carts') },
     { path: '/api/orders', module: require('../orders') },
+    { path: '/api/units', module: require('../units') },
+    { path: '/api/warranties', module: require('../warranties') },
+    { path: '/api/coupons', module: require('../coupons') },
+    { path: '/api/warehouses', module: require('../warehouses') },
+    { path: '/api/stores', module: require('../stores') },
 ];
 
-module.exports = routes;
+module.exports = router;

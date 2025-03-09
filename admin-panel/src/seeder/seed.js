@@ -26,7 +26,7 @@ const generateFakeData = async (fakePassword, guestRoleId) => {
     password: await AuthServices.hashPassword(fakePassword),
     password_text: fakePassword,
     role: await guestRoleId,
-    status: faker.datatype.boolean(),
+    status: true,
     image: null,
     gender: faker.person.sex(),
     address: faker.location.streetAddress(),

@@ -57,7 +57,7 @@ exports.index = async (req, res, next) => {
         if (units.length === 0) return res.status(200).json({ message: `No units found`, data: [] });
 
         const unitPromises = units.map(async (unit) => {
-            const { _id, name, updated_by, status } = unit
+            const { _id, name, short_name, updated_by, status } = unit
             return {
                 'id': _id,
                 'name': name,
@@ -203,10 +203,11 @@ exports.findData = async (id = null, res, filter = {}) => {
     let query = {};
     if (id) query._id = id;
     if (Object.keys(filter).length > 0) query = { ...query, ...filter };
+
     const unitData = await Unit.find(query)
         .select('_id name short_name status updated_by')
         .populate('updated_by', '_id name');
-
+console.log(unitData);
     if (!unitData) return res.status(404).json({ message: `Unit not found` });
     return unitData;
 }

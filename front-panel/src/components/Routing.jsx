@@ -94,6 +94,11 @@ const ProductTable = lazy(() => import('./Admin/ProductManagement/ProductTable')
 const ProductAdd = lazy(() => import('./Admin/ProductManagement/form/Add'))
 const ProductEdit = lazy(() => import('./Admin/ProductManagement/form/Edit'))
 const ProductView = lazy(() => import('./Admin/ProductManagement/form/View'))
+// unit
+const UnitTable = lazy(() => import('./Admin/UnitManagement/UnitTable'))
+const UnitAdd = lazy(() => import('./Admin/UnitManagement/form/Add'))
+const UnitEdit = lazy(() => import('./Admin/UnitManagement/form/Edit'))
+const UnitView = lazy(() => import('./Admin/UnitManagement/form/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -221,6 +226,13 @@ class Routing extends Component {
                                         <Route exact path={`create`} element={<DiscountAdd />} />
                                         <Route exact path={`:id/edit`} element={<DiscountEdit />} />
                                         <Route exact path={`:id`} element={<DiscountView />} />
+                                    </Route>
+
+                                    <Route exact path={`units`}>
+                                        <Route index element={<UnitTable />} />
+                                        <Route exact path={`create`} element={<UnitAdd />} />
+                                        <Route exact path={`:id/edit`} element={<UnitEdit />} />
+                                        <Route exact path={`:id`} element={<UnitView />} />
                                     </Route>
                                 </Route>
 

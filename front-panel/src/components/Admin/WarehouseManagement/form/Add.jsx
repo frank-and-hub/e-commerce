@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useFormValidation } from '../../Form/FormValidation'
-import { get, patch } from '../../../../utils/AxiosUtils'
+import { post } from '../../../../utils/AxiosUtils'
 import validate from '../validate'
 import SubmitButton from '../../Form/SubmitButton'
 import Input from '../../Form/Input'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { processNotifications } from '../../../../utils/notificationUtils'
-import { formattedData } from '../../../../utils/helper'
+import { useNavigate } from 'react-router-dom'
 import { useLoading } from '../../../../context/LoadingContext'
 import Textarea from '../../Form/Textarea'
 import CardForm from '../../Card/CardForm'
 
-function Edit() {
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+function Add() {
+
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
-
+    const navigate = useNavigate();
     const initialState = {
         name: '',
         percentage: '',
@@ -39,13 +34,12 @@ function Edit() {
         }
         setLoading(true)
         try {
-            const newValues = formattedData(values);
-            const res = await patch(`/discounts/${id}`, newValues);
+            const res = await post('/warehouses', values);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/products/discounts', { replace: true })
+            navigate('/storage/warehouses', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -59,33 +53,16 @@ function Edit() {
         document.getElementsByTagName('form')[0].reset();
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [tagData] = await Promise.all([
-                    get(`/discounts/${id}/edit`),
-                ]);
-                setValues(tagData?.data || {});
-                processNotifications(200, tagData?.message, dispatch);
-            } catch (err) {
-                processNotifications(err.status || 500, err.message, dispatch);
-            }
-        };
-        if (id) {
-            fetchData();
-        }
-    }, [dispatch, setValues, id]);
-
     return (
         <CardForm handleSubmit={handleSubmit} key={formKey}>
-            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
-            <Input name={`percentage`} label="percentage" value={values?.percentage} onChange={handleChange} required={true} error={errors.percentage} inputType={true} disabled={false} />
+            <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+            <Input name={`percentage`} label="percentage" value={values.percentage} onChange={handleChange} error={errors.percentage} required={true} inputType={true} />
             <Textarea name={`description`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
         </CardForm>
     );
 }
 
-export default Edit;
+export default Add;

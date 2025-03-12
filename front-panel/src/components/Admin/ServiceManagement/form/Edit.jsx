@@ -12,6 +12,7 @@ import { processNotifications } from '../../../../utils/notificationUtils'
 import { get, patch } from '../../../../utils/AxiosUtils'
 import Textarea from '../../Form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
+import CardForm from '../../Card/CardForm'
 
 function Edit() {
     const { id } = useParams();
@@ -79,24 +80,17 @@ function Edit() {
     }, [dispatch, setValues, id]);
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
-
-                        <Input name={`name`} label="Name" value={values?.name} required={true} error={errors.name} inputType={true} disabled={false} onChange={handleChange} />
-                        <div className={`col-md-4`}>
-                            <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={errors.icon} label='Icon' required={true} disabled={false} />
-                        </div>
-                        <Textarea onChange={handleChange} name={`description`} error={errors.description} value={values?.description} label={`Description`} required={true} disabled={false} />
-
-                        <div className={`col-12`}>
-                            <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
-                        </div>
-                    </form>
-                </div>
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <Input name={`name`} label="Name" value={values?.name} required={true} error={errors.name} inputType={true} disabled={false} onChange={handleChange} />
+            <div className={`col-md-4`}>
+                <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={errors.icon} label='Icon' required={true} disabled={false} />
             </div>
-        </>
+            <Textarea onChange={handleChange} name={`description`} error={errors.description} value={values?.description} label={`Description`} required={true} disabled={false} />
+
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+            </div>
+        </CardForm>
     );
 }
 

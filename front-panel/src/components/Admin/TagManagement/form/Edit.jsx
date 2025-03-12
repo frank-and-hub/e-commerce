@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { formattedData } from '../../../../utils/helper'
 import { useLoading } from '../../../../context/LoadingContext'
+import CardForm from '../../Card/CardForm'
 
 function Edit() {
     const { id } = useParams();
@@ -73,20 +74,13 @@ function Edit() {
     }, [dispatch, setValues, id]);
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
 
-                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
-                       
-                        <div className={`col-12`}>
-                            <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
-                        </div>
-                    </form>
-                </div>
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
-        </>
+        </CardForm>
     );
 }
 

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import SelectForm from '../../Form/Select/SelectForm'
 import Textarea from '../../Form/Textarea'
 import { PeriodOptions } from '../../../../utils/selects'
+import CardForm from '../../Card/CardForm'
 
 function View() {
     const { id } = useParams();
@@ -36,24 +37,17 @@ function View() {
     }
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} noValidate>
-
-                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-                        <Input name={`duration`} label="duration" value={values?.duration} onChange={handleChange} required={false} inputType={true} disabled={true} />
-                        <div className={`col-md-4`}>
-                            <SelectForm id="period" label={`Period`} value={values?.period} handleChange={handleChange} required={false} Options={PeriodOptions} disabled={true} />
-                        </div>
-                        <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description}  label={`Description`} required={false} disabled={true} />
-
-                        <div className={`col-12`}>
-                        </div>
-                    </form>
-                </div>
+        <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
+            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
+            <Input name={`duration`} label="duration" value={values?.duration} onChange={handleChange} required={false} inputType={true} disabled={true} />
+            <div className={`col-md-4`}>
+                <SelectForm id="period" label={`Period`} value={values?.period} handleChange={handleChange} required={false} Options={PeriodOptions} disabled={true} />
             </div>
-        </>
+            <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} label={`Description`} required={false} disabled={true} />
+
+            <div className={`col-12`}>
+            </div>
+        </CardForm>
     );
 }
 

@@ -13,6 +13,7 @@ import Textarea from '../../Form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
 import api from '../../../../utils/api'
 import config from '../../../../config'
+import CardForm from '../../Card/CardForm'
 
 function Edit() {
     const { id } = useParams();
@@ -103,25 +104,19 @@ function Edit() {
     };
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
-                        <div className={`col-md-4`}>
-                            <div className='cursor-none'>
-                                <img src={src} alt={`Brand`} className={`rounded-25 col-md-6`} onClick={handleClick} style={{ cursor: 'pointer' }} />
-                            </div>
-                        </div>
-                        <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
-                        <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
-                        <div className={`col-12`}>
-                            <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
-                        </div>
-                    </form>
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <div className={`col-md-4`}>
+                <div className='cursor-none'>
+                    <img src={src} alt={`Brand`} className={`rounded-25 col-md-6`} onClick={handleClick} style={{ cursor: 'pointer' }} />
                 </div>
             </div>
-        </>
+            <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
+            <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+            <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+            </div>
+        </CardForm>
     );
 }
 

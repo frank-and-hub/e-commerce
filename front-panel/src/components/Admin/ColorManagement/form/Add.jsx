@@ -7,6 +7,7 @@ import Input from '../../Form/Input'
 import { notifyError, notifySuccess, notifyInfo } from '../../Comman/Notification/Notification'
 import { useNavigate } from 'react-router-dom'
 import { useLoading } from '../../../../context/LoadingContext'
+import CardForm from '../../Card/CardForm'
 
 function Add() {
 
@@ -51,19 +52,13 @@ function Add() {
     };
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
-                        <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <Input name={`hex_code`} type='color' label="hex_code" value={values.hex_code} onChange={handleChange} error={errors.hex_code} required={true} inputType={true} />
-                        <div className={`col-12`}>
-                            <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
-                        </div>
-                    </form>
-                </div>
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+            <Input name={`hex_code`} type='color' label="hex_code" value={values.hex_code} onChange={handleChange} error={errors.hex_code} required={true} inputType={true} />
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
-        </>
+        </CardForm>
     );
 }
 

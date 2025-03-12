@@ -13,6 +13,7 @@ import { useLoading } from '../../../../context/LoadingContext'
 import { PeriodOptions } from '../../../../utils/selects'
 import SelectForm from '../../Form/Select/SelectForm'
 import Textarea from '../../Form/Textarea'
+import CardForm from '../../Card/CardForm'
 
 function Edit() {
     const { id } = useParams();
@@ -79,25 +80,18 @@ function Edit() {
     }, [dispatch, setValues, id]);
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
-
-                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
-                        <Input name={`duration`} label="duration" value={values?.duration} onChange={handleChange} error={errors.duration} required={true} inputType={true} />
-                        <div className={`col-md-4`}>
-                            <SelectForm id="period" label={`Period`} value={values?.period} handleChange={handleChange} error={errors.period} required={false} Options={PeriodOptions} />
-                        </div>
-                        <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
-
-                        <div className={`col-12`}>
-                            <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
-                        </div>
-                    </form>
-                </div>
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
+            <Input name={`duration`} label="duration" value={values?.duration} onChange={handleChange} error={errors.duration} required={true} inputType={true} />
+            <div className={`col-md-4`}>
+                <SelectForm id="period" label={`Period`} value={values?.period} handleChange={handleChange} error={errors.period} required={false} Options={PeriodOptions} />
             </div>
-        </>
+            <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
+
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+            </div>
+        </CardForm>
     );
 }
 

@@ -9,6 +9,7 @@ import SelectIcon from '../../Form/Select/SelectIcon'
 import Textarea from '../../Form/Textarea'
 import { useNavigate } from 'react-router-dom'
 import { useLoading } from '../../../../context/LoadingContext'
+import CardForm from '../../Card/CardForm'
 
 function Add() {
     const navigate = useNavigate();
@@ -54,24 +55,17 @@ function Add() {
     };
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} onSubmit={handleSubmit} noValidate>
-                        <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
-                        <div className={`col-md-4`}>
-                            <label htmlFor={`icon`} className={`form-label`}>Icon <span className='text-danger'>*</span></label>
-                            <SelectIcon id="icon" value={values.icon} handleChange={handleChange} error={errors.icon} />
-                            {errors.icon && <div className={`invalid-feedback`}>{errors.icon}</div>}
-                        </div>
-                        <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
-                        <div className={`col-12`}>
-                            <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
-                        </div>
-                    </form>
-                </div>
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+            <div className={`col-md-4`}>
+                <label htmlFor={`icon`} className={`form-label`}>Icon <span className='text-danger'>*</span></label>
+                <SelectIcon id="icon" value={values.icon} handleChange={handleChange} error={errors.icon} />
+                {errors.icon && <div className={`invalid-feedback`}>{errors.icon}</div>}
             </div>
-        </>
+            <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+            </div></CardForm>
     );
 }
 

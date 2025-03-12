@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { useDispatch } from 'react-redux'
 import SelectCategory from '../../Form/Select/SelectCategory'
+import CardForm from '../../Card/CardForm'
 
 function View() {
     const { id } = useParams();
@@ -35,24 +36,18 @@ function View() {
     }
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} noValidate>
-                        <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-                        <div className={`col-md-4`}>
-                            <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={false} required={false} disabled={true} label='Icon' />
-                        </div>
-                        <div className={`col-md-4`}>
-                            <SelectCategory id={`category`} label={`category`} value={values?.category?._id} handleChange={(e) => handleChange(e)} required={false} multiple={false} disabled={true} />
-                        </div>
-                        <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
-                        <div className={`col-12`}>
-                        </div>
-                    </form>
-                </div>
+        <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
+            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
+            <div className={`col-md-4`}>
+                <SelectIcon id="icon" value={values?.icon} handleChange={(e) => handleChange(e)} error={false} required={false} disabled={true} label='Icon' />
             </div>
-        </>
+            <div className={`col-md-4`}>
+                <SelectCategory id={`category`} label={`category`} value={values?.category?._id} handleChange={(e) => handleChange(e)} required={false} multiple={false} disabled={true} />
+            </div>
+            <Textarea name={`description`} className={`w-100`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
+            <div className={`col-12`}>
+            </div>
+        </CardForm>
     );
 }
 

@@ -4,6 +4,7 @@ import Input from '../../Form/Input'
 import { useParams } from 'react-router-dom'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { useDispatch } from 'react-redux'
+import Textarea from '../../Form/Textarea'
 import CardForm from '../../Card/CardForm'
 
 function View() {
@@ -15,13 +16,13 @@ function View() {
         const fetchData = async () => {
             try {
 
-                const [testimonialData] = await Promise.all([
-                    get(`/colors/${id}`),
+                const [tagData] = await Promise.all([
+                    get(`/warehouses/${id}`),
                 ]);
 
-                setValues(testimonialData?.data || {});
+                setValues(tagData?.data || {});
 
-                processNotifications(200, testimonialData?.message, dispatch);
+                processNotifications(200, tagData?.message, dispatch);
             } catch (err) {
 
                 processNotifications(err.status || 500, err.message, dispatch);
@@ -38,8 +39,9 @@ function View() {
 
     return (
         <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
-            <Input name={`name`} label="name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-            <Input name={`hex_code`} label="color" type='color' value={values?.hex_code} onChange={handleChange} required={false} inputType={true} disabled={true} />
+            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
+            <Input name={`percentage`} label="percentage" value={values?.percentage} onChange={handleChange} required={false} inputType={true} disabled={true} />
+            <Textarea name={`description`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
             <div className={`col-12`}>
             </div>
         </CardForm>

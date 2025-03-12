@@ -5,6 +5,7 @@ import Input from '../../Form/Input'
 import { useParams } from 'react-router-dom'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { useDispatch } from 'react-redux'
+import CardForm from '../../Card/CardForm'
 
 function View() {
     const { id } = useParams();
@@ -18,9 +19,9 @@ function View() {
                 const [roleData] = await Promise.all([
                     get(`/roles/${id}`),
                 ]);
-               
+
                 setValues(roleData?.data || {});
-              
+
                 processNotifications(200, roleData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
@@ -36,20 +37,14 @@ function View() {
     }
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} noValidate>
-                        <Input name={`name`} label="Name" value={values?.name} required={false} inputType={true} disabled={true} />
-                        <div className={`col-md-4`}>
-                            <SelectPermission id="permission" value={values?.permissions} handleChange={(e) => handleChange(e)} label='Permissions' required={false} disabled={true} />
-                        </div>
-                        <div className={`col-12`}>
-                        </div>
-                    </form>
-                </div>
+        <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
+            <Input name={`name`} label="Name" value={values?.name} required={false} inputType={true} disabled={true} />
+            <div className={`col-md-4`}>
+                <SelectPermission id="permission" value={values?.permissions} handleChange={(e) => handleChange(e)} label='Permissions' required={false} disabled={true} />
             </div>
-        </>
+            <div className={`col-12`}>
+            </div>
+        </CardForm>
     );
 }
 

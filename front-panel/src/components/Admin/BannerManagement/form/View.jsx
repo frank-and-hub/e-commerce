@@ -5,6 +5,7 @@ import Textarea from '../../Form/Textarea'
 import { useParams } from 'react-router-dom'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { useDispatch } from 'react-redux'
+import CardForm from '../../Card/CardForm'
 
 function View() {
     const { id } = useParams();
@@ -36,26 +37,20 @@ function View() {
     }
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form encType={`multipart/form-data`} className={`row mt-3 g-3 needs-validation`} noValidate>
-                        <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={(e) => e.preventDefault()} />
-                        <Input name={`name`} label="name" value={values?.name} required={false} inputType={true} disabled={true} />
-                        <Input name={`title`} label="title" value={values?.title} required={false} inputType={true} disabled={true} />
-                        <Input name={`url`} label="url" value={values?.url} required={false} inputType={true} disabled={true} />
-                        <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} label={`Description`} required={false} disabled={true} />
-                        <div className={`col-md-4`}>
-                            <div className='cursor-none'>
-                                <img src={src} alt={`Banner`} className={`rounded-25 col-md-6`} onClick={(e) => e.preventDefault()} style={{ cursor: 'pointer' }} />
-                            </div>
-                        </div>
-                        <div className={`col-12`}>
-                        </div>
-                    </form>
+        <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
+            <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={(e) => e.preventDefault()} />
+            <Input name={`name`} label="name" value={values?.name} required={false} inputType={true} disabled={true} />
+            <Input name={`title`} label="title" value={values?.title} required={false} inputType={true} disabled={true} />
+            <Input name={`url`} label="url" value={values?.url} required={false} inputType={true} disabled={true} />
+            <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} label={`Description`} required={false} disabled={true} />
+            <div className={`col-md-4`}>
+                <div className='cursor-none'>
+                    <img src={src} alt={`Banner`} className={`rounded-25 col-md-6`} onClick={(e) => e.preventDefault()} style={{ cursor: 'pointer' }} />
                 </div>
             </div>
-        </>
+            <div className={`col-12`}>
+            </div>
+        </CardForm>
     );
 }
 

@@ -104,6 +104,16 @@ const WarrantyTable = lazy(() => import('./Admin/WarrantyManagement/WarrantyTabl
 const WarrantyAdd = lazy(() => import('./Admin/WarrantyManagement/form/Add'))
 const WarrantyEdit = lazy(() => import('./Admin/WarrantyManagement/form/Edit'))
 const WarrantyView = lazy(() => import('./Admin/WarrantyManagement/form/View'))
+// shop
+const StoreTable = lazy(() => import('./Admin/StoreManagement/StoreTable'))
+const StoreAdd = lazy(() => import('./Admin/StoreManagement/form/Add'))
+const StoreEdit = lazy(() => import('./Admin/StoreManagement/form/Edit'))
+const StoreView = lazy(() => import('./Admin/StoreManagement/form/View'))
+// warehouse
+const WarehouseTable = lazy(() => import('./Admin/WarehouseManagement/WarehouseTable'))
+const WarehouseAdd = lazy(() => import('./Admin/WarehouseManagement/form/Add'))
+const WarehouseEdit = lazy(() => import('./Admin/WarehouseManagement/form/Edit'))
+const WarehouseView = lazy(() => import('./Admin/WarehouseManagement/form/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -272,6 +282,24 @@ class Routing extends Component {
                                     <Route exact path={`create`} element={<WarrantyAdd />} />
                                     <Route exact path={`:id/edit`} element={<WarrantyEdit />} />
                                     <Route exact path={`:id`} element={<WarrantyView />} />
+                                </Route>
+
+                                <Route exact path={`storage`}>
+                                    <Route index element={<StoreTable />} />
+                                    
+                                    <Route exact path={`stores`}>
+                                        <Route index element={<StoreTable />} />
+                                        <Route exact path={`create`} element={<StoreAdd />} />
+                                        <Route exact path={`:id/edit`} element={<StoreEdit />} />
+                                        <Route exact path={`:id`} element={<StoreView />} />
+                                    </Route>
+
+                                    <Route exact path={`warehouses`}>
+                                        <Route index element={<WarehouseTable />} />
+                                        <Route exact path={`create`} element={<WarehouseAdd />} />
+                                        <Route exact path={`:id/edit`} element={<WarehouseEdit />} />
+                                        <Route exact path={`:id`} element={<WarehouseView />} />
+                                    </Route>
                                 </Route>
                             </Route>
                             <Route exact path={`signin`} element={<SignIn />} />

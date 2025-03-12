@@ -11,6 +11,7 @@ import { get, patch } from '../../../../utils/AxiosUtils'
 import { processNotifications } from '../../../../utils/notificationUtils'
 import { formattedData } from '../../../../utils/helper'
 import { useLoading } from '../../../../context/LoadingContext'
+import CardForm from '../../Card/CardForm'
 
 function Edit() {
     const { id } = useParams();
@@ -86,29 +87,22 @@ function Edit() {
     }
 
     return (
-        <>
-            <div className={`card`}>
-                <div className={`card-body`}>
-                    <form key={formKey} encType={`multipart/form-data`} className={`row mt-3 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <Input name={`first_name`} label="User First Name" value={values?.name?.first_name} onChange={handleChange} error={errors.first_name} required={true} inputType={true} />
+            <Input name={`middle_name`} label="Middle Name" value={values?.name?.middle_name} onChange={handleChange} error={errors.middle_name} required={true} inputType={true} />
+            <Input name={`last_name`} label="Last Name" value={values?.name?.last_name} onChange={handleChange} error={errors.last_name} required={true} inputType={true} />
+            <Input name={`email`} label="Email" type={`email`} value={values?.email} onChange={handleChange} error={errors.email} required={true} inputType={true} />
+            <Input name={`password`} label="Password" value={values?.password} onChange={handleChange} error={errors.password} required={true} inputType={true} />
+            <Input name={`phone`} label="Phone" value={values?.phone} onChange={handleChange} error={errors.phone} required={true} inputType={true} />
 
-                        <Input name={`first_name`} label="User First Name" value={values?.name?.first_name} onChange={handleChange} error={errors.first_name} required={true} inputType={true} />
-                        <Input name={`middle_name`} label="Middle Name" value={values?.name?.middle_name} onChange={handleChange} error={errors.middle_name} required={true} inputType={true} />
-                        <Input name={`last_name`} label="Last Name" value={values?.name?.last_name} onChange={handleChange} error={errors.last_name} required={true} inputType={true} />
-                        <Input name={`email`} label="Email" type={`email`} value={values?.email} onChange={handleChange} error={errors.email} required={true} inputType={true} />
-                        <Input name={`password`} label="Password" value={values?.password} onChange={handleChange} error={errors.password} required={true} inputType={true} />
-                        <Input name={`phone`} label="Phone" value={values?.phone} onChange={handleChange} error={errors.phone} required={true} inputType={true} />
-
-                        <div className={`col-md-4`}>
-                            <SelectRole id={`role_id`} value={values?.role_id} required={true} disabled={false} label='role' handleChange={handleChange} />
-                        </div>
-
-                        <div className={`col-12`}>
-                            <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
-                        </div>
-                    </form>
-                </div>
+            <div className={`col-md-4`}>
+                <SelectRole id={`role_id`} value={values?.role_id} required={true} disabled={false} label='role' handleChange={handleChange} />
             </div>
-        </>
+
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+            </div>
+        </CardForm>
     );
 }
 

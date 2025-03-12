@@ -17,7 +17,7 @@ function View() {
             try {
 
                 const [tagData] = await Promise.all([
-                    get(`/discounts/${id}`),
+                    get(`/stores/${id}`),
                 ]);
 
                 setValues(tagData?.data || {});
@@ -39,9 +39,14 @@ function View() {
 
     return (
         <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
-            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-            <Input name={`percentage`} label="percentage" value={values?.percentage} onChange={handleChange} required={false} inputType={true} disabled={true} />
-            <Textarea name={`description`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
+            <Input name={`name`} label="name" value={values?.name} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`phone`} label="phone" value={values?.phone} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`email`} label="email" value={values?.email} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`country`} label="country" value={values?.country} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`state`} label="state" value={values?.state} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`city`} label="city" value={values?.city} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`zipcode`} label="zipcode" value={values?.zipcode} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Textarea name={`address`} label="address" value={values?.address} onChange={handleChange} disabled={true} required={false} inputType={true} ></Textarea>
             <div className={`col-12`}>
             </div>
         </CardForm>

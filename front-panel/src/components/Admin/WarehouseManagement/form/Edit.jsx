@@ -40,12 +40,12 @@ function Edit() {
         setLoading(true)
         try {
             const newValues = formattedData(values);
-            const res = await patch(`/discounts/${id}`, newValues);
+            const res = await patch(`/warehouses/${id}`, newValues);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/admin/products/discounts', { replace: true })
+            navigate('/storage/warehouses', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -63,7 +63,7 @@ function Edit() {
         const fetchData = async () => {
             try {
                 const [tagData] = await Promise.all([
-                    get(`/discounts/${id}/edit`),
+                    get(`/warehouses/${id}/edit`),
                 ]);
                 setValues(tagData?.data || {});
                 processNotifications(200, tagData?.message, dispatch);

@@ -5,6 +5,7 @@ import SelectRole from '../../Form/Select/SelectRole'
 import { get } from '../../../../utils/AxiosUtils'
 import { useDispatch } from 'react-redux'
 import { processNotifications } from '../../../../utils/notificationUtils'
+import CardForm from '../../Card/CardForm'
 
 function View() {
     const { id } = useParams();
@@ -36,23 +37,21 @@ function View() {
 
     return (
         <>
-            {values && (<div className={`card`}>
-                <div className={`card-body`}>
-                    <form encType={`multipart/form-data`} className={`row mt-3 g-4 needs-validation`} noValidate>
-                        <Input name={`first_name`} label="User First Name" value={values?.name?.first_name} required={false} inputType={true} disabled={true} />
-                        <Input name={`middle_name`} label="Middle Name" value={values?.name?.middle_name} required={false} inputType={true} disabled={true} />
-                        <Input name={`last_name`} label="Last Name" value={values?.name?.last_name} required={false} inputType={true} disabled={true} />
-                        <Input name={`email`} label="Email" type={`email`} value={values?.email} required={false} inputType={true} disabled={true} />
-                        <Input name={`password`} label="Password" value={values?.password_text} required={false} inputType={true} disabled={true} />
-                        <Input name={`phone`} label="Phone" value={values?.phone} required={false} inputType={true} disabled={true} />
-                        <div className={`col-md-4`}>
-                            <SelectRole id={`role_id`} value={values?.role?._id} required={false} disabled={true} label='role' handleChange={handleChange} />
-                        </div>
-                        <div className={`col-12`}>
-                        </div>
-                    </form>
-                </div>
-            </div>)}
+            {values && (
+                <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
+                    <Input name={`first_name`} label="User First Name" value={values?.name?.first_name} required={false} inputType={true} disabled={true} />
+                    <Input name={`middle_name`} label="Middle Name" value={values?.name?.middle_name} required={false} inputType={true} disabled={true} />
+                    <Input name={`last_name`} label="Last Name" value={values?.name?.last_name} required={false} inputType={true} disabled={true} />
+                    <Input name={`email`} label="Email" type={`email`} value={values?.email} required={false} inputType={true} disabled={true} />
+                    <Input name={`password`} label="Password" value={values?.password_text} required={false} inputType={true} disabled={true} />
+                    <Input name={`phone`} label="Phone" value={values?.phone} required={false} inputType={true} disabled={true} />
+                    <div className={`col-md-4`}>
+                        <SelectRole id={`role_id`} value={values?.role?._id} required={false} disabled={true} label='role' handleChange={handleChange} />
+                    </div>
+                    <div className={`col-12`}>
+                    </div>
+                </CardForm>
+            )}
         </>
     );
 }

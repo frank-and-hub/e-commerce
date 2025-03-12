@@ -295,12 +295,9 @@ exports.assignMenu = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const menuData = await Menu.find(query)
+exports.findData = async (id, res) => {
+ 
+    const menuData = await Menu.findById(id)
         .select('_id name route parent icon type updated_by status')
         .populate('updated_by', '_id name');
 

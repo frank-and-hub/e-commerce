@@ -49,6 +49,9 @@ app.use(morgan('dev'));
 // make file or folder statcly to view all
 app.use(express.static('public'));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(helper.requestTime);
 
 // use body parser for extracting josn data
@@ -56,6 +59,9 @@ app.use(bodyParser.json({ limit: '50mb' }));
 
 // use body parser for extracting url encoded
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 frontend_routes.forEach(frontend => {
     app.use(frontend.path, frontend.module);

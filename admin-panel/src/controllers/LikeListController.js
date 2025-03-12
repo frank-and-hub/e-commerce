@@ -214,12 +214,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
+exports.findData = async (id, res) => {
 
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const likeListData = await Like.find(query)
+    const likeListData = await Like.findById(id)
         .select('_id product user updated_by status')
         .populate('user', '_id name')
         .populate('product', '_id name')

@@ -247,12 +247,9 @@ exports.user_services = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const serviceData = await Service.find(query)
+exports.findData = async (id, res) => {
+   
+    const serviceData = await Service.findById(id)
         .select('_id name icon description user updated_by status')
         .populate('user', '_id name')
         .populate('updated_by', '_id name');

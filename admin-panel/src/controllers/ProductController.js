@@ -426,12 +426,9 @@ exports.image = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const productData = await Product.find(query)
+exports.findData = async (id, res) => {
+   
+    const productData = await Product.findById(id)
         .select('_id name description specification code price quantity discount unit warranty brand tags categories colors image product_images user manufactured_date expiry_date updated_by status')
         .populate('discount', '_id name')
         .populate('unit', '_id name')

@@ -152,7 +152,7 @@ const Table = ({
         let content;
         switch (header) {
             case 'id':
-                content = i + 1;
+                content = (i + 1);
                 break;
             case 'icon':
                 content = <i className={item}></i>;

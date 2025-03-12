@@ -218,12 +218,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const orderData = await Order.find(query)
+exports.findData = async (id, res) => {
+   
+    const orderData = await Order.findById(id)
         .select('_id cart user address price time status updated_by')
         .populate('user', '_id name')
         .populate('cart', '_id products')

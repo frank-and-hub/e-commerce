@@ -197,12 +197,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const faqData = await Faq.find(query)
+exports.findData = async (id, res) => {
+   
+    const faqData = await Faq.findById(id)
         .select('_id question answer created_by status')
         .populate('created_by', '_id name');
 

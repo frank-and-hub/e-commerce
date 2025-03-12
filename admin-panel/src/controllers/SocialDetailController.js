@@ -205,12 +205,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const socialData = await SocialDetail.find(query)
+exports.findData = async (id, res) => {
+   
+    const socialData = await SocialDetail.findById(id)
         .select('_id name url icon updated_by status')
         .populate('updated_by', '_id name');
 

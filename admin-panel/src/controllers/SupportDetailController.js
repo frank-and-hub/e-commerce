@@ -229,12 +229,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    await SupportDetails.find(query)
+exports.findData = async (id, res) => {
+   
+    await SupportDetails.findById(id)
         .select('_id call email address hours_start hours_end type week_start week_end updated_by status')
         .populate('updated_by', '_id name');
     if (!supportDetailsData) return res.status(404).json({ message: `SupportDetails not found` });

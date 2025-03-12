@@ -229,10 +229,8 @@ exports.getGuestRole = async (string) => {
     }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
+exports.findData = async (id, res) => {
+   
     const roleData = await Role.find(query)
         .select('_id name permissions updated_by status')
         .populate({

@@ -243,12 +243,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
+exports.findData = async (id, res) => {
 
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const brandData = await Brand.find(query)
+    const brandData = await Brand.findById(id)
         .select('_id name description user image updated_by status')
         .populate('user', '_id name')
         .populate('image', '_id name path')

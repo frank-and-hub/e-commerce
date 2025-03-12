@@ -262,12 +262,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
-
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const bannerData = await Banner.find(query)
+exports.findData = async (id, res) => {
+   
+    const bannerData = await Banner.findById(id)
         .select('_id name title description user image url updated_by status')
         .populate('user', '_id name')
         .populate('image', '_id name path')

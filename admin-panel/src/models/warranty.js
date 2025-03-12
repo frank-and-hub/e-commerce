@@ -5,7 +5,12 @@ const warrantySchema = new mongoose.Schema({
     name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
     description: { type: String, required: false, trim: true },
     duration: { type: Number, required: true },
-    period: { type: String, default: 'month', enum: ['day', 'week', 'month', 'year',], required: true },
+    period: {
+        type: String,
+        default: 'month',
+        enum: ['day', 'week', 'month', 'year',],
+        required: true
+    },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }

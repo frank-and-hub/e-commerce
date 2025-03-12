@@ -213,12 +213,9 @@ exports.destroy = async (req, res, next) => {
     } catch (err) { next(err) }
 }
 
-exports.findData = async (id = null, res, filter = {}) => {
+exports.findData = async (id, res) => {
 
-    let query = {};
-    if (id) query._id = id;
-    if (Object.keys(filter).length > 0) query = { ...query, ...filter };
-    const discountData = await Discount.find(query)
+    const discountData = await Discount.findById(id)
         .select('_id name description percentage updated_by status user')
         .populate('user', '_id name')
         .populate('updated_by', '_id name');

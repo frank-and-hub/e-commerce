@@ -1,16 +1,16 @@
-const multer = require('multer');
-const path = require('path');
+const multer = require(`multer`);
+const path = require(`path`);
 
-const transporter = require('../config/email');
-const secrets = require('../config/secrets');
+const transporter = require(`../config/email`);
+const secrets = require(`../config/secrets`);
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, './public/file/');
+        callback(null, `./public/file/`);
     },
     filename: function (req, file, callback) {
         const ext = path.extname(file.originalname);
-        const fileName = new Date().toISOString().replace(/:/g, '-') + ext;
+        const fileName = new Date().toISOString().replace(/:/g, `-`) + ext;
         callback(null, fileName);
     }
 });
@@ -22,7 +22,7 @@ const fileFilter = (allowedTypes) => (req, file, callback) => {
     if (extname && mimetype) {
         return callback(null, true);
     } else {
-        callback(new Error('Invalid file type'), false);
+        callback(new Error(`Invalid file type`), false);
     }
 }
 
@@ -50,7 +50,7 @@ const updateOps = (data) => {
     for (const ops of array_data) {
         update_ops[ops.propName] = ops.value;
     }
-    update_ops['updated_by'] = auth_user;
+    update_ops[`updated_by`] = auth_user;
     return update_ops;
 }
 
@@ -67,9 +67,9 @@ const sendEmail = async (to, subject, text) => {
             subject,
             text
         });
-        console.info('Email sent successfully');
+        console.info(`Email sent successfully`);
     } catch (err) {
-        console.info('Error sending email:', err.message);
+        console.info(`Error sending email:`, err.message);
     }
 }
 
@@ -80,7 +80,7 @@ const filterData = async (item) => {
 }
 
 const phoneFormate = (string) => {
-    return string?.trim()?.replace('-', '')?.replace('-', '')?.replace(' ', '');
+    return string?.trim()?.replace(`-`, ``)?.replace(`-`, ``)?.replace(` `, ``);
 }
 
 module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData, phoneFormate }

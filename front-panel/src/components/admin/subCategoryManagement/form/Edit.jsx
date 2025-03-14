@@ -1,0 +1,100 @@
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { notifyError, notifySuccess, notifyInfo } from '../../comman/notification/Notification'
+import { processNotifications } from '../../../../utils/notificationUtils'
+import { useLoading } from '../../../../context/LoadingContext'
+import { useFormValidation } from '../../form/FormValidation'
+import { get, patch } from '../../../../utils/AxiosUtils'
+import { formattedData } from '../../../../utils/helper'
+import SelectIcon from '../../form/select/SelectIcon'
+import SubmitButton from '../../form/SubmitButton'
+import Textarea from '../../form/Textarea'
+import Input from '../../form/Input'
+import validate from '../validate'
+import SelectCategory from '../../form/select/SelectCategory'
+import CardForm from '../../card/CardForm'
+
+function Edit() {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { loading, setLoading } = useLoading();
+    const [formKey, setFormKey] = useState(0);
+
+    const initialState = {
+        name: '',
+        icon: '',
+        category: '',
+        description: ''
+    };
+
+    const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        notifyInfo(values);
+        validateSubmit(e);
+        if (errors && Object.keys(errors).length > 0) {
+            // console.info(`Form validation failed : `);
+            console.table(errors);
+            return false;
+        }
+        setLoading(true)
+        try {
+            const newValues = formattedData(values);
+            const res = await patch(`/sub-categories/${id}`, newValues);
+            if (res) {
+                resetForm()
+                notifySuccess(res.message)
+            }
+            navigate('/admin/products/sub-categories', { replace: true })
+        } catch (err) {
+            notifyError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    };
+
+    const resetForm = () => {
+        setValues(initialState);
+        setFormKey((prevKey) => prevKey + 1);
+        document.getElementsByTagName('form')[0].reset();
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [getData] = await Promise.all([
+                    get(`/sub-categories/${id}/edit`),
+                ]);
+                setValues(getData?.data || {});
+                processNotifications(200, getData?.message, dispatch);
+            } catch (err) {
+                processNotifications(err.status || 500, err.message, dispatch);
+            }
+        };
+        if (id) {
+            fetchData();
+        }
+    }, [dispatch, setValues, id]);
+    return (
+        <CardForm handleSubmit={handleSubmit} key={formKey}>
+            <Input name={`name`} label={`Name`} value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+            <div className={`col-md-4`}>
+                <label htmlFor={`icon`} className={`form-label`}>Icon <span className='text-danger'>*</span></label>
+                <SelectIcon id={`icon`} value={values.icon} handleChange={handleChange} error={errors.icon} />
+                {errors.icon && <div className={`invalid-feedback`}>{errors.icon}</div>}
+            </div>
+            <div className={`col-md-4`}>
+                <SelectCategory id={`category`} label={`category`} value={values.category} handleChange={handleChange} error={errors.category} required={true} multiple={false} />
+            </div>
+            <Textarea name={`description`} className={`w-100`} label={`Description`} value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
+            <div className={`col-12`}>
+                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+            </div>
+        </CardForm>
+    );
+}
+
+export default Edit;

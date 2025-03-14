@@ -1,4 +1,4 @@
-import { notifyError } from "../components/Admin/Comman/Notification/Notification";
+import { notifyError } from "../components/admin/comman/notification/Notification";
 
 export const ucwords = (text) => {
     if (typeof text !== 'string' || text.length === 0) {

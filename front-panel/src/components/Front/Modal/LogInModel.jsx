@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useTransition } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../utils/AuthContext';
-import { notifySuccess } from '../../Admin/Comman/Notification/Notification';
+import { notifySuccess } from '../../admin/comman/notification/Notification';
 
 function LogInModel() {
 

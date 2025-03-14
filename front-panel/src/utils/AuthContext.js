@@ -4,7 +4,7 @@ import config from '../config'
 import { get } from './AxiosUtils'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser, clearUser } from './../store/authSlice'
-import { notifyError } from '../components/Admin/Comman/Notification/Notification'
+import { notifyError } from '../components/admin/comman/notification/Notification'
 
 const AuthContext = createContext();
 const url = config.reactApiUrl;

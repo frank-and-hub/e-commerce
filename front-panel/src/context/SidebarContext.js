@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { useAuth } from '../utils/AuthContext'
 import { get } from '../utils/AxiosUtils'
 import { setUser } from '../store/authSlice'
-import { notifyError } from '../components/Admin/Comman/Notification/Notification'
+import { notifyError } from '../components/admin/comman/notification/Notification'
 
 import { setSideBar } from '../store/sideBarSlice'
 import { setPermission } from '../store/permissionSlice'

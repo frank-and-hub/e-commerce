@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Button from './Button'
-import { debounce, formattedData, truncateString, ucwords } from '../../../utils/helper'
 import { Link } from 'react-router-dom'
-import Pageignation from './Pageignation'
-import ReusableModal from './models/ReusableModal'
+import { debounce, formattedData, truncateString, ucwords } from '../../../utils/helper'
 import { notifyError, notifySuccess } from '../comman/notification/Notification'
 import { destroy, get, patch } from '../../../utils/AxiosUtils'
 import { SidebarContext } from '../../../context/SidebarContext'
 import { useLoading } from '../../../context/LoadingContext'
 import { Loading } from '../loading/Loading'
+import Button from './Button'
+import Pageignation from './Pageignation'
+import ReusableModal from '../models/ReusableModal'
 
 // Sample data
 const Table = ({
@@ -21,7 +21,7 @@ const Table = ({
     filter,
     moduleName
 }) => {
-
+    
     const { pathname } = useContext(SidebarContext);
     const { loading, setLoading } = useLoading();
 
@@ -55,7 +55,7 @@ const Table = ({
         setCurrentPage(page);
     }
 
-    const headers = (data && data?.length > 0) ? Object.keys(data[0]) : [];
+    const tableData = (data && data?.length > 0) ? Object.keys(data[0]) : [];
 
     const handleSort = (key) => {
         let direction = 'asc';
@@ -190,7 +190,7 @@ const Table = ({
                 <div className={`card-body`}>
                     <div className='row my-2'>
                         <div className={`col-md-6`}>
-                            <h6 className={`card-title text-capitalize`}>{(cleanedTitle)}</h6>
+                            <h6 className={`card-title text-capitalize`}>{cleanedTitle}</h6>
                         </div>
                         <div className={`d-flex justify-content-evenly align-items-center col-md-6`}>
                             <div className={`col-md-9 col-sm-10 col-9`}>
@@ -230,9 +230,9 @@ const Table = ({
                         <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl} mb-2`} style={{ wordWrap: 'normal' }}>
                             <thead>
                                 <tr>
-                                    {!loading && headers.length > 0 && (
+                                    {!loading && tableData.length > 0 && (
                                         <>
-                                            {headers.map((header, index) => (
+                                            {tableData.map((header, index) => (
                                                 <th key={index} scope={`row`} className={`text-capitalize cursor${(header !== ('id' || '_id')) ? 'Pointer' : 'Auto'}`} onClick={(e) => (header === ('id' || '_id') ? e.preventDefault() : handleSort(header))}>
                                                     {header === ('id' || '_id')
                                                         ? (<i className={`bi bi-hash`}></i>)
@@ -248,13 +248,13 @@ const Table = ({
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <th colSpan={headers.length + 1} className='text-center'>
+                                        <th colSpan={tableData.length + 1} className='text-center'>
                                             <Loading />
                                         </th>
                                     </tr>
                                 ) : (data && data.length > 0 ? (data.map((item, i) => (
                                     <tr key={item.id} className='p-2'>
-                                        {headers.map((header, index) => {
+                                        {tableData.map((header, index) => {
                                             const content = columnCondication(header, item[header], (i + ((currentPage - 1) * dataLimit)), item);
                                             return (
                                                 <td key={index} className={``} >
@@ -276,14 +276,14 @@ const Table = ({
                                         </td>
                                     </tr>
                                 ))) : (<tr>
-                                    <th colSpan={headers.length + 1} className='text-center'>
+                                    <th colSpan={tableData.length + 1} className='text-center'>
                                         No Data Found!...
                                     </th>
                                 </tr>))}
                             </tbody>
                             <tfoot >
                                 <tr>
-                                    <td colSpan={headers.length + 1}>
+                                    <td colSpan={tableData.length + 1}>
                                         <div className={`row justify-content-md-between mt-2`}>
                                             <div className={`col-md-5 col-12 d-none d-md-block`}>
                                                 {dataCount > dataLimit && (

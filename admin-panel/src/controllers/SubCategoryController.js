@@ -14,7 +14,7 @@ const url = require('../config/url');
 const baseurl = `${url.apiUrl}`;
 const status_active = `${process.env.STATUS_ACTIVE}`;
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
-const constName = 'sub-sub_categories/';
+const constName = 'sub-categories/';
 
 exports.index = async (req, res, next) => {
     try {
@@ -81,7 +81,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: sub_categoryResponses
-            }, title: 'listing'
+            }, title: 'Sub Category'
         });
     } catch (err) { next(err) }
 }

@@ -78,7 +78,6 @@ exports.index = async (req, res, next) => {
                 'route': route,
                 'icon': icon,
                 'status': status
-                // 'updated_by': updated_by,
             }
 
             if (!filter_type) {
@@ -100,7 +99,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: menuResponses
-            }, title: 'listing'
+            }, title: 'Menu'
         });
     } catch (err) { next(err) }
 }

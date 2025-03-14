@@ -3,9 +3,9 @@ import Table from '../table/Table'
 import SubmitButton from '../form/SubmitButton'
 import { StatusOptions } from '../../../utils/selects'
 import SelectForm from '../form/select/SelectForm'
-import { useFormValidation } from '../form/FormValidation'
-import { useLoading } from '../../../context/LoadingContext'
 
+import { useLoading } from '../../../context/LoadingContext'
+import { useFormValidation, validate } from '../../../utils/FormValidation'
 
 function BrandTable() {
     const module = 'brands';
@@ -17,11 +17,6 @@ function BrandTable() {
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
-    }
-
-    const validate = (values) => {
-        let errors = {}
-        return errors;
     }
 
     const initialState = {
@@ -39,7 +34,6 @@ function BrandTable() {
         setLoading(true)
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

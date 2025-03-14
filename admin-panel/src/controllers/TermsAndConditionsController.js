@@ -49,7 +49,6 @@ exports.index = async (req, res, next) => {
                 't_and_c': t_and_c,
                 'status': status,
                 'updated_by': updated_by,
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const termsAndConditionsResponses = await Promise.all(termsAndConditionsPromises);
@@ -60,7 +59,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: termsAndConditionsResponses
-            }, title: 'listing'
+            }, title: 'Terms And Conditions'
         });
     } catch (err) { next(err)  }
 }

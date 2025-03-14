@@ -72,7 +72,6 @@ exports.index = async (req, res, next) => {
                 'url': url,
                 'image': image,
                 'status': status,
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const bannerResponses = await Promise.all(bannerPromises);
@@ -83,7 +82,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: bannerResponses
-            }, title: 'listing'
+            }, title: 'Banner'
         });
     } catch (err) { next(err) }
 }

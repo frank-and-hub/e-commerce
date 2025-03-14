@@ -65,7 +65,6 @@ exports.index = async (req, res, next) => {
                     'menu': per.menu.name
                 })),
                 'status': role?.status,
-                // 'updated_by': role.updated_by
             }
         });
         const roleResponses = await Promise.all(rolePromises);
@@ -76,7 +75,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: roleResponses
-            }, title: 'listing'
+            }, title: 'Role'
         });
     } catch (err) { next(err) }
 }

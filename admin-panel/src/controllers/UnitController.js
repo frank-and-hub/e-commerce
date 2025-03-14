@@ -74,7 +74,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: unitResponses
-            }, title: 'listing'
+            }, title: 'Unit'
         });
     } catch (err) { next(err) }
 }

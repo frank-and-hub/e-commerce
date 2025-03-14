@@ -50,7 +50,7 @@ exports.index = async (req, res, next) => {
         res.status(200).json({
             message: `List retrieved successfully`, response: {
                 data: responses
-            }, title: 'dashboard data'
+            }, title: 'Dashboard'
         });
     } catch (err) { next(err)  }
 }

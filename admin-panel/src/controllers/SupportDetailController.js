@@ -60,7 +60,6 @@ exports.index = async (req, res, next) => {
                 'week_end': week_end,
                 'status': status,
                 'updated_by': updated_by,
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const supportDetailsResponses = await Promise.all(supportDetailsPromises);
@@ -71,7 +70,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: supportDetailsResponses
-            }, title: 'listing'
+            }, title: 'Support Detail'
         });
     } catch (err) { next(err) }
 }

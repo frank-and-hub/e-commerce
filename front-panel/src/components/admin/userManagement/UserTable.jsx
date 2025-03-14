@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Table from '../table/Table'
 import SelectRole from '../form/select/SelectRole'
-import { useFormValidation } from '../form/FormValidation'
 import SelectForm from '../form/select/SelectForm'
 import SubmitButton from '../form/SubmitButton'
 import { GenderOptions, StatusOptions } from '../../../utils/selects'
 import { useLoading } from '../../../context/LoadingContext'
+import { useFormValidation, validate } from '../../../utils/FormValidation'
 
 
 function UsersTable() {
@@ -18,11 +18,6 @@ function UsersTable() {
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
-    }
-
-    const validate = (values) => {
-        let errors = {}
-        return errors;
     }
 
     const initialState = {
@@ -39,7 +34,6 @@ function UsersTable() {
         setLoading(true)
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

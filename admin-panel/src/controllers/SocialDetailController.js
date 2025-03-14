@@ -77,7 +77,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: socialResponses
-            }, title: 'listing'
+            }, title: 'Social Detail'
         });
     } catch (err) { next(err) }
 }

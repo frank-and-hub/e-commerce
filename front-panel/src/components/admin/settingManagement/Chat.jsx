@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { notifyError } from '../comman/notification/Notification'
 // import { useNavigate } from 'react-router-dom'
 import { useLoading } from '../../../context/LoadingContext'
-import { useFormValidation } from '../form/FormValidation'
+
 // import { post } from '../../../utils/AxiosUtils'
 import SubmitButton from '../form/SubmitButton'
 import SelectForm from '../form/select/SelectForm'
@@ -10,27 +10,19 @@ import { ucwords } from '../../../utils/helper'
 import { get, post } from '../../../utils/AxiosUtils'
 import { useSelector } from 'react-redux'
 import { Messages } from './Messages'
+import { chatValidation, useFormValidation } from '../../../utils/FormValidation'
 
 const Chat = ({ userOptions }) => {
-
 
     const { loading, setLoading } = useLoading();
     const [formKey] = useState(0);
     const [userData, setUserData] = useState([]);
     const [selectedReceiver, setSelectedReceiver] = useState(null);
 
-
     const initialState = {
         receiver_id: '',
         message: ''
-    };
-
-    const validate = (values) => {
-        let errors = {};
-        if (!values.receiver_id) errors.receiver_id = 'Please select support agent';
-        if (!values.message.trim()) errors.message = 'Please enter your message';
-        return errors;
-    };
+    }
 
     const roles = useSelector((state) => (state?.role?.role));
 
@@ -44,19 +36,17 @@ const Chat = ({ userOptions }) => {
         handleChange,
         handleSubmit: validateSubmit,
         setFormData: setValues
-    } = useFormValidation(initialState, validate);
+    } = useFormValidation(initialState, chatValidation);
 
     const handleSubmit = async (e) => {
+        
         e.preventDefault();
-
         validateSubmit(e);
 
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }
-
         setLoading(true)
         try {
             const res = await post('/messages', values);
@@ -65,7 +55,6 @@ const Chat = ({ userOptions }) => {
                     receiver_id: values?.receiver_id,
                     message: ''
                 });
-
                 // fetchPrevoiusChat({ target: { value: values.receiver_id } });
             }
         } catch (err) {

@@ -3,23 +3,16 @@ import SubmitButton from '../../form/SubmitButton'
 import { useLoading } from '../../../../context/LoadingContext'
 import { notifySuccess } from '../../comman/notification/Notification'
 import { post } from '../../../../utils/AxiosUtils'
-import { useFormValidation } from '../../form/FormValidation'
 import { transformData, ucwords } from '../../../../utils/helper'
 import { useNavigate } from 'react-router-dom'
+import { useFormValidation, validate } from '../../../../utils/FormValidation'
 
 export const PermissionTable = ({ response, permission, user_id = null, mainFormReset }) => {
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
     const [toggle, setToggle] = useState(false);
     const navigate = useNavigate();
-
     const columnCount = `7`;
-
-    const validate = (values) => {
-        let errors = {};
-        return errors;
-    }
-
     const initialState = {};
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -28,7 +21,6 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
         e.preventDefault();
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

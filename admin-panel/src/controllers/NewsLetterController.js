@@ -74,7 +74,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: newsLetterResponses
-            }, title: 'listing'
+            }, title: 'News Letter'
         });
     } catch (err) { next(err) }
 }

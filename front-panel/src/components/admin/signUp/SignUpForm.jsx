@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useTransition } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../utils/AuthContext'
-import useFormValidation from './signUpValidation/useFormValidation'
-import validate from './signUpValidation/validate'
 import { useSelector } from 'react-redux'
 import SubmitButton from '../form/SubmitButton'
 import { notifySuccess } from '../comman/notification/Notification'
 import { generateRandomString } from '../../../utils/helper'
+import { signUpValidation, useSignUpFormValidation } from '../../../utils/FormValidation'
 
 export const SignUpForm = () => {
 
@@ -22,14 +21,13 @@ export const SignUpForm = () => {
         password: ''
     }
 
-    const { values, errors, handleChange, handleSubmit: validateSubmit } = useFormValidation(initialState, validate);
+    const { values, errors, handleChange, handleSubmit: validateSubmit } = useSignUpFormValidation(initialState, signUpValidation);
 
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         validateSubmit(e);
 
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

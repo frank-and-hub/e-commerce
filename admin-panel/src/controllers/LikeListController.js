@@ -75,7 +75,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: likeListResponses
-            }, title: 'listing'
+            }, title: 'Like List'
         });
     } catch (err) { next(err) }
 }

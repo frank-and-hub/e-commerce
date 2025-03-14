@@ -4,9 +4,9 @@ import SubmitButton from '../../form/SubmitButton'
 import SelectForm from '../../form/select/SelectForm'
 import { useLoading } from '../../../../context/LoadingContext'
 import { SidebarContext } from '../../../../context/SidebarContext'
-import { useFormValidation } from '../../form/FormValidation'
 import { StatusOptions } from '../../../../utils/selects'
 import { ucwords } from '../../../../utils/helper'
+import { useFormValidation, validate } from '../../../../utils/FormValidation'
 
 
 function SocialDetailTable() {
@@ -23,11 +23,6 @@ function SocialDetailTable() {
         setShowFilter(!showFilter);
     }
 
-    const validate = (values) => {
-        let errors = {}
-        return errors;
-    }
-
     const initialState = {
         user_id: '',
         status: ''
@@ -41,7 +36,6 @@ function SocialDetailTable() {
         setLoading(true)
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

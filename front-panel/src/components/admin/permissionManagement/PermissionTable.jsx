@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Table from '../table/Table'
 import SubmitButton from '../form/SubmitButton'
-import { useFormValidation } from '../form/FormValidation'
 import { useLoading } from '../../../context/LoadingContext'
 import SelectMenu from '../form/select/SelectMenu'
 import { StatusOptions } from '../../../utils/selects'
 import SelectForm from '../form/select/SelectForm'
+import { useFormValidation, validate } from '../../../utils/FormValidation'
 
 function PermissionTable() {
     const module = 'permissions';
@@ -17,11 +17,6 @@ function PermissionTable() {
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
-    }
-
-    const validate = (values) => {
-        let errors = {}
-        return errors;
     }
 
     const initialState = {
@@ -37,7 +32,6 @@ function PermissionTable() {
         setLoading(true)
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

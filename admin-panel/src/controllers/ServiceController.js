@@ -67,8 +67,6 @@ exports.index = async (req, res, next) => {
                 'description': description,
                 'user': user,
                 'status': status
-                // 'updated_by': updated_by,
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const serviceResponses = await Promise.all(servicePromises);
@@ -79,7 +77,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: serviceResponses
-            }, title: 'listing'
+            }, title: 'Service'
         });
     } catch (err) { next(err) }
 }

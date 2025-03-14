@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Table from '../table/Table'
 import { useLoading } from '../../../context/LoadingContext'
-import { useFormValidation } from '../form/FormValidation'
 import SelectForm from '../form/select/SelectForm'
 import SubmitButton from '../form/SubmitButton'
 import { StatusOptions } from '../../../utils/selects'
@@ -10,6 +9,7 @@ import SelectCategory from '../form/select/SelectCategory'
 import SelectColor from '../form/select/SelectColor'
 import SelectDiscount from '../form/select/SelectDiscount'
 import SelectTag from '../form/select/SelectTag'
+import { useFormValidation, validate } from '../../../utils/FormValidation'
 
 function ProductTable() {
     const module = 'products';
@@ -21,11 +21,6 @@ function ProductTable() {
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
-    }
-
-    const validate = (values) => {
-        let errors = {}
-        return errors;
     }
 
     const initialState = {
@@ -47,7 +42,6 @@ function ProductTable() {
         setLoading(true)
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useTransition } from 'react'
-import { useFormValidation } from '../form/FormValidation'
+
 import { patch } from '../../../utils/AxiosUtils'
 import validate from './validate'
 import SubmitButton from '../form/SubmitButton'
@@ -36,7 +36,6 @@ function ProfileForm({ user }) {
         validateSubmit(e);
 
         if (errors && Object.keys(errors).length !== 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

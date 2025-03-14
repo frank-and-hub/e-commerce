@@ -86,8 +86,6 @@ exports.index = async (req, res, next) => {
                 'code': code,
                 'image': image,
                 'status': status,
-                // 'updated_by': updated_by
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
 
@@ -99,7 +97,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: productResponses
-            }, title: 'listing'
+            }, title: 'Product'
         });
     } catch (err) { next(err) }
 }

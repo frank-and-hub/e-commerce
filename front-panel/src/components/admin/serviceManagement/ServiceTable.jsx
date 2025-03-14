@@ -5,6 +5,7 @@ import { StatusOptions } from '../../../utils/selects'
 import SelectForm from '../Form/select/SelectForm'
 import { useFormValidation } from '../Form/FormValidation'
 import { useLoading } from '../../../context/LoadingContext'
+import { validate } from '../../../utils/FormValidation'
 
 
 function ServiceTable() {
@@ -17,11 +18,6 @@ function ServiceTable() {
 
     const handelFilter = (e) => {
         setShowFilter(!showFilter);
-    }
-
-    const validate = (values) => {
-        let errors = {}
-        return errors;
     }
 
     const initialState = {

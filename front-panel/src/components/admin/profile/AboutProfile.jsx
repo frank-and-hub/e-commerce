@@ -1,16 +1,14 @@
 import React, { useEffect, useMemo, useState, useTransition } from 'react'
 import api from '../../../utils/api'
 import config from '../../../config'
-
 import Input from '../form/Input'
 import SubmitButton from '../form/SubmitButton'
 import Textarea from '../form/RoundedTextarea'
-
 import { useAuth } from '../../../utils/AuthContext'
-import { useFormValidation } from '../form/FormValidation'
 import { checkFileValidation } from '../../../utils/helper'
 import { notifyError, notifySuccess } from '../comman/notification/Notification'
 import { get } from '../../../utils/AxiosUtils'
+import { aboutProfileValidation, useFormValidation } from '../../../utils/FormValidation'
 
 function AboutProfile() {
 
@@ -30,22 +28,13 @@ function AboutProfile() {
         experience: about?.experience ?? '',
     }), [about]);
 
-    const validate = (values) => {
-        let errors = {}
-        if (!values.title) errors.title = 'Please enter title';
-        if (!values.bio) errors.bio = 'Please enter bio';
-        if (!values.experience) errors.experience = 'Please enter experience';
-        return errors;
-    }
-
-    const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
+    const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, aboutProfileValidation);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         validateSubmit(e);
         
         if (errors && Object.keys(errors).length !== 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

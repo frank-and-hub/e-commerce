@@ -61,7 +61,6 @@ exports.index = async (req, res, next) => {
                 'receiver_id': receiver_id,
                 'message': message,
                 'status': status
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const chatResponses = await Promise.all(chatPromises);
@@ -72,7 +71,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: chatResponses
-            }, title: 'listing'
+            }, title: 'Chat'
         });
     } catch (err) { next(err)  }
 }

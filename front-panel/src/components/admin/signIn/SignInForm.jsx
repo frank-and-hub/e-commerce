@@ -2,10 +2,9 @@ import React, { useEffect, useTransition } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../utils/AuthContext'
-import useFormValidation from './signInValidation/useFormValidation'
-import validate from './signInValidation/validate'
 import SubmitButton from '../form/SubmitButton'
 import { notifySuccess } from '../comman/notification/Notification'
+import { signInValidation, useSingInFormValidation } from '../../../utils/FormValidation'
 
 export const SignInForm = () => {
     const token = useSelector((state) => (state.auth.token));
@@ -19,14 +18,13 @@ export const SignInForm = () => {
         password: ''
     }
 
-    const { values, errors, handleChange, handleSubmit: validateSubmit } = useFormValidation(initialState, validate);
+    const { values, errors, handleChange, handleSubmit: validateSubmit } = useSingInFormValidation(initialState, signInValidation);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         validateSubmit(e);
 
         if (errors && Object.keys(errors).length !== 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

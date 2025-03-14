@@ -23,6 +23,7 @@
   "homepage": "https://github.com/frank-and-hub/e-commerce#readme",
   "dependencies": {
     "concurrently": "^9.1.2",
-    "leaflet": "^1.9.4"
+    "leaflet": "^1.9.4",
+    "webpack": "^5.98.0"
   }
 }

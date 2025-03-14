@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { useFormValidation } from '../../form/FormValidation'
 import { post } from '../../../../utils/AxiosUtils'
-import validate from './validate'
 import SubmitButton from '../../form/SubmitButton'
 import { notifySuccess } from '../../comman/notification/Notification'
 import { useNavigate } from 'react-router-dom'
 import Textarea from '../../form/Textarea'
 import { useLoading } from '../../../../context/LoadingContext'
+import { faqValidation, useFormValidation } from '../../../../utils/FormValidation'
 
 function Add() {
 
@@ -19,13 +18,12 @@ function Add() {
     answer: ''
   };
 
-  const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
+  const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, faqValidation);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     validateSubmit(e);
     if (errors && Object.keys(errors).length > 0) {
-      // console.info(`Form validation failed : `);
       console.table(errors);
       return false;
     }

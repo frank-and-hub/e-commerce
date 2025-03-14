@@ -52,7 +52,6 @@ exports.index = async (req, res, next) => {
                     ]
                 },
                 { email: { $regex: trimmedSearch, $options: "i" } },
-                // { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: trimmedSearch, $options: "i" } } },
                 { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: trimmedSearch } } },
             ];
         }
@@ -100,7 +99,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: userResponses
-            }, title: 'listing'
+            }, title: 'User'
         });
     } catch (err) { next(err) }
 }

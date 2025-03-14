@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Table from '../table/Table'
-import { useFormValidation } from '../form/FormValidation'
+
 import { useLoading } from '../../../context/LoadingContext'
 import { StatusOptions } from '../../../utils/selects'
 import SelectForm from '../form/select/SelectForm'
 import SubmitButton from '../form/SubmitButton'
 import { ucwords } from '../../../utils/helper'
 import { SidebarContext } from '../../../context/SidebarContext'
+import { useFormValidation, validate } from '../../../utils/FormValidation'
 
 function ContactTable() {
     const module = 'contacts';
@@ -22,11 +23,6 @@ function ContactTable() {
         setShowFilter(!showFilter);
     }
 
-    const validate = (values) => {
-        let errors = {}
-        return errors;
-    }
-
     const initialState = {
         status: '',
         user_id: ''
@@ -40,7 +36,6 @@ function ContactTable() {
         setLoading(true)
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

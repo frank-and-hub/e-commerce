@@ -82,7 +82,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: warehouseResponses
-            }, title: 'listing'
+            }, title: 'Warehouse'
         });
     } catch (err) { next(err) }
 }

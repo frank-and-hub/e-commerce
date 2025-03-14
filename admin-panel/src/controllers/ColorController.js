@@ -75,7 +75,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: colorResponses
-            }, title: 'listing'
+            }, title: 'Color'
         });
     } catch (err) { next(err) }
 }

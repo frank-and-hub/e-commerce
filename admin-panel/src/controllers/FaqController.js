@@ -54,7 +54,6 @@ exports.index = async (req, res, next) => {
                 'answer': answer,
                 'created_by': created_by,
                 'status': status
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const faqResponses = await Promise.all(faqPromises);
@@ -65,7 +64,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: faqResponses
-            }, title: 'listing'
+            }, title: ' Frequently Asked Questions'
         });
     } catch (err) { next(err) }
 }

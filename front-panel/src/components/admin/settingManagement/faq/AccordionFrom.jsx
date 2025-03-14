@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { notifySuccess } from '../../comman/notification/Notification'
 import Input from '../../form/Input'
 import SubmitButton from '../../form/SubmitButton'
-import validate from './validate'
-import { useFormValidation } from '../../form/FormValidation'
 import { patch } from '../../../../utils/AxiosUtils';
 import { formattedData } from '../../../../utils/helper'
 import Textarea from '../../form/Textarea';
 import { useLoading } from '../../../../context/LoadingContext';
+import { faqValidation, useFormValidation } from '../../../../utils/FormValidation';
 
 function AccordionFrom({ value, onAction }) {
 
@@ -20,13 +19,12 @@ function AccordionFrom({ value, onAction }) {
         answer: value.answer ?? ''
     };
 
-    const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
+    const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, faqValidation);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         validateSubmit(e);
         if (errors && Object.keys(errors).length > 0) {
-            // console.info(`Form validation failed : `);
             console.table(errors);
             return false;
         }

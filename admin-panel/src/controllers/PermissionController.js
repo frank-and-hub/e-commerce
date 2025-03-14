@@ -76,7 +76,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: permissionResponses
-            }, title: 'listing'
+            }, title: 'Permission'
         });
     } catch (err) { next(err) }
 }

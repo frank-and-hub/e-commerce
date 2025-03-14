@@ -3,5 +3,5 @@
 //   CommonJS:
 //     require('tinymce/themes/silver')
 //   ES2015:
-//     import 'tinymce/themes/silver'
+    import 'tinymce/themes/silver'
 require('./theme.js');

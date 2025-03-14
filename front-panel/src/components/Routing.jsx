@@ -3,6 +3,7 @@ import React, { Component, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '../utils/AuthContext'
 import PrivateRoute from '../route/PrivateRoute'
+import PublicRoute from '../route/PublicRoute'
 
 // admin-panel start // ----------------------------------------------
 // sign-in page
@@ -31,98 +32,98 @@ const AboutUsPage = lazy(() => import('./admin/pages/AboutUsPage'))
 const ReturnPolicyPage = lazy(() => import('./admin/pages/ReturnPolicyPage'))
 const TermsAndConditions = lazy(() => import('./admin/pages/TermsAndConditions'))
 // users
-const UserForm = lazy(() => import('./admin/userManagement/form/Add'))
-const UserView = lazy(() => import('./admin/userManagement/form/View'))
-const UserEdit = lazy(() => import('./admin/userManagement/form/Edit'))
+const UserForm = lazy(() => import('./admin/userManagement/Add'))
+const UserView = lazy(() => import('./admin/userManagement/View'))
+const UserEdit = lazy(() => import('./admin/userManagement/Edit'))
 const UsersTable = lazy(() => import('./admin/userManagement/UserTable'))
 const UserRolePermission = lazy(() => import('./admin/userManagement/UserRolePermission'))
 // role
 const RoleTable = lazy(() => import('./admin/roleManagement/RoleTable'))
-const RoleAdd = lazy(() => import('./admin/roleManagement/form/Add'))
-const RoleEdit = lazy(() => import('./admin/roleManagement/form/Edit'))
-const RoleView = lazy(() => import('./admin/roleManagement/form/View'))
+const RoleAdd = lazy(() => import('./admin/roleManagement/Add'))
+const RoleEdit = lazy(() => import('./admin/roleManagement/Edit'))
+const RoleView = lazy(() => import('./admin/roleManagement/View'))
 // menu
 const MenuTable = lazy(() => import('./admin/menuManagement/MenuTable'))
-const MenuAdd = lazy(() => import('./admin/menuManagement/form/Add'))
-const MenuEdit = lazy(() => import('./admin/menuManagement/form/Edit'))
-const MenuView = lazy(() => import('./admin/menuManagement/form/View'))
+const MenuAdd = lazy(() => import('./admin/menuManagement/Add'))
+const MenuEdit = lazy(() => import('./admin/menuManagement/Edit'))
+const MenuView = lazy(() => import('./admin/menuManagement/View'))
 // contact
 const ContactTable = lazy(() => import('./admin/contactManagement/ContactTable'))
-const ContactView = lazy(() => import('./admin/contactManagement/form/View'))
+const ContactView = lazy(() => import('./admin/contactManagement/View'))
 // social-media
 const SocialDetailTable = lazy(() => import('./admin/settingManagement/SocialDetail/SocialDetailTable'))
-const SocialDetailAdd = lazy(() => import('./admin/settingManagement/SocialDetail/form/Add'))
-const SocialDetailEdit = lazy(() => import('./admin/settingManagement/SocialDetail/form/Edit'))
-const SocialDetailView = lazy(() => import('./admin/settingManagement/SocialDetail/form/View'))
+const SocialDetailAdd = lazy(() => import('./admin/settingManagement/SocialDetail/Add'))
+const SocialDetailEdit = lazy(() => import('./admin/settingManagement/SocialDetail/Edit'))
+const SocialDetailView = lazy(() => import('./admin/settingManagement/SocialDetail/View'))
 // banner
 const BannerTable = lazy(() => import('./admin/bannerManagement/BannerTable'))
-const BannerAdd = lazy(() => import('./admin/bannerManagement/form/Add'))
-const BannerEdit = lazy(() => import('./admin/bannerManagement/form/Edit'))
-const BannerView = lazy(() => import('./admin/bannerManagement/form/View'))
+const BannerAdd = lazy(() => import('./admin/bannerManagement/Add'))
+const BannerEdit = lazy(() => import('./admin/bannerManagement/Edit'))
+const BannerView = lazy(() => import('./admin/bannerManagement/View'))
 // brand
 const BrandTable = lazy(() => import('./admin/brandManagement/BrandTable'))
-const BrandAdd = lazy(() => import('./admin/brandManagement/form/Add'))
-const BrandEdit = lazy(() => import('./admin/brandManagement/form/Edit'))
-const BrandView = lazy(() => import('./admin/brandManagement/form/View'))
+const BrandAdd = lazy(() => import('./admin/brandManagement/Add'))
+const BrandEdit = lazy(() => import('./admin/brandManagement/Edit'))
+const BrandView = lazy(() => import('./admin/brandManagement/View'))
 // tag
 const TagTable = lazy(() => import('./admin/tagManagement/TagTable'))
-const TagAdd = lazy(() => import('./admin/tagManagement/form/Add'))
-const TagEdit = lazy(() => import('./admin/tagManagement/form/Edit'))
-const TagView = lazy(() => import('./admin/tagManagement/form/View'))
+const TagAdd = lazy(() => import('./admin/tagManagement/Add'))
+const TagEdit = lazy(() => import('./admin/tagManagement/Edit'))
+const TagView = lazy(() => import('./admin/tagManagement/View'))
 // color
 const ColorTable = lazy(() => import('./admin/colorManagement/ColorTable'))
-const ColorAdd = lazy(() => import('./admin/colorManagement/form/Add'))
-const ColorEdit = lazy(() => import('./admin/colorManagement/form/Edit'))
-const ColorView = lazy(() => import('./admin/colorManagement/form/View'))
+const ColorAdd = lazy(() => import('./admin/colorManagement/Add'))
+const ColorEdit = lazy(() => import('./admin/colorManagement/Edit'))
+const ColorView = lazy(() => import('./admin/colorManagement/View'))
 // product category
 const CategoryTable = lazy(() => import('./admin/categoryManagement/CategoryTable'))
-const CategoryAdd = lazy(() => import('./admin/categoryManagement/form/Add'))
-const CategoryEdit = lazy(() => import('./admin/categoryManagement/form/Edit'))
-const CategoryView = lazy(() => import('./admin/categoryManagement/form/View'))
+const CategoryAdd = lazy(() => import('./admin/categoryManagement/Add'))
+const CategoryEdit = lazy(() => import('./admin/categoryManagement/Edit'))
+const CategoryView = lazy(() => import('./admin/categoryManagement/View'))
 // product sub-category
 const SubCategoryTable = lazy(() => import('./admin/subCategoryManagement/SubCategoryTable'))
-const SubCategoryAdd = lazy(() => import('./admin/subCategoryManagement/form/Add'))
-const SubCategoryEdit = lazy(() => import('./admin/subCategoryManagement/form/Edit'))
-const SubCategoryView = lazy(() => import('./admin/subCategoryManagement/form/View'))
+const SubCategoryAdd = lazy(() => import('./admin/subCategoryManagement/Add'))
+const SubCategoryEdit = lazy(() => import('./admin/subCategoryManagement/Edit'))
+const SubCategoryView = lazy(() => import('./admin/subCategoryManagement/View'))
 // product sub-category
 const DiscountTable = lazy(() => import('./admin/discountManagement/DiscountTable'))
-const DiscountAdd = lazy(() => import('./admin/discountManagement/form/Add'))
-const DiscountEdit = lazy(() => import('./admin/discountManagement/form/Edit'))
-const DiscountView = lazy(() => import('./admin/discountManagement/form/View'))
+const DiscountAdd = lazy(() => import('./admin/discountManagement/Add'))
+const DiscountEdit = lazy(() => import('./admin/discountManagement/Edit'))
+const DiscountView = lazy(() => import('./admin/discountManagement/View'))
 // product
 const ProductTable = lazy(() => import('./admin/productManagement/ProductTable'))
-const ProductAdd = lazy(() => import('./admin/productManagement/form/Add'))
-const ProductEdit = lazy(() => import('./admin/productManagement/form/Edit'))
-const ProductView = lazy(() => import('./admin/productManagement/form/View'))
+const ProductAdd = lazy(() => import('./admin/productManagement/Add'))
+const ProductEdit = lazy(() => import('./admin/productManagement/Edit'))
+const ProductView = lazy(() => import('./admin/productManagement/View'))
 // unit
 const UnitTable = lazy(() => import('./admin/unitManagement/UnitTable'))
-const UnitAdd = lazy(() => import('./admin/unitManagement/form/Add'))
-const UnitEdit = lazy(() => import('./admin/unitManagement/form/Edit'))
-const UnitView = lazy(() => import('./admin/unitManagement/form/View'))
+const UnitAdd = lazy(() => import('./admin/unitManagement/Add'))
+const UnitEdit = lazy(() => import('./admin/unitManagement/Edit'))
+const UnitView = lazy(() => import('./admin/unitManagement/View'))
 // warranty
 const WarrantyTable = lazy(() => import('./admin/warrantyManagement/WarrantyTable'))
-const WarrantyAdd = lazy(() => import('./admin/warrantyManagement/form/Add'))
-const WarrantyEdit = lazy(() => import('./admin/warrantyManagement/form/Edit'))
-const WarrantyView = lazy(() => import('./admin/warrantyManagement/form/View'))
+const WarrantyAdd = lazy(() => import('./admin/warrantyManagement/Add'))
+const WarrantyEdit = lazy(() => import('./admin/warrantyManagement/Edit'))
+const WarrantyView = lazy(() => import('./admin/warrantyManagement/View'))
 // shop
 const StoreTable = lazy(() => import('./admin/storeManagement/StoreTable'))
-const StoreAdd = lazy(() => import('./admin/storeManagement/form/Add'))
-const StoreEdit = lazy(() => import('./admin/storeManagement/form/Edit'))
-const StoreView = lazy(() => import('./admin/storeManagement/form/View'))
+const StoreAdd = lazy(() => import('./admin/storeManagement/Add'))
+const StoreEdit = lazy(() => import('./admin/storeManagement/Edit'))
+const StoreView = lazy(() => import('./admin/storeManagement/View'))
 // warehouse
 const WarehouseTable = lazy(() => import('./admin/warehouseManagement/WarehouseTable'))
-const WarehouseAdd = lazy(() => import('./admin/warehouseManagement/form/Add'))
-const WarehouseEdit = lazy(() => import('./admin/warehouseManagement/form/Edit'))
-const WarehouseView = lazy(() => import('./admin/warehouseManagement/form/View'))
+const WarehouseAdd = lazy(() => import('./admin/warehouseManagement/Add'))
+const WarehouseEdit = lazy(() => import('./admin/warehouseManagement/Edit'))
+const WarehouseView = lazy(() => import('./admin/warehouseManagement/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
-const FrontLayout = lazy(() => import('./Front/Index/FrontLayout'))
-const FrontPage = lazy(() => import('./Front/Page/FrontPage/FrontPage'))
-const AboutPage = lazy(() => import('./Front/Page/AboutPage/AboutPage'))
-const ContactPage = lazy(() => import('./Front/Page/ContactPage/ContactPage'))
-const ProductList = lazy(() => import('./Front/Page/ProductList/ProductList'))
-const Product = lazy(() => import('./Front/Page/Product/Product'))
+const FrontLayout = lazy(() => import('./front/Index/FrontLayout'))
+const FrontPage = lazy(() => import('./front/Page/FrontPage/FrontPage'))
+const AboutPage = lazy(() => import('./front/Page/AboutPage/AboutPage'))
+const ContactPage = lazy(() => import('./front/Page/ContactPage/ContactPage'))
+const ProductList = lazy(() => import('./front/Page/ProductList/ProductList'))
+const Product = lazy(() => import('./front/Page/Product/Product'))
 // front-panel end // ------------------------------------
 
 class Routing extends Component {
@@ -140,7 +141,7 @@ class Routing extends Component {
             <AuthProvider>
                 <Router>
                     <Routes>
-                        <Route exact path={`/`} element={<FrontLayout />} >
+                        <Route exact path={`/`} element={<PublicRoute><FrontLayout /></PublicRoute>} >
                             {frontPanelRoutes.map((route, index) => (
                                 <Route key={index} exact path={route?.path} element={<route.component />} />
                             ))}

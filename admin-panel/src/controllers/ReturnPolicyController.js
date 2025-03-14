@@ -49,7 +49,6 @@ exports.index = async (req, res, next) => {
                 'info': info,
                 'status': status,
                 'updated_by': updated_by,
-                // 'request': { 'method': 'GET', 'url': `${baseurl}${constName}${_id}` }
             }
         });
         const returnPoliciesResponses = await Promise.all(returnPoliciesPromises);
@@ -60,7 +59,7 @@ exports.index = async (req, res, next) => {
                 limit: limit,
                 totalPages: Math.ceil(totalCount / limit),
                 data: returnPoliciesResponses
-            }, title: 'listing'
+            }, title: 'Return Policy'
         });
     } catch (err) { next(err)  }
 }

@@ -2,12 +2,11 @@ import React, { useContext, useState } from 'react'
 import SubmitButton from '../form/SubmitButton'
 import { notifyInfo } from '../comman/notification/Notification'
 import { get } from '../../../utils/AxiosUtils'
-import { useFormValidation } from '../form/FormValidation'
-import validate from './permission/validate'
 import { useLoading } from '../../../context/LoadingContext'
 import PermissionTable from './permission/PermissionTable'
 import { SidebarContext } from '../../../context/SidebarContext'
 import SelectUser from '../form/select/SelectUser'
+import { useFormValidation, userPermissionValidation } from '../../../utils/FormValidation'
 
 function UserRolePermission() {
 
@@ -21,14 +20,13 @@ function UserRolePermission() {
     user_id: ''
   };
 
-  const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
+  const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, userPermissionValidation);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     notifyInfo(values);
     validateSubmit(e);
     if (errors && Object.keys(errors).length > 0) {
-      // console.info(`Form validation failed : `);
       console.table(errors);
       return false;
     }

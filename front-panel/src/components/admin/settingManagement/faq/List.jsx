@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { destroy, get } from '../../../../utils/AxiosUtils'
 import AccordionFrom from './AccordionFrom'
-import ReusableModal from '../../table/models/ReusableModal'
 import { useNavigate } from 'react-router-dom'
 import { SidebarContext } from '../../../../context/SidebarContext'
 import { notifySuccess } from '../../comman/notification/Notification'
 import { useLoading } from '../../../../context/LoadingContext'
 import { Loading } from '../../loading/Loading'
+import ReusableModal from '../../models/ReusableModal'
 
 function List() {
     const { pathname } = useContext(SidebarContext);

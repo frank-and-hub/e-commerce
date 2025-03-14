@@ -280,8 +280,14 @@ export function faqValidation(values) {
 export function storeValidation(values) {
     let errors = {}
     if (!values.name) errors.name = 'Please enter name';
-    if (!values.percentage) errors.percentage = 'Please enter percentage';
-    if (!values.description) errors.description = 'Please enter description';
+    if (!values.phone) errors.phone = 'Please enter phone';
+    if (!values.email) errors.email = 'Please enter email';
+    if (!values.address) errors.address = 'Please enter address';
+    if (!values.city) errors.city = 'Please enter city';
+    if (!values.state) errors.state = 'Please enter state';
+    if (!values.zipcode) errors.zipcode = 'Please enter zipcode';
+    if (!values.country) errors.country = 'Please enter country';
+    if (!values.supplier_id) errors.supplier_id = 'Please select supplier';
     return errors;
 }
 

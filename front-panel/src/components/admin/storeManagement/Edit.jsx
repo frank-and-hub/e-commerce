@@ -12,6 +12,7 @@ import { useLoading } from '../../../context/LoadingContext'
 import Textarea from '../form/Textarea'
 import CardForm from '../card/CardForm'
 import { storeValidation, useFormValidation } from '../../../utils/FormValidation'
+import SelectSupplier from '../form/select/SelectSupplier'
 
 function Edit() {
     const { id } = useParams();
@@ -29,7 +30,7 @@ function Edit() {
         state: ``,
         zipcode: ``,
         country: ``,
-        supplier: ``
+        supplier_id: ``
     };
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, storeValidation);
@@ -91,6 +92,9 @@ function Edit() {
             <Input name={`city`} label="city" value={values?.city} onChange={handleChange} error={errors.city} required={true} inputType={true} />
             <Input name={`zipcode`} label="zipcode" value={values?.zipcode} onChange={handleChange} error={errors.zipcode} required={true} inputType={true} />
             <Textarea name={`address`} label="address" value={values?.address} onChange={handleChange} error={errors.address} required={true} inputType={true} ></Textarea>
+            <div className={`col-md-4`}>
+                <SelectSupplier id={`supplier_id`} label={`supplier`} value={values.supplier_id} handleChange={handleChange} error={errors.supplier_id} required={true} />
+            </div>
             <div className={`col-12`}>
                 <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
             </div>

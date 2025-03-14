@@ -6,6 +6,7 @@ import { processNotifications } from '../../../utils/notificationUtils'
 import { useDispatch } from 'react-redux'
 import Textarea from '../form/Textarea'
 import CardForm from '../card/CardForm'
+import SelectSupplier from '../form/select/SelectSupplier'
 
 function View() {
     const { id } = useParams();
@@ -47,6 +48,9 @@ function View() {
             <Input name={`city`} label="city" value={values?.city} onChange={handleChange} disabled={true} required={false} inputType={true} />
             <Input name={`zipcode`} label="zipcode" value={values?.zipcode} onChange={handleChange} disabled={true} required={false} inputType={true} />
             <Textarea name={`address`} label="address" value={values?.address} onChange={handleChange} disabled={true} required={false} inputType={true} ></Textarea>
+            <div className={`col-md-4`}>
+                <SelectSupplier id={`supplier_id`} label={`supplier`} value={values.supplier_id} handleChange={handleChange} required={true} disabled={true}/>
+            </div>
             <div className={`col-12`}>
             </div>
         </CardForm>

@@ -38,8 +38,8 @@ exports.index = async (req, res, next) => {
 
         const query = WishList.find(filter)
             .select('_id products user status updated_by')
-            .populate('user', '_id name')
-            .populate('updated_by', '_id name')
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name')
             .populate('products', '_id name price');
 
         if (req?.query?.page != 0) {

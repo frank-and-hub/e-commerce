@@ -12,7 +12,8 @@ function ProfileOverview({ user }) {
         'Address': user?.address,
         'City': user?.city,
         'State': user?.state,
-        'Zip Code': user?.zipcode
+        'Zip Code': user?.zipcode,
+        'Time Zone': user?.tmezone
     };
     return (
         <>

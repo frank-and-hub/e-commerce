@@ -45,7 +45,7 @@ exports.index = async (req, res, next) => {
 
         const query = NewsLetter.find(filter)
             .select('_id email ip_address updated_by status')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -206,7 +206,7 @@ exports.findData = async (id, res) => {
    
     const newsLetterData = await NewsLetter.findById(id)
         .select('_id email ip_address status updated_by')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!newsLetterData) return res.status(404).json({ message: `NewsLetter not found` });
     return newsLetterData;

@@ -142,7 +142,7 @@ exports.show = async (req, res, next) => {
             .select('_id sender_id receiver_id message updated_by status')
             .populate('sender_id', '_id name')
             .populate('receiver_id', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (!messageData || messageData?.length === 0) return res.status(200).json({ message: `Chat not found` });
 

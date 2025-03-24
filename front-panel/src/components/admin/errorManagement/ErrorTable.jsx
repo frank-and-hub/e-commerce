@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import Table from '../table/Table'
 import SubmitButton from '../form/SubmitButton'
-import { StatusOptions } from '../../../utils/selects'
+import { ApiStatusOptions } from '../../../utils/selects'
 import SelectForm from '../form/select/SelectForm'
+
 import { useLoading } from '../../../context/LoadingContext'
 import { useFormValidation, validate } from '../../../utils/FormValidation'
-import SelectSupplier from '../form/select/SelectSupplier'
 
 function DiscountTable() {
-    const module = 'stores';
+    const module = 'errors';
     const [showFilter, setShowFilter] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const { loading, setLoading } = useLoading();
@@ -54,10 +54,10 @@ function DiscountTable() {
     const handlers = {
         url: `/${module}`,
         handelView: true,
-        handelEdit: true,
+        handelEdit: false,
         handelDelete: true,
         handelFilter,
-        handelCreate: true,
+        handelCreate: false,
         moduleName: module,
         filter
     };
@@ -72,11 +72,9 @@ function DiscountTable() {
                     <form key={formKey} encType={`multipart/form-data`} className={`row m-0 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
 
                         <div className={`col-md-4`}>
-                            <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={StatusOptions} />
+                            <SelectForm id="status" label={`Status`} value={values.status} handleChange={handleChange} error={errors.status} required={false} Options={ApiStatusOptions} />
                         </div>
-                        <div className={`col-md-4`}>
-                            <SelectSupplier id={`supplier_id`} label={`supplier`} value={values.supplier_id} handleChange={handleChange} error={errors.supplier_id} required={true} />
-                        </div>
+
                         <div className={`col-md-12`}>
                             <SubmitButton className={`custom`} name={loading ? 'Loading...' : 'apply filter'} disabled={!showTable} />
                             <SubmitButton className={`secondary`} name={`Reset`} type='button' onClick={resetForm} />

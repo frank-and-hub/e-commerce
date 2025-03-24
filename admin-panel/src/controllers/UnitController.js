@@ -45,7 +45,7 @@ exports.index = async (req, res, next) => {
 
         const query = Unit.find(filter)
             .select('_id name short_name updated_by status')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -202,7 +202,7 @@ exports.findData = async (id, res) => {
    
     const unitData = await Unit.findById(id)
         .select('_id name short_name updated_by status')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!unitData) return res.status(404).json({ message: `Unit not found` });
     return unitData;

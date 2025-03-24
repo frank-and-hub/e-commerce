@@ -106,7 +106,7 @@ function Edit() {
         <CardForm handleSubmit={handleSubmit} key={formKey}>
             <div className={`col-md-4`}>
                 <div className='cursor-none'>
-                    <img src={src} alt={`Brand`} className={`rounded-25 col-md-6`} onClick={handleClick} style={{ cursor: 'pointer' }} />
+                    <img src={src} alt={`Brand`} className={`rounded-25 col-md-6 image-shell w-50`} onClick={handleClick} loading={`lazy`}/>
                 </div>
             </div>
             <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />

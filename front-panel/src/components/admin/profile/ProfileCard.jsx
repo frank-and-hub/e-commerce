@@ -49,7 +49,7 @@ function ProfileCard({ user }) {
             <div key={Math.floor(Math.random() * 1000)} className={`card pb-3`}>
                 <div className={`card-body profile-card pt-4 d-flex flex-column align-items-center`}>
                     <form encType={`multipart/form-data`} >
-                        <img src={src} alt={`Profile`} className={`rounded-circle circle-image`} onClick={handleClick} style={{ cursor: 'pointer' }} />
+                        <img src={src} alt={`Profile`} className={`rounded-circle circle-image`} onClick={handleClick} style={{ cursor: 'pointer' }} loading={`lazy`} />
                         <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
                     </form>
                     <h2>{getFullName(user?.name)}</h2>

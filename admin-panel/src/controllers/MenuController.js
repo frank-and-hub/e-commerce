@@ -57,7 +57,7 @@ exports.index = async (req, res, next) => {
 
         const query = Menu.find(filter)
             .select('_id name route type parent status icon updated_by status')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (filter_type) {
             query.sort({ [orderByField]: orderByDirection })
@@ -298,7 +298,7 @@ exports.findData = async (id, res) => {
  
     const menuData = await Menu.findById(id)
         .select('_id name route parent icon type updated_by status')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!menuData) return res.status(404).json({ message: `Menu not found` });
     return menuData;

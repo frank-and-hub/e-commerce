@@ -39,7 +39,7 @@ exports.signIn = async (req, res, next) => {
         const userData = await User.findOne({ email: email, status: status_active })
             .select('_id name email phone password password_text role image gender address about city state zipcode terms status updated_by')
             .populate('role', '_id name')
-            .populate('updated_by', '_id name')
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name')
             .populate('image', '_id name path');
         // check user data
         if (!userData) return res.status(401).json({ message: `User not found!` });

@@ -16,16 +16,13 @@ function View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-
-                const [tagData] = await Promise.all([
+                const [storesData] = await Promise.all([
                     get(`/stores/${id}`),
                 ]);
-
-                setValues(tagData?.data || {});
-
-                processNotifications(200, tagData?.message, dispatch);
+                console.log(storesData);
+                setValues(storesData?.data || {});
+                processNotifications(200, storesData?.message, dispatch);
             } catch (err) {
-
                 processNotifications(err.status || 500, err.message, dispatch);
             }
         };
@@ -49,7 +46,7 @@ function View() {
             <Input name={`zipcode`} label="zipcode" value={values?.zipcode} onChange={handleChange} disabled={true} required={false} inputType={true} />
             <Textarea name={`address`} label="address" value={values?.address} onChange={handleChange} disabled={true} required={false} inputType={true} ></Textarea>
             <div className={`col-md-4`}>
-                <SelectSupplier id={`supplier_id`} label={`supplier`} value={values.supplier_id} handleChange={handleChange} required={true} disabled={true}/>
+                <SelectSupplier id={`supplier_id`} label={`supplier`} value={values?.supplier_id} handleChange={handleChange} required={true} disabled={true}/>
             </div>
             <div className={`col-12`}>
             </div>

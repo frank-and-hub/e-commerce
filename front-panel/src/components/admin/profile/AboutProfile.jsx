@@ -99,7 +99,7 @@ function AboutProfile() {
                 <div className={`row mb-3`}>
                     <label htmlFor={`fileResume`} className={`col-md-4 col-lg-3 col-form-label text-start text-capitalize`}>Resume <span className={`text-dange`}>*</span></label>
                     <div className={`col-md-8 col-lg-9`}>
-                        <img src={src} alt={`Resume`} id={`fileResume`} className={`w-25`} style={{ cursor: 'pointer'}} onClick={handleClick} />
+                        <img src={src} alt={`Resume`} id={`fileResume`} className={`w-25`} style={{ cursor: 'pointer'}} onClick={handleClick} loading={`lazy`} />
                         <input type={`file`} id={`resumeFile`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
                     </div>
                 </div>

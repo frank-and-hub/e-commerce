@@ -17,7 +17,7 @@ exports.show = async (req, res, next) => {
             .select('_id name email phone gender address city state zipcode role image')
             .where('status').equals(status_active)
             .populate('role', '_id name')
-            .populate('updated_by', '_id name')
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name')
             .populate('image', '_id name path');
 
         const social_details = await SocialDetail.find({ 'user': userData?._id })
@@ -43,7 +43,7 @@ exports.show = async (req, res, next) => {
 
         // const plans = await Plan.find({ 'user': userData?._id })
         //     .select('_id user name description price currency payment_method payment_type')
-        //     .populate('user', '_id name')
+        //     .populate('user', '_id name.first_name name.middle_name name.last_name')
         //     .sort({ _id: -1 });
 
         if (!userData) return res.status(404).json({ message: `User not found!`, data: [] });

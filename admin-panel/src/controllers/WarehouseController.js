@@ -47,7 +47,7 @@ exports.index = async (req, res, next) => {
         const query = Warehouse.find(filter)
             .select('_id name phone email address city state zipcode country supplier updated_by status')
             .populate('supplier', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -253,7 +253,7 @@ exports.findData = async (id, res) => {
     const warehouseData = await Warehouse.findById(id)
         .select('_id name phone email address city state zipcode status supplier updated_by')
         .populate('supplier', '_id name')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!warehouseData) return res.status(404).json({ message: `Warehouse not found` });
     return warehouseData;

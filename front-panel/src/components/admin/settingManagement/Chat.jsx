@@ -112,7 +112,7 @@ const Chat = ({ userOptions }) => {
                                 {errors?.message && <div className={`invalid-feedback`} >{errors.message}</div>}
                             </div>
 
-                            <div className={`col-xl-12 text-center col-lg-12 col-sm-12`}>
+                            <div className={`col-12`}>
                                 <SubmitButton className={`custom w-50`} name={loading ? 'Sending...' : 'Send'} />
                             </div>
                         </div>

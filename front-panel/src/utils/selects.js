@@ -75,3 +75,62 @@ export const PeriodOptions = [
         label: 'Years'
     },
 ];
+
+export const ApiStatusOptions = [
+    {
+        value: '200',
+        label: 'OK'
+    },
+    {
+        value: '201',
+        label: 'Created'
+    },
+    {
+        value: '204',
+        label: 'No Content'
+    },
+    {
+        value: '400',
+        label: 'Bad Request'
+    },
+    {
+        value: '401',
+        label: 'Unauthorized'
+    },
+    {
+        value: '403',
+        label: 'Forbidden'
+    },
+    {
+        value: '404',
+        label: 'Not Found'
+    },
+    {
+        value: '405',
+        label: 'Method Not Allowed'
+    },
+    {
+        value: '408',
+        label: 'Request Timeout'
+    },
+    {
+        value: '500',
+        label: 'Internal Server Error'
+    },
+    {
+        value: '502',
+        label: 'Bad Gateway'
+    },
+    {
+        value: '503',
+        label: 'Service Unavailable'
+    },
+    {
+        value: '504',
+        label: 'Gateway Timeout'
+    },
+    {
+        value: '505',
+        label: 'HTTP Version Not Supported'
+    }
+];

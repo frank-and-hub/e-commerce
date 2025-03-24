@@ -47,9 +47,9 @@ exports.index = async (req, res, next) => {
 
         const query = Cart.find(filter)
             .select('_id product user status updated_by')
-            .populate('user', '_id name')
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
             .populate('product', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -245,8 +245,8 @@ exports.findData = async (id, res) => {
 
     const cartData = await Cart.findById(id)
         .select('_id products user updated_by status')
-        .populate('user', '_id name')
-        .populate('updated_by', '_id name')
+        .populate('user', '_id name.first_name name.middle_name name.last_name')
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name')
         .populate('products.product', '_id name price');
 
     if (!cartData) return res.status(404).json({ message: `Cart not found` });

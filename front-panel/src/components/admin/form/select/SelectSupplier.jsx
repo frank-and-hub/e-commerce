@@ -13,7 +13,7 @@ function SelectSupplier({ id, handleChange, value, error, required = false, disa
     }));
 
     const fetchData = async () => {
-        const res = await get('/suppliers?page=0');
+        const res = await get('/users?page=0');
         setResponse(res?.response);
     }
 

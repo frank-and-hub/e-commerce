@@ -48,9 +48,9 @@ exports.index = async (req, res, next) => {
 
         const query = Banner.find(filter)
             .select('_id name title description url image user updated_by status')
-            .populate('user', '_id name')
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
             .populate('image', '_id name path')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -265,9 +265,9 @@ exports.findData = async (id, res) => {
    
     const bannerData = await Banner.findById(id)
         .select('_id name title description user image url updated_by status')
-        .populate('user', '_id name')
+        .populate('user', '_id name.first_name name.middle_name name.last_name')
         .populate('image', '_id name path')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!bannerData) return res.status(404).json({ message: `Banner not found` });
     return bannerData;

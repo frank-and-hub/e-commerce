@@ -47,7 +47,7 @@ exports.index = async (req, res, next) => {
         const query = Coupon.find(filter)
             .select('_id name discount code start_date end_date limit once_per_customer updated_by status')
             .populate('discount', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -245,7 +245,7 @@ exports.findData = async (id, res) => {
     const couponData = await Coupon.findById(id)
         .select('_id name discount code start_date end_date limit once_per_customer status updated_by')
         .populate('discount', '_id name')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!couponData) return res.status(404).json({ message: `Coupon not found` });
     return couponData;

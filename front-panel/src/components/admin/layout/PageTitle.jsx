@@ -8,10 +8,14 @@ function PageTitle({ title, location }) {
     return (
         <>
             <div className={`pagetitle text-left mt-3`}>
-                <nav>
+                <nav className={`d-flex justify-content-between`} >
+                    <button type={`button`} className={`shadow btn btn-sm rounded-circle`} >
+                        <i className={`ri-arrow-go-forward-fill`} ></i>
+                    </button>
                     <ol className={`breadcrumb mb-0 text-capitalize`}>
                         <li className={`breadcrumb-item`}>
-                            <Link to={`/admin/index`} >home</Link>
+                            <Link to={`/admin/index`} >
+                            <i className={`bi bi-house-door`}></i></Link>
                         </li>
                         {pathSegments.map((segment, index) => {
                             const routeTo = `/admin/${pathSegments.slice(0, index + 1).join('/')}`;
@@ -23,7 +27,7 @@ function PageTitle({ title, location }) {
                                 </li>
                             ) : (
                                 <li key={index} className={`breadcrumb-item`}>
-                                    <Link to={routeTo} >{(segment.replace(/-/g, ' '))}</Link>
+                                    <Link to={routeTo} data-discover={true} >{(segment.replace(/-/g, ' '))}</Link>
                                 </li>
                             );
                         })}

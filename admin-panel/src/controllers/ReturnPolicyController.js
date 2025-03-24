@@ -30,7 +30,7 @@ exports.index = async (req, res, next) => {
         const query = ReturnPolicy.find()
             .select('_id info updated_by status')
             .where('status').equals(status_active)
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })

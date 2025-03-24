@@ -11,14 +11,12 @@ const Support = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-
             try {
                 const [supportData] = await Promise.all([
                     get(`/support-details`),
                 ]);
 
                 setSupportDetails(supportData?.response?.data || {});
-
                 processNotifications(200, supportData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
@@ -36,7 +34,7 @@ const Support = () => {
                     </div>
                 </div>
                 <div className={`row gy-4`}>
-                    <div className={`${supportDetails.length > 0 ? `col-xl-6` : `col-0 m-0`}`}>
+                    <div className={`${supportDetails.length > 0 ? `col-xl-6` : `col-md-8 col-12 m-0`}`}>
                         {supportDetails && supportDetails.length > 0 && supportDetails.map((values) => (
                             <div className={`card p-4`}>
                                 <div className='row p-0'>
@@ -68,7 +66,7 @@ const Support = () => {
                             </div>
                         ))}
                     </div>
-                    <div className={`${supportDetails.length > 0 ? `col-xl-6` : `col-12`}`}>
+                    <div className={`${supportDetails.length > 0 ? `col-xl-6` : `col-md-4 col-12`}`}>
                         <Chat />
                     </div>
                 </div>

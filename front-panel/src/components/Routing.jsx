@@ -115,6 +115,10 @@ const WarehouseTable = lazy(() => import('./admin/warehouseManagement/WarehouseT
 const WarehouseAdd = lazy(() => import('./admin/warehouseManagement/Add'))
 const WarehouseEdit = lazy(() => import('./admin/warehouseManagement/Edit'))
 const WarehouseView = lazy(() => import('./admin/warehouseManagement/View'))
+// error
+const ErrorTable = lazy(() => import('./admin/errorManagement/ErrorTable'))
+const ErrorView = lazy(() => import('./admin/errorManagement/View'))
+
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -167,6 +171,10 @@ class Routing extends Component {
                                     <Route exact path={`:id/edit`} element={<MenuEdit />} />
                                     <Route exact path={`:id`} element={<MenuView />} />
                                     <Route exact path={`role-and-permission`} element={<PermissionTable />} />
+                                    <Route exact path={`errors`}>
+                                        <Route exact path={`list`} element={<ErrorTable />} />
+                                        <Route exact path={`:id`} element={<ErrorView />} />
+                                    </Route>
                                 </Route>
 
                                 <Route exact path={`roles`}>

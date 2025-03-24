@@ -34,7 +34,12 @@ exports.index = async (req, res, next) => {
             const trimmedSearch = search.trim();
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
-                { short_name: { $regex: trimmedSearch, $options: "i" } },
+                { phone: { $regex: trimmedSearch, $options: "i" } },
+                { email: { $regex: trimmedSearch, $options: "i" } },
+                { address: { $regex: trimmedSearch, $options: "i" } },
+                { city: { $regex: trimmedSearch, $options: "i" } },
+                { zipcode: { $regex: trimmedSearch, $options: "i" } },
+                { state: { $regex: trimmedSearch, $options: "i" } },
             ];
         }
 
@@ -46,8 +51,8 @@ exports.index = async (req, res, next) => {
 
         const query = Store.find(filter)
             .select('_id name phone email address city state zipcode country supplier updated_by status')
-            .populate('supplier', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('supplier', '_id name.first_name name.middle_name name.last_name')
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -59,7 +64,7 @@ exports.index = async (req, res, next) => {
         if (stores.length === 0) return res.status(200).json({ message: `No stores found`, data: [] });
 
         const storePromises = stores.map(async (store) => {
-            const { _id, name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = store
+            const { _id, name, phone, email, address, city, state, zipcode, supplier, status } = store
             return {
                 'id': _id,
                 'name': name,
@@ -69,8 +74,7 @@ exports.index = async (req, res, next) => {
                 'city': city,
                 'state': state,
                 'zipcode': zipcode,
-                'supplier': supplier,
-                'updated_by': updated_by,
+                // 'supplier':supplier,
                 'status': status
             }
         });
@@ -110,7 +114,7 @@ exports.store = async (req, res, next) => {
     const { name, phone, email, address, city, state, zipcode, supplier_id } = req.body;
     try {
 
-        const existsStore = await Store.findOne({ name: name, status: status_active });
+        const existsStore = await Store.findOne({ name: name, status: status_active, address: address });
         if (existsStore) return res.status(200).json({ message: 'Store already exists' });
 
         const supplier = await User.findById(supplier_id).select('_id name').where('status').equals(status_active);
@@ -145,9 +149,7 @@ exports.show = async (req, res, next) => {
         const result = {
             'id': _id,
             'name': name,
-            'owner_name': owner_name,
             'phone': phone,
-            'work_phone': work_phone,
             'email': email,
             'address': address,
             'city': city,
@@ -249,11 +251,11 @@ exports.destroy = async (req, res, next) => {
 }
 
 exports.findData = async (id, res) => {
-   
+
     const storeData = await Store.findById(id)
         .select('_id name phone email address city state zipcode status supplier updated_by')
-        .populate('supplier', '_id name')
-        .populate('updated_by', '_id name');
+        .populate('supplier', '_id')
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!storeData) return res.status(404).json({ message: `Store not found` });
     return storeData;

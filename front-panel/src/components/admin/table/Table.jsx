@@ -21,11 +21,12 @@ const Table = ({
     filter,
     moduleName
 }) => {
-    
+
     const { pathname } = useContext(SidebarContext);
     const { loading, setLoading } = useLoading();
 
     const [data, setData] = useState([]);
+    const [dataTableTitle, setDataTableTitle] = useState(null);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +44,7 @@ const Table = ({
     const [selectedItemStatus, setSelectedItemStatus] = useState(null);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
 
-    const title = `${ucwords(pathname + ' data table')}`;
+    const title = `${ucwords((dataTableTitle ?? pathname) + ' table')}`;
     const cleanedTitle = title.replace(/[?_~/-]/g, ' ');
 
     const handleSearchChange = (e) => {
@@ -51,12 +52,10 @@ const Table = ({
         setCurrentPage(1);
     }
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    }
+    const handlePageChange = (page) => setCurrentPage(page);
 
     const tableData = (data && data?.length > 0) ? Object.keys(data[0]) : [];
-
+    
     const handleSort = (key) => {
         let direction = 'asc';
         if (sortConfig.key === key && sortConfig.direction === 'asc') {
@@ -113,6 +112,7 @@ const Table = ({
                 setDataCount(res?.response?.count)
                 setTotalPages(res?.response?.totalPages)
                 setLoading(false)
+                setDataTableTitle(res?.title)
 
             } catch (err) {
                 notifyError(err.message || 'An error occurred while fetching data.');
@@ -121,9 +121,7 @@ const Table = ({
             }
         };
 
-        if (!selectedItem) {
-            fetchData();
-        }
+        if (!selectedItem) fetchData();
 
     }, [setLoading, url, selectedItem, params]);
 
@@ -138,11 +136,8 @@ const Table = ({
     }
 
     const longTextString = (item) => {
-        if (Array.isArray(item)) {
-            return item?.map((obj, idx) => ucwords(obj?.name)).join(', ');
-        } else {
-            return ucwords(item?.name);
-        }
+        const itemName = (Array.isArray(item)) ? item?.map((obj, idx) => ucwords(obj?.name)).join(', ') : ucwords(item?.name);
+        return itemName;
     }
 
     const start = (currentPage - 1) * dataLimit + 1;
@@ -171,7 +166,7 @@ const Table = ({
                 break;
             case 'image':
                 const imageSrc = data?.image?.path;
-                content = imageSrc ? (<div className={`w-25 rounded-25`} ><img src={`${imageSrc}`} className={`rounded-circle circle-image-sm`} alt={`#`} /></div>) : (<i className={`bi bi-card-image`}></i>);
+                content = imageSrc ? (<div className={`w-25 rounded-25`} ><img src={`${imageSrc}`} className={`rounded-circle circle-image-sm`} alt={`#`} loading={`lazy`} /></div>) : (<i className={`bi bi-card-image`}></i>);
                 break;
             default:
                 if (typeof item === 'object' && item !== null) {
@@ -186,20 +181,20 @@ const Table = ({
 
     return (
         <>
-            <div key={`${url}`} className={`card`}>
+            <div className={`card`}>
                 <div className={`card-body`}>
                     <div className='row my-2'>
                         <div className={`col-md-6`}>
-                            <h6 className={`card-title text-capitalize`}>{cleanedTitle}</h6>
+                            <h6 className={`card-title text-capitalize mb-0`}>{cleanedTitle}</h6>
                         </div>
                         <div className={`d-flex justify-content-evenly align-items-center col-md-6`}>
                             <div className={`col-md-9 col-sm-10 col-9`}>
                                 <input
                                     type={`text`}
-                                    placeholder={`Search...`}
+                                    placeholder={`Search ${moduleName} ...`}
                                     value={searchTerm}
                                     onChange={handleSearchChange}
-                                    className={`form-control rounded-pill`}
+                                    className={`form-control rounded-pill shadow`}
                                 />
                             </div>
                             {handelFilter || handelCreate ? (
@@ -207,7 +202,7 @@ const Table = ({
                                     {handelFilter && (
                                         <div className={`col-6 m-auto`}>
                                             <span className={`d-inline-block color`} tabIndex={`0`} data-bs-toggle={`tooltip`} data-bs-original-title={``} title={ucwords(`filter`)}>
-                                                <Link onClick={() => handelFilter()} className={`btn btn-sm border rounded-circle`}>
+                                                <Link onClick={() => handelFilter()} className={`shadow btn btn-sm rounded-circle`}>
                                                     <i className={`bi bi-filter`}></i>
                                                 </Link>
                                             </span>
@@ -216,7 +211,7 @@ const Table = ({
                                     {handelCreate && (
                                         <div className={`col-6 m-auto`}>
                                             <span className={`d-inline-block color`} tabIndex={`0`} data-bs-toggle={`tooltip`} title={ucwords(`add`)}>
-                                                <Link to={`/admin${pathname}/create`} className={`btn btn-sm border rounded-circle`}>
+                                                <Link to={`/admin${pathname}/create`} className={`shadow btn btn-sm rounded-circle`}>
                                                     <i className={`bi bi-plus`}></i>
                                                 </Link>
                                             </span>
@@ -226,7 +221,11 @@ const Table = ({
                             ) : ``}
                         </div>
                     </div>
-                    <div className={`pre-table`}>
+                </div>
+            </div>
+            <div key={`${url}`} className={`card`}>
+                <div className={`card-body`}>
+                    <div className={`pre-table mt-3`}>
                         <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl} mb-2`} style={{ wordWrap: 'normal' }}>
                             <thead>
                                 <tr>
@@ -277,14 +276,14 @@ const Table = ({
                                     </tr>
                                 ))) : (<tr>
                                     <th colSpan={tableData.length + 1} className='text-center'>
-                                        No Data Found!...
+                                        <img src={`/admin/img/no-data-found.svg`} alt={`No Data Found!...`} className={`w-25`} />
                                     </th>
                                 </tr>))}
                             </tbody>
                             <tfoot >
                                 <tr>
-                                    <td colSpan={tableData.length + 1}>
-                                        <div className={`row justify-content-md-between mt-2`}>
+                                    <td colSpan={tableData.length + 1} className={`${tableData.length === 0?`p-0`:``}`} >
+                                        <div className={`row justify-content-md-between${tableData?.length > 0 ? ` mt-2`:``}`}>
                                             <div className={`col-md-5 col-12 d-none d-md-block`}>
                                                 {dataCount > dataLimit && (
                                                     <>

@@ -43,7 +43,7 @@ exports.index = async (req, res, next) => {
                     select: '_id name'
                 }
             })
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -229,8 +229,7 @@ exports.getGuestRole = async (string) => {
 }
 
 exports.findData = async (id, res) => {
-   
-    const roleData = await Role.find(query)
+    const roleData = await Role.findById(id)
         .select('_id name permissions updated_by status')
         .populate({
             path: 'permissions',
@@ -240,7 +239,7 @@ exports.findData = async (id, res) => {
                 select: '_id name'
             }
         })
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!roleData) return res.status(404).json({ message: `Role not found` });
     return roleData;

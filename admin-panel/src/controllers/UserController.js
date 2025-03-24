@@ -65,7 +65,7 @@ exports.index = async (req, res, next) => {
         const query = User.find(filter)
             .select('_id name email phone gender image status role about updated_by')
             .populate('role', '_id name')
-            .populate('updated_by', '_id name')
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name')
             .populate('image', '_id name path');
 
         if (req?.query?.page != 0) {

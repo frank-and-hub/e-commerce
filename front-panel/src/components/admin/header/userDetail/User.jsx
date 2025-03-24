@@ -8,9 +8,15 @@ function User() {
     const user = useSelector((state) => (state.auth.user));
     const [src, setSrc] = useState('');
 
+    const defaultImage = `assets/img/profile-img.jpg`;
+
     useEffect(() => {
-        setSrc(user?.image?.path ?? `assets/img/profile-img.jpg`);
-    }, [user, src]);
+        setSrc(user?.image?.path ?? defaultImage);
+    }, [user, src,defaultImage]);
+
+    const handleError = () => {
+        setSrc(defaultImage);
+    }
 
     return (
         <>
@@ -20,7 +26,7 @@ function User() {
                     onClick={(e) => e.preventDefault()}
                     data-bs-toggle={`dropdown`}
                 >
-                    <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} />
+                    <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} loading={`lazy`} onError={handleError} />
                     <span className={`d-none d-md-block dropdown-toggle ps-2`}>{getFullName(user?.name)}</span>
                 </Link>
                 <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-25 card-color`}>

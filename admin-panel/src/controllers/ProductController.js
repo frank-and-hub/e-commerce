@@ -59,8 +59,8 @@ exports.index = async (req, res, next) => {
         const query = Product.find(filter)
             .select('_id name description code url image user type manufactured_date expiry_date status updated_by')
             .populate('image', '_id name path')
-            .populate('user', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -431,7 +431,7 @@ exports.findData = async (id, res) => {
         .populate('discount', '_id name')
         .populate('unit', '_id name')
         .populate('brand', '_id name')
-        .populate('user', '_id name')
+        .populate('user', '_id name.first_name name.middle_name name.last_name')
         .populate('image', '_id name path')
         .populate('warranty', '_id name')
         .populate({
@@ -450,7 +450,7 @@ exports.findData = async (id, res) => {
             path: 'product_images',
             select: '_id name path'
         })
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!productData) return res.status(404).json({ message: `Product not found` });
     return productData;

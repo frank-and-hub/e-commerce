@@ -46,7 +46,7 @@ exports.index = async (req, res, next) => {
 
         const query = SocialDetail.find(filter)
             .select('_id name url icon updated_by status')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -209,7 +209,7 @@ exports.findData = async (id, res) => {
    
     const socialData = await SocialDetail.findById(id)
         .select('_id name url icon updated_by status')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!socialData) return res.status(404).json({ message: `SocialDetail not found` });
     return socialData;

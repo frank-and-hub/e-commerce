@@ -78,13 +78,13 @@ function Add() {
     return (
         <CardForm handleSubmit={handleSubmit} key={formKey}>
             <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={handleFileUpload} />
-            <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
+            <Input name={`name`} label="name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
             <Input name={`title`} label="title" value={values?.title} required={true} error={errors.title} inputType={true} disabled={false} onChange={handleChange} />
             <Input name={`url`} label="url" value={values?.url} required={false} error={errors.url} inputType={true} disabled={false} onChange={handleChange} />
             <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
             <div className={`col-md-4`}>
                 <div className='cursor-none'>
-                    <img src={src} alt={`Brand`} className={`rounded-25 col-md-6`} onClick={handleClick} style={{ cursor: 'pointer' }} />
+                    <img src={src} alt={`Brand`} className={`rounded-25 col-md-6 image-shell w-50`} onClick={handleClick} loading={`lazy`} />
                 </div>
             </div>
             <div className={`col-12`}>

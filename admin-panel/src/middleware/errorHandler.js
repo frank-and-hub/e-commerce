@@ -1,36 +1,38 @@
-const config = require('../../nodemon.json').env;
-const ErrorLog = require('../models/errorlog');
+const config = require(`../../nodemon.json`).env;
+const ErrorLog = require(`../models/errorlog`);
 
-module.exports = (err, req, res, next) => {
-    const statusCode = err.status || 500;
-    const errorType = config.ERROR_CODES[statusCode] || 'UnknownError';
+module.exports = async (err, req, res, next) => {
+    try {
+        const statusCode = err?.status || 500;
+        const errorType = config.ERROR_CODES[statusCode] || `UnknownError`;
 
-    let ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
-    if (ip.includes("::ffff:")) {
-        ip = ip.split("::ffff:")[1];
-    }
+        let ip = req.headers[`x-forwarded-for`]?.split(`,`)[0] || req.socket.remoteAddress;
 
-    const errorLog = new ErrorLog({
-        route: req.originalUrl,
-        statusCode: statusCode,
-        errorMessage: err.message,
-        errorType: errorType,
-        stackTrace: err.stack,
-        IP: ip
-    });
+        if (ip.includes("::ffff:")) ip = ip.split("::ffff:")[1];
 
-    errorLog.save()
-        .then(() => {
-            console.info('Error logged successfully');
-        })
-        .catch(logError => {
-            console.error('Failed to log error:', logError);
+        const errorLog = new ErrorLog({
+            route: req.originalUrl,
+            statusCode: statusCode,
+            errorMessage: err.message,
+            errorType: errorType,
+            stackTrace: err.stack,
+            IP: ip
         });
 
-    res.status(statusCode).json({
-        code: statusCode,
-        message: err.message || 'An error occurred',
-        errorType: errorType,
-        line: err.line
-    });
+        await errorLog.save()
+            .then(() => {
+                console.info(`Error logged successfully`);
+            })
+            .catch(logError => {
+                console.error(`Failed to log error:`, logError);
+            });
+
+        res.status(statusCode).json({
+            code: statusCode,
+            message: err.message || `An error occurred`,
+            errorType: errorType,
+            line: err.line || `N/A`
+        });
+
+    } catch (logError) { next(logError) }
 }

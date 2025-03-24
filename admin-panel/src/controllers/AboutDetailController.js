@@ -14,9 +14,9 @@ exports.index = async (req, res, next) => {
     try {
         const aboutDetails = await AboutDetail.find({ user: userId })
             .select('_id user title bio experience resume updated_by')
-            .populate('user', '_id name')
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
             .populate('resume', '_id name path')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (aboutDetails.length === 0) return res.status(200).json({ message: `No aboutDetails found`, data: [] });
 

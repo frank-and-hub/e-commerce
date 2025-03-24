@@ -46,7 +46,7 @@ exports.index = async (req, res, next) => {
 
         const query = Warranty.find(filter)
             .select('_id name description duration period updated_by status')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -217,7 +217,7 @@ exports.findData = async (id, res) => {
 
     const warrantyData = await Warranty.findById(id)
         .select('_id name description duration period status updated_by')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!warrantyData) return res.status(404).json({ message: `Warranty not found` });
     return warrantyData;

@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
     token: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Token', required: false }],
     terms: { type: Boolean, default: true },
     status: { type: Boolean, default: true },
+    timezone: { type: String, default: null },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }
 }, {

@@ -7,12 +7,15 @@ import { formattedData } from '../../../../utils/helper'
 import Textarea from '../../form/Textarea';
 import { useLoading } from '../../../../context/LoadingContext';
 import { faqValidation, useFormValidation } from '../../../../utils/FormValidation';
+import { processNotifications } from '../../../../utils/notificationUtils';
+import { useDispatch } from 'react-redux';
 
 function AccordionFrom({ value, onAction }) {
 
     const id = value?.id;
     const [formKey, setFormKey] = useState(0);
     const { loading, setLoading } = useLoading();
+    const dispatch = useDispatch();
 
     const initialState = {
         question: value.question ?? '',
@@ -37,8 +40,7 @@ function AccordionFrom({ value, onAction }) {
                 notifySuccess(res.message)
             }
         } catch (err) {
-            console.error(err.message);
-            console.error(err.message);
+            processNotifications(err.status || 500, err.message, dispatch);
         } finally {
             setLoading(false)
         }

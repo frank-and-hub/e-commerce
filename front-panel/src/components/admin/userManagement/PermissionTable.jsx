@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import SubmitButton from '../../form/SubmitButton'
-import { useLoading } from '../../../../context/LoadingContext'
-import { notifySuccess } from '../../comman/notification/Notification'
-import { post } from '../../../../utils/AxiosUtils'
-import { transformData, ucwords } from '../../../../utils/helper'
+import SubmitButton from '../form/SubmitButton'
+import { useLoading } from '../../../context/LoadingContext'
+import { notifySuccess } from '../comman/notification/Notification'
+import { post } from '../../../utils/AxiosUtils'
+import { transformData, ucwords } from '../../../utils/helper'
 import { useNavigate } from 'react-router-dom'
-import { useFormValidation, validate } from '../../../../utils/FormValidation'
+import { useFormValidation, validate } from '../../../utils/FormValidation'
 
 export const PermissionTable = ({ response, permission, user_id = null, mainFormReset }) => {
     const { loading, setLoading } = useLoading();
@@ -73,13 +73,14 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
                                     <th>Add</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
-                                    <th className={`p-0`} ><i
-                                        data-toggle={`tooltip`}
-                                        title='Checked All'
-                                        className={`bi bi-toggle-${toggle ? 'on' : 'off'} coursor-pointer`}
-                                        onClick={(e) => setToggle(!toggle)}
-                                        style={{ fontSize: '20px' }}
-                                    ></i></th>
+                                    <th className={`p-0 text-center`} >
+                                        <i data-toggle={`tooltip`}
+                                            title='Checked All'
+                                            className={`bi bi-toggle-${toggle ? 'on' : 'off'} coursor-pointer`}
+                                            onClick={(e) => setToggle(!toggle)}
+                                            style={{ fontSize: '1.5rem' }}
+                                        ></i>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -1,7 +1,7 @@
 {
     "env": {
         "APP_NAME": "E-Commerce",
-        "BASE_URL": "http://192.168.153.53",
+        "BASE_URL": "http://192.168.211.53",
         "ERROR_CODE": 500,
         "PORT": "5080",
         "REACT_PORT": "3000",
@@ -11,7 +11,7 @@
         "DB_PWD": "vNE6FrO7FFBkCtPN",
         "DB_CONNECTION_BEFORE": "cxxgw.mongodb.net/",
         "DB_CONNECTION_AFTER": "?retryWrites=true&w=majority&appName",
-        "HOST": "192.168.153.53",
+        "HOST": "192.168.211.53",
         "API": "api",
         "NODE_ENV": "development",
         "LOG_LEVEL": "info",

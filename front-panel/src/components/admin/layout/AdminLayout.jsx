@@ -28,7 +28,7 @@ function AdminLayout() {
                         <section className={`section`} >
                             <div className={`w-100`} >
                                 <div className={`col-lg-12`} >
-                                    <div className={`card-body px-1 mb-1`} >
+                                    <div className={`px-1 mb-1`} >
                                         <LoadingProvider>
                                             <DashboardProvider>
                                                 <Outlet />

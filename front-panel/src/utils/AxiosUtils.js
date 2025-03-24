@@ -3,6 +3,7 @@ import config from '../config'
 
 const baseUrl = config.reactApiUrl;
 const token = localStorage.getItem('token');
+
 const request = async (method, url, data = {}) => {
     try {
         const config = {
@@ -17,10 +18,8 @@ const request = async (method, url, data = {}) => {
         // console.clear()
         return response?.data
     } catch (err) {
-        console.error(`Error during the ${method.toUpperCase()} request to ${url} : ${err.status}`)
-        if (err.status === 401) {
-            localStorage.clear()            
-        }
+        console.error(`Error during the ${method.toUpperCase()} request to ${url} : ${err.status}`);
+        if (err.status === 401)  localStorage.clear();
         throw err.message;
     } finally {
         // console.trace()

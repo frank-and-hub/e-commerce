@@ -47,9 +47,9 @@ exports.index = async (req, res, next) => {
 
         const query = SubCategory.find(filter)
             .select('_id name icon code description user status updated_by category')
-            .populate('user', '_id name')
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
             .populate('category', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -248,9 +248,9 @@ exports.findData = async (id, res) => {
    
     const sub_categoryData = await SubCategory.findById(id)
         .select('_id name code icon description user category updated_by status')
-        .populate('user', '_id name')
+        .populate('user', '_id name.first_name name.middle_name name.last_name')
         .populate('category', '_id name')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!sub_categoryData) return res.status(404).json({ message: `Sub category not found` });
     return sub_categoryData;

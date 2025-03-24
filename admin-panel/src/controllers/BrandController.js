@@ -47,9 +47,9 @@ exports.index = async (req, res, next) => {
 
         const query = Brand.find(filter)
             .select('_id name description image user updated_by status')
-            .populate('user', '_id name')
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
             .populate('image', '_id name path')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -247,9 +247,9 @@ exports.findData = async (id, res) => {
 
     const brandData = await Brand.findById(id)
         .select('_id name description user image updated_by status')
-        .populate('user', '_id name')
+        .populate('user', '_id name.first_name name.middle_name name.last_name')
         .populate('image', '_id name path')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
         
     if (!brandData) return res.status(404).json({ message: `Brand not found` });
     return brandData;

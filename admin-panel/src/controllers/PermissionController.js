@@ -47,7 +47,7 @@ exports.index = async (req, res, next) => {
             .select('_id name menu status updated_by')
 
             .populate('menu', '_id name')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
                 .skip(skip)
@@ -205,7 +205,7 @@ exports.findData = async (id, res) => {
     const permissionData = await Permission.findById(id)
         .select('_id name menu updated_by status')
         .populate('menu', '_id name')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!permissionData) return res.status(404).json({ message: `Permission not found` });
     return permissionData;

@@ -44,7 +44,7 @@ exports.index = async (req, res, next) => {
 
         const query = Tag.find(filter)
             .select('_id name updated_by status')
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -194,7 +194,7 @@ exports.findData = async (id, res) => {
 
     const tagData = await Tag.findById(id)
         .select('_id name status updated_by')
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!tagData) return res.status(404).json({ message: `Tag not found` });
     return tagData;

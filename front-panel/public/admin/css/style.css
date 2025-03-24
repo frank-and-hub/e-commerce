@@ -14,6 +14,7 @@
   /* --backgroud-color: rgb(225, 225, 225); */
   --card-bg: #fff;
   --shadow: 0px 2px 5px 1px rgba(64, 60, 67, 0.16);
+  --bs-border-radius-lg: 0.5rem;
 }
 
 /* #root {
@@ -58,14 +59,14 @@ h6 {
 --------------------------------------------------------------*/
 #main {
   height: 100% !important;
-  margin: 60px 0px;
-  padding: 20px 10px 20px 20px;
+  margin: 3rem 0px;
+  padding: 1rem .5rem 1rem .8rem;
   transition: all 0.5s;
 }
 
 @media (max-width: 1199px) {
   #main {
-    padding: 20px;
+    padding: 1rem;
     height: 100% !important;
   }
 }
@@ -81,7 +82,7 @@ h6 {
 # Page Title
 --------------------------------------------------------------*/
 .pagetitle {
-  margin-bottom: 10px;
+  margin-bottom: .5rem;
 }
 
 .pagetitle h1 {
@@ -140,7 +141,7 @@ tfoot {
 /* Dropdown menus */
 .dropdown-menu {
   border-radius: 4px;
-  padding: 10px 0;
+  padding: .5rem 0;
   animation-name: dropdown-animate;
   animation-duration: 0.2s;
   animation-fill-mode: both;
@@ -152,7 +153,7 @@ tfoot {
 .dropdown-menu .dropdown-footer {
   text-align: center;
   font-size: 15px;
-  padding: 10px 25px;
+  padding: .5rem 25px;
 }
 
 .dropdown-menu .dropdown-footer a {
@@ -172,12 +173,12 @@ tfoot {
 
 .dropdown-menu .dropdown-item {
   font-size: 14px;
-  padding: 10px 15px;
+  padding: .5rem 15px;
   transition: 0.3s;
 }
 
 .dropdown-menu .dropdown-item i {
-  margin-right: 10px;
+  margin-right: .5rem;
   font-size: 18px;
   line-height: 0;
 }
@@ -196,7 +197,7 @@ tfoot {
     background: var(--background);
     position: absolute;
     top: -7px;
-    right: 20px;
+    right: 1rem;
     transform: rotate(45deg);
     border-top: 1px solid #eaedf1;
     border-left: 1px solid #eaedf1;
@@ -288,7 +289,7 @@ tfoot {
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
+  padding: 1rem 0 15px 0;
   font-size: 18px;
   font-weight: 500;
   color: var(--dark);
@@ -302,7 +303,7 @@ tfoot {
 }
 
 .card-body {
-  padding: 0 20px 10px 20px;
+  padding: 0 1rem .5rem 1rem;
 }
 
 .card-img-overlay {
@@ -313,7 +314,7 @@ tfoot {
 .alert-heading {
   font-weight: 500;
   font-family: "Poppins", sans-serif;
-  font-size: 20px;
+  font-size: 1rem;
 }
 
 /* Close Button */
@@ -364,7 +365,9 @@ tfoot {
   font-size: 14px;
   font-family: "Nunito", sans-serif;
   color: var(--light);
-  font-weight: 600;
+  font-weight: 700;
+  vertical-align: middle;
+  align-items: center;
 }
 
 .breadcrumb a {
@@ -420,9 +423,9 @@ tfoot {
   cursor: pointer;
 }
 
-@media (min-width: 320px) {
+@media (min-width: 3rem) {
   .logo {
-    width: 280px;
+    width: 10rem;
   }
 }
 
@@ -445,24 +448,24 @@ tfoot {
 
 .header {
   transition: all 1.5s;
-  z-index: 997;
-  height: 60px;
+  z-index: 1;
+  height: 3.3rem;
   box-shadow: #f6f9ff;
   animation: slideIn 0.5s ease-in-out forwards;
   background-color: var(--background);
-  padding-left: 20px;
+  padding-left: 1rem;
 }
 
 .header .toggle-sidebar-btn {
   font-size: 32px;
-  padding-left: 10px;
+  padding-left: .5rem;
   cursor: pointer;
   color: var(--dark);
 }
 
 .header .search-bar {
   min-width: 360px;
-  padding: 0 20px;
+  padding: 0 1rem;
 }
 
 @media (max-width: 1199px) {
@@ -471,7 +474,7 @@ tfoot {
     top: 50px;
     left: 0;
     right: 0;
-    padding: 20px;
+    padding: 1rem;
     /* box-shadow: 0px 0px 15px 0px rgba(1, 41, 112, 0.1); */
     box-shadow: var(--shadow);
     background: white;
@@ -583,12 +586,12 @@ textarea {
 .header-nav .notifications .notification-item {
   display: flex;
   align-items: center;
-  padding: 15px 10px;
+  padding: 15px .5rem;
   transition: 0.3s;
 }
 
 .header-nav .notifications .notification-item i {
-  margin: 0 20px 0 10px;
+  margin: 0 1rem 0 .5rem;
   font-size: 24px;
 }
 
@@ -615,7 +618,7 @@ textarea {
 }
 
 .header-nav .messages .message-item {
-  padding: 15px 10px;
+  padding: 15px .5rem;
   transition: 0.3s;
 }
 
@@ -624,7 +627,7 @@ textarea {
 }
 
 .header-nav .messages .message-item img {
-  margin: 0 20px 0 10px;
+  margin: 0 1rem 0 .5rem;
   max-height: 40px;
 }
 
@@ -650,6 +653,7 @@ textarea {
   min-width: 240px;
   padding-bottom: 0;
   top: 8px !important;
+  box-shadow: var(--shadow);
 }
 
 .header-nav .profile .dropdown-header h6 {
@@ -665,12 +669,12 @@ textarea {
 
 .header-nav .profile .dropdown-item {
   font-size: 14px;
-  padding: 10px 15px;
+  padding: .5rem 15px;
   transition: 0.3s;
 }
 
 .header-nav .profile .dropdown-item i {
-  margin-right: 10px;
+  margin-right: .5rem;
   font-size: 18px;
   line-height: 0;
 }
@@ -687,13 +691,13 @@ textarea {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 60px;
+  top: 3.5rem;
   left: 0;
   bottom: 0;
   width: 300px;
   z-index: 996;
   transition: all 0.5s;
-  padding: 20px;
+  padding: 1rem;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
@@ -703,7 +707,7 @@ textarea {
 
 @media (max-width: 1199px) {
   .sidebar {
-    left: -320px;
+    left: -31rem;
   }
 }
 
@@ -718,9 +722,10 @@ textarea {
 }
 
 @media (min-width: 1200px) {
+
   #main,
   #footer {
-    margin-left: 300px;
+    margin-left: 19rem;
   }
 }
 
@@ -735,7 +740,7 @@ textarea {
   .toggle-sidebar .sidebar {
     left: 0;
     bottom: 5px;
-    top: 70px;
+    top: 3.5rem;
   }
 }
 
@@ -754,11 +759,11 @@ textarea {
   }
 
   .toggle-sidebar .sidebar {
-    left: -320px;
+    left: -31rem;
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 71rem) {
   .Toastify__toast-container {
     padding: 5px 5px 0px 5px !important;
   }
@@ -793,7 +798,7 @@ textarea {
   text-transform: uppercase;
   color: var(--dark);
   font-weight: 600;
-  margin: 10px 0 5px 15px;
+  margin: .5rem 0 5px 15px;
 }
 
 .sidebar-nav .nav-link {
@@ -804,13 +809,13 @@ textarea {
   color: var(--dark);
   transition: 0.3;
   background: var(--background);
-  padding: 10px 15px;
+  padding: .5rem 15px;
   border-radius: 4px;
 }
 
 .sidebar-nav .nav-link i {
   font-size: 16px;
-  margin-right: 10px;
+  margin-right: .5rem;
   color: var(--light);
 }
 
@@ -828,7 +833,7 @@ textarea {
 .sidebar-nav .nav-link:hover,
 .sidebar-nav .nav-link.active {
   color: var(--light);
-  transition: all 0.5s;
+  /* transition: all 0.5s; */
   box-shadow: var(--shadow);
 }
 
@@ -860,7 +865,7 @@ textarea {
   font-weight: 600;
   color: var(--dark);
   transition: 0.3;
-  padding: 10px 0 10px 40px;
+  padding: .5rem 0 .5rem 40px;
   transition: 0.3s;
 }
 
@@ -898,7 +903,7 @@ textarea {
 
 .dashboard .filter .icon {
   color: #aab7cf;
-  padding-right: 20px;
+  padding-right: 1rem;
   padding-bottom: 5px;
   transition: 0.3s;
   font-size: 16px;
@@ -929,7 +934,7 @@ textarea {
 
 /* Info Cards */
 .dashboard .info-card {
-  /* padding-bottom: 10px; */
+  /* padding-bottom: .5rem; */
 }
 
 .dashboard .info-card h6 {
@@ -999,8 +1004,8 @@ textarea {
 }
 
 .dashboard .activity .activity-item .activity-content {
-  padding-left: 10px;
-  padding-bottom: 20px;
+  padding-left: .5rem;
+  padding-bottom: 1rem;
 }
 
 .dashboard .activity .activity-item:first-child .activite-label::before {
@@ -1059,11 +1064,11 @@ textarea {
 }
 
 .dashboard .recent-sales .dataTable-top {
-  padding: 0 0 10px 0;
+  padding: 0 0 .5rem 0;
 }
 
 .dashboard .recent-sales .dataTable-bottom {
-  padding: 10px 0 0 0;
+  padding: .5rem 0 0 0;
 }
 
 /* Top Selling */
@@ -1129,14 +1134,14 @@ textarea {
 # Profie Page
 --------------------------------------------------------------*/
 .profile .profile-card img {
-  max-width: 120px;
+  max-width: 11rem;
 }
 
 .profile .profile-card h2 {
   font-size: 24px;
   font-weight: 700;
   color: #2c384e;
-  margin: 10px 0 0 0;
+  margin: .5rem 0 0 0;
 }
 
 .profile .profile-card h3 {
@@ -1144,11 +1149,11 @@ textarea {
 }
 
 .profile .profile-card .social-links a {
-  font-size: 20px;
+  font-size: 1rem;
   display: inline-block;
   color: rgba(1, 41, 112, 0.5);
   line-height: 0;
-  margin-right: 10px;
+  margin-right: .5rem;
   transition: 0.3s;
 }
 
@@ -1158,7 +1163,7 @@ textarea {
 }
 
 .profile .profile-overview .row {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
   font-size: 15px;
 }
 
@@ -1182,7 +1187,7 @@ textarea {
 }
 
 .profile .profile-edit img {
-  max-width: 120px;
+  max-width: 11rem;
 }
 
 /*--------------------------------------------------------------
@@ -1212,10 +1217,10 @@ textarea {
 }
 
 .contact .info-box h3 {
-  font-size: 20px;
+  font-size: 1rem;
   color: var(--dark);
   font-weight: 700;
-  margin: 20px 0 10px 0;
+  margin: 1rem 0 .5rem 0;
 }
 
 .contact .info-box p {
@@ -1260,7 +1265,7 @@ textarea {
   border-radius: 50%;
   width: 24px;
   height: 24px;
-  margin: 0 10px -6px 0;
+  margin: 0 .5rem -6px 0;
   border: 3px solid #18d26e;
   border-top-color: #eee;
   animation: animate-loading 1s linear infinite;
@@ -1281,7 +1286,7 @@ textarea {
 }
 
 .contact .php-email-form input {
-  padding: 10px 15px;
+  padding: .5rem 15px;
 }
 
 .contact .php-email-form textarea {
@@ -1291,7 +1296,7 @@ textarea {
 .contact .php-email-form button[type=submit] {
   background: var(--light);
   border: 0;
-  padding: 10px 30px;
+  padding: .5rem 30px;
   color: var(--white);
   transition: 0.4s;
   border-radius: 4px;
@@ -1365,7 +1370,7 @@ textarea {
 # Footer
 --------------------------------------------------------------*/
 .footer {
-  padding: 20px 0;
+  padding: 1rem 0;
   font-size: 14px;
   transition: all 0.5s;
   border-top: 1px solid #cddfff;
@@ -1384,13 +1389,11 @@ textarea {
 }
 
 .rounded-25 {
-  border-radius: 25px !important;
-  /* margin: .5rem !important; */
-  /* padding: .5rem !important; */
+  border-radius: 2rem !important;
 }
 
 .rounded-50 {
-  border-radius: 50px !important;
+  border-radius: 2.5rem !important;
 }
 
 textarea,
@@ -1477,13 +1480,13 @@ table>thead>tr .action {
 }
 
 .loading {
-  max-width: 10vw;
+  max-width: 18rem;
   cursor: progress;
   animation-iteration-count: infinite;
   animation-name: loading;
   top: 50%;
   left: 50%;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   /* box-shadow: var(--shadow); */
 }
 
@@ -1494,8 +1497,8 @@ table>thead>tr .action {
 
 .table .loading {
   z-index: 1;
-  width: 8vw;
-  left: 46%;
+  width: 12rem;
+  left: 40%;
 }
 
 .pageignation {
@@ -1509,12 +1512,13 @@ table>thead>tr .action {
   transition: all 0.5s;
   color: var(--dark);
   margin: 0px 4px;
+  box-shadow: var(--shadow) !important;
   background-color: var(--background) !important;
 }
 
 .circle-image {
-  width: 120px;
-  height: 120px;
+  width: 11rem;
+  height: 11rem;
   border-radius: 50%;
   object-fit: cover;
   overflow: hidden;
@@ -1577,12 +1581,21 @@ table>thead>tr .action {
   align-items: center;
 }
 
+.table tbody tr td:nth-child(1) {
+  max-width: .3rem;
+  width: .3rem;
+}
+
 .Toastify__toast {
   border-radius: 15px !important;
 }
 
 i {
   color: var(--light);
+}
+
+.shadow {
+  box-shadow: var(--shadow) !important;
 }
 
 .btn-custom {
@@ -1643,6 +1656,7 @@ i {
   min-height: 38px !important;
   font-size: 13.33px;
   animation: slideIn 0.5s ease-in-out forwards;
+  border-radius: var(--bs-border-radius-lg);
 }
 
 .section {
@@ -1652,7 +1666,7 @@ i {
 @keyframes slideIn {
   0% {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-1rem);
   }
 
   100% {
@@ -1706,4 +1720,15 @@ i {
       }
     }
   }
+}
+
+.image-shell {
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  height: 2rem;
+  width: 8rem;
+  min-height: 8rem;
+  min-width: 10rem;
+  border: 1px solid var(--light);
+  padding: .5rem;
 }

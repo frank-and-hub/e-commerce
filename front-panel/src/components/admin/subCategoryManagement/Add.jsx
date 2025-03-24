@@ -58,9 +58,7 @@ function Add() {
         <CardForm handleSubmit={handleSubmit} key={formKey}>
             <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
             <div className={`col-md-4`}>
-                <label htmlFor={`icon`} className={`form-label`}>Icon <span className='text-danger'>*</span></label>
-                <SelectIcon id="icon" value={values.icon} handleChange={handleChange} error={errors.icon} />
-                {errors.icon && <div className={`invalid-feedback`}>{errors.icon}</div>}
+                <SelectIcon id="icon" label={`icon`} value={values.icon} handleChange={handleChange} error={errors.icon}  required={true} />
             </div>
             <div className={`col-md-4`}>
                 <SelectCategory id={`category`} label={`category`} value={values.category} handleChange={handleChange} error={errors.category} required={true} multiple={false} />

@@ -13,7 +13,7 @@ export default function Input({ name, label, value, error, onChange, type = `tex
         defaultValue={value}
         autoComplete={`off`}
         placeholder={`Enter ${(name).replace('_', ' ')}`}
-        className={`form-control${inputType ? `` : ` rounded-pill`}${error ? ` is-invalid` : ``}`}
+        className={`${type === `checkbox` ? `form-check-input`:`form-control`}${inputType ? `` : ` rounded-pill`}${error ? ` is-invalid` : ``}`}
     />);
 
     return (
@@ -24,7 +24,11 @@ export default function Input({ name, label, value, error, onChange, type = `tex
                     <>
                         {inputType ? InputItem : <div className={`col-md-8 col-lg-9`}>{InputItem}</div>}
                     </>
-                    {error && <div className={`invalid-feedback`} >{error}</div>}
+                    {error ? (
+                        <div className={`invalid-feedback`} >{error}</div>
+                    ) : (
+                        <div className={`valid-feedback`} >{`${name} is correct`}</div>
+                    )}
                 </>
             </div>
         </>

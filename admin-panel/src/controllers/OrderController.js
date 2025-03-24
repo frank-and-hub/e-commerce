@@ -50,7 +50,7 @@ exports.index = async (req, res, next) => {
 
         const query = Order.find(filter)
             .select('_id cart user address price time status updated_by')
-            .populate('user', '_id name')
+            .populate('user', '_id name.first_name name.middle_name name.last_name')
             .populate('cart', '_id products')
             .populate({
                 path: 'cart',
@@ -60,7 +60,7 @@ exports.index = async (req, res, next) => {
                     select: '_id name price',
                 }
             })
-            .populate('updated_by', '_id name');
+            .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -222,7 +222,7 @@ exports.findData = async (id, res) => {
    
     const orderData = await Order.findById(id)
         .select('_id cart user address price time status updated_by')
-        .populate('user', '_id name')
+        .populate('user', '_id name.first_name name.middle_name name.last_name')
         .populate('cart', '_id products')
         .populate({
             path: 'cart',
@@ -232,7 +232,7 @@ exports.findData = async (id, res) => {
                 select: '_id name price',
             }
         })
-        .populate('updated_by', '_id name');
+        .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!orderData) return res.status(404).json({ message: `Order not found` });
     return orderData;

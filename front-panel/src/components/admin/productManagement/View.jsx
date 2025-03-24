@@ -67,7 +67,7 @@ function View() {
             <input type={`file`} id={`imageInput`} className={`d-none`} name={`image`} onChange={(e) => e.preventDefault()} />
             <div className={`col-md-4`}>
                 <div className='cursor-none'>
-                    <img src={src} alt={`Project main`} className={`rounded-25 col-md-6 w-50`} onClick={(e) => e.preventDefault()} style={{ cursor: 'pointer' }} />
+                    <img src={src} alt={`Project main`} className={`rounded-25 col-md-6 image-shell w-50`} onClick={(e) => e.preventDefault()} loading={`lazy`} />
                 </div>
             </div>
             <div className={`col-12`}>

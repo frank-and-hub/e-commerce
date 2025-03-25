@@ -113,7 +113,7 @@ const Chat = ({ userOptions }) => {
                             </div>
 
                             <div className={`col-12`}>
-                                <SubmitButton className={`custom w-50`} name={loading ? 'Sending...' : 'Send'} />
+                                <SubmitButton className={`custom w-50`} disable={loading} name={loading ? 'Sending...' : 'Send'} />
                             </div>
                         </div>
                     </form>

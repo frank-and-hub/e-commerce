@@ -58,7 +58,7 @@ function Add() {
                 <SelectPermission id="permissions" value={values.permissions} handleChange={handleChange} error={errors.permissions} required={true} disabled={false} label='Permissions' />
             </div>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
         </CardForm>
     );

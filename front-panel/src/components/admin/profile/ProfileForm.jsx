@@ -95,7 +95,7 @@ function ProfileForm({ user }) {
                 <Input name={`tmezone`} label={`Tme Zone`} value={values?.tmezone} onChange={handleChange} error={errors?.tmezone} required={true} />
                 
                 <div className={`text-center`}>
-                    <SubmitButton className={`custom`} name={isPending ? 'Saving...' : 'Save Changes'} />
+                    <SubmitButton className={`custom`} disable={isPending} name={isPending ? 'Saving...' : 'Save Changes'} />
                 </div>
             </form>
         </>

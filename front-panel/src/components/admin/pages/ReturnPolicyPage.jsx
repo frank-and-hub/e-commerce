@@ -96,7 +96,7 @@ const ReturnPolicyPage = () => {
                                     <Textarea border={`0`} editor={true} name={`info`} className={`w-100`} onChange={handleChange} disabled={!inState} required={!inState} value={values?.info ?? response?.info} label={null} error={error?.info} />
                                     <div className={`col-12`}>
                                         {inState && (
-                                            <SubmitButton className={`custom`} name={!loading ? 'Updating...' : 'Update Form'} />
+                                            <SubmitButton className={`custom`} disable={!loading} name={!loading ? 'Updating...' : 'Update Form'} />
                                         )}
                                     </div>
                                 </form>

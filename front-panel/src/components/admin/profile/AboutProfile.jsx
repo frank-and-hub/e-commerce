@@ -105,7 +105,7 @@ function AboutProfile() {
                 </div>
 
                 <div className={`text-center`}>
-                    <SubmitButton className={`custom`} name={isPending ? 'Saving...' : 'Save Changes'} />
+                    <SubmitButton className={`custom`} disable={isPending} name={isPending ? 'Saving...' : 'Save Changes'} />
                 </div>
             </form>
         </>

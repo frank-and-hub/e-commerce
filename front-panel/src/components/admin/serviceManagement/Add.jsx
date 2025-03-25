@@ -62,7 +62,7 @@ function Add() {
             </div>
             <Textarea onChange={handleChange} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
         </CardForm>
     );

@@ -54,7 +54,7 @@ function Add() {
             <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
             <Input name={`short_name`} label="Short Name" value={values.short_name} onChange={handleChange} error={errors.short_name} required={true} inputType={true} />
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
         </CardForm>
     );

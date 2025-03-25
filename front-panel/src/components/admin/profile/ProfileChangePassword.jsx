@@ -6,9 +6,9 @@ import { notifyError, notifySuccess } from '../comman/notification/Notification'
 
 function ProfileChangePassword({ user }) {
 
-    const [password, setPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [renewPassword, setReNewPassword] = useState('');
+    const [password, setPassword] = useState(``);
+    const [newPassword, setNewPassword] = useState(``);
+    const [renewPassword, setReNewPassword] = useState(``);
     const [isPasswordValid, setIsPasswordValid] = useState(false);
     const [formKey, setFormKey] = useState(0);
     const [error, setError] = useState({});
@@ -89,7 +89,7 @@ function ProfileChangePassword({ user }) {
                 <Input name={`renewpassword`} type={`password`} label="Re-enter Password" value={renewPassword} onChange={(e) => setReNewPassword(e.target.value)} error={error.renewPassword} required={true} onBlur={handleHoverOff} inputType={false} />
 
                 <div className={`text-center`}>
-                    <SubmitButton className={`custom`} name={formValid ? `Changing...` : `Change Password`} />
+                    <SubmitButton className={`custom`} disable={formValid} name={formValid ? `Changing...` : `Change Password`} />
                 </div>
             </form>
         </>

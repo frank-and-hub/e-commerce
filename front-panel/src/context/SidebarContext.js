@@ -14,14 +14,17 @@ export const SidebarContext = createContext();
 
 export const SidebarProvider = ({ children }) => {
 
-    const dispatch = useDispatch();
     const { logout } = useAuth();
-    const location = useLocation();
-    const [menus, setMenus] = useState({});
-    const [loading, setLoading] = useState(false);
-    const pathname = location.pathname !== '/' ? location.pathname.replace('admin/', '') : 'Dashboard';
 
-    const userId = localStorage.getItem('user_id') ?? null;
+    const [menus, setMenus] = useState({});
+    const [selectUserData, setSelectUserData] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch(),
+        location = useLocation(),
+        pathname = location.pathname !== '/' ? location.pathname.replace('admin/', '') : 'Dashboard',
+        userId = localStorage.getItem('user_id') ?? null;
+
     const user = useSelector((state) => (state.auth.user));
     const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');
 
@@ -33,17 +36,18 @@ export const SidebarProvider = ({ children }) => {
             // console.log(`token is still hear ${token}`)
             try {
                 // console.trace();
-                const [sideBarData, permissionData] = await Promise.all([
+                const [sideBarData, permissionData, allUserData] = await Promise.all([
                     get('/menus'),
-                    get('/permissions')
+                    get('/permissions'),
+                    get('/users?page=0')
                 ]);
 
                 if (!user) {
                     const { data: LoadUser } = await get(`/users/${userId}`);
                     dispatch(setUser({ user: LoadUser }));
                 }
-
                 setMenus(sideBarData?.response);
+                setSelectUserData(allUserData?.response);
                 dispatch(setMenuData(sideBarData?.response));
                 dispatch(setSideBar(sideBarData?.response?.data));
                 dispatch(setPermission({ permission: permissionData?.response }));
@@ -57,7 +61,7 @@ export const SidebarProvider = ({ children }) => {
         (!token) ? logout() : fetchData(token);
     }, [logout, user, token, userId, setLoading, dispatch]);
 
-    const propsAray = { menus, loading, pathname };
+    const propsAray = { menus, loading, pathname, selectUserData };
 
     return (
         <SidebarContext.Provider value={{ ...propsAray }}>

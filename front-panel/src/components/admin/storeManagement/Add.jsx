@@ -48,7 +48,7 @@ function Add() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/storage/stores', { replace: true })
+            navigate('/admin/storage/stores', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -76,7 +76,7 @@ function Add() {
                 <SelectSupplier id={`supplier_id`} label={`supplier`} value={values.supplier_id} handleChange={handleChange} error={errors.supplier_id} required={true} />
             </div>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
         </CardForm>
 

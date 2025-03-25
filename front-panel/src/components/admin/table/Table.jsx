@@ -28,7 +28,7 @@ const Table = ({
     const [data, setData] = useState([]);
     const [dataTableTitle, setDataTableTitle] = useState(null);
 
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState(``);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     // const [itemsPerPage] = useState(config.pageignation);
@@ -55,7 +55,7 @@ const Table = ({
     const handlePageChange = (page) => setCurrentPage(page);
 
     const tableData = (data && data?.length > 0) ? Object.keys(data[0]) : [];
-    
+
     const handleSort = (key) => {
         let direction = 'asc';
         if (sortConfig.key === key && sortConfig.direction === 'asc') {
@@ -188,7 +188,7 @@ const Table = ({
                             <h6 className={`card-title text-capitalize mb-0`}>{cleanedTitle}</h6>
                         </div>
                         <div className={`d-flex justify-content-evenly align-items-center col-md-6`}>
-                            <div className={`col-md-9 col-sm-10 col-9`}>
+                            <div className={`col-md-10 col-sm-9 col-8`}>
                                 <input
                                     type={`text`}
                                     placeholder={`Search ${moduleName} ...`}
@@ -198,7 +198,7 @@ const Table = ({
                                 />
                             </div>
                             {handelFilter || handelCreate ? (
-                                <div className={`col-md-3 col-sm-2 d-flex justify-content-evenly`} >
+                                <div className={`col-md-2 col-sm-3 col-4 d-flex justify-content-evenly`} >
                                     {handelFilter && (
                                         <div className={`col-6 m-auto`}>
                                             <span className={`d-inline-block color`} tabIndex={`0`} data-bs-toggle={`tooltip`} data-bs-original-title={``} title={ucwords(`filter`)}>
@@ -256,20 +256,32 @@ const Table = ({
                                         {tableData.map((header, index) => {
                                             const content = columnCondication(header, item[header], (i + ((currentPage - 1) * dataLimit)), item);
                                             return (
-                                                <td key={index} className={``} >
+                                                <td key={index}>
                                                     {content}
                                                 </td>);
                                         })}
                                         <td className='action w-100'>
                                             <>
                                                 {handelView && (
-                                                    <Button iconClass={`bi bi-eye`} tooltip={ucwords(`view ${item?.name}`)} url={`${item?.id}`} />
+                                                    <Button
+                                                        iconClass={`bi bi-eye`}
+                                                        tooltip={ucwords(`view ${item?.name}`)}
+                                                        url={`${item?.id}`} />
                                                 )}
                                                 {item.status === true && handelEdit && (
-                                                    <Button iconClass={`bi bi-pencil-square`} tooltip={ucwords(`edit ${item?.name}`)} url={`${item?.id}/edit`} />
+                                                    <Button
+                                                        iconClass={`bi bi-pencil-square`}
+                                                        tooltip={ucwords(`edit ${item?.name}`)}
+                                                        url={`${item?.id}/edit`} />
                                                 )}
                                                 {item.status === false && handelDelete && (
-                                                    <Button iconClass={`bi bi-trash`} onClick={() => { handelDeleteModel(item.id); setSelectedItemName(item?.name); }} tooltip={ucwords(`delete ${item?.name}`)} />
+                                                    <Button
+                                                        iconClass={`bi bi-trash`}
+                                                        onClick={() => {
+                                                            handelDeleteModel(item.id);
+                                                            setSelectedItemName(item?.name);
+                                                        }}
+                                                        tooltip={ucwords(`delete ${item?.name}`)} />
                                                 )}
                                             </>
                                         </td>
@@ -282,8 +294,8 @@ const Table = ({
                             </tbody>
                             <tfoot >
                                 <tr>
-                                    <td colSpan={tableData.length + 1} className={`${tableData.length === 0?`p-0`:``}`} >
-                                        <div className={`row justify-content-md-between${tableData?.length > 0 ? ` mt-2`:``}`}>
+                                    <td colSpan={tableData.length + 1} className={`${tableData.length === 0 ? `p-0` : ``}`} >
+                                        <div className={`row justify-content-md-between${tableData?.length > 0 ? ` mt-2` : ``}`}>
                                             <div className={`col-md-5 col-12 d-none d-md-block`}>
                                                 {dataCount > dataLimit && (
                                                     <>

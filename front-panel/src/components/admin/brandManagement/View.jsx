@@ -11,7 +11,7 @@ function View() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [values, setValues] = useState(null);
-    const [src, setSrc] = useState('');
+    const [src, setSrc] = useState(``);
 
     useEffect(() => {
         const fetchData = async () => {

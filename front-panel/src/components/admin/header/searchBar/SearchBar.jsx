@@ -4,7 +4,7 @@ import config from '../../../../config'
 const baseUrl = config.reactApiUrl;
 
 const SearchBar = () => {
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(``);
 
     const handleSearch = async (e) => {
         e.preventDefault();

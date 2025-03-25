@@ -13,7 +13,7 @@ import Textarea from '../form/Textarea'
 import CardForm from '../card/CardForm'
 
 function View() {
-    const [src, setSrc] = useState('');
+    const [src, setSrc] = useState(``);
     const { id } = useParams();
     const dispatch = useDispatch();
     const [values, setValues] = useState(null);

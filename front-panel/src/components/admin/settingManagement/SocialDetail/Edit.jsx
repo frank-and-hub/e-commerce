@@ -82,7 +82,7 @@ function Edit() {
             </div>
             <Input name={`url`} text={`url`} label={`Url`} value={values?.url} required={true} error={errors.url} inputType={true} disabled={false} onChange={handleChange} />
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

@@ -72,7 +72,7 @@ function Add() {
                         <SelectRole id={`role_id`} label={`Role`} value={values.role_id} handleChange={handleChange} error={errors.role_id} required={true} />
                     </div>
                     <div className={`col-12`}>
-                        <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                        <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
                     </div>
                 </form>
             </div>

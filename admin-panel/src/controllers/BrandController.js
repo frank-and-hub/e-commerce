@@ -178,12 +178,12 @@ exports.update = async (req, res, next) => {
     const { id } = req.params;
     try {
         const file = req.file;
-
+        
         const brand = await Brand.findById(id);
         if (!brand) return res.status(404).json({ message: `Brand not found!`, });
 
         if (!Array.isArray(req.body)) return res.status(400).json({ message: `No details were updated (brand may not exist or the data is the same)` });
-
+        
         const updateOps = helper.updateOps(req);
 
         if (file) {

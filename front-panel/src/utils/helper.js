@@ -163,3 +163,11 @@ export const fetchSelectedOptions = (data) => {
 export const getFullName = (name) => {
     return `${name?.first_name} ${name?.middle_name ? name?.middle_name + ' ' : ''}${name?.last_name}`;
 }
+
+export const dummyImage = () => {
+    return `./../../public/admin/img/profile-img.jpg`;
+}
+
+export const handleErrorImage = (event, defaultImage) => {
+    return event.target.src = defaultImage ?? dummyImage();
+};

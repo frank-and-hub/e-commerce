@@ -20,7 +20,7 @@ function Add() {
 
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
-    const [src, setSrc] = useState('');
+    const [src, setSrc] = useState(``);
     const navigate = useNavigate();
     const baseUrl = config.reactApiUrl;
     const initialState = {
@@ -119,7 +119,7 @@ function Add() {
                 </div>
             </div>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
         </CardForm>
     );

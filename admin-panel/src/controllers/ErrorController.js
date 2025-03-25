@@ -44,7 +44,7 @@ exports.index = async (req, res, next) => {
         });
 
         const query = ErrorLog.find(filter)
-            .select('_id route statusCode errorMessage errorType stackTrace IP');
+            .select('_id route statusCode errorMessage errorType stackTrace IP status');
 
         if (req?.query?.page != 0) {
             query.sort({ [orderByField]: orderByDirection })
@@ -56,7 +56,7 @@ exports.index = async (req, res, next) => {
         if (errorlogs.length === 0) return res.status(200).json({ message: `No error logs found`, data: [] });
 
         const errorlogPromises = errorlogs.map(async (errorlog) => {
-            const { _id, route, statusCode, errorMessage, errorType, stackTrace, IP } = errorlog;
+            const { _id, route, statusCode, errorMessage, errorType, stackTrace, IP, status } = errorlog;
 
             return {
                 'id': _id,
@@ -65,7 +65,8 @@ exports.index = async (req, res, next) => {
                 'errorMessage': errorMessage,
                 'errorType': errorType,
                 'stackTrace': stackTrace,
-                'ip': IP
+                'ip': IP,
+                'status': status
             }
         });
         const errorlogResponses = await Promise.all(errorlogPromises);
@@ -85,7 +86,7 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const errorlogData = await this.findData(id, res);
-        const { _id, route, statusCode, errorMessage, errorType, stackTrace, IP } = errorlogData;
+        const { _id, route, statusCode, errorMessage, errorType, stackTrace, IP, status } = errorlogData;
         const result = {
             'id': _id,
             'route': route,
@@ -93,9 +94,10 @@ exports.show = async (req, res, next) => {
             'errorMessage': errorMessage,
             'errorType': errorType,
             'stackTrace': stackTrace,
-            'ip': IP
+            'ip': IP,
+            'status': status
         }
-        res.status(200).json({ message: `Error log data found`, data: result, title: `View ${name} errorlog detail` });
+        res.status(200).json({ message: `Error log data found`, data: result, title: `View ${route} errorlog detail` });
     } catch (err) { next(err) }
 }
 
@@ -128,7 +130,7 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id, res) => {
 
     const errorlogData = await ErrorLog.findById(id)
-        .select('_id route statusCode errorMessage errorType stackTrace IP');
+        .select('_id route statusCode errorMessage errorType stackTrace IP status');
 
     if (!errorlogData) return res.status(404).json({ message: `Error log not found` });
     return errorlogData;

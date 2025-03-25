@@ -21,7 +21,7 @@ function Edit() {
     const navigate = useNavigate();
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
-    const [src, setSrc] = useState('');
+    const [src, setSrc] = useState(``);
     const baseUrl = config.reactApiUrl;
 
     const initialState = {
@@ -113,7 +113,7 @@ function Edit() {
                 </div>
             </div>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

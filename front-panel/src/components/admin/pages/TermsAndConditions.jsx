@@ -96,7 +96,7 @@ const TermsAndConditions = () => {
                                     <Textarea border={`0`} editor={true} name={`t_and_c`} className={`w-100`} onChange={handleChange} disabled={!inState} required={!inState} value={values?.t_and_c ?? response?.t_and_c} label={null} error={error?.t_and_c} />
                                     <div className={`col-12`}>
                                         {inState && (
-                                            <SubmitButton className={`custom`} name={!loading ? 'Updating...' : 'Update Form'} />
+                                            <SubmitButton className={`custom`} disable={!loading} name={!loading ? 'Updating...' : 'Update Form'} />
                                         )}
                                     </div>
                                 </form>

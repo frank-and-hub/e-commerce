@@ -76,7 +76,7 @@ function Edit() {
             <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
 
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

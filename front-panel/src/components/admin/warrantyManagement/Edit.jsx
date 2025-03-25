@@ -87,7 +87,7 @@ function Edit() {
             <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} error={errors.description} label={`Description`} required={true} disabled={false} />
 
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

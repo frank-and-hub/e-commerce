@@ -105,7 +105,7 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
                                     <th colSpan={columnCount} >
                                         <div className={`col-12`}>
                                             {response && (
-                                                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                                                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
                                             )}
                                         </div>
                                     </th>

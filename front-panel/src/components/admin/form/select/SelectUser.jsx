@@ -10,9 +10,9 @@ function SelectUser({ id, handleChange, value, error, label = null, required = f
         value: item?.id,
         label: `${ucwords(item?.name)}`
     }));
-
     const fetchData = async () => {
         const res = await get('/users?page=0');
+        console.log(res);
         setResponse(res?.response);
     }
 

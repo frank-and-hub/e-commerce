@@ -59,7 +59,7 @@ function Add() {
             </div>
             <Input name={`url`} text={`url`} label="Url" value={values.url} onChange={handleChange} error={errors.url} required={true} inputType={true} />
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
         </CardForm>
     );

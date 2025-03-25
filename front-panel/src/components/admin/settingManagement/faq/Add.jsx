@@ -56,7 +56,7 @@ function Add() {
             <Textarea name={`question`} label="Question" value={values.question} className={`w-100`} onChange={handleChange} error={errors.question} inputType={true} required={true} />
             <Textarea name={`answer`} label="Answer" value={values.answer} className={`w-100`} onChange={handleChange} error={errors.answer} inputType={true} required={true} />
             <div className={`col-12`}>
-              <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+              <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>
           </form>
         </div>

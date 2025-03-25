@@ -60,7 +60,7 @@ function AccordionFrom({ value, onAction }) {
                 </div>
                 <Textarea border={`0`} label={null} onChange={handleChange} className={`w-100`} name={`answer`} value={values?.answer} />
                 <div className={`col-12 text-end`}>
-                    <SubmitButton className={`custom`} name={loading ? 'Submitting...' : 'Submit Form'} />
+                    <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
                 </div>
             </form>
         </>

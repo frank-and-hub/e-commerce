@@ -23,7 +23,7 @@ function Edit() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [src, setSrc] = useState('');
+    const [src, setSrc] = useState(``);
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
 
@@ -155,7 +155,7 @@ function Edit() {
                 </div>
             </div>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

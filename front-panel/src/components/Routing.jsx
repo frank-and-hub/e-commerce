@@ -173,7 +173,7 @@ class Routing extends Component {
                                     <Route exact path={`role-and-permission`} element={<PermissionTable />} />
                                     <Route exact path={`errors`}>
                                         <Route exact path={`list`} element={<ErrorTable />} />
-                                        <Route exact path={`:id`} element={<ErrorView />} />
+                                        <Route exact path={`list/:id`} element={<ErrorView />} />
                                     </Route>
                                 </Route>
 

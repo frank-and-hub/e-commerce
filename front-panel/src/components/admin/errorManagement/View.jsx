@@ -15,16 +15,12 @@ function View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-
-                const [tagData] = await Promise.all([
+                const [errorLogData] = await Promise.all([
                     get(`/errors/${id}`),
                 ]);
-
-                setValues(tagData?.data || {});
-
-                processNotifications(200, tagData?.message, dispatch);
+                setValues(errorLogData?.data || {});
+                processNotifications(200, errorLogData?.message, dispatch);
             } catch (err) {
-
                 processNotifications(err.status || 500, err.message, dispatch);
             }
         };
@@ -42,9 +38,9 @@ function View() {
             <Input name={`route`} label="route" value={values?.route} onChange={handleChange} required={false} inputType={true} disabled={true} />
             <Input name={`statusCode`} label="statusCode" value={values?.statusCode} onChange={handleChange} required={false} inputType={true} disabled={true} />
             <Input name={`errorType`} label="errorType" value={values?.errorType} onChange={handleChange} required={false} inputType={true} disabled={true} />
-            <Input name={`stackTrace`} label="stackTrace" value={values?.stackTrace} onChange={handleChange} required={false} inputType={true} disabled={true} />
             <Input name={`ip`} label="ip" value={values?.ip} onChange={handleChange} required={false} inputType={true} disabled={true} />
             <Textarea name={`errorMessage`} label="errorMessage" value={values?.errorMessage} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
+            <Textarea name={`stackTrace`} className={`w-100`} label="stackTrace" value={values?.stackTrace} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
             <div className={`col-12`}>
             </div>
         </CardForm>

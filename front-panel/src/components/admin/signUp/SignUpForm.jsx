@@ -125,7 +125,7 @@ export const SignUpForm = () => {
                 </div>
 
                 <div className={`col-12`}>
-                    <SubmitButton className={`custom w-50`} name={isPending ? 'Creating Account' : 'Create Account'} />
+                    <SubmitButton className={`custom w-50`} disable={isPending} name={isPending ? 'Creating Account' : 'Create Account'} />
                 </div>
                 <div className={`col-12`}>
                     <p className={`small mb-0`}>Already have an account? <Link to={`/admin/signin`}>Sign in</Link></p>

@@ -51,7 +51,7 @@ function Edit() {
                 resetForm()
                 notifySuccess(res.message)
             }
-            navigate('/storage/stores', { replace: true })
+            navigate('/admin/storage/stores', { replace: true })
         } catch (err) {
             notifyError(err.message)
         } finally {
@@ -96,7 +96,7 @@ function Edit() {
                 <SelectSupplier id={`supplier_id`} label={`supplier`} value={values.supplier_id} handleChange={handleChange} error={errors.supplier_id} required={true} />
             </div>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

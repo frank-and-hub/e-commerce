@@ -83,7 +83,7 @@ function Edit() {
             <Input name={`hex_code`} label="color" value={values?.hex_code} onChange={handleChange} required={true} error={errors.hex_code} inputType={true} disabled={false} />
 
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

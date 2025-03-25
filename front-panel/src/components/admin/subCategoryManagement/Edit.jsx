@@ -87,7 +87,7 @@ function Edit() {
             </div>
             <Textarea name={`description`} className={`w-100`} label={`Description`} value={values?.description} onChange={handleChange} error={errors.description} required={true} inputType={true} ></Textarea>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

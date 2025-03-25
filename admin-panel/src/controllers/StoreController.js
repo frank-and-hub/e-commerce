@@ -34,11 +34,11 @@ exports.index = async (req, res, next) => {
             const trimmedSearch = search.trim();
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
-                { phone: { $regex: trimmedSearch, $options: "i" } },
+                // { phone: { $regex: trimmedSearch, $options: "i" } },
                 { email: { $regex: trimmedSearch, $options: "i" } },
                 { address: { $regex: trimmedSearch, $options: "i" } },
                 { city: { $regex: trimmedSearch, $options: "i" } },
-                { zipcode: { $regex: trimmedSearch, $options: "i" } },
+                // { zipcode: { $regex: trimmedSearch, $options: "i" } },
                 { state: { $regex: trimmedSearch, $options: "i" } },
             ];
         }
@@ -64,7 +64,7 @@ exports.index = async (req, res, next) => {
         if (stores.length === 0) return res.status(200).json({ message: `No stores found`, data: [] });
 
         const storePromises = stores.map(async (store) => {
-            const { _id, name, phone, email, address, city, state, zipcode, supplier, status } = store
+            const { _id, name, phone, email, address, city, state, zipcode, country, supplier, status } = store
             return {
                 'id': _id,
                 'name': name,
@@ -73,8 +73,8 @@ exports.index = async (req, res, next) => {
                 'address': address,
                 'city': city,
                 'state': state,
+                'country': country,
                 'zipcode': zipcode,
-                // 'supplier':supplier,
                 'status': status
             }
         });
@@ -101,6 +101,7 @@ exports.create = (req, res, next) => {
                 'email': 'String',
                 'address': 'String',
                 'city': 'String',
+                'country': 'String',
                 'state': 'String',
                 'zipcode': 'Number',
                 'supplier': 'SchemaID'
@@ -111,7 +112,7 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, phone, email, address, city, state, zipcode, supplier_id } = req.body;
+    const { name, phone, email, address, city, state, zipcode, supplier_id, country } = req.body;
     try {
 
         const existsStore = await Store.findOne({ name: name, status: status_active, address: address });
@@ -122,7 +123,7 @@ exports.store = async (req, res, next) => {
 
         const store = new Store({
             _id: new mongoose.Types.ObjectId(),
-            name, phone, email, address, city, state, zipcode,
+            name, phone, email, address, city, state, zipcode, country,
             supplier: supplier._id,
         });
         const newData = await store.save();
@@ -132,6 +133,7 @@ exports.store = async (req, res, next) => {
             'phone': newData?.phone,
             'email': newData?.email,
             'address': newData?.address,
+            'country': newData?.country,
             'city': newData?.city,
             'state': newData?.state,
             'zipcode': newData?.zipcode,
@@ -145,13 +147,14 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const storeData = await this.findData(id, res);
-        const { _id, name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = storeData;
+        const { _id, name, phone, email, address, city, state, zipcode, country, supplier, updated_by, status } = storeData;
         const result = {
             'id': _id,
             'name': name,
             'phone': phone,
             'email': email,
             'address': address,
+            'country': country,
             'city': city,
             'state': state,
             'zipcode': zipcode,
@@ -167,13 +170,14 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const storeData = await this.findData(id, res);
-        const { _id, name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = storeData;
+        const { _id, name, phone, email, address, city, state, zipcode, country, supplier, updated_by, status } = storeData;
         const result = {
             'id': _id,
             'name': name,
             'phone': phone,
             'email': email,
             'address': address,
+            'country': country,
             'city': city,
             'state': state,
             'zipcode': zipcode,
@@ -198,13 +202,14 @@ exports.update = async (req, res, next) => {
         const result = await Store.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedStore = await this.findData(id, res);
-            const { _id, name, phone, email, address, city, state, zipcode, supplier } = updatedStore;
+            const { _id, name, phone, email, address, city, state, zipcode, country, supplier } = updatedStore;
             const storeData = {
                 'id': _id,
                 'name': name,
                 'phone': phone,
                 'email': email,
                 'address': address,
+                'country': country,
                 'city': city,
                 'state': state,
                 'zipcode': zipcode,
@@ -239,6 +244,7 @@ exports.destroy = async (req, res, next) => {
                     'email': 'String',
                     'address': 'String',
                     'city': 'String',
+                    'country': 'String',
                     'state': 'String',
                     'zipcode': 'Number',
                     'supplier': 'SchemaID'
@@ -253,7 +259,7 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id, res) => {
 
     const storeData = await Store.findById(id)
-        .select('_id name phone email address city state zipcode status supplier updated_by')
+        .select('_id name phone email address country city state zipcode status supplier updated_by')
         .populate('supplier', '_id')
         .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 

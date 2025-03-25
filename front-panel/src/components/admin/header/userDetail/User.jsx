@@ -6,7 +6,7 @@ import { getFullName } from '../../../../utils/helper';
 
 function User() {
     const user = useSelector((state) => (state.auth.user));
-    const [src, setSrc] = useState('');
+    const [src, setSrc] = useState(``);
 
     const defaultImage = `assets/img/profile-img.jpg`;
 

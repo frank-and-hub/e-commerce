@@ -10,12 +10,12 @@ function ReusableModal({ show, handleClose, title, body, primaryAction, secondar
             <Modal.Body className='text-center border-0 p-0'>{body}</Modal.Body>
             <Modal.Footer className='border-0 center'>
                 {secondaryLabel && (
-                    <Button className='btn-sm rounded-pill' variant={secondaryVariant} onClick={secondaryAction || handleClose}>
+                    <Button className='btn-sm rounded-pill px-3' variant={secondaryVariant} onClick={secondaryAction || handleClose}>
                         {secondaryLabel}
                     </Button>
                 )}
                 {primaryLabel && (
-                    <Button className='btn-sm rounded-pill' variant={primaryVariant} onClick={primaryAction}>
+                    <Button className='btn-sm rounded-pill px-3' variant={primaryVariant} onClick={primaryAction}>
                         {primaryLabel}
                     </Button>
                 )}

@@ -7,6 +7,7 @@ const errorLogSchema = new mongoose.Schema({
     IP: { type: String, required: true },
     errorMessage: { type: String, required: true },
     stackTrace: { type: String },
+    status: { type: Boolean, default: false },
 }, {
     timestamps: true
 });

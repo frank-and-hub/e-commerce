@@ -3,6 +3,7 @@ const router = express.Router();
 
 // helpers
 const helper = require('../../utils/helper');
+const validation = require('../../utils/validation');
 
 // controllers
 const UserController = require('../../controllers/UserController');
@@ -18,11 +19,11 @@ const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 
 router.route('/')
     .get(checkPermission(fileName, 'read'), UserController.index)
-    .post(checkAuth, checkPermission(fileName, 'create'), UserController.store);
+    .post(checkAuth, checkPermission(fileName, 'create'), validation.handleValidationErrors, UserController.store);
 
 router.route('/:id')
     .get(checkAuth, checkPermission(fileName, 'read'), UserController.show)
-    .patch(checkAuth, checkPermission(fileName, 'edit'), UserController.update)
+    .patch(checkAuth, checkPermission(fileName, 'edit'), validation.handleValidationErrors, UserController.update)
     .delete(checkAuth, checkPermission(fileName, 'delete'), UserController.destroy);
 
 router.put('/:id/role', checkAuth, checkPermission(fileName, 'edit'), UserController.assignRole);

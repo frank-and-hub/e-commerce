@@ -13,14 +13,14 @@ const request = async (method, url, data = {}) => {
             data: method !== 'get' ? data : undefined,
         };
         // console.time(method.toUpperCase())
-        const response = await api(config)
+        const res = await api(config)
         // console.info(`Successfully received data via ${method.toUpperCase()} method requested to ${url}.`)
         // console.clear()
-        return response?.data
+        return res?.data
     } catch (err) {
         console.error(`Error during the ${method.toUpperCase()} request to ${url} : ${err.status}`);
         if (err.status === 401)  localStorage.clear();
-        throw err.message;
+        throw err.response;
     } finally {
         // console.trace()
         // console.timeEnd(config)

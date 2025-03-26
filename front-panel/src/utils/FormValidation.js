@@ -1,6 +1,9 @@
 import { useState } from 'react'
+// import { SidebarContext } from '../context/SidebarContext';
+
 
 export const useFormValidation = (initialState, validate) => {
+    // const { apiErrors } = useContext(SidebarContext);
     const [formData, setFormData] = useState(initialState);
     const [errors, setErrors] = useState({});
 
@@ -16,6 +19,9 @@ export const useFormValidation = (initialState, validate) => {
         e.preventDefault();
         const validationErrors = validate(formData);
         setErrors(validationErrors);
+
+        // const processedErrors = processApiErrors(apiErrors);
+        // setErrors(processedErrors);
     }
 
     return {
@@ -23,9 +29,22 @@ export const useFormValidation = (initialState, validate) => {
         errors,
         handleChange,
         handleSubmit,
-        setFormData
+        setFormData,
     }
 }
+
+export const processApiErrors = (apiErrors) => {
+    const formattedErrors = {};
+    apiErrors.forEach((error) => {
+        const { path, msg } = error;
+        if (formattedErrors[path]) {
+            formattedErrors[path].push(msg);
+        } else {
+            formattedErrors[path] = [msg];
+        }
+    });
+    return formattedErrors;
+};
 
 export const useSignUpFormValidation = (initialState, validate) => {
     const [values, setValues] = useState(initialState);
@@ -98,7 +117,7 @@ export function bannerValidation(values) {
     let errors = {}
     if (!values.name) errors.name = 'Please enter name';
     if (!values.description) errors.description = 'Please enter description';
-    if (!values.icon) errors.icon = 'Please select icon';
+    // if (!values.icon) errors.icon = 'Please select icon';
     return errors;
 }
 
@@ -114,7 +133,7 @@ export function categoryValidation(values) {
     let errors = {}
     if (!values.name) errors.name = 'Please enter name';
     if (!values.description) errors.description = 'Please enter description';
-    if (!values.icon) errors.icon = 'Please select icon';
+    // if (!values.icon) errors.icon = 'Please select icon';
     return errors;
 }
 
@@ -240,7 +259,7 @@ export function serviceValidation(values) {
     let errors = {}
     if (!values.name) errors.name = 'Please enter name';
     if (!values.description) errors.description = 'Please enter description';
-    if (!values.icon) errors.icon = 'Please select icon';
+    // if (!values.icon) errors.icon = 'Please select icon';
     return errors;
 }
 
@@ -248,7 +267,7 @@ export function socialDetailValidation(values) {
     let errors = {}
     if (!values.name) errors.name = 'Please enter name';
     if (!values.url) errors.url = 'Please enter url';
-    if (!values.icon) errors.icon = 'Please select icon';
+    // if (!values.icon) errors.icon = 'Please select icon';
     return errors;
 }
 
@@ -291,7 +310,7 @@ export function storeValidation(values) {
 export function subCategoryValidation(values) {
     let errors = {}
     if (!values.name) errors.name = 'Please enter name';
-    if (!values.icon) errors.icon = 'Please select icon';
+    // if (!values.icon) errors.icon = 'Please select icon';
     if (!values.category) errors.category = 'Please select category';
     if (!values.description) errors.description = 'Please enter description';
     return errors;

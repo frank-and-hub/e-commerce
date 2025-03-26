@@ -83,4 +83,14 @@ const phoneFormate = (string) => {
     return string?.trim()?.replace(`-`, ``)?.replace(`-`, ``)?.replace(` `, ``);
 }
 
+const loremPatterns = [
+    /lorem ipsum/i,  // Match "Lorem ipsum" (case insensitive)
+    /dolor sit amet/i,  // Match "dolor sit amet"
+    /consectetur adipiscing elit/i,  // Match "consectetur adipiscing elit"
+    /sed do eiusmod tempor incididunt/i,  // Match "sed do eiusmod tempor incididunt"
+    /ut labore et dolore magna aliqua/i,  // Match "ut labore et dolore magna aliqua"
+    /quis nostrud exercitation ullamco/i,  // Match "quis nostrud exercitation ullamco"
+    /labore et dolore magna aliqua/i,  // Match "labore et dolore magna aliqua"
+];
+
 module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData, phoneFormate }

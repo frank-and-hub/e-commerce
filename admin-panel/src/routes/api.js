@@ -36,6 +36,7 @@ const router = [
     { path: `${api}/warehouses`, module: require(`${path}/warehouses`) },
     { path: `${api}/stores`, module: require(`${path}/stores`) },
     { path: `${api}/errors`, module: require(`${path}/errors`) },
+    { path: `${api}/settings`, module: require(`${path}/settings`) },
 ];
 
 module.exports = router;

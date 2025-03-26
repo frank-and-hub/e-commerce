@@ -63,12 +63,9 @@ function Edit() {
                 const [testimonialData] = await Promise.all([
                     get(`/colors/${id}/edit`),
                 ]);
-
                 setValues(testimonialData?.data || {});
-
                 processNotifications(200, testimonialData?.message, dispatch);
             } catch (err) {
-
                 processNotifications(err.status || 500, err.message, dispatch);
             }
         };
@@ -80,7 +77,7 @@ function Edit() {
     return (
         <CardForm handleSubmit={handleSubmit} key={formKey}>
             <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={true} error={errors.name} inputType={true} disabled={false} />
-            <Input name={`hex_code`} label="color" value={values?.hex_code} onChange={handleChange} required={true} error={errors.hex_code} inputType={true} disabled={false} />
+            <Input name={`hex_code`} type='color' label="color" value={values?.hex_code} onChange={handleChange} required={true} error={errors.hex_code} inputType={true} disabled={false} />
 
             <div className={`col-12`}>
                 <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />

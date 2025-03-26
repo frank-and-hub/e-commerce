@@ -3,6 +3,7 @@ const router = express.Router();
 
 // helpers
 const helper = require('../../utils/helper');
+const validation = require('../../utils/validation');
 
 const { checkAuth } = require('../../middleware/authMiddleware');
 const BannerController = require('../../controllers/BannerController');
@@ -13,11 +14,11 @@ const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 
 router.route('/')
     .get(checkAuth, checkPermission(fileName, 'read'), BannerController.index)
-    .post(checkAuth, helper.fileImageUpload.single('image'), checkPermission(fileName, 'create'), BannerController.store);
+    .post(checkAuth, helper.fileImageUpload.single('image'), checkPermission(fileName, 'create'), validation.handleValidationErrors, BannerController.store);
 
 router.route('/:id')
     .get(checkAuth, checkPermission(fileName, 'read'), BannerController.show)
-    .patch(checkAuth, checkPermission(fileName, 'edit'), BannerController.update)
+    .patch(checkAuth, checkPermission(fileName, 'edit'), validation.handleValidationErrors, BannerController.update)
     .delete(checkAuth, checkPermission(fileName, 'delete'), BannerController.destroy);
 
 // update image

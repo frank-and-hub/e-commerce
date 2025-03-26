@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
+const validation = require('../../utils/validation');
+
 const { checkAuth } = require('../../middleware/authMiddleware');
 const SupportDetailController = require('../../controllers/SupportDetailController');
 // permissios check
@@ -9,11 +12,11 @@ const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 
 router.route('/')
     .get(checkAuth, checkPermission(fileName, 'read'), SupportDetailController.index)
-    .post(checkAuth, checkPermission(fileName, 'create'), SupportDetailController.store);
+    .post(checkAuth, checkPermission(fileName, 'create'), validation.handleValidationErrors, SupportDetailController.store);
 
 router.route('/:id')
     .get(checkAuth, checkPermission(fileName, 'read'), SupportDetailController.show)
-    .patch(checkAuth, checkPermission(fileName, 'edit'), SupportDetailController.update)
+    .patch(checkAuth, checkPermission(fileName, 'edit'), validation.handleValidationErrors, SupportDetailController.update)
     .delete(checkAuth, checkPermission(fileName, 'delete'), SupportDetailController.destroy);
 
 // get form

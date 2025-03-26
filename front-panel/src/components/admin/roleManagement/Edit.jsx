@@ -41,7 +41,6 @@ function Edit() {
             const newValues = formattedData(values);
             const res = await patch(`/roles/${id}`, newValues);
             if (res) {
-
                 resetForm()
                 notifySuccess(res.message)
                 navigate('/admin/roles', { replace: true })

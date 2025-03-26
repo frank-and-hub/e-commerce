@@ -3,6 +3,7 @@ const router = express.Router();
 
 // helpers
 const helper = require('../../utils/helper');
+const validation = require('../../utils/validation');
 
 const { checkAuth } = require('../../middleware/authMiddleware');
 const BrandController = require('../../controllers/BrandController');
@@ -13,11 +14,11 @@ const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 
 router.route('/')
     .get(checkAuth, checkPermission(fileName, 'read'), BrandController.index)
-    .post(checkAuth, helper.fileImageUpload.single('image'), checkPermission(fileName, 'create'), BrandController.store);
+    .post(checkAuth, helper.fileImageUpload.single('image'), checkPermission(fileName, 'create'), validation.handleValidationErrors, BrandController.store);
 
 router.route('/:id')
     .get(checkAuth, checkPermission(fileName, 'read'), BrandController.show)
-    .patch(checkAuth, checkPermission(fileName, 'edit'), BrandController.update)
+    .patch(checkAuth, checkPermission(fileName, 'edit'), validation.handleValidationErrors, BrandController.update)
     .delete(checkAuth, checkPermission(fileName, 'delete'), BrandController.destroy);
 
 // update image

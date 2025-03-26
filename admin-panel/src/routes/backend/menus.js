@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
+const validation = require('../../utils/validation');
+
 const { checkAuth } = require('../../middleware/authMiddleware');
 const MenuController = require('../../controllers/MenuController');
 // permissios check
@@ -9,11 +12,11 @@ const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 
 router.route('/')
     .get(checkAuth, checkPermission(fileName, 'read'), MenuController.index)
-    .post(checkAuth, checkPermission(fileName, 'create'), MenuController.store);
+    .post(checkAuth, checkPermission(fileName, 'create'), validation.handleValidationErrors, MenuController.store);
 
 router.route('/:id')
     .get(checkAuth, checkPermission(fileName, 'read'), MenuController.show)
-    .patch(checkAuth, checkPermission(fileName, 'edit'), MenuController.update)
+    .patch(checkAuth, checkPermission(fileName, 'edit'), validation.handleValidationErrors, MenuController.update)
     .delete(checkAuth, checkPermission(fileName, 'delete'), MenuController.destroy);
 
 router.put('/:id/assign', checkAuth, checkPermission(fileName, 'edit'), MenuController.assignMenu);

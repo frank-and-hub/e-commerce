@@ -23,7 +23,7 @@ const Profile = lazy(() => import('./admin/profile/Profile'))
 // user permissions
 const PermissionTable = lazy(() => import('./admin/permissionManagement/PermissionTable'))
 // settings
-// const SiteForm = lazy(() => import ('./Admin/SettingManagement/SiteForm'))
+const SettingForm = lazy(() => import ('./admin/settingManagement/SettingForm'))
 const Support = lazy(() => import('./admin/settingManagement/Support'))
 const FaqList = lazy(() => import('./admin/settingManagement/faq/List'))
 const AddFaq = lazy(() => import('./admin/settingManagement/faq/Add'))
@@ -185,7 +185,7 @@ class Routing extends Component {
                                 </Route>
 
                                 <Route exact path={`settings`}>
-                                    <Route index element={<Blank />} />
+                                    <Route index element={<SettingForm />} />
 
                                     <Route exact path={`faqs`}>
                                         <Route index element={<FaqList />} />

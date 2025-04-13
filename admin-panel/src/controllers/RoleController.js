@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Role = require('../models/role');
+const User = require('../models/user');
 const Permission = require('../models/permission');
 
 // helper function
@@ -73,6 +74,7 @@ exports.index = async (req, res, next) => {
                     'name': per.name,
                     'menu': per.menu.name
                 })),
+                'users_count': await User.countDocuments({ role: role?._id }),
                 'status': role?.status,
             }
         });

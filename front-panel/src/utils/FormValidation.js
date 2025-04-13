@@ -244,7 +244,7 @@ export function aboutUsValidation(values) {
 
 export function roleValidation(values) {
     let errors = {}
-    if (!values.name) errors.name = 'Please enter role name';
+    if (!values.name) errors.name = 'Please enter name';
     if (!values.permissions) errors.permissions = 'Please select permissions';
     return errors;
 }
@@ -384,5 +384,13 @@ export function warrantyValidation(values) {
     if (!values.duration) errors.duration = 'Please select duration';
     if (!values.period) errors.period = 'Please select period';
     if (!values.description) errors.description = 'Please enter description';
+    return errors;
+}
+
+export function departmentValidation (values) {
+    let errors = {}
+    if (!values.name) errors.name = 'Please enter name';
+    if (!values.icon) errors.icon = 'Please select icon';
+    if (!values.hod_id) errors.hod_id = 'Please select hod';
     return errors;
 }

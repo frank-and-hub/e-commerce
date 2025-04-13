@@ -7,7 +7,7 @@ import { setIcon } from 'store/iconSlice';
 
 function SelectIcon({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
     const dispatch = useDispatch();
-    const iconDataOptions = useSelector((state) => (state.icon.iconData));
+    const iconDataOptions = useSelector((state) => (state?.icon?.iconData));
     const [iconOptions, setIconOptions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); const [hasMore, setHasMore] = useState(true);
     const ITEMS_PER_PAGE = 100;

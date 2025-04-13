@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
-
 import { get, patch } from 'utils/AxiosUtils'
-import SelectPermission from 'components/admin/form/select/SelectPermission'
-import SubmitButton from 'components/admin/form/SubmitButton'
-import Input from 'components/admin/form/Input'
 import { notifyError, notifySuccess, notifyInfo } from 'components/admin/comman/notification/Notification'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { processNotifications } from 'utils/notificationUtils'
-import { formattedData } from 'utils/helper'
+import { formattedData, ucwords } from 'utils/helper'
 import { useLoading } from 'context/LoadingContext'
+import { departmentValidation, useFormValidation } from 'utils/FormValidation'
+
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Input from 'components/admin/form/Input'
 import CardForm from 'components/admin/card/CardForm'
-import { roleValidation, useFormValidation } from 'utils/FormValidation'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import SelectIcon from 'components/admin/form/select/SelectIcon'
 
 function Edit() {
     const { id } = useParams();
@@ -21,12 +22,57 @@ function Edit() {
     const [formKey, setFormKey] = useState(0);
     const navigate = useNavigate();
 
+    const [hodUserData, setHodUSerData] = useState([]);
+    const [employeeUserData, setEmployeeUserData] = useState([]);
+
+    const roles = useSelector((state) => (state?.role?.role));
+
+    const hod_role_id = roles?.data
+        ?.filter((option) => option.name === 'hod')
+        ?.map((option) => option.id)[0];
+
+    const employee_role_id = roles?.data
+        ?.filter((option) => option.name === 'employee')
+        ?.map((option) => option.id)[0];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+
+                const [roleRes, employeeRes] = await Promise.all([
+                    get(`/users?role_id=${hod_role_id}`),
+                    get(`/users?role_id=${employee_role_id}`),
+                ]);
+
+                const userRoleOptions = roleRes?.response?.data?.map((item) => ({
+                    value: item?.id,
+                    label: `${ucwords(item?.name)}`
+                }));
+
+                const userEmployeeOptions = employeeRes?.response?.data?.map((item) => ({
+                    value: item?.id,
+                    label: `${ucwords(item?.name)}`
+                }));
+
+                setHodUSerData(userRoleOptions || []);
+                setEmployeeUserData(userEmployeeOptions || []);
+            } catch (err) {
+                console.error(err.message);
+                setHodUSerData([]);
+            }
+        };
+
+        fetchData();
+    }, [hod_role_id, employee_role_id]);
+
     const initialState = {
         name: '',
-        permissions: []
+        icon: '',
+        hod_id: '',
+        members: []
     };
 
-    const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, roleValidation);
+    const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, departmentValidation);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,11 +85,11 @@ function Edit() {
         setLoading(true)
         try {
             const newValues = formattedData(values);
-            const res = await patch(`/roles/${id}`, newValues);
+            const res = await patch(`/departments/${id}`, newValues);
             if (res) {
                 resetForm()
                 notifySuccess(res.message)
-                navigate('/admin/roles', { replace: true })
+                navigate('/admin/departments', { replace: true })
             }
         } catch (err) {
             notifyError(err.message)
@@ -61,9 +107,8 @@ function Edit() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch roles and user data in parallel
                 const [roleData] = await Promise.all([
-                    get(`/roles/${id}/edit`),
+                    get(`/departments/${id}/edit`),
                 ]);
                 setValues(roleData?.data || {});
                 processNotifications(200, roleData?.message, dispatch);
@@ -78,14 +123,18 @@ function Edit() {
 
     return (
         <CardForm handleSubmit={handleSubmit} key={formKey}>
-            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} inputType={true} disabled={false} />
-
+            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />
             <div className={`col-md-4`}>
-                <SelectPermission id="permissions" value={values?.permissions} handleChange={handleChange} error={errors.permissions} required={true} disabled={false} label='Permissions' />
+                <SelectIcon id="icon" label={`Icon`} value={values?.icon} handleChange={handleChange} error={errors.icon} required={true} />
             </div>
-
+            <div className={`col-md-4`}>
+                <SelectForm id="hod_id" label={`h o d`} value={values?.hod_id} handleChange={handleChange} error={errors.hod_id} required={true} Options={hodUserData} />
+            </div>
+            <div className={`col-md-4`}>
+                <SelectForm id="members" label={`members`} value={values?.members} handleChange={handleChange} error={errors.members} required={true} Options={employeeUserData} isMulti={true} />
+            </div>
             <div className={`col-12`}>
-                <SubmitButton className={`custom`} name={loading ? 'Updating...' : 'Update Form'} />
+                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Updating...' : 'Update Form'} />
             </div>
         </CardForm>
     );

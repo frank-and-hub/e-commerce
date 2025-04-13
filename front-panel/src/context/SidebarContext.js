@@ -6,6 +6,7 @@ import { get } from 'utils/AxiosUtils'
 import { setUser } from 'store/authSlice'
 import { notifyError } from 'components/admin/comman/notification/Notification'
 
+import { setRole } from 'store/roleSlice'
 import { setSideBar } from 'store/sideBarSlice'
 import { setPermission } from 'store/permissionSlice'
 import { setMenuData } from 'store/MenuRedux/menuActions'
@@ -27,16 +28,17 @@ export const SidebarProvider = ({ children }) => {
         userId = localStorage.getItem('user_id') ?? null;
 
     const user = useSelector((state) => (state.auth.user));
-    const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');   
+    const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');
 
     useEffect(() => {
         const fetchData = async (token) => {
             setLoading(true)
             if (!token) await logout();
             try {
-                const [settingData, sideBarData, permissionData, allUserData] = await Promise.all([
+                const [settingData, sideBarData, allRoleData, permissionData, allUserData] = await Promise.all([
                     get('/settings'),
                     get('/menus'),
+                    get('/roles?page=0'),
                     get('/permissions'),
                     get('/users?page=0'),
                 ]);
@@ -92,6 +94,7 @@ export const SidebarProvider = ({ children }) => {
                     dispatch(setSideBar(sideBarData?.response?.data));
                 }
 
+                if (allRoleData) dispatch(setRole({ role: allRoleData?.response }));
                 if (allUserData) setSelectUserData(allUserData?.response);
                 if (permissionData) dispatch(setPermission({ permission: permissionData?.response }));
 

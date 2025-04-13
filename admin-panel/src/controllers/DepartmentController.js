@@ -45,7 +45,7 @@ exports.index = async (req, res, next) => {
         });
 
         const query = Department.find(filter)
-            .select('_id name icon hod members updated_by status')
+            .select('_id name icon hod updated_by status')
             .populate('hod', '_id name.first_name name.middle_name name.last_name')
             .populate({
                 path: 'members',
@@ -68,9 +68,8 @@ exports.index = async (req, res, next) => {
                 'id': _id,
                 'name': name,
                 'icon': icon,
-                'hod': hod,
-                'members': members,
-                'updated_by': updated_by,
+                'hod': `${hod.name?.first_name} ${hod?.name?.middle_name} ${hod?.name?.last_name}`,
+                'team_members': members.length,
                 'status': status
             }
         });
@@ -105,18 +104,20 @@ exports.create = (req, res, next) => {
 exports.store = async (req, res, next) => {
     const { name, icon, hod_id, members } = req.body;
     try {
-
         const existsDepartment = await Department.findOne({ name: name, status: status_active });
         if (existsDepartment) return res.status(200).json({ message: 'Department already exists' });
 
         const hod = await User.findById(hod_id).select('_id name.first_name name.middle_name name.last_name').where('status').equals(status_active);
         if (!hod) return res.status(404).json({ message: `User not found` });
 
+        const foundMembers = await User.find({ _id: { $in: members }, status: status_active }).select('_id name.first_name name.middle_name name.last_name');
+        if (foundMembers.length !== members.length) return res.status(404).json({ message: 'One or more active users not found' });
+
         const department = new Department({
             _id: new mongoose.Types.ObjectId(),
             name, icon,
             hod: hod_id,
-            members,
+            members: foundMembers.map(p => p._id)
         });
 
         const newData = await department.save();
@@ -125,7 +126,10 @@ exports.store = async (req, res, next) => {
             'name': newData?.name,
             'icon': newData.icon,
             'hod': hod?.name,
-            'members': newData?.members,
+            'members': foundMembers.map(perm => ({
+                'id': perm._id,
+                'name': `${perm.name?.first_name} ${perm?.name?.middle_name} ${perm?.name?.last_name}`,
+            }))
         }
         res.status(201).json({ message: `Your name is received Successfully`, data: response });
     } catch (err) { next(err) }
@@ -139,9 +143,9 @@ exports.show = async (req, res, next) => {
         const result = {
             'id': _id,
             'name': name,
-            'icod': icon,
+            'icon': icon,
             'hod_id': hod?._id,
-            'members': members,
+            'members': await helper.filterData(members),
             'status': status,
             'updated_by': updated_by
         }
@@ -157,9 +161,9 @@ exports.edit = async (req, res, next) => {
         const result = {
             'id': _id,
             'name': name,
-            'icod': icon,
+            'icon': icon,
             'hod_id': hod?._id,
-            'members': members,
+            'members': await helper.filterData(members),
             'status': status,
             'updated_by': updated_by
         }
@@ -177,24 +181,32 @@ exports.update = async (req, res, next) => {
 
         const updateOps = helper.updateOps(req);
 
+        const membersId = updateOps['members'];
+        const hodId = updateOps['hod_id'];
+
+        if (hodId) {
+            updateOps['hod'] = hodId;
+        }
+
+        const members = await User.find({ _id: { $in: membersId } }).select('_id name.first_name name.middle_name name.last_name');
+        if (membersId && members?.length !== membersId?.length) return res.status(404).json({ message: 'One or more members not found' });
+
         const result = await Department.updateOne({ _id: id }, { $set: updateOps });
+
         if (result.modifiedCount > 0) {
             const updatedDepartment = await this.findData(id, res);
-            const { _id, name, icon, hod, members } = updatedDepartment;
-            const departmentData = {
-                'id': _id,
-                'name': name,
-                'icon': icon,
-                'hod': hod,
-                'members': members,
+            const result = {
+                'id': updatedDepartment._id,
+                'name': updatedDepartment?.name,
+                'members': updatedDepartment?.members.map(per => ({
+                    'id': per._id,
+                    'name': `${per.name?.first_name} ${per?.name?.middle_name} ${per?.name?.last_name}`,
+                }))
             }
-            return res.status(200).json({ message: `Department details updated successfully`, data: departmentData });
+            return res.status(200).json({ message: `Department details updated successfully`, data: result });
         }
         res.status(404).json({ message: `Department not found or no details to update`, data: [] });
-    } catch (err) {
-        ``
-        next(err)
-    }
+    } catch (err) { next(err) }
 }
 
 exports.destroy = async (req, res, next) => {

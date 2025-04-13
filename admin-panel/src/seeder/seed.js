@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const axios = require('axios');
 const User = require('../models/user');
 const Role = require('../models/role');
 const Menu = require('../models/menu');
+const Country = require('../models/country');
 const Permission = require('../models/permission');
 const { faker } = require('@faker-js/faker');
 const connectDB = require('../config/db');
@@ -21,6 +23,7 @@ const generateFakeData = async (fakePassword, guestRoleId) => {
       middle_name: faker.person.firstName(),
       last_name: faker.person.lastName(),
     },
+    dial_code: generateDialCode(),
     phone: phoneNumber,
     email: faker.internet.email(),
     password: await AuthServices.hashPassword(fakePassword),
@@ -38,6 +41,12 @@ const generateFakeData = async (fakePassword, guestRoleId) => {
     updated_by: null,
     deleted_at: null
   }
+};
+
+const generateDialCode = () => {
+  const countryCodes = ['1', '44', '91', '61', '49', '33', '81', '55', '27', '91', '59', '94'];
+  const randomCode = countryCodes[Math.floor(Math.random() * countryCodes.length)];
+  return `+${randomCode}`;
 };
 
 const defaultRoleData = [
@@ -373,5 +382,35 @@ const seedUserData = async () => {
   }
 };
 
+const fetchAndStoreCountries = async () => {
+  try {
+    await connectDB();
+    console.log('Database connected');
+
+    const response = await axios.get('https://restcountries.com/v3.1/all');
+    const countriesData = response.data;
+
+    const countryDocuments = countriesData.map((country) => ({
+      _id: new mongoose.Types.ObjectId(),
+      name: country.name.common,
+      dialCode: `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes[0] : ''}`,
+      region: country.region,
+      subregion: country.subregion,
+      population: country.population,
+      capital: country.capital,
+      flags: country.flags,
+    }));
+
+    await Country.insertMany(countryDocuments);
+    console.log('Countries data saved to MongoDB');
+  } catch (err) {
+    console.error('Error seeding data:', err);
+    mongoose.disconnect();
+  } finally {
+    console.log('Database disconnected');
+  }
+}
+
 // Run the Seeder
-seedUserData();
+// seedUserData();
+// fetchAndStoreCountries();

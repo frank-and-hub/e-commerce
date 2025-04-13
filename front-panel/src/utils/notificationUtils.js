@@ -1,5 +1,5 @@
 // notificationUtils.js
-import { addAlert } from '../store/alertSlice'
+import { addAlert } from 'store/alertSlice'
 
 export const processNotifications = (status, message, dispatch) => {
     const notificationData = {

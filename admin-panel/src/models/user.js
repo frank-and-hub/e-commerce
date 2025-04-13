@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
         middle_name: { type: String, required: false, trim: true, set: (value) => value.toLowerCase() },
         last_name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
     },
+    dial_code: { type: String, default: null, minlength: 2, maxlength: 3 },
     phone: { type: Number, default: null, minlength: 8, maxlength: 12, unique: true, },
     email: { type: String, required: true, unique: true, match: [emailRegex, 'Please provide a valid email address'] },
     password: { type: String, required: true },

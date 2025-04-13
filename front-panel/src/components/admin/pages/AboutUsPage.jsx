@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import SubmitButton from '../form/SubmitButton'
-import { get, post } from '../../../utils/AxiosUtils'
-import { notifyError, notifySuccess } from '../comman/notification/Notification'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { get, post } from 'utils/AxiosUtils'
+import { notifyError, notifySuccess } from 'components/admin/comman/notification/Notification'
 
-import Textarea from '../form/Textarea'
-import { processNotifications } from '../../../utils/notificationUtils'
+import Textarea from 'components/admin/form/Textarea'
+import { processNotifications } from 'utils/notificationUtils'
 import { useDispatch } from 'react-redux'
-import { useLoading } from '../../../context/LoadingContext'
-import { aboutUsValidation, useFormValidation } from '../../../utils/FormValidation'
+import { useLoading } from 'context/LoadingContext'
+import { aboutUsValidation, useFormValidation } from 'utils/FormValidation'
 
 const AboutUsPage = () => {
     const dispatch = useDispatch();
@@ -82,7 +82,7 @@ const AboutUsPage = () => {
             <section className={`section`}>
                 <div className={`card-head`}>
                     <div className={`card-title`}>
-                        <p className='p-0 m-0 btn' onClick={() => (setInState(!inState))} > About Us </p>
+                        <p className='py-0 m-0 btn' onClick={() => (setInState(!inState))} > About Us </p>
                     </div>
                 </div>
                 <div className={`card`}>

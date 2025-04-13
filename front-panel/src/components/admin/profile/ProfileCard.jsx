@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import config from '../../../config'
-import api from '../../../utils/api'
+import api from 'utils/api'
 import { Link } from 'react-router-dom'
-import { notifyError, notifySuccess } from '../comman/notification/Notification.js'
-import { useAuth } from '../../../utils/AuthContext'
-import { checkFileValidation, getFullName } from './../../../utils/helper.js'
+import { notifyError, notifySuccess } from 'components/admin/comman/notification/Notification.js'
+import { useAuth } from 'utils/AuthContext'
+import { checkFileValidation, getFullName } from 'utils/helper.js'
 
 function ProfileCard({ user }) {
     const [src, setSrc] = useState('/img/profile-img.jpg');

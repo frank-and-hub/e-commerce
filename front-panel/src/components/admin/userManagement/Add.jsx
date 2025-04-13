@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import Input from '../form/Input'
-import SubmitButton from '../form/SubmitButton'
-import SelectRole from '../form/select/SelectRole'
-import { post } from '../../../utils/AxiosUtils'
-import { notifySuccess, notifyInfo } from '../comman/notification/Notification'
+import Input from 'components/admin/form/Input'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import SelectRole from 'components/admin/form/select/SelectRole'
+import { post } from 'utils/AxiosUtils'
+import { notifySuccess, notifyInfo } from 'components/admin/comman/notification/Notification'
 import { useNavigate } from 'react-router-dom'
-import { useLoading } from '../../../context/LoadingContext'
-import { useFormValidation, userValidation } from '../../../utils/FormValidation'
+import { useLoading } from 'context/LoadingContext'
+import { useFormValidation, userValidation } from 'utils/FormValidation'
+import SelectDialCode from 'components/admin/form/select/SelectDialCode'
 
 function Add() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Add() {
         last_name: '',
         email: '',
         password: '',
+        dial_code:``,
         phone: '',
         role_id: '',
     };
@@ -56,7 +58,7 @@ function Add() {
         document.getElementsByTagName('form')[0].reset();
     };
 
-    if (response && error) console.log(response && error);
+    if (response && error) console.info(response && error);
 
     return (
         <><div key={formKey} className={`card`}>
@@ -66,6 +68,9 @@ function Add() {
                     <Input name={`middle_name`} label="Middle Name" value={values.middle_name} onChange={handleChange} error={errors.middle_name} required={false} inputType={true} />
                     <Input name={`last_name`} label="Last Name" value={values.last_name} onChange={handleChange} error={errors.last_name} required={true} inputType={true} />
                     <Input name={`email`} label="Email" type={`email`} value={values.email} onChange={handleChange} error={errors.email} required={true} inputType={true} />
+                    <div className={`col-md-4`}>
+                        <SelectDialCode id="dial_code" label={`dial_code`} value={values.dial_code} handleChange={handleChange} error={errors.dial_code} required={false} />
+                    </div>
                     <Input name={`password`} label="Password" value={values.password} onChange={handleChange} error={errors.password} required={true} inputType={true} />
                     <Input name={`phone`} label="Phone" value={values.phone} onChange={handleChange} error={errors.phone} required={true} inputType={true} />
                     <div className={`col-md-4`}>

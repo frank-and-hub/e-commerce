@@ -1,14 +1,15 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { useAuth } from '../utils/AuthContext'
-import { get } from '../utils/AxiosUtils'
-import { setUser } from '../store/authSlice'
-import { notifyError } from '../components/admin/comman/notification/Notification'
+import { useAuth } from 'utils/AuthContext'
+import { get } from 'utils/AxiosUtils'
+import { setUser } from 'store/authSlice'
+import { notifyError } from 'components/admin/comman/notification/Notification'
 
-import { setSideBar } from '../store/sideBarSlice'
-import { setPermission } from '../store/permissionSlice'
-import { setMenuData } from '../store/MenuRedux/menuActions'
+import { setSideBar } from 'store/sideBarSlice'
+import { setPermission } from 'store/permissionSlice'
+import { setMenuData } from 'store/MenuRedux/menuActions'
+import { hexToRGBA, pickReadableTextColor } from 'utils/helper'
 
 export const SidebarContext = createContext();
 
@@ -26,23 +27,13 @@ export const SidebarProvider = ({ children }) => {
         userId = localStorage.getItem('user_id') ?? null;
 
     const user = useSelector((state) => (state.auth.user));
-    const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');
-
-    const hexToRGBA = (hex, alpha = 1) => {
-        hex = hex.replace('#', '');
-
-        let r = parseInt(hex.substring(0, 2), 16);
-        let g = parseInt(hex.substring(2, 4), 16);
-        let b = parseInt(hex.substring(4, 6), 16);
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    }
+    const token = useSelector((state) => (state.auth.token)) ?? localStorage.getItem('token');   
 
     useEffect(() => {
         const fetchData = async (token) => {
             setLoading(true)
             if (!token) await logout();
             try {
-                // console.trace();
                 const [settingData, sideBarData, permissionData, allUserData] = await Promise.all([
                     get('/settings'),
                     get('/menus'),
@@ -54,13 +45,56 @@ export const SidebarProvider = ({ children }) => {
                     const { data: LoadUser } = await get(`/users/${userId}`);
                     dispatch(setUser({ user: LoadUser }));
                 }
-                document.documentElement.style.setProperty('--light', settingData?.data?.color);
-                document.documentElement.style.setProperty('--shadow', `0px 2px 5px 1px ${hexToRGBA(settingData?.data?.color, 0.3)}`);
-                setMenus(sideBarData?.response);
-                setSelectUserData(allUserData?.response);
-                dispatch(setMenuData(sideBarData?.response));
-                dispatch(setSideBar(sideBarData?.response?.data));
-                dispatch(setPermission({ permission: permissionData?.response }));
+
+                if (settingData) {
+                    const {
+                        color,
+                        background,
+                        grayscale_percentage,
+                        grayscale,
+                        invert_percentage,
+                        invert,
+                        saturate_percentage,
+                        saturate,
+                        contrast_percentage,
+                        contrast,
+                        sepia_percentage,
+                        sepia,
+                    } = settingData?.data;
+
+                    if (color) {
+                        document.documentElement.style.setProperty('--light', color);
+                        document.documentElement.style.setProperty('--shadow', `0px 2px 5px 1px ${hexToRGBA(color, 0.3)}`);
+                    }
+
+                    if (background) {
+                        document.documentElement.style.setProperty('--background', background);
+                        const textColor = pickReadableTextColor(background);
+                        document.documentElement.style.setProperty('--dark', textColor);
+                    }
+
+                    const setFilter = (condition, value, cssVar, fn) => {
+                        if (condition && value > 0) {
+                            document.documentElement.style.setProperty(cssVar, `${fn}(${value}%)`);
+                        }
+                    };
+
+                    setFilter(grayscale, grayscale_percentage, '--grayscale', 'grayscale');
+                    setFilter(invert, invert_percentage, '--invert', 'invert');
+                    setFilter(saturate, saturate_percentage, '--saturate', 'saturate');
+                    setFilter(contrast, contrast_percentage, '--contrast', 'contrast');
+                    setFilter(sepia, sepia_percentage, '--sepia', 'sepia');
+                }
+
+                if (sideBarData) {
+                    setMenus(sideBarData?.response);
+                    dispatch(setMenuData(sideBarData?.response));
+                    dispatch(setSideBar(sideBarData?.response?.data));
+                }
+
+                if (allUserData) setSelectUserData(allUserData?.response);
+                if (permissionData) dispatch(setPermission({ permission: permissionData?.response }));
+
             } catch (err) {
                 notifyError(`Error fetching data: ${err.message}`);
                 if (err.status === 401) logout();

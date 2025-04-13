@@ -24,7 +24,17 @@ exports.index = async (req, res, next) => {
         const orderByField = req?.query?.orderby || '_id';
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
-        const filter = { ...req?.query?.filter };
+        const filter = {};
+        const { status, search } = req.query;
+
+        if (status) filter.status = status;
+
+        if (search) {
+            const trimmedSearch = search.trim();
+            filter.$or = [
+                { name: { $regex: trimmedSearch, $options: "i" } },
+            ];
+        }
 
         const skip = (page - 1) * limit;
         const totalCount = await Role.countDocuments({
@@ -34,7 +44,6 @@ exports.index = async (req, res, next) => {
 
         const query = Role.find(filter)
             .select('_id name permissions status updated_by')
-
             .populate({
                 path: 'permissions',
                 select: '_id name menu',

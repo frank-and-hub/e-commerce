@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Table from '../table/Table'
+import Table from 'components/admin/table/Table'
 
-import { useLoading } from '../../../context/LoadingContext'
-import { StatusOptions } from '../../../utils/selects'
-import SelectForm from '../form/select/SelectForm'
-import SubmitButton from '../form/SubmitButton'
-import { ucwords } from '../../../utils/helper'
-import { SidebarContext } from '../../../context/SidebarContext'
-import { useFormValidation, validate } from '../../../utils/FormValidation'
+import { useLoading } from 'context/LoadingContext'
+import { StatusOptions } from 'utils/selects'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { ucwords } from 'utils/helper'
+import { SidebarContext } from 'context/SidebarContext'
+import { useFormValidation, validate } from 'utils/FormValidation'
 
 function ContactTable() {
     const module = 'contacts';

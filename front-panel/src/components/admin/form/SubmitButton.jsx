@@ -4,7 +4,7 @@ function SubmitButton({ className, name, type = 'submit', disable = false, onCli
     return (
         <>
             <button
-                className={`col-xl-2 col-md-2 col-sm-3 col-xs-4 col-8 btn btn-outline-${className} btn-sm rounded-pill text-capitalize`}
+                className={`col-xl-2 col-md-2 col-sm-3 col-xs-4 col-5 btn btn-outline-${className} btn-sm rounded-pill text-capitalize shadow`}
                 type={type}
                 disable={disable}
                 onClick={onClick}

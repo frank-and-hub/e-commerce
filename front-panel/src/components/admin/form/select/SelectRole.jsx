@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
-import { customStyles, ucwords } from '../../../../utils/helper'
-import { get } from '../../../../utils/AxiosUtils';
+import { customStyles, ucwords } from 'utils/helper'
+import { get } from 'utils/AxiosUtils';
 
 function SelectRole({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
 

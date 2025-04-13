@@ -1,5 +1,5 @@
 import React from 'react'
-import { rasc } from '../../../utils/helper'
+import { rasc } from 'utils/helper'
 
 function RoundedTextarea({ name, label, type = 'text', value, onChange, error, required = false, inputType = false }) {
 

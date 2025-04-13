@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
-import { customStyles, ucwords } from '../../../../utils/helper'
-import { get } from '../../../../utils/AxiosUtils';
+import { customStyles, ucwords } from 'utils/helper'
+import { get } from 'utils/AxiosUtils';
 
 function SelectPermission({ id, handleChange, value, error, label = null, required = false, disabled = false, }) {
     const [response, setResponse] = useState();

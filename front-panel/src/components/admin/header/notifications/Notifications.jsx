@@ -2,7 +2,7 @@ import React from 'react'
 import NotificationItem from './NotificationItem'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { clearAlert, removeAlert } from '../../../store/alertSlice';
+import { clearAlert, removeAlert } from 'store/alertSlice';
 
 function Notifications({ notifications }) {
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function Notifications({ notifications }) {
     return (
         <>
             <li className={`nav-item dropdown`}>
-                <Link to={`#`} className={`nav-link nav-icon`} onClick={(e) => e.preventDefault()} data-bs-toggle="dropdown`}>
+                <Link to={`#`} className={`nav-link nav-icon`} onClick={(e) => e.preventDefault()} data-bs-toggle={`dropdown`}>
                     <i className={`bi bi-bell`}></i>
                     <span className={`badge bg-primary badge-number`}>{notifications?.length}</span>
                 </Link>
@@ -31,7 +31,7 @@ function Notifications({ notifications }) {
                         </Link>
                     </li>
 
-                    <li><hr className={`dropdown-divider" /></li>
+                    <li><hr className={`dropdown-divider`} /></li>
 
                     {notifications?.map((notification, index) => (
                         <React.Fragment key={index}>
@@ -43,13 +43,13 @@ function Notifications({ notifications }) {
                                 time={notification?.time}
                                 omClick={handleCloseAlert(index)}
                             />
-                            <li><hr className={`dropdown-divider" /></li>
+                            <li><hr className={`dropdown-divider`} /></li>
                         </React.Fragment>
                     ))}
 
-                    {/* <li className={`dropdown-footer`}>
+                    <li className={`dropdown-footer`}>
                         <Link to={`#`} onClick={handleClearAll}>Clear all</Link>
-                    </li> */}
+                    </li>
                 </ul>
             </li>
         </>

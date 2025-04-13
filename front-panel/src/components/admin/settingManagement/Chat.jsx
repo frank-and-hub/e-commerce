@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { notifyError } from '../comman/notification/Notification'
+import { notifyError } from 'components/admin/comman/notification/Notification'
 // import { useNavigate } from 'react-router-dom'
-import { useLoading } from '../../../context/LoadingContext'
+import { useLoading } from 'context/LoadingContext'
 
-// import { post } from '../../../utils/AxiosUtils'
-import SubmitButton from '../form/SubmitButton'
-import SelectForm from '../form/select/SelectForm'
-import { ucwords } from '../../../utils/helper'
-import { get, post } from '../../../utils/AxiosUtils'
+// import { post } from 'utils/AxiosUtils'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import { ucwords } from 'utils/helper'
+import { get, post } from 'utils/AxiosUtils'
 import { useSelector } from 'react-redux'
 import { Messages } from './Messages'
-import { chatValidation, useFormValidation } from '../../../utils/FormValidation'
+import { chatValidation, useFormValidation } from 'utils/FormValidation'
 
 const Chat = ({ userOptions }) => {
 

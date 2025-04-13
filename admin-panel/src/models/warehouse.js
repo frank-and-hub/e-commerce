@@ -5,6 +5,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const warehouseSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
+    owner_name: { type: String, required: true, trim: true, set: (value) => value.toLowerCase() },
     phone: { type: Number, required: true, minlength: 8, maxlength: 12 },
     email: { type: String, required: true, unique: true, match: [emailRegex, 'Please provide a valid email address'] },
     address: { type: Object, default: null },

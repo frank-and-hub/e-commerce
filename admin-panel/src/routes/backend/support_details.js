@@ -5,8 +5,10 @@ const validation = require('../../utils/validation');
 
 const { checkAuth } = require('../../middleware/authMiddleware');
 const SupportDetailController = require('../../controllers/SupportDetailController');
+
 // permissios check
 const checkPermission = require('../../middleware/checkPermission');
+
 // get filea name
 const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 

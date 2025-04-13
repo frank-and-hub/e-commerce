@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { debounce, formattedData, truncateString, ucwords } from '../../../utils/helper'
-import { notifyError, notifySuccess } from '../comman/notification/Notification'
-import { destroy, get, patch } from '../../../utils/AxiosUtils'
-import { SidebarContext } from '../../../context/SidebarContext'
-import { useLoading } from '../../../context/LoadingContext'
+import { debounce, formattedData, truncateString, ucwords } from 'utils/helper'
+import { notifyError, notifySuccess } from 'components/admin/comman/notification/Notification'
+import { destroy, get, patch } from 'utils/AxiosUtils'
+import { SidebarContext } from 'context/SidebarContext'
+import { useLoading } from 'context/LoadingContext'
 import { Loading } from '../loading/Loading'
 import Button from './Button'
 import Pageignation from './Pageignation'
@@ -44,7 +44,7 @@ const Table = ({
     const [selectedItemStatus, setSelectedItemStatus] = useState(null);
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
 
-    const title = `${ucwords((dataTableTitle ?? pathname) + ' table')}`;
+    const title = `${ucwords((dataTableTitle ?? 'Data') + ' table')}`;
     const cleanedTitle = title.replace(/[?_~/-]/g, ' ');
 
     const handleSearchChange = (e) => {
@@ -182,12 +182,12 @@ const Table = ({
     return (
         <>
             <div className={`card`}>
-                <div className={`card-body`}>
+                <div className={`card-body pb-0`}>
                     <div className='row my-2'>
-                        <div className={`col-md-6`}>
+                        <div className={`col-md-5`}>
                             <h6 className={`card-title text-capitalize mb-0`}>{cleanedTitle}</h6>
                         </div>
-                        <div className={`d-flex justify-content-evenly align-items-center col-md-6`}>
+                        <div className={`d-flex justify-content-evenly align-items-center col-md-7`}>
                             <div className={`col-md-10 col-sm-9 col-8`}>
                                 <input
                                     type={`text`}
@@ -203,7 +203,7 @@ const Table = ({
                                         <div className={`col-6 m-auto`}>
                                             <span className={`d-inline-block color`} tabIndex={`0`} data-bs-toggle={`tooltip`} data-bs-original-title={``} title={ucwords(`filter`)}>
                                                 <Link onClick={() => handelFilter()} className={`shadow btn btn-sm rounded-circle`}>
-                                                    <i className={`bi bi-filter`}></i>
+                                                    <i className={`bi bi-${true ? `filter-left`:`x-lg`}`}></i>
                                                 </Link>
                                             </span>
                                         </div>
@@ -212,7 +212,7 @@ const Table = ({
                                         <div className={`col-6 m-auto`}>
                                             <span className={`d-inline-block color`} tabIndex={`0`} data-bs-toggle={`tooltip`} title={ucwords(`add`)}>
                                                 <Link to={`/admin${pathname}/create`} className={`shadow btn btn-sm rounded-circle`}>
-                                                    <i className={`bi bi-plus`}></i>
+                                                    <i className={`bi bi-plus-lg`}></i>
                                                 </Link>
                                             </span>
                                         </div>
@@ -293,28 +293,22 @@ const Table = ({
                                 </tr>))}
                             </tbody>
                             <tfoot >
-                                <tr>
-                                    <td colSpan={tableData.length + 1} className={`${tableData.length === 0 ? `p-0` : ``}`} >
-                                        <div className={`row justify-content-md-between${tableData?.length > 0 ? ` mt-2` : ``}`}>
-                                            <div className={`col-md-5 col-12 d-none d-md-block`}>
-                                                {dataCount > dataLimit && (
-                                                    <>
-                                                        <div className={`position-absolute my-auto py-2 `}>Showing {start} to {end} of {dataCount} entries</div>
-                                                    </>
-                                                )}
-                                            </div>
-                                            <div className={`col-md-7 col-12`}>
-                                                <div className={`position-relative Page navigation`}>
-                                                    {dataCount > dataLimit && (
-                                                        <>
-                                                            <Pageignation totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-                                                        </>
-                                                    )}
+                                {dataCount > dataLimit && (
+                                    <tr>
+                                        <td colSpan={tableData.length + 1} className={`${tableData.length === 0 ? `p-0` : ``}`} >
+                                            <div className={`row justify-content-md-between${tableData?.length > 0 ? ` mt-2` : ``}`}>
+                                                <div className={`col-md-5 col-12 d-none d-md-block`}>
+                                                    <div className={`position-absolute my-auto py-2 `}>Showing {start} to {end} of {dataCount} entries</div>
+                                                </div>
+                                                <div className={`col-md-7 col-12`}>
+                                                    <div className={`position-relative Page navigation`}>
+                                                        <Pageignation totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                )}
                             </tfoot>
                         </table>
                     </div>

@@ -1,8 +1,8 @@
 import { useEffect, useState, useTransition } from "react"
 import { get, post, put, patch, destroy } from '../utils/AxiosUtils'
 import { useSelector, useDispatch } from 'react-redux'
-import { processNotifications } from "../utils/notificationUtils"
-import { useAuth } from './../utils/AuthContext'
+import { processNotifications } from "utils/notificationUtils"
+import { useAuth } from 'utils/AuthContext'
 
 const useApi = (apiCall, url, bodyData = null) => {
     const { logout } = useAuth();

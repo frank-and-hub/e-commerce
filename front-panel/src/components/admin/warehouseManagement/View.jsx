@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { get } from '../../../utils/AxiosUtils'
-import Input from '../form/Input'
+import { get } from 'utils/AxiosUtils'
+import Input from 'components/admin/form/Input'
 import { useParams } from 'react-router-dom'
-import { processNotifications } from '../../../utils/notificationUtils'
+import { processNotifications } from 'utils/notificationUtils'
 import { useDispatch } from 'react-redux'
-import Textarea from '../form/Textarea'
-import CardForm from '../card/CardForm'
+import Textarea from 'components/admin/form/Textarea'
+import CardForm from 'components/admin/card/CardForm'
+import SelectSupplier from 'components/admin/form/select/SelectSupplier'
 
 function View() {
     const { id } = useParams();
@@ -15,13 +16,11 @@ function View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-
-                const [tagData] = await Promise.all([
+                const [warehousesData] = await Promise.all([
                     get(`/warehouses/${id}`),
                 ]);
-
-                setValues(tagData?.data || {});
-                processNotifications(200, tagData?.message, dispatch);
+                setValues(warehousesData?.data || {});
+                processNotifications(200, warehousesData?.message, dispatch);
             } catch (err) {
                 processNotifications(err.status || 500, err.message, dispatch);
             }
@@ -37,9 +36,18 @@ function View() {
 
     return (
         <CardForm handleSubmit={(e) => e.preventDefault()} key={0}>
-            <Input name={`name`} label="Name" value={values?.name} onChange={handleChange} required={false} inputType={true} disabled={true} />
-            <Input name={`percentage`} label="percentage" value={values?.percentage} onChange={handleChange} required={false} inputType={true} disabled={true} />
-            <Textarea name={`description`} label="Description" value={values?.description} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
+            <Input name={`name`} label="name" value={values?.name} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`owner_name`} label="owner_name" value={values?.owner_name} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`phone`} label="phone" value={values?.phone} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`email`} label="email" value={values?.email} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`country`} label="country" value={values?.country} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`state`} label="state" value={values?.state} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`city`} label="city" value={values?.city} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <Input name={`zipcode`} label="zipcode" value={values?.zipcode} onChange={handleChange} disabled={true} required={false} inputType={true} />
+            <div className={`col-md-4`}>
+                <SelectSupplier id={`supplier_id`} label={`supplier`} value={values?.supplier_id} handleChange={handleChange} required={true} disabled={true}/>
+            </div>
+            <Textarea name={`address`} className={`w-100`} label="address" value={values?.address} onChange={handleChange} disabled={true} required={false} inputType={true} ></Textarea>
             <div className={`col-12`}>
             </div>
         </CardForm>

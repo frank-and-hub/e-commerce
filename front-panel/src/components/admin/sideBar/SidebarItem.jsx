@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SubSidebarItem from './SubSidebarItem'
-import { ucwords } from '../../../utils/helper'
-import { SidebarContext } from '../../../context/SidebarContext'
+import { ucwords } from 'utils/helper'
+import { SidebarContext } from 'context/SidebarContext'
 
 const SidebarItem = ({ icon, label, route, subItems }) => {
     const [active, setActive] = useState(null);

@@ -63,9 +63,9 @@ exports.index = async (req, res, next) => {
                 'route': route,
                 'statusCode': statusCode,
                 'errorMessage': errorMessage,
-                'errorType': errorType,
+                // 'errorType': errorType,
                 'stackTrace': stackTrace,
-                'ip': IP,
+                // 'ip': IP,
                 'status': status
             }
         });

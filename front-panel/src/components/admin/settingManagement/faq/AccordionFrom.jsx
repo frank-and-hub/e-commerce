@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { notifySuccess } from '../../comman/notification/Notification'
-import Input from '../../form/Input'
-import SubmitButton from '../../form/SubmitButton'
-import { patch } from '../../../../utils/AxiosUtils';
-import { formattedData } from '../../../../utils/helper'
-import Textarea from '../../form/Textarea';
-import { useLoading } from '../../../../context/LoadingContext';
-import { faqValidation, useFormValidation } from '../../../../utils/FormValidation';
-import { processNotifications } from '../../../../utils/notificationUtils';
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
+import Input from 'components/admin/form/Input'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { patch } from 'utils/AxiosUtils';
+import { formattedData } from 'utils/helper'
+import Textarea from 'components/admin/form/Textarea';
+import { useLoading } from 'context/LoadingContext';
+import { faqValidation, useFormValidation } from 'utils/FormValidation';
+import { processNotifications } from 'utils/notificationUtils';
 import { useDispatch } from 'react-redux';
 
 function AccordionFrom({ value, onAction }) {

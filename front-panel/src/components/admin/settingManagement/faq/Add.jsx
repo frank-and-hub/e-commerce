@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { post } from '../../../../utils/AxiosUtils'
-import SubmitButton from '../../form/SubmitButton'
-import { notifySuccess } from '../../comman/notification/Notification'
+import { post } from 'utils/AxiosUtils'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
 import { useNavigate } from 'react-router-dom'
-import Textarea from '../../form/Textarea'
-import { useLoading } from '../../../../context/LoadingContext'
-import { faqValidation, useFormValidation } from '../../../../utils/FormValidation'
+import Textarea from 'components/admin/form/Textarea'
+import { useLoading } from 'context/LoadingContext'
+import { faqValidation, useFormValidation } from 'utils/FormValidation'
 
 function Add() {
 
@@ -36,7 +36,6 @@ function Add() {
         navigate('/admin/settings/faqs', true);
       }
     } catch (err) {
-      console.error(err.message);
       console.error(err.message);
     } finally {
       setLoading(false)

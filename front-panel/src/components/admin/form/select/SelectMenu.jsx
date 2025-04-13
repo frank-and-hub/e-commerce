@@ -1,7 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 import { useSelector } from 'react-redux'
-import { customStyles, ucwords } from '../../../../utils/helper'
+import { customStyles, ucwords } from 'utils/helper'
 
 function SelectMenu({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
 

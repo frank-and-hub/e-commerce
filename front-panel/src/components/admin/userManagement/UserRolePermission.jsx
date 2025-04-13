@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
-import SubmitButton from '../form/SubmitButton'
-import { notifyInfo } from '../comman/notification/Notification'
-import { get } from '../../../utils/AxiosUtils'
-import { useLoading } from '../../../context/LoadingContext'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { notifyInfo } from 'components/admin/comman/notification/Notification'
+import { get } from 'utils/AxiosUtils'
+import { useLoading } from 'context/LoadingContext'
 import PermissionTable from './PermissionTable'
-import { SidebarContext } from '../../../context/SidebarContext'
-import SelectUser from '../form/select/SelectUser'
-import { useFormValidation, userPermissionValidation } from '../../../utils/FormValidation'
+import { SidebarContext } from 'context/SidebarContext'
+import SelectUser from 'components/admin/form/select/SelectUser'
+import { useFormValidation, userPermissionValidation } from 'utils/FormValidation'
 
 function UserRolePermission() {
 

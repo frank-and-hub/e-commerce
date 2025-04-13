@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import SubmitButton from '../form/SubmitButton'
-import { useLoading } from '../../../context/LoadingContext'
-import { notifySuccess } from '../comman/notification/Notification'
-import { post } from '../../../utils/AxiosUtils'
-import { transformData, ucwords } from '../../../utils/helper'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { useLoading } from 'context/LoadingContext'
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
+import { post } from 'utils/AxiosUtils'
+import { transformData, ucwords } from 'utils/helper'
 import { useNavigate } from 'react-router-dom'
-import { useFormValidation, validate } from '../../../utils/FormValidation'
+import { useFormValidation, validate } from 'utils/FormValidation'
 
 export const PermissionTable = ({ response, permission, user_id = null, mainFormReset }) => {
     const { loading, setLoading } = useLoading();
@@ -56,15 +56,15 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
         }
     }, [response, setValues]);
 
-    console.log(`toggle is ${toggle}`)
+    console.info(`toggle is ${toggle}`)
 
     return (
         <>
             <div className={`card`}>
                 <div className={`card-head`}></div>
                 <div className={`card-body`} >
-                    <form key={formKey} className={`row mt-3 px-3 g-4 needs-validation`} onSubmit={handleSubmit} noValidate>
-                        <table className={`table table-borderless table-sm`}>
+                    <form key={formKey} className={`row mt-3 px-3 g-4 needs-validation overflow-auto`} onSubmit={handleSubmit} noValidate>
+                        <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl} mb-2`}>
                             <thead>
                                 <tr key={formKey}  >
                                     <th><i className={`bi bi-hash`} ></i></th>

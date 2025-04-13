@@ -10,7 +10,7 @@ function Error() {
                     <h1>404</h1>
                     <h2>The page you are looking for doesn't exist.</h2>
                     <Link className={`btn text-capitalize`} to={`/admin`} >back to home</Link>
-                    <img src={`admin-assets/img/not-found.svg`} className={`img-fluid py-5`} alt={`Page Not Found`} loading={`lazy`} />
+                    <img src={`/admin/img/not-found.svg`} className={`img-fluid py-5`} alt={`Page Not Found`} loading={`lazy`} />
                     <div className={`credits`}>
                         Designed by <a href={`https://bootstrapmade.com/`} >BootstrapMade</a>
                     </div>

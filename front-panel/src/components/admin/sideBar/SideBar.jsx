@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import SidebarItem from './SidebarItem'
-import { SidebarContext } from '../../../context/SidebarContext'
+import { SidebarContext } from 'context/SidebarContext'
 import { Loading } from '../loading/Loading'
 
 const SideBar = () => {

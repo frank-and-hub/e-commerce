@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { SignUpForm } from './SignUpForm';
 import Designedby from '../footer/designedby/Designedby';
+import { CaptureImage } from './CaptureImage';
 
 function SignUp() {
     return (
@@ -11,10 +12,13 @@ function SignUp() {
                     <div className={`container`}>
                         <div className={`row justify-content-center`}>
                             <div className={`col-lg-5 col-md-7  d-flex flex-column align-items-center justify-content-center`}>
-                                <div className={`d-flex justify-content-center py-4`}>
+                                <div className={`d-flex justify-content-center`}>
+                                    {/*                                     
                                     <Link to={`/`} className={`logo d-flex align-items-center w-auto`}>
                                         <span className={`d-none d-lg-block`}>Admin</span>
                                     </Link>
+                                    */}
+                                    <CaptureImage /> 
                                 </div>
                                 <div className={`card mb-3`}>
                                     <div className={`card-body`}>

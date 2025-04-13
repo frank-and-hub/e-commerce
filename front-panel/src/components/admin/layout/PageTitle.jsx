@@ -1,30 +1,39 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useReRender } from 'context/ReRenderContext'
+import { handleToggleSidebar } from 'utils/helper';
 
 function PageTitle({ title, location }) {
 
     const pathSegments = location.pathname.replace('/admin', '').split('/').filter((x) => x);
-    const [previousUrl, setPreviousUrl] = useState(null);
-
+    // const [previousUrl, setPreviousUrl] = useState(null);
+    const { triggerReRender } = useReRender();
     const prevUrlRef = useRef(location?.pathname);
 
     useEffect(() => {
-        setPreviousUrl(prevUrlRef.current);
+        // setPreviousUrl(prevUrlRef.current);
         prevUrlRef.current = location.pathname;
     }, [location]);
 
     return (
         <>
             <div className={`pagetitle text-left mt-3 pr-2`}>
-                <nav className={`d-flex justify-content-between px-1`} >
-                    <Link className={`shadow btn btn-sm rounded-pill mx-0 px-3`} to={previousUrl} >
-                        <i className={`ri-arrow-go-forward-fill`} ></i> 
-                        {/* Go Back */}
-                    </Link>
-                    <ol className={`breadcrumb mb-2 text-capitalize shadow rounded-pill px-3`}>
+                <nav className={`d-flex justify-content-between align-items-center`} >
+                    <div className={`col-xl-1 col-md-2 col-sm-3 d-none d-sm-block`}>
+                        <div className={`d-flex justify-content-between`}>
+                            <Link className={`shadow btn rounded-pill px-3 mx-1`} onClick={handleToggleSidebar} title={`Previous Page`} >
+                                <i className={`b bi-list`} ></i> 
+                            </Link>
+                            <p className={`shadow btn rounded-pill px-3 mx-1`} onClick={triggerReRender} title={`Refresh Data`} >
+                                <i className={`b bi-arrow-clockwise`} ></i> 
+                            </p>
+                        </div>
+                    </div>
+                    <ol className={`breadcrumb m-0 text-capitalize shadow rounded-pill px-3 py-2`}>
                         <li className={`breadcrumb-item`}>
                             <Link to={`/admin/index`} >
-                                <i className={`bi bi-house-door`}></i>
+                                {/* <i className={`bi bi-house-door`}></i>  */}
+                                Home
                             </Link>
                         </li>
                         {pathSegments.map((segment, index) => {
@@ -42,6 +51,8 @@ function PageTitle({ title, location }) {
                             );
                         })}
                     </ol>
+
+                   
                 </nav>
             </div>
         </>

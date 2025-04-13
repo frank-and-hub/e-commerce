@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from '../table/Table'
+import Table from 'components/admin/table/Table'
 
 function MenuTable() {
     const module = 'menus';

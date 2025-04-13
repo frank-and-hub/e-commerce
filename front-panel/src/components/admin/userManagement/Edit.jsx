@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import Input from '../form/Input'
-import SubmitButton from '../form/SubmitButton'
-import SelectRole from '../form/select/SelectRole'
+import Input from 'components/admin/form/Input'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import SelectRole from 'components/admin/form/select/SelectRole'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { notifyInfo, notifySuccess } from '../comman/notification/Notification'
-import { get, patch } from '../../../utils/AxiosUtils'
-import { processNotifications } from '../../../utils/notificationUtils'
-import { formattedData } from '../../../utils/helper'
-import { useLoading } from '../../../context/LoadingContext'
-import CardForm from '../card/CardForm'
-import { useFormValidation, userValidation } from '../../../utils/FormValidation'
+import { notifyInfo, notifySuccess } from 'components/admin/comman/notification/Notification'
+import { get, patch } from 'utils/AxiosUtils'
+import { processNotifications } from 'utils/notificationUtils'
+import { formattedData } from 'utils/helper'
+import { useLoading } from 'context/LoadingContext'
+import CardForm from 'components/admin/card/CardForm'
+import { useFormValidation, userValidation } from 'utils/FormValidation'
 
 function Edit() {
     const { id } = useParams();
@@ -80,7 +80,7 @@ function Edit() {
         }
     }, [dispatch, id, setValues]);
 
-    if (response && error) console.log(response && error);
+    if (response && error) console.info(response && error);
 
     return (
         <CardForm handleSubmit={handleSubmit} key={formKey}>

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../utils/AuthContext';
-import { notifySuccess } from '../comman/notification/Notification';
-import { post } from '../../../utils/AxiosUtils';
+import { useAuth } from 'utils/AuthContext';
+import { notifySuccess } from 'components/admin/comman/notification/Notification';
+import { post } from 'utils/AxiosUtils';
 
 const SignOut = () => {
   const navigate = useNavigate();

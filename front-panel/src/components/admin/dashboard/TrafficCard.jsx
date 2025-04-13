@@ -1,8 +1,8 @@
 import React from 'react'
 import { Filter } from './Filter'
 import { TrafficChart } from './TrafficChart'
-import { useDashboard } from '../../../context/DashBoardContext'
-import { ucwords } from '../../../utils/helper'
+import { useDashboard } from 'context/DashBoardContext'
+import { ucwords } from 'utils/helper'
 
 export const TrafficCard = ({ trafficDataChart }) => {
     const { trafficFilter, setTrafficFilter } = useDashboard();

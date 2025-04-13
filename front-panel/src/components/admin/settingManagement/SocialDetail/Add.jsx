@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { post } from '../../../../utils/AxiosUtils'
-import { useLoading } from '../../../../context/LoadingContext'
-import Input from '../../form/Input'
-import SelectIcon from '../../form/select/SelectIcon'
-import SubmitButton from '../../form/SubmitButton'
-import { notifyError, notifyInfo, notifySuccess } from '../../comman/notification/Notification'
-import CardForm from '../../card/CardForm'
-import { socialDetailValidation, useFormValidation } from '../../../../utils/FormValidation'
+import { post } from 'utils/AxiosUtils'
+import { useLoading } from 'context/LoadingContext'
+import Input from 'components/admin/form/Input'
+import SelectIcon from 'components/admin/form/select/SelectIcon'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { notifyError, notifyInfo, notifySuccess } from 'components/admin/comman/notification/Notification'
+import CardForm from 'components/admin/card/CardForm'
+import { socialDetailValidation, useFormValidation } from 'utils/FormValidation'
 
 function Add() {
     const navigate = useNavigate();

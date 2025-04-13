@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '../utils/AuthContext'
 import PrivateRoute from '../route/PrivateRoute'
 import PublicRoute from '../route/PublicRoute'
+import { ReRenderProvider } from '../context/ReRenderContext'
 
 // admin-panel start // ----------------------------------------------
 // sign-in page
@@ -24,7 +25,8 @@ const Profile = lazy(() => import('./admin/profile/Profile'))
 const PermissionTable = lazy(() => import('./admin/permissionManagement/PermissionTable'))
 // settings
 const SettingForm = lazy(() => import ('./admin/settingManagement/SettingForm'))
-const Support = lazy(() => import('./admin/settingManagement/Support'))
+const Support = lazy(() => import('./admin/settingManagement/support/Support'))
+const AddSupport = lazy(() => import('./admin/settingManagement/support/Add'))
 const FaqList = lazy(() => import('./admin/settingManagement/faq/List'))
 const AddFaq = lazy(() => import('./admin/settingManagement/faq/Add'))
 // static pages
@@ -118,7 +120,11 @@ const WarehouseView = lazy(() => import('./admin/warehouseManagement/View'))
 // error
 const ErrorTable = lazy(() => import('./admin/errorManagement/ErrorTable'))
 const ErrorView = lazy(() => import('./admin/errorManagement/View'))
-
+// department
+const DepartmentTable = lazy(() => import('./admin/departmentManagement/DepartmentTable'))
+const DepartmentAdd = lazy(() => import('./admin/departmentManagement/Add'))
+const DepartmentEdit = lazy(() => import('./admin/departmentManagement/Edit'))
+const DepartmentView = lazy(() => import('./admin/departmentManagement/View'))
 // admin-panel end // ------------------------------------------------------
 
 // front-panel start // ------------------------------------
@@ -143,6 +149,7 @@ class Routing extends Component {
 
         return (
             <AuthProvider>
+                <ReRenderProvider>
                 <Router>
                     <Routes>
                         <Route exact path={`/`} element={<PublicRoute><FrontLayout /></PublicRoute>} >
@@ -202,7 +209,7 @@ class Routing extends Component {
 
                                 <Route exact path={`supports`}>
                                     <Route index element={<Support />} />
-                                    <Route exact path={`create`} element={<Support />} />
+                                    <Route exact path={`create`} element={<AddSupport />} />
                                 </Route>
 
                                 <Route exact path={`pages`}>
@@ -286,6 +293,13 @@ class Routing extends Component {
                                     <Route exact path={`:id`} element={<Blank />} />
                                 </Route>
 
+                                <Route exact path={`departments`}>
+                                    <Route index element={<DepartmentTable />} />
+                                    <Route exact path={`create`} element={<DepartmentAdd />} />
+                                    <Route exact path={`:id/edit`} element={<DepartmentEdit />} />
+                                    <Route exact path={`:id`} element={<DepartmentView />} />
+                                </Route>
+
                                 <Route exact path={`warranties`}>
                                     <Route index element={<WarrantyTable />} />
                                     <Route exact path={`create`} element={<WarrantyAdd />} />
@@ -318,6 +332,7 @@ class Routing extends Component {
                         </Route>
                     </Routes>
                 </Router>
+                </ReRenderProvider>
             </AuthProvider >
         );
     }

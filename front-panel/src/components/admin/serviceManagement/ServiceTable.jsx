@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Table from '../Table/Table'
-import SubmitButton from '../Form/SubmitButton'
-import { StatusOptions } from '../../../utils/selects'
-import SelectForm from '../Form/select/SelectForm'
-import { useFormValidation } from '../Form/FormValidation'
-import { useLoading } from '../../../context/LoadingContext'
-import { validate } from '../../../utils/FormValidation'
+import Table from 'components/admin/table/Table'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { StatusOptions } from 'utils/selects'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import { useFormValidation } from 'components/admin/form/FormValidation'
+import { useLoading } from 'context/LoadingContext'
+import { validate } from 'utils/FormValidation'
 
 
 function ServiceTable() {

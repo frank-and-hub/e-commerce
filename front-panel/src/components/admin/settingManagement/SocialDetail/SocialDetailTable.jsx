@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Table from '../../table/Table'
-import SubmitButton from '../../form/SubmitButton'
-import SelectForm from '../../form/select/SelectForm'
-import { useLoading } from '../../../../context/LoadingContext'
-import { SidebarContext } from '../../../../context/SidebarContext'
-import { StatusOptions } from '../../../../utils/selects'
-import { ucwords } from '../../../../utils/helper'
-import { useFormValidation, validate } from '../../../../utils/FormValidation'
+import Table from 'components/admin/table/Table'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import { useLoading } from 'context/LoadingContext'
+import { SidebarContext } from 'context/SidebarContext'
+import { StatusOptions } from 'utils/selects'
+import { ucwords } from 'utils/helper'
+import { useFormValidation, validate } from 'utils/FormValidation'
 
 
 function SocialDetailTable() {

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Table from '../table/Table'
-import SubmitButton from '../form/SubmitButton'
-import { useLoading } from '../../../context/LoadingContext'
-import SelectMenu from '../form/select/SelectMenu'
-import { StatusOptions } from '../../../utils/selects'
-import SelectForm from '../form/select/SelectForm'
-import { useFormValidation, validate } from '../../../utils/FormValidation'
+import Table from 'components/admin/table/Table'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { useLoading } from 'context/LoadingContext'
+import SelectMenu from 'components/admin/form/select/SelectMenu'
+import { StatusOptions } from 'utils/selects'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import { useFormValidation, validate } from 'utils/FormValidation'
 
 function PermissionTable() {
     const module = 'permissions';

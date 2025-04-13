@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Table from '../table/Table'
-import SelectRole from '../form/select/SelectRole'
-import SelectForm from '../form/select/SelectForm'
-import SubmitButton from '../form/SubmitButton'
-import { GenderOptions, StatusOptions } from '../../../utils/selects'
-import { useLoading } from '../../../context/LoadingContext'
-import { useFormValidation, validate } from '../../../utils/FormValidation'
+import Table from 'components/admin/table/Table'
+import SelectRole from 'components/admin/form/select/SelectRole'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { GenderOptions, StatusOptions } from 'utils/selects'
+import { useLoading } from 'context/LoadingContext'
+import { useFormValidation, validate } from 'utils/FormValidation'
 
 
 function UsersTable() {

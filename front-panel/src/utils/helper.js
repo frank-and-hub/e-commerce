@@ -189,3 +189,69 @@ export const loremTextCheck = (text) => {
     //     return res.status(400).json({ error: 'Error: Please do not use Lorem Ipsum text.' });
     // }
 }
+
+export const handleToggleSidebar = () => {
+    document.body.classList.toggle('toggle-sidebar');
+    const element = document.getElementById('sidebar');
+    if (element) {
+        if (window.innerWidth >= 1020) {
+            element.classList.toggle('my-3');
+            element.classList.toggle('mx-2');
+        } else {
+            console.clear();
+        }
+    }
+}
+
+export const hexToRGBA = (hex, alpha = 1) => {
+    hex = hex.replace('#', '');
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+export const hexToRGB = (hex) => {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(char => char + char).join('');
+    const bigint = parseInt(hex, 16);
+    return {
+        r: (bigint >> 16) & 255,
+        g: (bigint >> 8) & 255,
+        b: bigint & 255
+    };
+}
+
+export const luminance = (r, g, b) => {
+    const a = [r, g, b].map(v => {
+        v /= 255;
+        return v <= 0.03928
+            ? v / 12.92
+            : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+}
+
+export const contrast = (rgb1, rgb2) => {
+    const lum1 = luminance(rgb1.r, rgb1.g, rgb1.b),
+        lum2 = luminance(rgb2.r, rgb2.g, rgb2.b);
+    return (Math.max(lum1, lum2) + 0.05) /
+        (Math.min(lum1, lum2) + 0.05);
+}
+
+export const pickReadableTextColor = (bgHex, colorOptions = ['#ffffff', '#f9f9f9', '#f1f1f1', '#cccccc', '#999999', '#666666', '#333333', '#000000', '#fffae3', '#f5f5dc', '#ffe4e1', '#e6f7ff', '#e8f5e9', '#fce4ec', '#fafafa', '#1a1a1a']) => {
+    const bgRGB = hexToRGB(bgHex);
+    let bestColor = '#000',
+        bestContrast = 0;
+
+    for (const color of colorOptions) {
+        const fgRGB = hexToRGB(color),
+            currentContrast = contrast(bgRGB, fgRGB);
+        if (currentContrast > bestContrast) {
+            bestContrast = currentContrast;
+            bestColor = color;
+        }
+    }
+
+    return bestColor;
+}

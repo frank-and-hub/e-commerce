@@ -1,7 +1,7 @@
 import React from 'react'
 import { Filter } from './Filter'
-import { useDashboard } from '../../../context/DashBoardContext'
-import { ucwords } from '../../../utils/helper'
+import { useDashboard } from 'context/DashBoardContext'
+import { ucwords } from 'utils/helper'
 
 export const UsersCard = ({ usersCount }) => {
     const { userFilter, setUserFilter } = useDashboard();

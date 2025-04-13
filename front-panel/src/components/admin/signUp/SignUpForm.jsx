@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useTransition } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../../utils/AuthContext'
+import { useAuth } from 'utils/AuthContext'
 import { useSelector } from 'react-redux'
-import SubmitButton from '../form/SubmitButton'
-import { notifySuccess } from '../comman/notification/Notification'
-import { generateRandomString } from '../../../utils/helper'
-import { signUpValidation, useSignUpFormValidation } from '../../../utils/FormValidation'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
+import { generateRandomString } from 'utils/helper'
+import { signUpValidation, useSignUpFormValidation } from 'utils/FormValidation'
 
 export const SignUpForm = () => {
 
@@ -78,7 +78,7 @@ export const SignUpForm = () => {
                 <div className={`col-12`}>
                     <label htmlFor={`yourEmail`} className={`form-label`}>Your Email</label>
                     <div className={`input-group has-validation`}>
-                        <span className={`input-group-text" id="inputGroupPrepend`}>@</span>
+                        <span className={`input-group-text`} id={`inputGroupPrepend`}>@</span>
                         <input
                             type={`email`}
                             name={`email`}
@@ -118,7 +118,7 @@ export const SignUpForm = () => {
                         autoComplete="off"
                         readOnly={true}
                     />
-                    <button type={`button`} data-toggle="tooltip" title='Generate Key' onClick={generatePassword} className='position-absolute bg-transparent' style={{ top: '55%', right: '5%' }}>
+                    <button type={`button`} data-toggle={`tooltip`} title={`Generate Key`} onClick={generatePassword} className='position-absolute bg-transparent' style={{ top: '55%', right: '5%' }}>
                         <i className='bi bi-key-fill'></i>
                     </button>
                     {errors.password && <div className={`invalid-feedback d-block text-left`}>{errors.password}</div>}

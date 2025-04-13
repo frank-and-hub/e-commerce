@@ -9,7 +9,7 @@ const connectionFunction = (processed_env) => {
         case `live`:
             return `${processed_env.DB_URL}://${processed_env.CONNECTION_NAME}:${processed_env.DB_PWD}@${processed_env.CONNECTION_NAME}.${processed_env.DB_CONNECTION_BEFORE}${processed_env.DB_NAME}${processed_env.DB_CONNECTION_AFTER}=${processed_env.CONNECTION_NAME}`
         default:
-            throw new Error('Invalid DB_TYPE specified in the environment variables.');
+            throw new Error(`Invalid DB_TYPE specified in the environment variables.`);
     }
 }
 

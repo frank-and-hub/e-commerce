@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useState, useTransition } from 'react'
-import api from '../../../utils/api'
+import api from 'utils/api'
 import config from '../../../config'
-import Input from '../form/Input'
-import SubmitButton from '../form/SubmitButton'
-import Textarea from '../form/RoundedTextarea'
-import { useAuth } from '../../../utils/AuthContext'
-import { checkFileValidation } from '../../../utils/helper'
-import { notifyError, notifySuccess } from '../comman/notification/Notification'
-import { get } from '../../../utils/AxiosUtils'
-import { aboutProfileValidation, useFormValidation } from '../../../utils/FormValidation'
+import Input from 'components/admin/form/Input'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Textarea from 'components/admin/form/RoundedTextarea'
+import { useAuth } from 'utils/AuthContext'
+import { checkFileValidation } from 'utils/helper'
+import { notifyError, notifySuccess } from 'components/admin/comman/notification/Notification'
+import { get } from 'utils/AxiosUtils'
+import { aboutProfileValidation, useFormValidation } from 'utils/FormValidation'
 
 function AboutProfile() {
 

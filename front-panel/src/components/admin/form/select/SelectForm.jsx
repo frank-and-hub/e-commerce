@@ -1,6 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
-import { customStyles, ucwords } from '../../../../utils/helper'
+import { customStyles, ucwords } from 'utils/helper'
 
 function SelectForm({ id, handleChange, value, error, required = false, disabled = false, label = null, Options }) {
     Options = [{

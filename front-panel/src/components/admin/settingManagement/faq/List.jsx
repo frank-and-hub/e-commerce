@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { destroy, get } from '../../../../utils/AxiosUtils'
+import { destroy, get } from 'utils/AxiosUtils'
 import AccordionFrom from './AccordionFrom'
 import { useNavigate } from 'react-router-dom'
-import { SidebarContext } from '../../../../context/SidebarContext'
-import { notifySuccess } from '../../comman/notification/Notification'
-import { useLoading } from '../../../../context/LoadingContext'
-import { Loading } from '../../loading/Loading'
-import ReusableModal from '../../models/ReusableModal'
+import { SidebarContext } from 'context/SidebarContext'
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
+import { useLoading } from 'context/LoadingContext'
+import { Loading } from 'components/admin/loading/Loading'
+import ReusableModal from 'components/admin/models/ReusableModal'
 
 function List() {
     const { pathname } = useContext(SidebarContext);
@@ -65,7 +65,7 @@ function List() {
             <section className={`section`}>
                 <div className={`card-head`}>
                     <div className={`card-title`}>
-                        <p className='p-0 m-0 btn' onClick={() => (navigate('/admin/settings/faqs/create', true))} > Frequently Asked Questions  </p>
+                        <p className='py-0 m-0 btn' onClick={() => (navigate('/admin/settings/faqs/create', true))} > Frequently Asked Questions  </p>
                     </div>
                 </div>
                 <div className={`row`}>
@@ -75,7 +75,7 @@ function List() {
                         ) : (faqData && faqData?.length > 0) ? faqData?.map((item, index) => (
                             <div key={item?.id} className={`card`}>
                                 <div className={`card-body`}>
-                                    <div className={`accordion accordion-flush`} id={`faq-group-${index}`}>
+                                    <div className={`accordion accordion-flush pt-1`} id={`faq-group-${index}`}>
                                         <div className={`accordion-item`}>
                                             <h2 className={`accordion-header`}>
                                                 <button

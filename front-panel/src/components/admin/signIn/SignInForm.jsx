@@ -1,10 +1,10 @@
 import React, { useEffect, useTransition } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../../utils/AuthContext'
-import SubmitButton from '../form/SubmitButton'
-import { notifySuccess } from '../comman/notification/Notification'
-import { signInValidation, useSingInFormValidation } from '../../../utils/FormValidation'
+import { useAuth } from 'utils/AuthContext'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
+import { signInValidation, useSingInFormValidation } from 'utils/FormValidation'
 
 export const SignInForm = () => {
     const token = useSelector((state) => (state.auth.token));
@@ -14,8 +14,8 @@ export const SignInForm = () => {
     const [isPending, startTransition] = useTransition();
 
     const initialState = {
-        email: '',
-        password: ''
+        email: 'johanna.gottlieb@yahoo.com',
+        password: 'ON4DEWrbyMSonZNz'
     }
 
     const { values, errors, handleChange, handleSubmit: validateSubmit } = useSingInFormValidation(initialState, signInValidation);

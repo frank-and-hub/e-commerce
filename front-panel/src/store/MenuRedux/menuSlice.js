@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { get } from '../../utils/AxiosUtils'
+import { get } from 'utils/AxiosUtils'
 
 // Thunks to fetch both menus
 export const fetchMenus = createAsyncThunk('menu/fetchMenus', async (_, { rejectWithValue }) => {

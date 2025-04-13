@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { post } from '../../../utils/AxiosUtils'
-import SubmitButton from '../form/SubmitButton'
-import Input from '../form/Input'
-import { notifyError, notifySuccess, notifyInfo } from '../comman/notification/Notification'
+import { post } from 'utils/AxiosUtils'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Input from 'components/admin/form/Input'
+import { notifyError, notifySuccess, notifyInfo } from 'components/admin/comman/notification/Notification'
 import { useNavigate } from 'react-router-dom'
-import { useLoading } from '../../../context/LoadingContext'
-import CardForm from '../card/CardForm'
-import { unitValidation, useFormValidation } from '../../../utils/FormValidation'
+import { useLoading } from 'context/LoadingContext'
+import CardForm from 'components/admin/card/CardForm'
+import { unitValidation, useFormValidation } from 'utils/FormValidation'
 
 function Add() {
 

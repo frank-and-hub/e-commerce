@@ -45,8 +45,8 @@ exports.index = async (req, res, next) => {
         });
 
         const query = Warehouse.find(filter)
-            .select('_id name phone email address city state zipcode country supplier updated_by status')
-            .populate('supplier', '_id name')
+            .select('_id name owner_name phone email address city state zipcode country supplier updated_by status')
+            .populate('supplier', '_id name.first_name name.middle_name name.last_name')
             .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
         if (req?.query?.page != 0) {
@@ -59,18 +59,19 @@ exports.index = async (req, res, next) => {
         if (warehouses.length === 0) return res.status(200).json({ message: `No warehouses found`, data: [] });
 
         const warehousePromises = warehouses.map(async (warehouse) => {
-            const { _id, name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = warehouse
+            const { _id, name, owner_name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = warehouse
             return {
                 'id': _id,
                 'name': name,
+                'owner_name': owner_name,
                 'phone': phone,
                 'email': email,
                 'address': address,
                 'city': city,
                 'state': state,
                 'zipcode': zipcode,
-                'supplier': supplier,
-                'updated_by': updated_by,
+                // 'supplier': supplier,
+                // 'updated_by': updated_by,
                 'status': status
             }
         });
@@ -93,6 +94,7 @@ exports.create = (req, res, next) => {
             message: `Create warehouse form`,
             body: {
                 'name': 'String',
+                'owner_name': 'Strng',
                 'phone': 'Number',
                 'email': 'String',
                 'address': 'String',
@@ -107,9 +109,9 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { name, phone, email, address, city, state, zipcode, supplier_id } = req.body;
+    const { name, owner_name, phone, email, address, city, state, zipcode, supplier_id } = req.body;
     try {
-        
+
         const existsWarehouse = await Warehouse.findOne({ name: name, status: status_active });
         if (existsWarehouse) return res.status(200).json({ message: 'Warehouse already exists' });
 
@@ -118,13 +120,14 @@ exports.store = async (req, res, next) => {
 
         const warehouse = new Warehouse({
             _id: new mongoose.Types.ObjectId(),
-            name, phone, email, address, city, state, zipcode,
+            name, owner_name, phone, email, address, city, state, zipcode,
             supplier: supplier._id,
         });
         const newData = await warehouse.save();
         const response = {
             'id': newData?._id,
             'name': newData?.name,
+            'owner_name': newData?.owner_name,
             'phone': newData?.phone,
             'email': newData?.email,
             'address': newData?.address,
@@ -141,13 +144,13 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const warehouseData = await this.findData(id, res);
-        const { _id, name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = warehouseData;
+        const { _id, name, owner_name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = warehouseData;
         const result = {
             'id': _id,
             'name': name,
             'owner_name': owner_name,
             'phone': phone,
-            'work_phone': work_phone,
+            'work_phone': phone,
             'email': email,
             'address': address,
             'city': city,
@@ -165,10 +168,11 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const warehouseData = await this.findData(id, res);
-        const { _id, name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = warehouseData;
+        const { _id, name, owner_name, phone, email, address, city, state, zipcode, supplier, updated_by, status } = warehouseData;
         const result = {
             'id': _id,
             'name': name,
+            'owner_name': owner_name,
             'phone': phone,
             'email': email,
             'address': address,
@@ -196,10 +200,11 @@ exports.update = async (req, res, next) => {
         const result = await Warehouse.updateOne({ _id: id }, { $set: updateOps });
         if (result.modifiedCount > 0) {
             const updatedWarehouse = await this.findData(id, res);
-            const { _id, name, phone, email, address, city, state, zipcode, supplier } = updatedWarehouse;
+            const { _id, name, owner_name, phone, email, address, city, state, zipcode, supplier } = updatedWarehouse;
             const warehouseData = {
                 'id': _id,
                 'name': name,
+                'owner_name': owner_name,
                 'phone': phone,
                 'email': email,
                 'address': address,
@@ -233,6 +238,7 @@ exports.destroy = async (req, res, next) => {
                 'url': `${baseurl}${constName}`,
                 'body': {
                     'name': 'String',
+                    'owner_name': 'Strng',
                     'phone': 'Number',
                     'email': 'String',
                     'address': 'String',
@@ -249,10 +255,10 @@ exports.destroy = async (req, res, next) => {
 }
 
 exports.findData = async (id, res) => {
-   
+
     const warehouseData = await Warehouse.findById(id)
-        .select('_id name phone email address city state zipcode status supplier updated_by')
-        .populate('supplier', '_id name')
+        .select('_id name owner_name phone email address city state zipcode status supplier updated_by')
+        .populate('supplier', '_id')
         .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
     if (!warehouseData) return res.status(404).json({ message: `Warehouse not found` });

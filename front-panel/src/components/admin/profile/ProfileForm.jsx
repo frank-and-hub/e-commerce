@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useTransition } from 'react'
 
-import { patch } from '../../../utils/AxiosUtils'
+import { patch } from 'utils/AxiosUtils'
 import validate from './validate'
-import SubmitButton from '../form/SubmitButton'
-import Input from '../form/Input'
-import Textarea from '../form/RoundedTextarea'
-import { notifyError, notifySuccess } from '../comman/notification/Notification'
-import { useAuth } from '../../../utils/AuthContext'
-import { useFormValidation } from '../../../utils/FormValidation'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Input from 'components/admin/form/Input'
+import Textarea from 'components/admin/form/RoundedTextarea'
+import { notifyError, notifySuccess } from 'components/admin/comman/notification/Notification'
+import { useAuth } from 'utils/AuthContext'
+import { useFormValidation } from 'utils/FormValidation'
+// import SelectForm from 'components/admin/form/select/SelectForm'
+// import { GenderOptions } from 'utils/selects'
 
 function ProfileForm({ user }) {
     const { loadUser } = useAuth();
@@ -85,7 +87,7 @@ function ProfileForm({ user }) {
                 <Input name={`email`} label={`Email`} type={`email`} value={values?.email} onChange={handleChange} error={errors?.email} required={true} />
 
                 <Input name={`gender`} label={`Gender`} value={values?.gender} onChange={handleChange} error={errors?.gender} required={true} />
-               
+                
                 <Textarea name={`about`} label={`About`} value={values?.about} onChange={handleChange} error={errors?.about} required={true} />
                 <Input name={`address`} label={`Address`} value={values?.address} onChange={handleChange} error={errors?.address} required={true} />
                 <Input name={`city`} label={`City`} value={values?.city} onChange={handleChange} error={errors?.city} required={true} />

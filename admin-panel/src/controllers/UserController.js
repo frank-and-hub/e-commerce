@@ -63,7 +63,7 @@ exports.index = async (req, res, next) => {
         });
 
         const query = User.find(filter)
-            .select('_id name email phone gender image status role about updated_by')
+            .select('_id name email dial_code phone gender image status role about updated_by')
             .populate('role', '_id name')
             .populate('updated_by', '_id name.first_name name.middle_name name.last_name')
             .populate('image', '_id name path');
@@ -79,11 +79,12 @@ exports.index = async (req, res, next) => {
         if (users.length === 0) return res.status(200).json({ message: `Users not found!`, data: [] });
 
         const userPromises = users.map(async (user) => {
-            const { _id, full_name, email, phone, role, image, status } = user;
+            const { _id, full_name, email, dial_code, phone, role, image, status } = user;
             return {
                 'id': _id,
                 'name': full_name,
                 'email': email,
+                'dial_code': dial_code,
                 'phone': phone,
                 'role': role,
                 'image': image,
@@ -115,6 +116,7 @@ exports.create = (req, res, next) => {
                     'last_name': 'String'
                 },
                 'email': 'String',
+                'dial_code': 'String',
                 'phone': 'Digits',
                 'password': 'String',
                 'role_id': 'SchemaId',
@@ -145,6 +147,7 @@ exports.store = async (req, res, next) => {
                 'last_name': newData?.name?.last_name
             },
             'email': newData?.email,
+            'dial_code': newData?.dial_code,
             'phone': newData?.phone,
             'role': newData?.role,
             'password': password,
@@ -174,7 +177,7 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const userData = await getDataById(id, res);
-        const { _id, name, email, phone, password_text, role } = userData;
+        const { _id, name, email, dial_code, phone, password_text, role } = userData;
         const userResponses = {
             '_id': _id,
             'name': {
@@ -183,6 +186,7 @@ exports.edit = async (req, res, next) => {
                 'last_name': name?.last_name
             },
             'email': email,
+            'dial_code': dial_code,
             'phone': phone,
             'password': password_text,
             'role_id': role?._id,
@@ -224,7 +228,7 @@ exports.update = async (req, res, next) => {
 
         if (result.modifiedCount > 0) {
             const updatedUser = await getDataById(id, res);
-            const { _id, name, email, phone, gender, role, image, about } = updatedUser;
+            const { _id, name, email, dial_code, phone, gender, role, image, about } = updatedUser;
             const userData = {
                 'id': _id,
                 'name': {
@@ -233,6 +237,7 @@ exports.update = async (req, res, next) => {
                     'last_name': name?.last_name
                 },
                 'email': email,
+                'dial_code': dial_code,
                 'phone': phone,
                 'gender': gender,
                 'role': role,

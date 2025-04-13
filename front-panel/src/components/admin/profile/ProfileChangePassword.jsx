@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { post } from './../../../utils/AxiosUtils'
-import SubmitButton from '../form/SubmitButton'
-import Input from '../form/Input';
-import { notifyError, notifySuccess } from '../comman/notification/Notification';
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Input from 'components/admin/form/Input';
+import { notifyError, notifySuccess } from 'components/admin/comman/notification/Notification';
 
 function ProfileChangePassword({ user }) {
 

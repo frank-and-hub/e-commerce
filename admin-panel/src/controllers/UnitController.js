@@ -57,12 +57,11 @@ exports.index = async (req, res, next) => {
         if (units.length === 0) return res.status(200).json({ message: `No units found`, data: [] });
 
         const unitPromises = units.map(async (unit) => {
-            const { _id, name, short_name, updated_by, status } = unit
+            const { _id, name, short_name, status } = unit
             return {
                 'id': _id,
                 'name': name,
                 'short_name': short_name,
-                'updated_by': updated_by,
                 'status': status
             }
         });

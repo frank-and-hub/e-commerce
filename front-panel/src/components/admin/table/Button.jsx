@@ -1,5 +1,5 @@
 import React from 'react'
-import { ucwords } from '../../../utils/helper'
+import { ucwords } from 'utils/helper'
 import { Link } from 'react-router-dom'
 
 function Button({ iconClass, onClick = null, tooltip = null, url = null, disabled = false }) {

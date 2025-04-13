@@ -1,9 +1,6 @@
 import { useState } from 'react'
-// import { SidebarContext } from '../context/SidebarContext';
-
 
 export const useFormValidation = (initialState, validate) => {
-    // const { apiErrors } = useContext(SidebarContext);
     const [formData, setFormData] = useState(initialState);
     const [errors, setErrors] = useState({});
 
@@ -19,9 +16,6 @@ export const useFormValidation = (initialState, validate) => {
         e.preventDefault();
         const validationErrors = validate(formData);
         setErrors(validationErrors);
-
-        // const processedErrors = processApiErrors(apiErrors);
-        // setErrors(processedErrors);
     }
 
     return {
@@ -293,12 +287,36 @@ export function faqValidation(values) {
     return errors;
 }
 
+export function supportValidation(values) {
+    let errors = {}
+    if (!values.cell) errors.cell = 'Please enter cell number';
+    if (values.cell.length < 8) errors.call = 'cell number should to be at least 8 characters';
+    if (!/^\d+$/.test(values.cell)) errors.call = 'Cell number must be a valid number';
+    if (!values.type) errors.type = 'Please enter type';
+    if (!values.email) errors.email = 'Please enter email';
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email)) errors.email = 'Please enter a valid email address';
+    if (!values.address) errors.address = 'Please enter address';
+    if (values.address.length < 5 || values.address.length > 200) errors.address = 'Address must be between 5 and 200 characters';
+    if (!values.hours_start) errors.hours_start = 'Please enter hours start';
+    if (!/^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/.test(values.hours_start)) errors.hours_start = 'Start hours must be in valid 24-hour format (HH:mm)';
+    if (!values.hours_end) errors.hours_end = 'Please enter hours end';
+    if (!/^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/.test(values.hours_end)) errors.hours_end = 'End hours must be in valid 24-hour format (HH:mm)';
+    if (!values.week_start) errors.week_start = 'Please enter week start';
+    // if (!/^Week \d+$/.test(values.week_start)) errors.week_start = 'Week start must be in the format "Week X" (e.g., Week 1)';
+    if (!values.week_end) errors.week_end = 'Please enter week end';
+    // if (!/^Week \d+$/.test(values.week_end)) errors.week_end = 'Week end must be in the format "Week X" (e.g., Week 1)';
+    return errors;
+}
+
 export function storeValidation(values) {
     let errors = {}
     if (!values.name) errors.name = 'Please enter name';
     if (!values.phone) errors.phone = 'Please enter phone';
+    if (values.phone.length < 8) errors.phone = 'Phone number should to be at least 8 characters';
     if (!values.email) errors.email = 'Please enter email';
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email)) errors.email = 'Please enter a valid email address';
     if (!values.address) errors.address = 'Please enter address';
+    if (values.address.length < 5 || values.address.length > 200) errors.address = 'Address must be between 5 and 200 characters';
     if (!values.city) errors.city = 'Please enter city';
     if (!values.state) errors.state = 'Please enter state';
     if (!values.zipcode) errors.zipcode = 'Please enter zipcode';
@@ -330,6 +348,7 @@ export function userValidation(values) {
     if (!values.last_name) errors.last_name = 'Please enter last name';
     if (values.last_name.length < 3) errors.last_name = 'Last name needs to be at least 3 characters';
     if (!values.email) errors.email = 'Please enter email';
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email)) errors.email = 'Please enter a valid email address';
     if (!values.password) errors.password = 'Please enter password';
     if (values.password.length < 8) errors.password = 'Password needs to be at least 8 characters';
     if (!values.phone) errors.phone = 'Please enter phone';

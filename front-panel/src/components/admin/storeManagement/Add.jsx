@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { post } from '../../../utils/AxiosUtils'
-import SubmitButton from '../form/SubmitButton'
-import Input from '../form/Input'
-import { notifyError, notifySuccess, notifyInfo } from '../comman/notification/Notification'
+import { post } from 'utils/AxiosUtils'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Input from 'components/admin/form/Input'
+import { notifyError, notifySuccess, notifyInfo } from 'components/admin/comman/notification/Notification'
 import { useNavigate } from 'react-router-dom'
-import { useLoading } from '../../../context/LoadingContext'
-import Textarea from '../form/Textarea'
-import CardForm from '../card/CardForm'
-import { storeValidation, useFormValidation } from '../../../utils/FormValidation'
-import SelectSupplier from '../form/select/SelectSupplier'
+import { useLoading } from 'context/LoadingContext'
+import Textarea from 'components/admin/form/Textarea'
+import CardForm from 'components/admin/card/CardForm'
+import { storeValidation, useFormValidation } from 'utils/FormValidation'
+import SelectSupplier from 'components/admin/form/select/SelectSupplier'
 
 function Add() {
 
@@ -71,10 +71,10 @@ function Add() {
             <Input name={`state`} label="state" value={values.state} onChange={handleChange} error={errors.state} required={true} inputType={true} />
             <Input name={`city`} label="city" value={values.city} onChange={handleChange} error={errors.city} required={true} inputType={true} />
             <Input name={`zipcode`} label="zipcode" value={values.zipcode} onChange={handleChange} error={errors.zipcode} required={true} inputType={true} />
-            <Textarea name={`address`} label="address" value={values?.address} onChange={handleChange} error={errors.address} required={true} inputType={true} ></Textarea>
             <div className={`col-md-4`}>
                 <SelectSupplier id={`supplier_id`} label={`supplier`} value={values.supplier_id} handleChange={handleChange} error={errors.supplier_id} required={true} />
             </div>
+            <Textarea name={`address`} className={`w-100`} label="address" value={values?.address} onChange={handleChange} error={errors.address} required={true} inputType={true} ></Textarea>
             <div className={`col-12`}>
                 <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
             </div>

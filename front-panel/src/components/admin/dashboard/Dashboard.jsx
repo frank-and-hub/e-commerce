@@ -8,8 +8,8 @@ import { PaymentCard } from './PaymentCard'
 import { ReportGraph } from './ReportGraph'
 import { TrafficCard } from './TrafficCard'
 
-import { useDashboard } from '../../../context/DashBoardContext'
-import { post } from '../../../utils/AxiosUtils'
+import { useDashboard } from 'context/DashBoardContext'
+import { post } from 'utils/AxiosUtils'
 import { useState } from 'react'
 
 function Dashboard() {

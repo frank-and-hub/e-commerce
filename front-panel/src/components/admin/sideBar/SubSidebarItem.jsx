@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SidebarItem from './SidebarItem'
-import { ucwords } from '../../../utils/helper'
-import { SidebarContext } from '../../../context/SidebarContext';
+import { ucwords } from 'utils/helper'
+import { SidebarContext } from 'context/SidebarContext';
 
 function SubSidebarItem({ icon, label, subItems, route = null }) {
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ function SubSidebarItem({ icon, label, subItems, route = null }) {
                 data-toggle={`tooltip`}
                 data-placement={`top`}
                 title={ucwords(label)} >
-                <i className={icon}></i> {(label)} {subItems && subItems.length > 0 && <i className={`bi bi-chevron-down ms-auto`}></i>}
+                <i className={`${icon}`}></i> {(label)} {subItems && subItems.length > 0 && <i className={`font-weight-bold bi bi-chevron-down ms-auto`}></i>}
             </Link>
             {subItems && subItems.length > 0 && (
                 <ul

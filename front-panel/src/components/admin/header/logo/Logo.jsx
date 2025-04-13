@@ -1,19 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { handleToggleSidebar } from 'utils/helper'
 
 function Logo() {
-    const handleToggleSidebar = () => {
-        document.body.classList.toggle('toggle-sidebar');
-        const element = document.getElementById('sidebar');
-        if (element) {
-            if (window.innerWidth >= 1020) {
-                element.classList.toggle('my-3');
-                element.classList.toggle('mx-2');
-            } else {
-                console.clear();
-            }
-        }
-    }
     return (
         <>
             <div className={`d-flex align-items-center justify-content-between`} >
@@ -21,7 +10,7 @@ function Logo() {
                     className={`logo d-flex align-items-center`}
                     onClick={handleToggleSidebar}
                 >
-                    <img className={`d-block d-md-none`} src={`/admin/img/logo.svg`} alt={`logo`} />
+                    <img className={`d-block d-md-none`} src={`/admin/img/logo.svg`} alt={`logo`} width={`26px`} height={`26px`} />
                     <span className={`d-none d-md-block`} >Admin</span>
                 </Link>
             </div>

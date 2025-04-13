@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
-import { customStyles, ucwords } from '../../../../utils/helper'
-import { get } from '../../../../utils/AxiosUtils';
+import { customStyles, ucwords } from 'utils/helper'
+import { get } from 'utils/AxiosUtils';
 
 function SelectUser({ id, handleChange, value, error, label = null, required = false, disabled = false }) {
     const [response, setResponse] = useState();
@@ -12,7 +12,6 @@ function SelectUser({ id, handleChange, value, error, label = null, required = f
     }));
     const fetchData = async () => {
         const res = await get('/users?page=0');
-        console.log(res);
         setResponse(res?.response);
     }
 

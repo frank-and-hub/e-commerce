@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import SubmitButton from '../form/SubmitButton'
-import Input from '../form/Input'
-import { notifyError, notifySuccess, notifyInfo } from '../comman/notification/Notification'
-import Textarea from '../form/Textarea'
-import { useLoading } from '../../../context/LoadingContext'
-import { checkFileValidation } from '../../../utils/helper'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Input from 'components/admin/form/Input'
+import { notifyError, notifySuccess, notifyInfo } from 'components/admin/comman/notification/Notification'
+import Textarea from 'components/admin/form/Textarea'
+import { useLoading } from 'context/LoadingContext'
+import { checkFileValidation } from 'utils/helper'
 import config from '../../../config'
-import api from '../../../utils/api'
-import CardForm from '../card/CardForm'
-import { bannerValidation, useFormValidation } from '../../../utils/FormValidation'
+import api from 'utils/api'
+import CardForm from 'components/admin/card/CardForm'
+import { bannerValidation, useFormValidation } from 'utils/FormValidation'
 
 function Add() {
     const navigate = useNavigate();

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import SignOut from '../../signOut/SignOut'
+import SignOut from 'components/admin/signOut/SignOut'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { getFullName } from '../../../../utils/helper';
+import { getFullName, ucwords } from 'utils/helper';
 
 function User() {
     const user = useSelector((state) => (state.auth.user));
     const [src, setSrc] = useState(``);
 
-    const defaultImage = `assets/img/profile-img.jpg`;
+    const defaultImage = `/admin/img/profile-img.jpg`;
 
     useEffect(() => {
         setSrc(user?.image?.path ?? defaultImage);
-    }, [user, src,defaultImage]);
+    }, [user, src, defaultImage]);
 
     const handleError = () => {
         setSrc(defaultImage);
@@ -26,19 +26,19 @@ function User() {
                     onClick={(e) => e.preventDefault()}
                     data-bs-toggle={`dropdown`}
                 >
-                    <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} loading={`lazy`} onError={handleError} />
-                    <span className={`d-none d-md-block dropdown-toggle ps-2`}>{getFullName(user?.name)}</span>
+                    <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} loading={`lazy`} onError={handleError} width={`2.2rem`} height={`2.2rem`}/>
+                    {/* <span className={`d-none d-md-block dropdown-toggle ps-2`}>
+                        {ucwords(getFullName(user?.name))}
+                    </span> */}
                 </Link>
                 <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-25 card-color`}>
                     <li className={`dropdown-header`}>
                         <Link to={`/admin/profile`} className={``} >
-                            <h6 className={``} >{getFullName(user?.name)}</h6>
+                            <h6 className={``} >{ucwords(getFullName(user?.name))}</h6>
                             <span className={``} >{user?.email}</span>
                         </Link>
                     </li>
-                    <li className={`p-1`}>
-
-                    </li>
+                    <li className={`p-1`}></li>
                     <SignOut />
                 </ul>
             </li>

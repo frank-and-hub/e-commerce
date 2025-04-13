@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { get } from '../../../utils/AxiosUtils'
-import SelectIcon from '../form/select/SelectIcon'
-import Input from '../form/Input'
-import Textarea from '../form/Textarea'
-import { processNotifications } from '../../../utils/notificationUtils'
-import CardForm from '../card/CardForm'
+import { get } from 'utils/AxiosUtils'
+import SelectIcon from 'components/admin/form/select/SelectIcon'
+import Input from 'components/admin/form/Input'
+import Textarea from 'components/admin/form/Textarea'
+import { processNotifications } from 'utils/notificationUtils'
+import CardForm from 'components/admin/card/CardForm'
 
 function View() {
     const { id } = useParams();

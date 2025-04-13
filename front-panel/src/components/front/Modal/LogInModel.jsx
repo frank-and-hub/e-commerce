@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useTransition } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../utils/AuthContext';
-import { notifySuccess } from '../../admin/comman/notification/Notification';
+import { useAuth } from 'utils/AuthContext';
+import { notifySuccess } from 'components/admin/comman/notification/Notification';
 
 function LogInModel() {
 
@@ -82,7 +82,6 @@ function LogInModel() {
                 const response = await login(values.email, values.password);
                 if (!response) throw new Error("Failed to submit form");
                 notifySuccess(response.message);
-                console.log(response);
                 navigate(`/`, { replace: true });
                 document.querySelector('.btn-close').click();
             } catch (error) {

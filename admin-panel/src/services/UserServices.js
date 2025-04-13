@@ -7,7 +7,7 @@ class UserService {
     async getDataById(id, res) {
 
         const userData = await User.findById(id)
-            .select(`_id name email phone password password_text role image gender address about city state zipcode terms status updated_by`)
+            .select(`_id name email dial_code phone password password_text role image gender address about city state zipcode terms status updated_by`)
             // .where(`status`).equals(status_active)
             .populate(`role`, `_id name`)
             .populate(`updated_by`, `_id name`)
@@ -18,7 +18,7 @@ class UserService {
     }
 
     async insertNewData(userData, user_id) {
-        const { first_name, middle_name, last_name, email, phone, password, role_id } = userData;
+        const { first_name, middle_name, last_name, email, dial_code, phone, password, role_id } = userData;
         try {
             const hashPassword = await hashPassword(password);
 
@@ -32,6 +32,7 @@ class UserService {
                 email,
                 password: hashPassword,
                 password_text: password,
+                dial_code: dial_code,
                 phone: phoneformate(phone),
                 role: role_id,
                 updated_by: user_id ?? null,

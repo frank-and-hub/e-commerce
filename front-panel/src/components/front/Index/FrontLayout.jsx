@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import { get } from '../../../utils/AxiosUtils'
+// import { get } from 'utils/AxiosUtils'
 
 import Navbar from '../Navbar/Navbar'
 import Header from '../Header/Header'

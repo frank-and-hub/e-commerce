@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Table from '../table/Table'
-import SubmitButton from '../form/SubmitButton'
-import SelectForm from '../form/select/SelectForm'
-import { StatusOptions } from '../../../utils/selects'
-import { useLoading } from '../../../context/LoadingContext'
-import { useFormValidation, validate } from '../../../utils/FormValidation'
+import Table from 'components/admin/table/Table'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import { StatusOptions } from 'utils/selects'
+import { useLoading } from 'context/LoadingContext'
+import { useFormValidation, validate } from 'utils/FormValidation'
 
 
 function BannerTable() {

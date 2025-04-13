@@ -1,7 +1,7 @@
 import React from 'react'
-import { rasc } from '../../../utils/helper'
+import { rasc, ucwords } from 'utils/helper'
 
-export default function Input({ name, label, value, error, onChange, type = `text`, onBlur = (e) => e.preventDefault(), readonly = false, required = false, disabled = false, inputType = false }) {
+export default function Input({ name, label, value, error, onChange, type = `text`, onBlur = (e) => e.preventDefault(), readonly = false, required = false, disabled = false, inputType = false, min = 0, max = 0, checked = false }) {
     const InputItem = (<input
         name={name}
         type={type}
@@ -12,15 +12,18 @@ export default function Input({ name, label, value, error, onChange, type = `tex
         readOnly={readonly}
         defaultValue={value}
         autoComplete={`off`}
+        min={min > 0 ? min : ``}
+        max={max > 0 ? max : ``}
+        checked={checked}
         placeholder={`Enter ${(name).replace('_', ' ')}`}
-        className={`${type === `checkbox` ? `form-check-input`:`form-control`}${inputType ? `` : ` rounded-pill`}${error ? ` is-invalid` : ``}`}
+        className={`${type === `checkbox` ? `form-check-input` : `form-control`}${inputType ? `` : ` rounded-pill`}${error ? ` is-invalid` : ``}`}
     />);
 
     return (
         <>
             <div className={`${inputType ? `col-md-4` : `row mb-3`}`} >
                 <>
-                    {label && (<label htmlFor={rasc(name)} className={`text-capitalize${inputType ? ` form-label` : `col-md-4 col-lg-3 col-form-label text-start`}`}>{(label)} {required && <span className={`text-danger`}>*</span>}</label>)}
+                    {label && (<label htmlFor={rasc(name)} className={`text-capitalize${inputType ? ` form-label` : ` col-md-4 col-lg-3 col-form-label text-start`}`}>{ucwords(label)} {required && <span className={`text-danger`}>*</span>}</label>)}
                     <>
                         {inputType ? InputItem : <div className={`col-md-8 col-lg-9`}>{InputItem}</div>}
                     </>

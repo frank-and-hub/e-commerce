@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
-import { customStyles, ucwords } from '../../../../utils/helper'
+import { customStyles, ucwords } from 'utils/helper'
 import { useDispatch, useSelector } from 'react-redux';
 import { icons } from '../../comman/Icons';
-import { setIcon } from '../../../../store/iconSlice';
+import { setIcon } from 'store/iconSlice';
 
 function SelectIcon({ id, handleChange, value, error, required = false, disabled = false, label = null }) {
     const dispatch = useDispatch();

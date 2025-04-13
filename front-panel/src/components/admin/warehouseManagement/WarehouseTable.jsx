@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Table from '../table/Table'
-import SubmitButton from '../form/SubmitButton'
-import { StatusOptions } from '../../../utils/selects'
-import SelectForm from '../form/select/SelectForm'
-import { useLoading } from '../../../context/LoadingContext'
-import { useFormValidation, validate } from '../../../utils/FormValidation'
+import Table from 'components/admin/table/Table'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import { StatusOptions } from 'utils/selects'
+import SelectForm from 'components/admin/form/select/SelectForm'
+import { useLoading } from 'context/LoadingContext'
+import { useFormValidation, validate } from 'utils/FormValidation'
 
 function DiscountTable() {
     const module = 'warehouses';

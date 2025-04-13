@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useLoading } from '../Components/Admin/Context/LoadingContext';
+import { useLoading } from 'components/Admin/Context/LoadingContext';
 
 function useAxios(url) {
   const [data, setData] = useState([]);

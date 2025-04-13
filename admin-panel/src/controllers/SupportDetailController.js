@@ -32,7 +32,7 @@ exports.index = async (req, res, next) => {
         });
 
         const query = SupportDetails.find()
-            .select('_id call email address hours_start hours_end type week_start week_end updated_by status')
+            .select('_id cell email address hours_start hours_end type week_start week_end updated_by status')
             .where('status').equals(status_active)
             .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
 
@@ -47,10 +47,10 @@ exports.index = async (req, res, next) => {
         if (support_details.length === 0) return res.status(200).json({ message: `No support details found`, data: [] });
 
         const supportDetailsPromises = support_details.map(async (supportDetails) => {
-            const { _id, call, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetails;
+            const { _id, cell, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetails;
             return {
                 'id': _id,
-                'call': call,
+                'cell': cell,
                 'email': email,
                 'type': type,
                 'address': address,
@@ -80,7 +80,7 @@ exports.create = (req, res, next) => {
         res.status(200).json({
             message: `Create Support details form`,
             body: {
-                'call': 'String',
+                'cell': 'String',
                 'email': 'String',
                 'type': 'String',
                 'address': 'String',
@@ -95,19 +95,19 @@ exports.create = (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    const { call, email, address, hours_start, hours_end, week_start, week_end, type } = req.body;
+    const { cell, email, address, hours_start, hours_end, week_start, week_end, type } = req.body;
     try {
-        const existsSupportDetails = await SupportDetails.findOne({ call: call, email: email, status: status_active });
+        const existsSupportDetails = await SupportDetails.findOne({ cell: cell, email: email, status: status_active });
         if (existsSupportDetails) return res.status(200).json({ message: 'Support details already exists' });
 
         const supportDetails = new SupportDetails({
             _id: new mongoose.Types.ObjectId(),
-            call, email, address, hours_start, hours_end, type, week_start, week_end
+            cell, email, address, hours_start, hours_end, type, week_start, week_end
         });
         const newData = await supportDetails.save();
         const response = {
             'id': newData?._id,
-            'call': newData?.call,
+            'cell': newData?.cell,
             'type': newData?.type,
             'email': newData?.email,
             'address': newData?.address,
@@ -124,10 +124,10 @@ exports.show = async (req, res, next) => {
     const { id } = req.params;
     try {
         const supportDetailsData = await this.findData(id, res);
-        const { _id, call, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetailsData;
+        const { _id, cell, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetailsData;
         const result = {
             'id': _id,
-            'call': call,
+            'cell': cell,
             'email': email,
             'type': type,
             'address': address,
@@ -138,7 +138,7 @@ exports.show = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by,
         }
-        res.status(200).json({ message: `SupportDetails data found`, data: result, title: `View ${call} support details detail` });
+        res.status(200).json({ message: `SupportDetails data found`, data: result, title: `View ${cell} support details detail` });
     } catch (err) { next(err) }
 }
 
@@ -146,10 +146,10 @@ exports.edit = async (req, res, next) => {
     const { id } = req.params;
     try {
         const supportDetailsData = await this.findData(id, res);
-        const { _id, call, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetailsData;
+        const { _id, cell, email, address, hours_start, hours_end, type, week_start, week_end, updated_by, status } = supportDetailsData;
         const result = {
             'id': _id,
-            'call': call,
+            'cell': cell,
             'email': email,
             'type': type,
             'address': address,
@@ -160,7 +160,7 @@ exports.edit = async (req, res, next) => {
             'status': status,
             'updated_by': updated_by,
         }
-        res.status(200).json({ message: `SupportDetails data found`, data: result, title: `Edit ${call} support details detail` });
+        res.status(200).json({ message: `SupportDetails data found`, data: result, title: `Edit ${cell} support details detail` });
     } catch (err) { next(err) }
 }
 
@@ -178,10 +178,10 @@ exports.update = async (req, res, next) => {
 
         if (result.modifiedCount > 0) {
             const updatedSupportDetails = await this.findData(id, res);
-            const { _id, call, email, address, hours_start, hours_end, type, week_start, week_end, updated_by } = updatedSupportDetails;
+            const { _id, cell, email, address, hours_start, hours_end, type, week_start, week_end, updated_by } = updatedSupportDetails;
             const supportDetailsData = {
                 'id': _id,
-                'call': call,
+                'cell': cell,
                 'email': email,
                 'type': type,
                 'address': address,
@@ -212,7 +212,7 @@ exports.destroy = async (req, res, next) => {
                 'method': 'POST',
                 'url': `${baseurl}${constName}`,
                 'body': {
-                    'call': 'String',
+                    'cell': 'String',
                     'email': 'String',
                     'type': 'String',
                     'address': 'String',
@@ -231,7 +231,7 @@ exports.destroy = async (req, res, next) => {
 exports.findData = async (id, res) => {
    
     await SupportDetails.findById(id)
-        .select('_id call email address hours_start hours_end type week_start week_end updated_by status')
+        .select('_id cell email address hours_start hours_end type week_start week_end updated_by status')
         .populate('updated_by', '_id name.first_name name.middle_name name.last_name');
     if (!supportDetailsData) return res.status(404).json({ message: `SupportDetails not found` });
     return SupportDetails;

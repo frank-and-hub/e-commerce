@@ -21,10 +21,7 @@ function Profile() {
 
   return (
     <section className={`section profile m-0`}>
-      <div className={`row`}>
-        <div className={`col-xl-4`}>
-          <ProfileCard user={user} />
-        </div>  
+      <div className={`row`}>         
         <div className={`col-xl-8`}>
           <div className={`card`}>
             <div className={`card-body pt-3`}>
@@ -55,6 +52,9 @@ function Profile() {
             </div>
           </div>
         </div>
+        <div className={`col-xl-4`}>
+          <ProfileCard user={user} />
+        </div> 
       </div>
     </section>
   );

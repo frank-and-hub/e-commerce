@@ -24,7 +24,7 @@ const SearchBar = () => {
     return (
         <>
             <div className={`search-bar w-50`}>
-                <form encType={`multipart/form-data`} className={`search-form d-flex align-items-center`} onSubmit={handleSearch}>
+                <form encType={`multipart/form-data`} className={`rounded-pill border search-form d-flex align-items-center`} onSubmit={handleSearch}>
                     <input
                         type={`text`}
                         className={`rounded-pill border`}

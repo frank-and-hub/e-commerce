@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 
-import { post } from '../../../utils/AxiosUtils'
-import SelectIcon from '../form/select/SelectIcon'
-import SelectMenu from '../form/select/SelectMenu'
-import SubmitButton from '../form/SubmitButton'
-import Input from '../form/Input'
-import { notifySuccess } from '../comman/notification/Notification'
+import { post } from 'utils/AxiosUtils'
+import SelectIcon from 'components/admin/form/select/SelectIcon'
+import SelectMenu from 'components/admin/form/select/SelectMenu'
+import SubmitButton from 'components/admin/form/SubmitButton'
+import Input from 'components/admin/form/Input'
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
 import { useNavigate } from 'react-router-dom'
-import { useLoading } from '../../../context/LoadingContext'
-import { menuValidation, useFormValidation } from '../../../utils/FormValidation'
+import { useLoading } from 'context/LoadingContext'
+import { menuValidation, useFormValidation } from 'utils/FormValidation'
 
 function Add() {
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Filter } from './Filter'
 import ReportsChart from './ReportsChart'
-import { useDashboard } from '../../../context/DashBoardContext'
-import { ucwords } from '../../../utils/helper'
+import { useDashboard } from 'context/DashBoardContext'
+import { ucwords } from 'utils/helper'
 
 export const ReportGraph = ({ reportDataChart }) => {
     const { reportFilter, setReportFilter } = useDashboard();

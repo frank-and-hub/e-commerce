@@ -1,5 +1,5 @@
 import React from 'react'
-import { rasc } from '../../../utils/helper'
+import { rasc } from 'utils/helper'
 
 export default function Textarea({
     name,

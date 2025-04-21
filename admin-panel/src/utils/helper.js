@@ -93,4 +93,6 @@ const loremPatterns = [
     /labore et dolore magna aliqua/i,  // Match "labore et dolore magna aliqua"
 ];
 
-module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData, phoneFormate, loremPatterns }
+const makeSlug = (name) => name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+
+module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData, phoneFormate, loremPatterns, makeSlug }

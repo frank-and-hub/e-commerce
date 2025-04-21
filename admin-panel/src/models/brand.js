@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { makeSlug } = require('../utils/helper');
 
 const brandSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -6,6 +7,7 @@ const brandSchema = new mongoose.Schema({
     name: { type: String, required: true, trim: true, unique: true, set: (value) => value.toLowerCase() },
     description: { type: String, required: true, trim: true },
     image: { type: mongoose.Schema.Types.ObjectId, ref: 'File', required: false },
+    slug: { type: String, required: true, unique: true, index: true },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }
@@ -16,6 +18,11 @@ const brandSchema = new mongoose.Schema({
 brandSchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
+});
+
+brandSchema.pre('save', async function (next) {
+    this.slug = makeSlug(this.name);
+    next()
 });
 
 brandSchema.index({ name: 1, deleted_at: 1 });

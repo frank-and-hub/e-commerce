@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { makeSlug } = require('../utils/helper');
 
 const productSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -20,6 +21,7 @@ const productSchema = new mongoose.Schema({
     manufactured_date: { type: Date, required: true },
     expiry_date: { type: Date, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    slug: { type: String, required: true, unique: true, index: true },
     status: { type: Boolean, default: true },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }
@@ -30,6 +32,11 @@ const productSchema = new mongoose.Schema({
 productSchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
+});
+
+productSchema.pre('save', async function (next) {
+    this.slug = makeSlug(this.name);
+    next()
 });
 
 productSchema.index({ name: 1, deleted_at: 1 });

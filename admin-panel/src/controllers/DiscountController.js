@@ -17,6 +17,7 @@ const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
 const constName = 'discounts/';
 
 exports.index = async (req, res, next) => {
+    const { search, status } = req.query;
     try {
         const page = parseInt(req?.query?.page) || 1;
         const limit = parseInt(req?.query?.limit) || parseInt(data_limit);
@@ -25,8 +26,16 @@ exports.index = async (req, res, next) => {
         const orderByDirection = req?.query?.direction === 'asc' ? 1 : -1;
 
         const filter = {};
-        const { status } = req.query;
         if (status) filter.status = status;
+
+        if (search) {
+            const trimmedSearch = search.trim();
+            filter.$or = [
+                { name: { $regex: trimmedSearch, $options: "i" } },
+                { slug: { $regex: trimmedSearch, $options: "i" } },
+                { description: { $regex: trimmedSearch, $options: "i" } },
+            ];
+        }
 
         const skip = (page - 1) * limit;
         const totalCount = await Discount.countDocuments({

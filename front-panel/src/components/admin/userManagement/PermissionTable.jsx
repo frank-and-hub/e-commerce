@@ -7,12 +7,12 @@ import { transformData, ucwords } from 'utils/helper'
 import { useNavigate } from 'react-router-dom'
 import { useFormValidation, validate } from 'utils/FormValidation'
 
-export const PermissionTable = ({ response, permission, user_id = null, mainFormReset }) => {
+export const PermissionTable = ({ response, permission, user_id = null, mainFormReset, permissionsName }) => {
     const { loading, setLoading } = useLoading();
     const [formKey, setFormKey] = useState(0);
     const [toggle, setToggle] = useState(false);
     const navigate = useNavigate();
-    const columnCount = `7`;
+    const columnCount = `6`;
     const initialState = {};
 
     const { formData: values, errors, handleChange, handleSubmit: validateSubmit, setFormData: setValues } = useFormValidation(initialState, validate);
@@ -30,7 +30,7 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
                 const res = await post(`/users/${user_id}/permssions`, transformData(values));
                 notifySuccess(res.message)
             }
-            navigate('/admin/users/permissions', { replace: true })
+            navigate(`/admin/users/permissions`, { replace: true })
         } catch (err) {
             console.error(err.message);
         } finally {
@@ -43,7 +43,7 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
     const resetForm = () => {
         setValues(initialState);
         setFormKey((prevKey) => prevKey + 1);
-        document.getElementsByTagName('form')[0].reset();
+        document.getElementsByTagName(`form`)[0].reset();
     };
 
     useEffect(() => {
@@ -54,28 +54,25 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
             }, {});
             setValues((prev) => ({ ...prev, ...initialValues }));
         }
-    }, [response, setValues]);
-
-    console.info(`toggle is ${toggle}`)
+    }, [response, setValues, user_id]);
 
     return (
         <>
-            <div className={`card`}>
-                <div className={`card-head`}></div>
+            <div className={`card`} >
+                <div className={`card-head`} ></div>
                 <div className={`card-body`} >
-                    <form key={formKey} className={`row mt-3 px-3 g-4 needs-validation overflow-auto`} onSubmit={handleSubmit} noValidate>
-                        <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl} mb-2`}>
+                    <form key={formKey} className={`row mt-3 px-3 g-4 needs-validation overflow-auto`} onSubmit={handleSubmit} noValidate >
+                        <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl} mb-2`} >
                             <thead>
-                                <tr key={formKey}  >
-                                    <th><i className={`bi bi-hash`} ></i></th>
+                                <tr key={formKey}>
+                                    <th><i className={`bi bi-hash`}></i></th>
                                     <th>Menu Name</th>
-                                    <th>View</th>
-                                    <th>Add</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                    <th className={`p-0 text-center`} >
+                                    {permissionsName.length > 0 && permissionsName.map((value, key) => (
+                                        <th key={key}>{ucwords(value)}</th>
+                                    ))}
+                                    <th className={`p-0 text-center`}>
                                         <i data-toggle={`tooltip`}
-                                            title='Checked All'
+                                            title={`Checked All`}
                                             className={`bi bi-toggle-${toggle ? 'on' : 'off'} coursor-pointer`}
                                             onClick={(e) => setToggle(!toggle)}
                                             style={{ fontSize: '1.5rem' }}
@@ -87,14 +84,13 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
                                 {response && response.length > 0 ? (
                                     response.map((value, k) => {
                                         const isChecked = (field) => permission?.[k]?.[field] === true;
-                                        return (<tr>
-                                            <td>{k + 1}</td>
-                                            <td>{ucwords(value.name)}</td>
-                                            <td><input name={`view[${k}]`} onChange={handleChange} type={`checkbox`} defaultChecked={isChecked('view')} defaultValue={`1`} className={`btn`} /></td>
-                                            <td><input name={`add[${k}]`} onChange={handleChange} type={`checkbox`} defaultChecked={isChecked('add')} defaultValue={`1`} className={`btn`} /></td>
-                                            <td><input name={`edit[${k}]`} onChange={handleChange} type={`checkbox`} defaultChecked={isChecked('edit')} defaultValue={`1`} className={`btn`} /></td>
-                                            <td><input name={`delete[${k}]`} onChange={handleChange} type={`checkbox`} defaultChecked={isChecked('delete')} defaultValue={`1`} className={`btn`} /></td>
-                                            <th><input name={`menu[${k}]`} onChange={handleChange} type={`hidden`} defaultValue={value?.id} className={``} /></th>
+                                        return (<tr key={k}>
+                                            <td>{k + 1}<input name={`menu[${k}]`} onChange={handleChange} type={`hidden`} defaultValue={value?.id} className={`${k} ${toggle}`} /> </td>
+                                            <td>{ucwords(value?.name)}</td>
+                                            {permissionsName.length > 0 && permissionsName.map((value, key) => (
+                                                <td><input name={`${value}[${k}]`} onChange={handleChange} type={`checkbox`} defaultChecked={isChecked(`${value}`)} defaultValue={`1`} className={`btn`} /></td>
+                                            ))}
+                                            <th></th>
                                         </tr>)
                                     })) : (<tr>
                                         <th colSpan={columnCount} >No data available...</th>
@@ -102,10 +98,10 @@ export const PermissionTable = ({ response, permission, user_id = null, mainForm
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colSpan={columnCount} >
+                                    <th colSpan={columnCount}>
                                         <div className={`col-12`}>
                                             {response && (
-                                                <SubmitButton className={`custom`} disable={loading} name={loading ? 'Submitting...' : 'Submit Form'} />
+                                                <SubmitButton className={`custom`} disable={loading} name={loading ? `Submitting...` : `Submit Form`} />
                                             )}
                                         </div>
                                     </th>

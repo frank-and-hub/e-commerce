@@ -33,6 +33,7 @@ exports.index = async (req, res, next) => {
             const trimmedSearch = search.trim();
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
+                { slug: { $regex: trimmedSearch, $options: "i" } },
                 { description: { $regex: trimmedSearch, $options: "i" } },
             ];
         }

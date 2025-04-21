@@ -51,6 +51,7 @@ exports.index = async (req, res, next) => {
                         { "name.last_name": { $regex: trimmedSearch, $options: "i" } }
                     ]
                 },
+                { slug: { $regex: trimmedSearch, $options: "i" } },
                 { email: { $regex: trimmedSearch, $options: "i" } },
                 { $expr: { $regexMatch: { input: { $toString: "$phone" }, regex: trimmedSearch } } },
             ];

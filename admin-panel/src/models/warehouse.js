@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { makeSlug } = require('../utils/helper');
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -14,6 +15,7 @@ const warehouseSchema = new mongoose.Schema({
     zipcode: { type: Number, default: null, maxlength: 10 },
     country: { type: String, default: null, maxlength: 100 },
     status: { type: Boolean, default: true },
+    slug: { type: String, required: true, unique: true, index: true },
     supplier: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }
@@ -24,6 +26,11 @@ const warehouseSchema = new mongoose.Schema({
 warehouseSchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
+});
+
+warehouseSchema.pre('save', async function (next) {
+    this.slug = makeSlug(this.name);
+    next()
 });
 
 warehouseSchema.index({ name: 1, deleted_at: 1 });

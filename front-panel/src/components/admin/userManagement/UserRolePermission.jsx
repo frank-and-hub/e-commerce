@@ -49,11 +49,14 @@ function UserRolePermission() {
     document.getElementsByTagName('form')[0].reset();
   };
 
+  const arrayPermissions = ['view', 'add', 'edit', 'delete'];
+
   const TableData = {
     response: menus?.data,
     permission: userResponse,
     user_id: values?.user_id,
-    mainFormReset: resetForm
+    mainFormReset: resetForm,
+    permissionsName: arrayPermissions
   }
 
   return (

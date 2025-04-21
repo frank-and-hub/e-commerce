@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const bcrypt = require('bcrypt');
+const { makeSlug } = require('../utils/helper');
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -27,6 +28,7 @@ const userSchema = new mongoose.Schema({
     country: { type: String, default: null, maxlength: 100 },
     token: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Token', required: false }],
     terms: { type: Boolean, default: true },
+    slug: { type: String, required: true, unique: true, index: true },
     status: { type: Boolean, default: true },
     timezone: { type: String, default: null },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
@@ -39,6 +41,7 @@ userSchema.pre('save', async function (next) {
     if (this.isModified('password') || this.isNew) {
         this.password = await bcrypt.hash(this.password, 10);
     }
+    this.slug = makeSlug(`${this.name?.first_name} ${this.name?.middle_name??''} ${this.name?.last_name ?? ''}`);
     next()
 });
 
@@ -51,6 +54,6 @@ userSchema.virtual('full_name').get(function () {
     return `${this.name?.first_name} ${this.name?.middle_name ? this.name?.middle_name + ' ' : ''}${this.name?.last_name}`;
 });
 
-userSchema.index({ name: 1, deleted_at: 1, });
+userSchema.index({ name: 1, deleted_at: 1 });
 
 module.exports = mongoose.model('User', userSchema);

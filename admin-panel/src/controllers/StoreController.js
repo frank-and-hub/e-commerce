@@ -35,6 +35,7 @@ exports.index = async (req, res, next) => {
             filter.$or = [
                 { name: { $regex: trimmedSearch, $options: "i" } },
                 // { phone: { $regex: trimmedSearch, $options: "i" } },
+                { slug: { $regex: trimmedSearch, $options: "i" } },
                 { email: { $regex: trimmedSearch, $options: "i" } },
                 { address: { $regex: trimmedSearch, $options: "i" } },
                 { city: { $regex: trimmedSearch, $options: "i" } },

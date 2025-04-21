@@ -5,7 +5,7 @@ export const CaptureImage = () => {
     const canvasRef = useRef(null);
     const [image, setImage] = useState(null);
     const [stream, setStream] = useState(null);
-    const [isVideoReady, setIsVideoReady] = useState(false);
+    // const [isVideoReady, setIsVideoReady] = useState(false);
 
     // useEffect(() => {
     //     navigator.mediaDevices
@@ -36,7 +36,7 @@ export const CaptureImage = () => {
 
                 // Listen to when the video is ready
                 videoRef.current.onloadedmetadata = () => {
-                    setIsVideoReady(true); // Video is ready for capture
+                    // setIsVideoReady(true); // Video is ready for capture
                 };
             } catch (error) {
                 console.error("Error accessing the webcam: ", error);

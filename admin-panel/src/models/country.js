@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { makeSlug } = require('../utils/helper');
 
 const countrySchema = new mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
@@ -15,7 +16,7 @@ const countrySchema = new mongoose.Schema({
         png: { type: String, required: true },
         svg: { type: String, required: true },
     },
-
+    slug: { type: String, required: true, unique: true, index: true },
     status: { type: Boolean, default: true },
     deleted_at: { type: Date, default: null }
 }, {
@@ -25,6 +26,11 @@ const countrySchema = new mongoose.Schema({
 countrySchema.pre(/^find/, function (next) {
     this.where({ deleted_at: null });
     next();
+});
+
+countrySchema.pre('save', async function (next) {
+    this.slug = makeSlug(this.name);
+    next()
 });
 
 countrySchema.index({ _id: 1, name: 1, dialCode: 1, deleted_at: 1 });

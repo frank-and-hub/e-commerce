@@ -70,3 +70,17 @@ export const OptionsThemeType = [
     { value: 'dark', label: 'Dark' },
     { value: 'light', label: 'Light' },
 ];
+
+export const OptionsFilterType = [
+    { value: 'none', label: 'None' },
+    { value: 'sepia', label: 'Sepia' },
+    { value: 'contrast', label: 'Contrast' },
+    { value: 'saturate', label: 'Saturate' },
+    { value: 'invert', label: 'Invert' },
+    { value: 'grayscale', label: 'Grayscale' },
+    { value: 'opacity', label: 'Opacity' },
+    { value: 'hue-rotate', label: 'Hue rotate' },
+    { value: 'blur', label: 'Blur' },
+    { value: 'drop-shadow', label: 'Drop Shadow' },
+    { value: 'brightness', label: 'Brightness' },
+];

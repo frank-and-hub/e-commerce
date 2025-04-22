@@ -1,33 +1,27 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-:root {
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  --primary: #EB1616;
-  --secondary: #191C24;
-  --light: #967ADC;
-  --dark: #434648;
-  --background: #ffffff;
-  --white: #fff;
-  --card-bg: #fff;
-  --shadow2: rgba(64, 60, 67, 0.16);
-  --shadow: 0px 2px 5px 1px rgba(150, 122, 220, 0.40);
-  --bs-border-radius-lg: 0.5rem;
-  --grayscale: grayscale(0);
-  --invert: invert(0);
-  --saturate: saturate(0);
-  --contrast: contrast(0);
-  --sepia: sepia(0);
-}
 
 body {
-  font-family: "Open Sans", sans-serif;
   background: var(--background);
   color: var(--light);
   scrollbar-width: none;
   font-size: smaller;
-  /* filter: var(--grayscale) var(--invert) var(--saturate) var(--sepia); */
+  filter: none;
+  transition: filter 0.3s ease;
+}
+
+body .dark {
+  --primary: #EB1616;
+  --secondary: #ffffff;
+  --light: #3ae161;
+  --dark: #e1e1e1;
+  --background: #050505;
+  --white: #1e1e1e;
+  --card-bg: #5b5b5b;
+
+  --shadow2: rgba(0, 0, 0, 0.4);
+  --shadow: 0px 2px 5px 1px rgba(251, 251, 251, 0.5);
 }
 
 a {
@@ -41,6 +35,7 @@ a:hover {
   text-decoration: none;
 }
 
+p,
 h1,
 h2,
 h3,
@@ -112,7 +107,7 @@ thead,
 th,
 td,
 tfoot {
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .back-to-top i {
@@ -181,7 +176,7 @@ tfoot {
 }
 
 .dropdown-menu .dropdown-item:hover {
-  background-color: var(--background);
+  background-color: var(--transparent);
   border-radius: 25px;
   transition: all 0.5s;
 }
@@ -191,7 +186,7 @@ tfoot {
     content: "";
     width: 13px;
     height: 13px;
-    background: var(--background);
+    background: var(--transparent);
     position: absolute;
     top: -7px;
     right: 1rem;
@@ -270,14 +265,14 @@ tfoot {
   margin-bottom: 1rem;
   border: none;
   box-shadow: var(--shadow);
-  background-color: var(--background);
+  background-color: var(--transparent);
   border-radius: 1.5rem;
 }
 
 .card-header,
 .card-footer {
   border-color: #ebeef4;
-  background-color: var(--background);
+  background-color: var(--transparent);
   color: #798eb3;
   padding: 15px;
   transform: translateY(0);
@@ -325,7 +320,7 @@ tfoot {
 /* Accordion */
 .accordion-item {
   border: 1px solid var(--white);
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .accordion-button:focus {
@@ -335,14 +330,14 @@ tfoot {
 
 .accordion-button:not(.collapsed) {
   color: var(--dark);
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .accordion-flush .accordion-button {
   padding: 15px 0;
   background: none;
   border: 0;
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .accordion-flush .accordion-button:not(.collapsed) {
@@ -360,7 +355,7 @@ tfoot {
 .breadcrumb {
   color: var(--light);
   font-weight: 700;
-  background-color: var(--background);
+  background-color: var(--transparent);
   vertical-align: middle;
   align-items: center;
 }
@@ -407,7 +402,7 @@ tfoot {
 }
 
 .nav-tabs-bordered .nav-link.active {
-  background-color: var(--background);
+  background-color: var(--transparent);
   color: var(--light);
   border-bottom: 3px solid var(--light);
   border-radius: .2rem;
@@ -513,9 +508,13 @@ input,
 textarea {
   color: var(--dark);
   border: 1px solid var(--dark);
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
+input:focus,
+textarea:focus {
+  color: var(--dark) !important;
+}
 
 .header .search-form input:focus,
 .header .search-form input:hover {
@@ -610,7 +609,7 @@ textarea {
 }
 
 .header-nav .notifications .notification-item:hover {
-  background-color: var(--background);
+  background-color: var(--transparent);
   color: var(--dark);
   transition: all 0.5s;
 }
@@ -647,7 +646,7 @@ textarea {
 }
 
 .header-nav .messages .message-item:hover {
-  background-color: var(--background);
+  background-color: var(--transparent);
   transition: all 0.5s;
 }
 
@@ -682,7 +681,7 @@ textarea {
 }
 
 .header-nav .profile .dropdown-item:hover {
-  background-color: var(--background);
+  background-color: var(--transparent);
   border-radius: 50px;
   color: var(--light);
   transition: all 0.5s;
@@ -703,7 +702,7 @@ textarea {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
-  background: var(--background);
+  background: var(--transparent);
   animation: slideIn 0.5s ease-in-out forwards;
 }
 
@@ -716,7 +715,7 @@ textarea {
 .sidebar::-webkit-scrollbar {
   width: 5px;
   height: 8px;
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .sidebar::-webkit-scrollbar-thumb {
@@ -809,7 +808,7 @@ textarea {
   font-weight: 600;
   color: var(--dark);
   transition: 0.3;
-  background: var(--background);
+  background: var(--transparent);
   padding: .5rem 15px;
   border-radius: 4px;
 }
@@ -823,7 +822,7 @@ textarea {
 .sidebar-nav .nav-link.collapsed {
   color: var(--dark);
   transition: all 0.5s;
-  background: var(--background);
+  background: var(--transparent);
 }
 
 .sidebar-nav .nav-link.collapsed i {
@@ -956,17 +955,17 @@ textarea {
 
 .dashboard .sales-card .card-icon {
   color: var(--light);
-  background: var(--background);
+  background: var(--transparent);
 }
 
 .dashboard .revenue-card .card-icon {
   color: #2eca6a;
-  background: var(--background);
+  background: var(--transparent);
 }
 
 .dashboard .customers-card .card-icon {
   color: #ff771d;
-  background: var(--background);
+  background: var(--transparent);
 }
 
 /* Activity */
@@ -1056,7 +1055,7 @@ textarea {
 }
 
 .dashboard .recent-sales .table thead {
-  background: var(--background);
+  background: var(--transparent);
 }
 
 .dashboard .recent-sales .table thead th {
@@ -1077,7 +1076,7 @@ textarea {
 }
 
 .dashboard .top-selling .table thead {
-  background: var(--background);
+  background: var(--transparent);
 }
 
 .dashboard .top-selling .table thead th {
@@ -1091,7 +1090,7 @@ textarea {
 .dashboard .top-selling img {
   border-radius: 5px;
   max-width: 60px;
-  background: var(--background);
+  background: var(--transparent);
 }
 
 /*--------------------------------------------------------------
@@ -1252,7 +1251,7 @@ textarea {
 
 .contact .php-email-form .loading {
   display: none;
-  background: var(--background);
+  background: var(--transparent);
   text-align: center;
   padding: 15px;
   cursor: progress;
@@ -1351,7 +1350,7 @@ textarea {
 }
 
 .btn-light {
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .error-404 .btn:hover {
@@ -1408,7 +1407,7 @@ keygen,
 optgroup,
 form,
 input {
-  background-color: var(--background);
+  background-color: var(--transparent);
   color: var(--dark);
   outline: 0;
   border: 2px solid var(--shadow);
@@ -1418,7 +1417,7 @@ input {
 }
 
 .card-color {
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .card .form-label {
@@ -1449,7 +1448,7 @@ div {
 .color:hover {
   transition: all 0.5s;
   color: var(--light);
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 table>tbody>tr>td,
@@ -1461,13 +1460,13 @@ table>thead>tr {
 
 .table tbody tr td {
   color: var(--dark);
-  background: var(--background);
+  background: var(--transparent);
   min-width: 5vw;
 }
 
 .table thead tr th {
   color: var(--dark);
-  background: var(--background);
+  background: var(--transparent);
 }
 
 table>tbody>tr>td .action,
@@ -1488,7 +1487,7 @@ table>thead>tr .action {
   top: 50%;
   left: 50%;
   box-shadow: var(--shadow);
-  background-color: var(--background);
+  background-color: var(--transparent);
   padding: .5rem 2rem;
   font-size: 3rem;
   color: var(--light);
@@ -1519,7 +1518,7 @@ table>thead>tr .action {
   color: var(--dark);
   margin: 0px 4px;
   box-shadow: var(--shadow);
-  background-color: var(--background);
+  background-color: var(--transparent);
 }
 
 .circle-image {
@@ -1620,22 +1619,22 @@ i {
 }
 
 .shadow {
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow) !important;
 }
 
 .btn-custom {
-  --bs-btn-color: var(--background);
+  --bs-btn-color: var(--transparent);
   --bs-btn-bg: var(--light);
   --bs-btn-border-color: var(--light);
-  --bs-btn-hover-color: var(--background);
+  --bs-btn-hover-color: var(--transparent);
   --bs-btn-hover-bg: #0b5ed7;
   --bs-btn-hover-border-color: #0a58ca;
   --bs-btn-focus-shadow-rgb: 49, 132, 253;
-  --bs-btn-active-color: var(--background);
+  --bs-btn-active-color: var(--transparent);
   --bs-btn-active-bg: #0a58ca;
   --bs-btn-active-border-color: #0a53be;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: var(--background);
+  --bs-btn-disabled-color: var(--transparent);
   --bs-btn-disabled-bg: var(--light);
   --bs-btn-disabled-border-color: var(--light);
 }
@@ -1647,11 +1646,11 @@ i {
 .btn-outline-custom {
   --bs-btn-color: var(--light);
   --bs-btn-border-color: var(--light);
-  --bs-btn-hover-color: var(--background);
+  --bs-btn-hover-color: var(--transparent);
   --bs-btn-hover-bg: var(--light);
   --bs-btn-hover-border-color: var(--light);
   --bs-btn-focus-shadow-rgb: 13, 110, 253;
-  --bs-btn-active-color: var(--background);
+  --bs-btn-active-color: var(--transparent);
   --bs-btn-active-bg: var(--light);
   --bs-btn-active-border-color: var(--light);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
@@ -1675,7 +1674,7 @@ i {
 }
 
 .modal-content {
-  background-color: var(--background);
+  background-color: var(--transparent);
   border-radius: 25px;
 }
 
@@ -1685,7 +1684,7 @@ i {
   font-size: 13.33px;
   animation: slideIn 0.5s ease-in-out forwards;
   border-radius: var(--bs-border-radius-lg);
-  background-color: var(--background) !important;
+  background-color: var(--transparent) !important;
 }
 
 .section {
@@ -1760,5 +1759,5 @@ i {
 }
 
 .input-group-text {
-  background-color: var(--background);
+  background-color: var(--transparent);
 }

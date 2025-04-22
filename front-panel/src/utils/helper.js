@@ -201,6 +201,9 @@ export const handleToggleSidebar = () => {
             console.clear();
         }
     }
+    
+    const isSidebarToggled = document.body.classList.contains('toggle-sidebar');
+    console.log(`Sidebar Toggle is ${isSidebarToggled ? 'ON' : 'OFF'}`);
 }
 
 export const hexToRGBA = (hex, alpha = 1) => {

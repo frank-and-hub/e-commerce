@@ -21,7 +21,7 @@ function PageTitle({ title, location }) {
                 <nav className={`d-flex justify-content-between align-items-center`} >
                     <div className={`col-xl-1 col-md-2 col-sm-3 d-none d-sm-block`}>
                         <div className={`d-flex justify-content-between`}>
-                            <Link className={`shadow btn rounded-pill px-3 mx-1`} onClick={handleToggleSidebar} title={`Previous Page`} >
+                            <Link className={`shadow btn rounded-pill px-3 mx-1`} onClick={handleToggleSidebar} title={`Toggle`} >
                                 <i className={`b bi-list`} ></i> 
                             </Link>
                             <p className={`shadow btn rounded-pill px-3 mx-1`} onClick={triggerReRender} title={`Refresh Data`} >
@@ -41,7 +41,7 @@ function PageTitle({ title, location }) {
                             const isLast = (index === pathSegments.length - 1);
 
                             return isLast ? (
-                                <li key={index} className={`breadcrumb-item active" aria-current="page`}>
+                                <li key={index} className={`breadcrumb-item active`} aria-current={`page`}>
                                     {(segment.replace(/-/g, ' '))}
                                 </li>
                             ) : (

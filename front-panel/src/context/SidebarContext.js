@@ -10,7 +10,7 @@ import { setRole } from 'store/roleSlice'
 import { setSideBar } from 'store/sideBarSlice'
 import { setPermission } from 'store/permissionSlice'
 import { setMenuData } from 'store/MenuRedux/menuActions'
-import { hexToRGBA, pickReadableTextColor } from 'utils/helper'
+import { handleToggleSidebar, hexToRGBA, pickReadableTextColor } from 'utils/helper'
 
 export const SidebarContext = createContext();
 
@@ -52,16 +52,9 @@ export const SidebarProvider = ({ children }) => {
                     const {
                         color,
                         background,
-                        grayscale_percentage,
-                        grayscale,
-                        invert_percentage,
-                        invert,
-                        saturate_percentage,
-                        saturate,
-                        contrast_percentage,
-                        contrast,
-                        sepia_percentage,
-                        sepia,
+                        theme,
+                        filter,
+                        isSidebarToggled,
                     } = settingData?.data;
 
                     if (color) {
@@ -75,17 +68,15 @@ export const SidebarProvider = ({ children }) => {
                         document.documentElement.style.setProperty('--dark', textColor);
                     }
 
-                    const setFilter = (condition, value, cssVar, fn) => {
-                        if (condition && value > 0) {
-                            document.documentElement.style.setProperty(cssVar, `${fn}(${value}%)`);
-                        }
-                    };
+                    if (filter) document.documentElement.style.setProperty('filter', `var(--${filter})`);
 
-                    setFilter(grayscale, grayscale_percentage, '--grayscale', 'grayscale');
-                    setFilter(invert, invert_percentage, '--invert', 'invert');
-                    setFilter(saturate, saturate_percentage, '--saturate', 'saturate');
-                    setFilter(contrast, contrast_percentage, '--contrast', 'contrast');
-                    setFilter(sepia, sepia_percentage, '--sepia', 'sepia');
+                    if (theme) {
+                        const themeClasses = ['light', 'dark'];
+                        themeClasses.forEach(cls => document.getElementById('root').classList.remove(cls));
+                        document.getElementById('root').classList.add(`${theme}`);
+                    }
+
+                    if(isSidebarToggled) handleToggleSidebar();
                 }
 
                 if (sideBarData) {

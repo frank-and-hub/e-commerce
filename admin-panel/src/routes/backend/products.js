@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 // helpers
-const helper = require('../../utils/helper');
-const validation = require('../../utils/validation');
+const helper = require('@/utils/helper');
+const validation = require('@/utils/validation');
 
 // Middleware
-const ProductController = require('../../controllers/ProductController');
+const ProductController = require('@/controllers/ProductController');
 // permissios check
-const checkPermission = require('../../middleware/checkPermission');
-const { checkAuth } = require('../../middleware/authMiddleware');
+const checkPermission = require('@/middleware/checkPermission');
+const { checkAuth } = require('@/middleware/authMiddleware');
 // get filea name
 const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 

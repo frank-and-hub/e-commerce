@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const File = require('../models/file');
-const AboutDetail = require('../models/about_detail');
+const File = require('@/models/file');
+const AboutDetail = require('@/models/about_detail');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const apiBaseUrl = `${url.apiBaseUrl}`;

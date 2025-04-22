@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 // models
-const Menu = require('../models/menu');
-const Permission = require('../models/permission');
+const Menu = require('@/models/menu');
+const Permission = require('@/models/permission');
 // helper function
 const helper = require('../utils/helper');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const baseurl = `${url.apiUrl}`;

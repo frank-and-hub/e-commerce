@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const secrets = require('./secrets');
+const secrets = require('@/config/secrets');
 
 const transporter = nodemailer.createTransport({
     service: secrets.emailService,

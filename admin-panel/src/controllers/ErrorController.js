@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const ErrorLog = require('../models/errorlog');
+const ErrorLog = require('@/models/errorlog');
 
 // helper function
 const helper = require('../utils/helper');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const baseurl = `${url.apiUrl}`;

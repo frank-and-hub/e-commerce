@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const TermsAndConditions = require('../models/terms_and_conditions');
-const User = require('../models/user');
+const TermsAndConditions = require('@/models/terms_and_conditions');
+const User = require('@/models/user');
 
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const status_active = `${process.env.STATUS_ACTIVE}`;

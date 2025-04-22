@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const ReturnPolicy = require('../models/return_policy');
-const User = require('../models/user');
+const ReturnPolicy = require('@/models/return_policy');
+const User = require('@/models/user');
 
 const data_limit = `${process.env.DATA_PAGINATION_LIMIT}`;
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const status_active = `${process.env.STATUS_ACTIVE}`;

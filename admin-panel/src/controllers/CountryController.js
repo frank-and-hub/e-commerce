@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const axios = require('axios');
-const Country = require('../models/country');
+const Country = require('@/models/country');
 
 // base url
 const status_active = `${process.env.STATUS_ACTIVE}`;

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const Tag = require('../models/tag');
+const Tag = require('@/models/tag');
 
 // helper function
 const helper = require('../utils/helper');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const baseurl = `${url.apiUrl}`;

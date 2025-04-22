@@ -1,11 +1,11 @@
 // models
-const User = require('../models/user');
-// const Plan = require('../models/plan');
-// const Service = require('../models/service');
-// const Project = require('../models/project');
-const About = require('../models/about_detail');
-// const Testimonial = require('../models/testimonial');
-const SocialDetail = require('../models/social_detail');
+const User = require('@/models/user');
+// const Plan = require('@/models/plan');
+// const Service = require('@/models/service');
+// const Project = require('@/models/project');
+const About = require('@/models/about_detail');
+// const Testimonial = require('@/models/testimonial');
+const SocialDetail = require('@/models/social_detail');
 
 // status
 const status_active = `${process.env.STATUS_ACTIVE}`;

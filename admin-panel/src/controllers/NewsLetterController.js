@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const User = require('../models/user');
-const NewsLetter = require('../models/news-letter');
+const User = require('@/models/user');
+const NewsLetter = require('@/models/news-letter');
 
 // helper function
 const helper = require('../utils/helper');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const baseurl = `${url.apiUrl}`;

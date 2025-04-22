@@ -2,8 +2,8 @@ const passport = require('passport');
 const { Strategy: LocalStrategy } = require('passport-local');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const bcrypt = require('bcryptjs');
-const User = require('../models/user'); // Import your User model
-const secrets = require('./secrets');
+const User = require('@/models/user'); // Import your User model
+const secrets = require('@/config/secrets');
 const status_active = `${process.env.STATUS_ACTIVE}`;
 
 // Local Strategy for login (username and password)

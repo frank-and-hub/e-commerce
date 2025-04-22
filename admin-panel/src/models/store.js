@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { makeSlug } = require('../utils/helper');
+const { makeSlug } = require('@/utils/helper');
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

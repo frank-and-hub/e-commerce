@@ -1,7 +1,7 @@
 // AuthServices.js
 const jwt = require(`jsonwebtoken`);
 const bcrypt = require(`bcrypt`);
-const secrets = require(`../config/secrets`);
+const secrets = require(`@/config/secrets`);
 
 // Function to generate JWT token
 exports.generateToken = (user) => {

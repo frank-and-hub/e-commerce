@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 // models
-const User = require('../models/user');
-const Role = require('../models/role');
-const File = require('../models/file');
-const SocialDetail = require('../models/social_detail');
-const UserPermission = require('../models/user_permission');
+const User = require('@/models/user');
+const Role = require('@/models/role');
+const File = require('@/models/file');
+const SocialDetail = require('@/models/social_detail');
+const UserPermission = require('@/models/user_permission');
 
 // helper function
 const helper = require('../utils/helper');
@@ -14,7 +14,7 @@ const helper = require('../utils/helper');
 const AuthServices = require('../services/AuthServices');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 const { getDataById, insertNewData } = require('../services/UserServices');
 
 // base url

@@ -6,16 +6,8 @@ const settingSchema = new mongoose.Schema({
     color: { type: String, required: false },
     background: { type: String, required: false },
     theme: { type: String, enum: ['dark', 'light'], default: 'light' },
-    grayscale: { type: Boolean, default: false },
-    grayscale_percentage: { type: String, default: '1', required: false },
-    invert: { type: Boolean, default: false },
-    invert_percentage: { type: String, default: '1', required: false },
-    saturate: { type: Boolean, default: false },
-    saturate_percentage: { type: String, default: '1', required: false },
-    contrast: { type: Boolean, default: false },
-    contrast_percentage: { type: String, default: '1', required: false },
-    sepia: { type: Boolean, default: false },
-    sepia_percentage: { type: String, default: '1', required: false },
+    filter: { type: String, enum: ['sepia', 'contrast', 'saturate', 'invert', 'grayscale', 'opacity', 'hue-rotate', 'blur', 'drop-shadow', 'brightness', 'none'], default: 'none' },
+    isSidebarToggled: { type: Boolean, default: false },
     updated_by: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'User' },
     deleted_at: { type: Date, default: null }
 }, {

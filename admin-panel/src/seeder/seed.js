@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const axios = require('axios');
-const User = require('../models/user');
-const Role = require('../models/role');
-const Menu = require('../models/menu');
-const Country = require('../models/country');
-const Permission = require('../models/permission');
+const User = require('@/models/user');
+const Role = require('@/models/role');
+const Menu = require('@/models/menu');
+const Country = require('@/models/country');
+const Permission = require('@/models/permission');
 const { faker } = require('@faker-js/faker');
-const connectDB = require('../config/db');
-const AuthServices = require('../services/AuthServices');
-const { getGuestRole } = require('../controllers/RoleController');
+const connectDB = require('@/config/db');
+const AuthServices = require('@/services/AuthServices');
+const { getGuestRole } = require('@/controllers/RoleController');
 
 let i = 0;
 const generateFakeData = async (fakePassword, guestRoleId) => {

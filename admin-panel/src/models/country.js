@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { makeSlug } = require('../utils/helper');
+const { makeSlug } = require('@/utils/helper');
 
 const countrySchema = new mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true },

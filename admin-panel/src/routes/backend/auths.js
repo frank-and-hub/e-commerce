@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const validation = require('../../utils/validation');
-const { checkAuth } = require('../../middleware/authMiddleware');
-const AuthController = require('../../controllers/AuthController');
+const validation = require('@/utils/validation');
+const { checkAuth } = require('@/middleware/authMiddleware');
+const AuthController = require('@/controllers/AuthController');
 
 router.route('/sign-in')
     .get(AuthController.getSignIn)

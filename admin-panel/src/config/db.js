@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const secrets = require('./secrets');
+const secrets = require('@/config/secrets');
 
 // Function to connect to MongoDB
 const connectDB = async () => {

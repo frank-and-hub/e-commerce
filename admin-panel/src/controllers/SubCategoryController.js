@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const SubCategory = require('../models/sub_category');
-const Category = require('../models/category');
-const User = require('../models/user');
+const SubCategory = require('@/models/sub_category');
+const Category = require('@/models/category');
+const User = require('@/models/user');
 
 // helper function
 const helper = require('../utils/helper');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const baseurl = `${url.apiUrl}`;

@@ -1,6 +1,6 @@
-const User = require(`../models/user`);
-const { phoneFormate } = require(`../utils/helper`);
-const { hashPassword } = require(`./AuthServices`);
+const User = require(`@/models/user`);
+const { phoneFormate } = require(`@/utils/helper`);
+const { hashPassword } = require(`@/services/AuthServices`);
 const status_active = `${process.env.STATUS_ACTIVE}`;
 
 class UserService {

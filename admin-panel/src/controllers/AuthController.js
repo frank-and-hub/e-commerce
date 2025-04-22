@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-const User = require('../models/user');
-const Token = require('../models/token');
-const SocialDetail = require('../models/social_detail');
+const User = require('@/models/user');
+const Token = require('@/models/token');
+const SocialDetail = require('@/models/social_detail');
 
 const AuthServices = require('../services/AuthServices');
 
 const helper = require('../utils/helper');
-const url = require('../config/url');
+const url = require('@/config/url');
 
 const RoleController = require('./RoleController');
 const baseurl = `${url.apiUrl}`;

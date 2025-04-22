@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const LikeListController = require('../../controllers/LikeListController');
+const LikeListController = require('@/controllers/LikeListController');
 
-const validation = require('../../utils/validation');
+const validation = require('@/utils/validation');
 
 // permissios check
-const checkPermission = require('../../middleware/checkPermission');
+const checkPermission = require('@/middleware/checkPermission');
 // get filea name
 const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 

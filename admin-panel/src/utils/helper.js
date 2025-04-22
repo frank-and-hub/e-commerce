@@ -1,8 +1,8 @@
 const multer = require(`multer`);
 const path = require(`path`);
 
-const transporter = require(`../config/email`);
-const secrets = require(`../config/secrets`);
+const transporter = require(`@/config/email`);
+const secrets = require(`@/config/secrets`);
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {

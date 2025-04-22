@@ -1,5 +1,5 @@
-const secrets = require('./secrets');
-const url = require('./url');
+const secrets = require('@/config/secrets');
+const url = require('@/config/url');
 
 module.exports = {
     server: {

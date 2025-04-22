@@ -1,5 +1,5 @@
-const config = require(`../../nodemon.json`).env;
-const ErrorLog = require(`../models/errorlog`);
+const config = require(`@/../nodemon`).env;
+const ErrorLog = require(`@/models/errorlog`);
 
 module.exports = async (err, req, res, next) => {
     try {

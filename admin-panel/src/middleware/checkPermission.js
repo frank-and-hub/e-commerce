@@ -1,7 +1,7 @@
-const User = require('../models/user');
-const Role = require('../models/role');
-const Permission = require('../models/permission');
-const Menu = require('../models/menu');
+const User = require('@/models/user');
+const Role = require('@/models/role');
+const Permission = require('@/models/permission');
+const Menu = require('@/models/menu');
 
 const checkPermission = (menuName, permissionName) => {
     return async (req, res, next) => {

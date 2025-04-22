@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { checkAuth } = require('../../middleware/authMiddleware');
-const AboutUsController = require('../../controllers/AboutUsController');
+const { checkAuth } = require('@/middleware/authMiddleware');
+const AboutUsController = require('@/controllers/AboutUsController');
 // permissios check
-const checkPermission = require('../../middleware/checkPermission');
+const checkPermission = require('@/middleware/checkPermission');
 // get filea name
 const fileName = __filename.slice(__dirname.length + 1).replace('.js', '');
 

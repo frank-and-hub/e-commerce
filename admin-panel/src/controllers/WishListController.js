@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const User = require('../models/user');
-const Product = require('../models/product');
-const WishList = require('../models/wish_list');
+const User = require('@/models/user');
+const Product = require('@/models/product');
+const WishList = require('@/models/wish_list');
 
 // base url
 const status_active = `${process.env.STATUS_ACTIVE}`;

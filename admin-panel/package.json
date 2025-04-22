@@ -11,6 +11,7 @@
     "express-validator": "^7.2.1",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "mongoos": "^0.0.1-security",
     "mongoose": "^8.10.0",
     "mongoose-seed": "^0.6.0",
@@ -33,5 +34,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "_moduleAliases": {
+    "@": "src"
+  }
 }

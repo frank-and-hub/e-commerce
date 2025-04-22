@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 
-const Tag = require('../models/tag');
-const User = require('../models/user');
-const File = require('../models/file');
-const Color = require('../models/color');
-const Unit = require('../models/unit');
-const Brand = require('../models/brand');
-const Product = require('../models/product');
-const Warranty = require('../models/warranty');
-const Discount = require('../models/discount');
-const Category = require('../models/category');
+const Tag = require('@/models/tag');
+const User = require('@/models/user');
+const File = require('@/models/file');
+const Color = require('@/models/color');
+const Unit = require('@/models/unit');
+const Brand = require('@/models/brand');
+const Product = require('@/models/product');
+const Warranty = require('@/models/warranty');
+const Discount = require('@/models/discount');
+const Category = require('@/models/category');
 
 // helper function
 const helper = require('../utils/helper');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const baseurl = `${url.apiUrl}`;

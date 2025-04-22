@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const Role = require('../models/role');
-const User = require('../models/user');
-const Permission = require('../models/permission');
+const Role = require('@/models/role');
+const User = require('@/models/user');
+const Permission = require('@/models/permission');
 
 // helper function
 const helper = require('../utils/helper');
 
 // config url
-const url = require('../config/url');
+const url = require('@/config/url');
 
 // base url
 const baseurl = `${url.apiUrl}`;

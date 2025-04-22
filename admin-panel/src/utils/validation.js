@@ -1,5 +1,5 @@
 const { body, param, validationResult } = require(`express-validator`);
-const ErrorLog = require(`../models/errorlog`);
+const ErrorLog = require(`@/models/errorlog`);
 
 exports.validateUserSignUp = [
     body(`name`)

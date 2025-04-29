@@ -16,7 +16,7 @@ const SettingForm = () => {
     const navigate = useNavigate();
 
     const initialState = {
-        color: '#967ADC',
+        color: '#0d6efd',
         background: '#ffffff',
         theme: '',
         filter: ''

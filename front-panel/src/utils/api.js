@@ -11,16 +11,15 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token') ?? null;
-  if (token) {
-    // console.info('👍');
-    config.headers['Authorization'] = `Bearer ${token}`;
-  }
+  if (token) config.headers['Authorization'] = `Bearer ${token}`; // console.info('👍'); 
   return config;
-},
-  (error) => {
-    // console.info('👎');
-    return Promise.reject(error);
-  }
+}, (error) => Promise.reject(error) // console.info('👎');
 );
+
+// api.interceptors.response.use((response) => {
+//   const token = localStorage.getItem('token') ?? null;
+//   if (token) config.headers['Authorization'] = `Bearer ${token}`;
+//   return response;
+// }, (error) => Promise.reject(error));
 
 export default api;

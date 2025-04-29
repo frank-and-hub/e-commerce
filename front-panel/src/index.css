@@ -4,7 +4,7 @@
   --primary: #EB1616;
   --secondary: #191C24;
   --light: #967ADC;
-  --dark: #cecece;
+  --dark: #1f1f1f;
   --background: #ffffff;
   --white: #fff;
   --card-bg: #fff;
@@ -13,7 +13,7 @@
   --bs-border-radius-lg: 0.5rem;
   --transparent: transparent;
   --sepia: sepia(1);
-  --contrast: contrast(0.5);
+  --contrast: contrast(1.5);
   --saturate: saturate(0.5);
   --invert: invert(1);
   --grayscale: grayscale(1);

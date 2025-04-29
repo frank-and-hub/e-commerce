@@ -1660,6 +1660,12 @@ i {
   --bs-gradient: none;
 }
 
+.btn-outline-custom:hover {
+  color: var(--white);
+  background-color: var(--light);
+  border-color: var(--light);
+}
+
 .modal-backdrop {
   width: 100%;
   height: 100%;

@@ -123,7 +123,7 @@ export const loadScript = (url) => {
 export const customStyles = {
     control: (provided, state) => ({
         ...provided,
-        borderRadius: `var(--bs-border-radius)`,
+        borderRadius: `var(--bs-border-radius-xxl)`,
         boxShadow: state.isFocused ? `var(--background)` : `none`,
     }),
     option: (provided, state) => ({
@@ -201,7 +201,7 @@ export const handleToggleSidebar = () => {
             console.clear();
         }
     }
-    
+
     const isSidebarToggled = document.body.classList.contains('toggle-sidebar');
     console.log(`Sidebar Toggle is ${isSidebarToggled ? 'ON' : 'OFF'}`);
 }

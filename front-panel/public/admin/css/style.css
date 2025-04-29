@@ -1487,7 +1487,7 @@ table>thead>tr .action {
   top: 50%;
   left: 50%;
   box-shadow: var(--shadow);
-  background-color: var(--transparent);
+  background-color: var(--white);
   padding: .5rem 2rem;
   font-size: 3rem;
   color: var(--light);
@@ -1517,6 +1517,7 @@ table>thead>tr .action {
   transition: all 0.5s;
   color: var(--dark);
   margin: 0px 4px;
+  border-radius: 1rem;
   box-shadow: var(--shadow);
   background-color: var(--transparent);
 }

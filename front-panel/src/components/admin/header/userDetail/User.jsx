@@ -26,12 +26,12 @@ function User() {
                     onClick={(e) => e.preventDefault()}
                     data-bs-toggle={`dropdown`}
                 >
-                    <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} loading={`lazy`} onError={handleError} width={`2.2rem`} height={`2.2rem`}/>
+                    <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} loading={`lazy`} onError={handleError} width={`2.2rem`} height={`2.2rem`} />
                     {/* <span className={`d-none d-md-block dropdown-toggle ps-2`}>
                         {ucwords(getFullName(user?.name))}
                     </span> */}
                 </Link>
-                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-25 card-color`}>
+                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-25 card-color`} style={{ background: `var(--white)` }}>
                     <li className={`dropdown-header`}>
                         <Link to={`/admin/profile`} className={``} >
                             <h6 className={``} >{ucwords(getFullName(user?.name))}</h6>

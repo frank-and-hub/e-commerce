@@ -1,9 +1,9 @@
 import React from 'react'
 import { rasc } from 'utils/helper'
 
-function RoundedTextarea({ name, label, type = 'text', value, onChange, error, required = false, inputType = false }) {
+function RoundedTextarea({ name, label, type = 'text', value, onChange, error, required = false, inputType = false, ...props }) {
 
-    const TextAreaItem = <textarea name={name} type={type} className={`form-control rounded-pill${error ? ' is-invalid' : ''}`} id={rasc(name)} defaultValue={value} style={{ height: "100px", paddingTop: "10px" }} onChange={onChange} ></textarea>;
+    const TextAreaItem = <textarea name={name} type={type} className={`form-control rounded-pill${error ? ' is-invalid' : ''}`} id={rasc(name)} defaultValue={value} style={{ height: "100px", paddingTop: "10px" }} onChange={onChange} {...props}></textarea>;
 
     return (
         <>

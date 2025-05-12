@@ -39,8 +39,8 @@ function View() {
             <Input name={`statusCode`} label="statusCode" value={values?.statusCode} onChange={handleChange} required={false} inputType={true} disabled={true} />
             <Input name={`errorType`} label="errorType" value={values?.errorType} onChange={handleChange} required={false} inputType={true} disabled={true} />
             <Input name={`ip`} label="ip" value={values?.ip} onChange={handleChange} required={false} inputType={true} disabled={true} />
-            <Textarea name={`errorMessage`} label="errorMessage" value={values?.errorMessage} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
-            <Textarea name={`stackTrace`} className={`w-100`} label="stackTrace" value={values?.stackTrace} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
+            <Textarea name={`errorMessage`} label="error Message" value={values?.errorMessage} onChange={handleChange} required={false} inputType={true} disabled={true}  className={`w-100`}></Textarea>
+            <Textarea name={`stackTrace`} className={`w-100`} label={`stack Trace`} value={values?.stackTrace} onChange={handleChange} required={false} inputType={true} disabled={true} ></Textarea>
             <div className={`col-12`}>
             </div>
         </CardForm>

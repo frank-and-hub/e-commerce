@@ -8,7 +8,7 @@ export const Filter = ({ setFilterFunction }) => {
                 <Link className={`icon`} onClick={(e) => e.preventDefault()} data-bs-toggle={`dropdown`}>
                     <i className={`bi bi-three-dots`}></i>
                 </Link>
-                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow rounded-25`}>
+                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow rounded-50`}>
                     <li className={`dropdown-header text-start`}>
                         <h6>Filter</h6>
                     </li>

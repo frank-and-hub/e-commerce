@@ -9,7 +9,7 @@
   --white: #fff;
   --card-bg: #fff;
   --shadow2: rgba(64, 60, 67, 0.16);
-  --shadow: 0px 2px 5px 1px rgba(150, 122, 220, 0.40);
+  --shadow: 0rem 0.1rem 0.2rem 0.05rem rgba(150, 122, 220, 0.40);
   --bs-border-radius-lg: 0.5rem;
   --transparent: transparent;
   --sepia: sepia(1);
@@ -32,6 +32,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-image: url('../public/admin/img/background.jpg'); */
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+  background-blend-mode: luminosity;
 }
 
 code {

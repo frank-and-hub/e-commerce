@@ -7,7 +7,7 @@ const SideBar = () => {
     const { menus, loading } = useContext(SidebarContext);
     return (
         <>
-            <aside id={`sidebar`} className={`sidebar shadow my-3 mt-4 mx-2 rounded-25 d-md-block`} style={{ scrollbarWidth: "none" }}>
+            <aside id={`sidebar`} className={`sidebar shadow my-3 mt-4 mx-2 rounded-50 d-md-block`} style={{ scrollbarWidth: "none" }}>
                 <ul className={`sidebar-nav`} id={`sidebar-nav`}>
                     {loading ? (
                         <Loading />

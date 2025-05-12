@@ -81,7 +81,7 @@ function Add() {
         <CardForm handleSubmit={handleSubmit} key={formKey}>
             <div className={`col-md-4`}>
                 <div className='cursor-none'>
-                    <img src={src} alt={`Brand`} className={`rounded-25 col-md-6 image-shell w-50`} onClick={handleClick} loading={`lazy`}/>
+                    <img src={src} alt={`Brand`} className={`rounded-50 col-md-6 image-shell w-50`} onClick={handleClick} loading={`lazy`}/>
                 </div>
             </div>
             <Input name={`name`} label="Name" value={values.name} onChange={handleChange} error={errors.name} required={true} inputType={true} />

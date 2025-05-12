@@ -45,7 +45,7 @@ function View() {
             <Textarea onChange={handleChange} className={`w-100`} name={`description`} value={values?.description} label={`Description`} required={false} disabled={true} />
             <div className={`col-md-4`}>
                 <div className='cursor-none'>
-                    <img src={src} alt={`Banner`} className={`rounded-25 col-md-6 image-shell w-50`} onClick={(e) => e.preventDefault()} loading={`lazy`}/>
+                    <img src={src} alt={`Banner`} className={`rounded-50 col-md-6 image-shell w-50`} onClick={(e) => e.preventDefault()} loading={`lazy`}/>
                 </div>
             </div>
             <div className={`col-12`}>

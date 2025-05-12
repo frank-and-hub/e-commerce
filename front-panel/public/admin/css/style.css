@@ -9,6 +9,7 @@ body {
   font-size: smaller;
   filter: none;
   transition: filter 0.3s ease;
+  /* font-variant-caps: small-caps; */
 }
 
 body .dark {
@@ -21,7 +22,7 @@ body .dark {
   --card-bg: #5b5b5b;
 
   --shadow2: rgba(0, 0, 0, 0.4);
-  --shadow: 0px 2px 5px 1px rgba(251, 251, 251, 0.5);
+  --shadow: 0rem 0.1rem 0.2rem 0.05rem rgba(251, 251, 251, 0.5);
 }
 
 a {
@@ -177,7 +178,7 @@ tfoot {
 
 .dropdown-menu .dropdown-item:hover {
   background-color: var(--transparent);
-  border-radius: 25px;
+  border-radius: 2.5rem;
   transition: all 0.5s;
 }
 
@@ -266,7 +267,7 @@ tfoot {
   border: none;
   box-shadow: var(--shadow);
   background-color: var(--transparent);
-  border-radius: 1.5rem;
+  border-radius: 2.5rem;
 }
 
 .card-header,
@@ -1516,10 +1517,19 @@ table>thead>tr .action {
 .pagination .btn {
   transition: all 0.5s;
   color: var(--dark);
-  margin: 0px 4px;
-  border-radius: 1rem;
+  margin: 0px 0.5;
+  border-radius: 2rem;
   box-shadow: var(--shadow);
   background-color: var(--transparent);
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination .btn .action {
+  border-color: var(--light);
 }
 
 .circle-image {
@@ -1682,7 +1692,8 @@ i {
 
 .modal-content {
   background-color: var(--transparent);
-  border-radius: 25px;
+  border-radius: 2.5rem;
+  background: var(--white);
 }
 
 .form-control {
@@ -1767,4 +1778,18 @@ i {
 
 .input-group-text {
   background-color: var(--transparent);
+}
+
+.table>:not(caption)>*>* {
+  background-color: var(--transparent);
+}
+
+.modal {
+  background-color: var(--transparent);
+  backdrop-filter: blur(1px);
+}
+
+.modal-backdrop.show {
+  opacity: 0;
+  background: var(--background);
 }

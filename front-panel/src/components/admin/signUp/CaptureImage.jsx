@@ -76,7 +76,7 @@ export const CaptureImage = () => {
 
     return (
         <>
-            {!image && <div className={`p-2 rounded-25`}>
+            {!image && <div className={`p-2 rounded-50`}>
                 <video
                     ref={videoRef}
                     autoPlay
@@ -87,7 +87,7 @@ export const CaptureImage = () => {
                 <button onClick={captureImage} className={`col-12`}>Capture Image</button>
                 <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
             </div>}
-            {image && <center className={`p-2 rounded-25`}>
+            {image && <center className={`p-2 rounded-50`}>
                 <img src={image} alt="Captured" className={`rounded-circle circle-image-xl `} />
             </center>}
         </>

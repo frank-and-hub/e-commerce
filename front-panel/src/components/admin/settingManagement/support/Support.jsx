@@ -41,28 +41,28 @@ const Support = () => {
                             <div className={`p-0`}>
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-3 col-sm-6">
-                                        <div class="info-box card rounded-25">
+                                        <div class="info-box card rounded-50">
                                             <i class="bi bi-geo-alt"></i>
                                             <h3>Address</h3>
                                             <p>{values?.address ?? ''}</p>
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-3 col-sm-6">
-                                        <div class="info-box card rounded-25">
+                                        <div class="info-box card rounded-50">
                                             <i class="bi bi-telephone"></i>
                                             <h3>Call Us</h3>
                                             <p>{values?.cell ?? ''}</p>
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-3 col-sm-6">
-                                        <div class="info-box card rounded-25">
+                                        <div class="info-box card rounded-50">
                                             <i class="bi bi-envelope"></i>
                                             <h3>Email Us</h3>
                                             <p>{values?.email ?? ''}</p>
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-3 col-sm-6">
-                                        <div class="info-box card rounded-25">
+                                        <div class="info-box card rounded-50">
                                             <i class="bi bi-clock"></i>
                                             <h3>Open Hours</h3>
                                             <p className={`text-capitalize mb-0`}>{`${(values?.week_start ?? '')} - ${(values?.week_end ?? '')} - ${(values?.hours_start ?? '')} - ${(values?.hours_end ?? '')}`}</p>

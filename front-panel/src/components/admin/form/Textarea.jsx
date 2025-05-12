@@ -13,6 +13,7 @@ export default function Textarea({
     className = null,
     required = false,
     disabled = false,
+    ...props
 }) {
     const InputItem = <textarea
         name={name}
@@ -22,8 +23,9 @@ export default function Textarea({
         disabled={disabled}
         defaultValue={value}
         placeholder={`Enter ${name}`}
-        style={{ height: `${className ? `100px` : `25px`}` }}
-        className={`form-control border-${border}${editor ? ` tinymce-editor` : ``}${className ?? ``}${error ? ` is-invalid` : ``}`}
+        style={{ height: `${className ? `100px` : `25px`}`, borderRadius: `1.5rem` }}
+        className={`form-control border-${border} ${editor ? ` tinymce-editor` : ``} ${className ?? ``} ${error ? ` is-invalid` : ``} p-3`}
+        {...props}
     ></textarea>;
     return (
         <>

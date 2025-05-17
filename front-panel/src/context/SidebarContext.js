@@ -90,7 +90,7 @@ export const SidebarProvider = ({ children }) => {
                 if (permissionData) dispatch(setPermission({ permission: permissionData?.response }));
 
             } catch (err) {
-                notifyError(`Error fetching data: ${err.message}`);
+                notifyError(`Error fetching data: ${err?.message ?? err}`);
                 if (err.status === 401) logout();
             } finally {
                 setLoading(false)

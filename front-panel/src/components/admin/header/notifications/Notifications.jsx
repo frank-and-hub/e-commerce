@@ -23,7 +23,7 @@ function Notifications({ notifications }) {
                     <span className={`badge bg-primary badge-number`}>{notifications?.length}</span>
                 </Link>
 
-                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications rounded-50 card-color`}>
+                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications rounded-50 card-color p-3`}>
                     <li className={`dropdown-header`}>
                         You have {notifications?.length} new notifications
                         <Link to={`#`} onClick={handleClearAll} >

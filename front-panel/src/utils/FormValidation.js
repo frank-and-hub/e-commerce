@@ -265,6 +265,16 @@ export function socialDetailValidation(values) {
     return errors;
 }
 
+export function otpValidation(values) {
+    let errors = {}
+    if (!values.otp) {
+        errors.otp = 'Please enter your otp';
+    } else if (values.otp.length < 6) {
+        errors.otp = 'Password needs to be at least 6 characters';
+    }
+    return errors;
+}
+
 export function signInValidation(values) {
     let errors = {}
     if (!values.email) {

@@ -5,7 +5,6 @@ import { notifyError, notifySuccess } from 'components/admin/comman/notification
 import { destroy, get, patch } from 'utils/AxiosUtils'
 import { SidebarContext } from 'context/SidebarContext'
 import { useLoading } from 'context/LoadingContext'
-import { Loading } from '../loading/Loading'
 import Button from './Button'
 import Pageignation from './Pageignation'
 import ReusableModal from '../models/ReusableModal'
@@ -66,7 +65,7 @@ const Table = ({
     }
 
     const handleDeleteConfirm = async () => {
-        setLoading(true)
+        if(!loading) setLoading(true)
         try {
             const resDeleted = await destroy(`/${moduleName}/${selectedItem}`);
             notifySuccess(resDeleted.message);
@@ -80,7 +79,7 @@ const Table = ({
     };
 
     const handleStatusChangeConfirm = async () => {
-        setLoading(true)
+        if(!loading) setLoading(true)
         try {
             const newValues = formattedData({ 'status': selectedItemStatus });
             const resUpdated = await patch(`/${moduleName}/${selectedItem}`, newValues);
@@ -233,7 +232,7 @@ const Table = ({
                             <table className={`table table-borderless table-sm datatable table-responsive{-sm|-md|-lg|-xl} mb-2`} style={{ wordWrap: 'normal' }}>
                                 <thead>
                                     <tr>
-                                        {!loading && tableData.length > 0 && (
+                                        {tableData.length > 0 && (
                                             <>
                                                 {tableData.map((header, index) => (
                                                     <th key={index} scope={`row`} className={`text-capitalize cursor${(header !== ('id' || '_id')) ? 'Pointer' : 'Auto'}`} onClick={(e) => (header === ('id' || '_id') ? e.preventDefault() : handleSort(header))}>

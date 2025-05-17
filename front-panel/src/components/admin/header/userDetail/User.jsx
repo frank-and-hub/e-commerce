@@ -28,7 +28,7 @@ function User() {
                 >
                     <img src={src} alt="Profile" className={`rounded-circle circle-image-small`} loading={`lazy`} onError={handleError} width={`2.2rem`} height={`2.2rem`} />
                 </Link>
-                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-50 card-color`} style={{ background: `var(--white)` }}>
+                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-arrow profile rounded-50 card-color p-3`} style={{ background: `var(--white)` }}>
                     <li className={`dropdown-header`}>
                         <Link to={`/admin/profile`} className={``} >
                             <h6 className={``} >{ucwords(getFullName(user?.name))}</h6>

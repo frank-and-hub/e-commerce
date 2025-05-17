@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     const login = useCallback(async (email, password) => {
         try {
             const { data } = await api.post(`${url}/sign-in`, { email, password });
+            localStorage.clear();
             await storeUserData(data.user, data?.token);
             localStorage.setItem('token', data?.token);
             localStorage.setItem('user', data?.user);
@@ -62,6 +63,37 @@ export const AuthProvider = ({ children }) => {
             throw err;
         }
     }, [storeUserData]);
+
+    const varify_otp = useCallback(async (input, otp, type) => {
+        try {
+            const { data } = await api.post(`${url}/verify-otp`, { input, otp, type });
+            localStorage.clear();
+            await storeUserData(data.user, data?.token);
+            localStorage.setItem('token', data?.token);
+            localStorage.setItem('user', data?.user);
+            localStorage.setItem('role', data?.user?.role?.name);
+            localStorage.setItem('user-email', data?.user?.email);
+            localStorage.setItem('user_id', data?.user?._id);
+            return data;
+        } catch (err) {
+            notifyError(`Login error: ${err.message}`);
+            throw err;
+        }
+    }, [storeUserData]);
+
+    const send_otp = useCallback(async (email, password) => {
+        try {
+            const { data } = await api.post(`${url}/send-otp`, { email, password });
+            localStorage.clear();
+            localStorage.setItem('user-email', data?.user?.email);
+            localStorage.setItem('user-phone', data?.user?.phone);
+            localStorage.setItem('user-login-method', data?.type);
+            localStorage.setItem('user-login-otp', data?.otp);
+            return data;
+        } catch (err) {
+            throw err;
+        }
+    }, []);
 
     const logout = useCallback(async () => {
         await clearUserData();
@@ -118,9 +150,11 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         loadUser,
+        send_otp,
+        varify_otp,
         isLoggedIn,
         loading,
-    }), [user, register, login, logout, loadUser, isLoggedIn, loading]);
+    }), [user, register, login, logout, loadUser, send_otp, varify_otp, isLoggedIn, loading]);
 
     return (
         <AuthContext.Provider value={contextValue}>

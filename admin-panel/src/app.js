@@ -31,9 +31,13 @@ app.use(cors());
 // Allow all origins 
 app.use(cors({
     origin: react_base_url, // Allow requests from your front-end
-    methods: `GET, POST, PUT, DELETE, POST`, // Specify allowed HTTP methods
-    credentials: true // If you`re using cookies or authorization headers
+    credentials: true, // If you`re using cookies or authorization headers
+    methods: `GET, POST, PUT, DELETE, POST, OPTIONS`, // Specify allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], 
 }));
+
+// Automatically handle preflight OPTIONS requests
+app.options('*', cors());
 
 // set headers
 app.use(setHeaders);

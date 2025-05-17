@@ -7,8 +7,8 @@ module.exports = {
         host: url.host
     },
     api: {
-        baseUrl: secrets.apiBaseUrl
+        baseUrl: url.apiBaseUrl
     },
     environment: secrets.nodeEnv,
-    secret: secrets.secrate
+    secret: secrets.secret
 }

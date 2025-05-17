@@ -14,4 +14,7 @@ router.route('/sign-up')
 
 router.post('/sign-out', checkAuth, AuthController.signOut);
 
+router.post('/send-otp', AuthController.sendOtp);
+router.post('/verify-otp', AuthController.verifyOtp);
+
 module.exports = router;

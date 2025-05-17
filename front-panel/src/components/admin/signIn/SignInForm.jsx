@@ -2,15 +2,15 @@ import React, { useEffect, useTransition } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from 'utils/AuthContext'
-import SubmitButton from 'components/admin/form/SubmitButton'
-import { notifySuccess } from 'components/admin/comman/notification/Notification'
 import { signInValidation, useSingInFormValidation } from 'utils/FormValidation'
+import { notifySuccess } from 'components/admin/comman/notification/Notification'
+import SubmitButton from 'components/admin/form/SubmitButton'
 
 export const SignInForm = () => {
     const token = useSelector((state) => (state.auth.token));
     const navigate = useNavigate();
 
-    const { login } = useAuth();
+    const { send_otp } = useAuth();
     const [isPending, startTransition] = useTransition();
 
     const initialState = {
@@ -28,13 +28,14 @@ export const SignInForm = () => {
             console.table(errors);
             return false;
         }
-        
+
         startTransition(async () => {
             try {
-                const response = await login(values.email, values.password);
+                const response = await send_otp(values.email, values.password);
                 if (!response) throw new Error("Failed to submit form");
                 notifySuccess(response.message);
-                navigate('/admin/index', { replace: true })
+                // navigate('/admin/index', { replace: true })
+                navigate('/admin/verify-otp', { replace: true })
             } catch (error) {
                 console.error(`Error during login: ${error}`);
             }
@@ -42,6 +43,7 @@ export const SignInForm = () => {
     }
 
     useEffect(() => {
+        localStorage.clear();
         navigate(token ? '/admin' : '/admin/signin', { replace: true })
     }, [token, navigate]);
 

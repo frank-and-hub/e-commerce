@@ -95,4 +95,13 @@ const loremPatterns = [
 
 const makeSlug = (name) => name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
 
-module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData, phoneFormate, loremPatterns, makeSlug }
+const generateOtp = (length = 6) => {
+    const digits = `0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`;
+    let otp = ``;
+    for (let i = 0; i < length; i++) {
+        otp += digits[Math.floor(Math.random() * digits.length)];
+    }
+    return otp;
+};
+
+module.exports = { fileUpload, fileImageUpload, updateOps, requestTime, sendEmail, filterData, phoneFormate, loremPatterns, makeSlug, generateOtp }

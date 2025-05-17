@@ -20,7 +20,7 @@ export default function TableSkeleton({ rows = 5, columns = 4 }) {
                             <td key={colIdx}><Skeleton height={20} /></td>
                         ))}
                     </tr>
-                ))} 
+                ))}
             </tbody>
         </table>
     );
